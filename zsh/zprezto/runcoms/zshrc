@@ -11,3 +11,25 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+#
+## aliases
+#
+alias man='LANG=ja_JP.UTF-8 /usr/bin/man'
+alias javac='javac -J-Dfile.encoding=UTF-8'
+alias java='java -Dfile.encoding=UTF-8'
+alias git=hub
+# ローカルのnode_modulesからの利用
+alias npm-exec='PATH=$(npm bin):$PATH'
+alias gh='ghq list -p | pe cd'
+alias ll='ls -alh'
+alias la='ls -a'
+alias lf='ls -F'
+
+# ローカルの設定ファイルがあればそれを読み込み
+if [ -f "$HOME/.zshrc.local" ]; then
+  source "$HOME/.zshrc.local"
+fi
+
+# rbenv
+eval "$(rbenv init -)"

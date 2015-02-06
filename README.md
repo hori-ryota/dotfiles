@@ -17,8 +17,8 @@ todo
 
 - [x] zsh
     + [x] zprezto
-    + [ ] exports config
-    + [ ] custom zshrc (alias etc...)
+    + [x] exports config
+    + [x] custom zshrc (alias etc...)
 - [ ] Vim
     + [ ] coffeescript
     + [ ] cpp

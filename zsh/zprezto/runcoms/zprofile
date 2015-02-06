@@ -75,3 +75,14 @@ TMPPREFIX="${TMPDIR%/}/zsh"
 if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
+
+
+#######################################################################
+#                            Custom Config                            #
+#######################################################################
+
+export DOTFILES=$HOME/.dotfiles
+export LOCAL_ZSH_ROOT_PATH=$DOTFILES/zsh
+export LOCAL_ZSH_MODULE_PATH=${LOCAL_ZSH_ROOT_PATH}/modules
+
+source "${LOCAL_ZSH_MODULE_PATH}/export.zsh"
