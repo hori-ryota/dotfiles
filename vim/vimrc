@@ -41,7 +41,7 @@ set ambiwidth=double
 
 set textwidth=0
 if v:version >= 703
-  set colorcolumn=80
+    set colorcolumn=80
 endif
 set foldmethod=marker
 "}}}
@@ -58,13 +58,13 @@ let g:local_undo_dir = s:script_dir . '/undo'
 
 " create necessary directories
 if !filewritable(g:local_backup_dir)
-  call mkdir(g:local_backup_dir, "p")
+    call mkdir(g:local_backup_dir, "p")
 endif
 if !filewritable(g:local_swap_dir)
-  call mkdir(g:local_swap_dir, "p")
+    call mkdir(g:local_swap_dir, "p")
 endif
 if !filewritable(g:local_undo_dir)
-  call mkdir(g:local_undo_dir, "p")
+    call mkdir(g:local_undo_dir, "p")
 endif
 
 " スワップ用のディレクトリ
@@ -122,7 +122,7 @@ set visualbell t_vb=        " No beep sound
 "        Example: Using CTRL-X on "0x100" results in "0x0ff"
 set nrformats-=octal,hex,alpha
 if has("mouse") " Enable the use of the mouse in all modes
-  set mouse=a
+    set mouse=a
 endif
 
 " フォーカスが移った場合に常にredraw
@@ -147,27 +147,27 @@ syntax on
 
 " 行末にスペースをハイライト
 function! WhiteSpaceEOL()
-  highlight WhiteSpaceEOL ctermbg=red guibg=red
+    highlight WhiteSpaceEOL ctermbg=red guibg=red
 endfunction
 
 " 全角文字をハイライト
 function! ZenkakuSpace()
-  highlight ZenkakuSpace ctermbg=green guibg=green
+    highlight ZenkakuSpace ctermbg=green guibg=green
 endfunction
 
 if has('syntax')
-  augroup WhiteSpaceEol
-    autocmd!
-    autocmd ColorScheme       * call WhiteSpaceEOL()
-    autocmd VimEnter,WinEnter * match WhiteSpaceEOL /\s\+$/
-  augroup END
-  call WhiteSpaceEOL()
-  augroup ZenkakuSpace
-    autocmd!
-    autocmd ColorScheme       * call ZenkakuSpace()
-    autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
-  augroup END
-  call ZenkakuSpace()
+    augroup WhiteSpaceEol
+        autocmd!
+        autocmd ColorScheme       * call WhiteSpaceEOL()
+        autocmd VimEnter,WinEnter * match WhiteSpaceEOL /\s\+$/
+    augroup END
+    call WhiteSpaceEOL()
+    augroup ZenkakuSpace
+        autocmd!
+        autocmd ColorScheme       * call ZenkakuSpace()
+        autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
+    augroup END
+    call ZenkakuSpace()
 endif
 "}}}
 
