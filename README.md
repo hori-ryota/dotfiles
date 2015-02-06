@@ -48,7 +48,7 @@ todo
     + [ ] python
     + [x] scss
     + [x] vim
-    + [ ] CtrlP ignore options
+    + [ ] CtrlP custom ignore doesn't work... (´・ω・｀)
 - [x] tmux
 - [x] git
 - [ ] Brewfile
@@ -85,3 +85,4 @@ todo
 - thinca/vim-ref
 - tpope/vim-repeat
 - mattn/gist-vim
+- haya14busa/vim-migemo (For CtrlP)
