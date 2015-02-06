@@ -33,7 +33,7 @@ todo
     + [x] scss
     + [x] vim
 - [x] tmux
-- [ ] git
+- [x] git
 - [ ] Brewfile
 
 

@@ -12,3 +12,7 @@ ln -s $ZDOTDIR/zprezto/runcoms/zshrc $HOME/.zshrc
 
 # tmux
 ln -s $BASEDIR/tmux.conf $HOME/.tmux.conf
+
+# git
+ln -s $BASEDIR/gitconfig $HOME/.gitconfig
+ln -s $BASEDIR/gitignore $HOME/.gitignore_global
