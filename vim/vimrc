@@ -1,0 +1,234 @@
+let s:script_dir = expand('<sfile>:p:h')
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               General Config                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
+set clipboard+=unnamed " Yanks go on clipboard instead
+let mapleader = ','
+nnoremap <space>v :<C-u>edit $HOME/.vimrc<CR> " Open vimrc
+nnoremap <space>s :<C-u>source $HOME/.vimrc<CR> " Reflect vimrc
+" Character encoding
+set encoding=utf-8
+set termencoding=utf-8
+set fileencoding=utf-8
+" Automatic end-of-file format detection
+set fileformats=unix,mac,dos
+"}}}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               Editor Config                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{ 
+set autoindent
+set smartindent
+set wrap
+
+set tabstop=2
+set expandtab
+set nosmarttab
+set softtabstop=0
+set shiftwidth=2
+set shiftround
+
+set infercase
+set formatoptions+=n
+set wrapmargin=0
+set virtualedit=block
+set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«,nbsp:%
+set nolist
+set ambiwidth=double
+
+set textwidth=0
+if v:version >= 703
+  set colorcolumn=80
+endif
+set foldmethod=marker
+"}}}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              Undo/Swap Config                              "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"{{{
+" path
+let g:local_backup_dir = s:script_dir . '/backup'
+let g:local_swap_dir = s:script_dir . '/swap'
+let g:local_undo_dir = s:script_dir . '/undo'
+
+" create necessary directories
+if !filewritable(g:local_backup_dir)
+  call mkdir(g:local_backup_dir, "p")
+endif
+if !filewritable(g:local_swap_dir)
+  call mkdir(g:local_swap_dir, "p")
+endif
+if !filewritable(g:local_undo_dir)
+  call mkdir(g:local_undo_dir, "p")
+endif
+
+" スワップ用のディレクトリ
+let &directory = g:local_swap_dir
+let &backupdir = g:local_backup_dir
+
+set backup
+set writebackup
+
+"" Persistent undo
+if has('persistent_undo')
+    let &undodir = g:local_undo_dir
+    set undofile
+endif
+"
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                                 UI Config                                  "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"{{{
+set ruler                   " show the cursor position all the time
+" highlight cursor line in current window
+augroup cch
+    autocmd!
+    autocmd WinLeave * set nocursorline
+    autocmd WinEnter,BufRead * set cursorline
+augroup END
+highlight clear CursorLine
+highlight CursorLine ctermbg=black
+
+set showcmd                     " コマンドの一部を画面下に表示
+set number                      " 行番号の表示
+set nolazyredraw                " don't redraw while executing macros
+set wildmenu                    " turn on wild menu
+set wildmode=list:longest,full
+set cmdheight=1                 " コマンドライン行を1行に
+" カーソルを左右させるキーのうち、ここで指定したものでは、
+" カーソルが行頭／末にあるときに前／次行に移動できるようになる。
+set whichwrap=b,s,h,l,<,>,[,]   
+" インサートモードですべて消す
+set backspace=indent,eol,start
+set shortmess=filtoOA           " shorten messages
+set report=0                    " tell us about changes
+set nostartofline               " don't jump to the start of line when scrolling
+set showmatch                   " brackets/braces that is
+set matchtime=3                 " duration to show matching brace (1/10 sec)
+set laststatus=2                " The last window always have status line
+set scrolloff=5             " Keep at least 5 lines above and below the cursor
+set visualbell t_vb=        " No beep sound
+" Treat octal and hexadecimal number as decimal number
+" octal  Numbers that start with a zero will be considered to be octal
+"        Example: Using CTRL-A on "007" results in "010"
+" hex    Numbers starting with "0x" or "0X" will be considered to be hexadecimal
+"        Example: Using CTRL-X on "0x100" results in "0x0ff"
+set nrformats-=octal,hex,alpha
+if has("mouse") " Enable the use of the mouse in all modes
+  set mouse=a
+endif
+
+" フォーカスが移った場合に常にredraw
+augroup Redraw
+    autocmd!
+    autocmd FocusGained * redraw!
+augroup END
+"}}}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                          Window operation Config                           "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 横分割時は下へ､ 縦分割時は右へ新しいウィンドウが開くようにする
+set splitbelow
+set splitright
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              Highlight Config                              "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
+syntax on
+
+" 行末にスペースをハイライト
+function! WhiteSpaceEOL()
+  highlight WhiteSpaceEOL ctermbg=red guibg=red
+endfunction
+
+" 全角文字をハイライト
+function! ZenkakuSpace()
+  highlight ZenkakuSpace ctermbg=green guibg=green
+endfunction
+
+if has('syntax')
+  augroup WhiteSpaceEol
+    autocmd!
+    autocmd ColorScheme       * call WhiteSpaceEOL()
+    autocmd VimEnter,WinEnter * match WhiteSpaceEOL /\s\+$/
+  augroup END
+  call WhiteSpaceEOL()
+  augroup ZenkakuSpace
+    autocmd!
+    autocmd ColorScheme       * call ZenkakuSpace()
+    autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
+  augroup END
+  call ZenkakuSpace()
+endif
+"}}}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               Search Config                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{
+"" Search
+set history=100             " keep 100 lines of command line histories
+set ignorecase
+set smartcase
+set wrapscan                " Searches wrap around the end of the file
+" While typing a search command, show where the pattern matches
+set incsearch
+set hlsearch                " highlighting matches
+" turn off highlight by Esc x 2
+nmap <ESC><ESC> :<C-u>nohlsearch<CR><ESC>
+augroup Search
+    autocmd!
+    autocmd QuickFixCmdPost *grep cwindow
+augroup END
+"}}}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              Filetype Config                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"" ftdetects
+augroup FileTypeDetect "{{{
+    autocmd!
+    autocmd BufRead,BufNewFile *.java                   setfiletype java
+    autocmd BufRead,BufNewFile Capfile,Gemfile,Rakefile setfiletype ruby
+    autocmd BufRead,BufNewFile *.json,*.gyp,*.js        setfiletype javascript
+    autocmd BufRead,BufNewFile *.{md,mdwn,mkd,mkdn,mark*,txt,text} setfiletype markdown
+    autocmd BufRead,BufNewFile *.PL,*.psgi,*.t          setfiletype perl
+    autocmd BufRead,BufNewFile .tmux.conf,tmux.conf     setfiletype tmux
+    autocmd BufRead,BufNewFile *.jade                   setfiletype jade
+    autocmd BufRead,BufNewFile *.less                   setfiletype less
+    autocmd BufRead,BufNewFile *.coffee                 setfiletype coffee
+    autocmd BufRead,BufNewFile *.hatena                 setfiletype markdown
+    autocmd BufRead,BufNewFile *.pp                     setfiletype puppet
+    autocmd BufRead,BufNewFile *.scss                   setfiletype scss
+    autocmd BufRead,BufNewFile *.py                     setfiletype python
+    autocmd BufRead,BufNewFile *.html                   setfiletype html
+    autocmd BufRead,BufNewFile *.go                     setfiletype go
+    autocmd BufRead,BufNewFile *.tex                    setfiletype tex
+    autocmd BufWinEnter,BufNewFile *_spec.rb            setfiletype ruby.rspec
+augroup END
+"}}}
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                              vim-plug Config                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+source $HOME/.vim/plugged_list.vim
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"                               Other scripts                                "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set runtimepath+=$HOME/.vim/
+runtime! conf.d/common/*.vim
+runtime! conf.d/filetypes/*.vim
+runtime! conf.d/plugins/*.vim
+
+" vim: set filetype=vim :
