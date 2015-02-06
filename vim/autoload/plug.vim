@@ -1,1 +1,1 @@
-vim/vim-plug/plug.vim
+/Users/hori/.dotfiles/vim/vim-plug/plug.vim
