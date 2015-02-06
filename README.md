@@ -1,6 +1,11 @@
 Dotfiles
 ========
-Dotfiles for Mac.
+Dotfiles for Mac using zsh and Vim.
+
+
+Requirement
+-----------
+- Homebrew
 
 
 Install
@@ -10,6 +15,7 @@ git clone https://github.com/hori-ryota/dotfiles.git ~/.dotfiles --recursive
 cd ~/.dotfiles
 ./install.sh
 ```
+
 
 Repositories I referred to 
 --------------------------
@@ -42,6 +48,7 @@ todo
     + [ ] python
     + [x] scss
     + [x] vim
+    + [ ] CtrlP ignore options
 - [x] tmux
 - [x] git
 - [ ] Brewfile
