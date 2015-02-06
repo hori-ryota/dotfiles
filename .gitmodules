@@ -1,3 +1,6 @@
 [submodule "zprezto"]
 	path = zprezto
 	url = git://github.com/sorin-ionescu/prezto.git
+[submodule "iTerm/color/hybrid"]
+	path = iTerm/color/hybrid
+	url = https://gist.github.com/w0ng/5e0a431531670e05dc4f
