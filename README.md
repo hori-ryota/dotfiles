@@ -5,7 +5,17 @@ Dotfiles for Mac.
 
 Install
 -------
-coming soon
+``` shell
+git clone https://github.com/hori-ryota/dotfiles.git ~/.dotfiles --recursive
+cd ~/.dotfiles
+./install.sh
+```
+
+Repositories I referred to 
+--------------------------
+- [yasuharu519/dotfiles](https://github.com/yasuharu519/dotfiles)
+- [Layzie/dotfiles](https://github.com/Layzie/dotfiles)
+- [suguru/dotfiles](https://github.com/suguru/dotfiles)
 
 
 todo
