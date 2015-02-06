@@ -1,0 +1,8 @@
+# vim
+vim/backup/*
+vim/plugged/*
+vim/swap/*
+vim/undo/*
+
+# font
+font/*
