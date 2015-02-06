@@ -32,7 +32,7 @@ todo
     + [ ] python
     + [x] scss
     + [x] vim
-- [ ] tmux
+- [x] tmux
 - [ ] git
 - [ ] Brewfile
 

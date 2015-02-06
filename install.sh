@@ -9,3 +9,6 @@ ln -s $ZDOTDIR/zprezto/runcoms/zpreztorc $HOME/.zpreztorc
 ln -s $ZDOTDIR/zprezto/runcoms/zprofile $HOME/.zprofile
 ln -s $ZDOTDIR/zprezto/runcoms/zshenv $HOME/.zshenv
 ln -s $ZDOTDIR/zprezto/runcoms/zshrc $HOME/.zshrc
+
+# tmux
+ln -s $BASEDIR/tmux.conf $HOME/.tmux.conf
