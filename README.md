@@ -16,6 +16,14 @@ cd ~/.dotfiles
 ./install.sh
 ```
 
+### Optional
+
+Install apps using Homebrew.
+``` shell
+cd ~/.dotfiles
+./brew.sh
+```
+
 
 Repositories I referred to 
 --------------------------
@@ -51,31 +59,20 @@ todo
     + [ ] CtrlP custom ignore doesn't work... (´・ω・｀)
 - [x] tmux
 - [x] git
-- [ ] Brewfile
+- [x] Homebrew
+- [ ] Alfred
 
 
 ### Create docs or script for install
 
-- [ ] 1Password
 - [ ] Alfred
-- [ ] Chrome
-- [ ] Dropbox
-- [ ] Google IME
 - [ ] Growl
-- [ ] HomeBrew
-    + [ ] cask
 - [ ] Karabiner
 - [ ] Mac Preferences
-- [ ] Path Finder
 - [ ] PopClip
 - [ ] ShiftIt
-- [ ] Skitch
-- [ ] Todoist
 - [ ] Tunnelblick
 - [ ] Xcode
-- [ ] nodebrew
-- [ ] peco
-- [ ] rbenv
 
 
 ### Considering Plugins
