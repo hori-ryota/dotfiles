@@ -9,10 +9,12 @@ brew upgrade
 # General
 brew install zsh
 brew install zsh-completions
-brew install tree
+
+brew install ack
 brew install curl
-brew install wget
 brew install tmux
+brew install tree
+brew install wget
 
 # Version control system
 brew install git
@@ -39,51 +41,60 @@ brew install ruby-build
 ##########
 
 # Install cask
-brew install caskroom/cask/brew-cask
+brew install --force caskroom/cask/brew-cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
+# clean
+brew cask cleanup
+
 # General
-brew cask install iterm2
-brew cask install 1password
+brew cask install --force iterm2
+brew cask install --force 1password
 
 # Launcher
-brew cask install alfred
+brew cask install --force alfred
 
 # Browser
-brew cask install google-chrome
+brew cask install --force google-chrome
 
 # IME
-brew cask install google-japanese-ime
+brew cask install --force google-japanese-ime
 
 # Fast Keywords Concatenator
-brew cask install karabiner
+brew cask install --force karabiner
 
 # Replace finder
-brew cask install path-finder
+brew cask install --force path-finder
 
 # Window manager
-brew cask install shiftit
+brew cask install --force shiftit
 
 # Document manager
-brew cask install dash
+brew cask install --force dash
 
 # Todo manager
-brew cask install todoist
+brew cask install --force todoist
 
 # Chat
-brew cask install hipchat
+brew cask install --force goofy
+brew cask install --force hipchat
+brew cask install --force skype
 
 # Virtual environment
-brew cask install virtualbox
-brew cask install genymotion
+brew cask install --force virtualbox
+brew cask install --force genymotion
 
 # Image optimization
-brew cask install imageoptim
+brew cask install --force imageoptim
 
 # Others
-brew cask install dropbox
-brew cask install sourcetree
-brew cask install send-to-kindle
+brew cask install --force caffeine
+brew cask install --force dropbox
+brew cask install --force evernote
+brew cask install --force send-to-kindle
+brew cask install --force skitch
+brew cask install --force sourcetree
+brew cask install --force vagrant
 
 
 ###########################
@@ -91,15 +102,11 @@ brew cask install send-to-kindle
 ###########################
 
 # Active Users
-# Caffeine
-# Evernote
 # Growl
 # Line
 # Pocket
 # PopClip
 # Reeder 2
-# Skitch
-# Skype
 # Visits
 # Xcode
 # 夜フクロウ
