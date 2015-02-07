@@ -32,4 +32,4 @@ if [ -f "$HOME/.zshrc.local" ]; then
 fi
 
 # rbenv
-eval "$(rbenv init -)"
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
