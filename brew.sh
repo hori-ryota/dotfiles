@@ -6,9 +6,6 @@
 brew update
 brew upgrade
 
-# Requirement
-brew install cmake
-
 # General
 brew install zsh
 brew install zsh-completions
