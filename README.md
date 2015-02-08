@@ -57,6 +57,7 @@ todo
     + [x] scss
     + [x] vim
     + [ ] CtrlP custom ignore doesn't work... (´・ω・｀)
+    + [ ] Font for powerline
 - [x] tmux
 - [x] git
 - [x] Homebrew

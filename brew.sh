@@ -23,6 +23,7 @@ brew install hub
 brew install python
 brew install lua
 brew install vim --with-lua
+brew install fontforge --with-python
 
 # tmux
 brew install tmux
