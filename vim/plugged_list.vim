@@ -7,7 +7,7 @@ call plug#begin('~/.vim/plugged')
 """""""""""
 "  crtlp  "
 """""""""""
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 
 """"""""""""""""
 "  Status bar  "
