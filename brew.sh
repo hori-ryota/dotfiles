@@ -12,7 +12,6 @@ brew install zsh-completions
 
 brew install ack
 brew install curl
-brew install tmux
 brew install tree
 brew install wget
 
@@ -24,6 +23,10 @@ brew install hub
 brew install python
 brew install lua
 brew install vim --with-lua
+
+# tmux
+brew install tmux
+brew install reattach-to-user-namespace
 
 # For development
 ## golang
