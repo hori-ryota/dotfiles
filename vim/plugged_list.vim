@@ -59,7 +59,7 @@ Plug 't9md/vim-choosewin', {
 " edit surround easy
 Plug 'tpope/vim-surround'
 " Aligning Text
-Plug 'godlygeek/tabular'
+Plug 'junegunn/vim-easy-align'
 " comment stuff out
 Plug 'tpope/vim-commentary'
 " reuse register
@@ -146,6 +146,11 @@ Plug 'mattn/emmet-vim', {
 """"""""""""""
 "  Markdown  "
 """"""""""""""
+" Depended by vim-markdown
+Plug 'godlygeek/tabular', {
+            \ 'for': 'markdown'
+            \ }
+
 Plug 'rcmdnk/vim-markdown', {
             \ 'for': 'markdown'
             \ }
