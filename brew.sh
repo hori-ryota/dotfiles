@@ -45,7 +45,7 @@ brew install ruby-build
 ##########
 
 # Install cask
-brew install --force caskroom/cask/brew-cask
+brew install caskroom/cask/brew-cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # clean
