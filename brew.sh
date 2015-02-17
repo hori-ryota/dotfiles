@@ -71,6 +71,7 @@ brew cask install --force karabiner
 brew cask install --force path-finder
 
 # Window manager
+brew cask install --force xquartz
 brew cask install --force shiftit
 
 # Document manager
