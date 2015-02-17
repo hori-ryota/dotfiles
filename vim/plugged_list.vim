@@ -30,7 +30,7 @@ Plug 'w0ng/vim-hybrid'
 "  YouCompleteMe  "
 """""""""""""""""""
 Plug 'Valloric/YouCompleteMe', {
-            \ 'do': 'brew install cmake && ./install.sh --clang-completer'
+            \ 'do': 'brew install cmake; ./install.sh --clang-completer'
             \ }
 
 """""""""""""
