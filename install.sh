@@ -20,6 +20,9 @@ ln -ins "$VDOTDIR"/vimrc "$HOME"/.vimrc
 # tmux
 ln -ins "$BASEDIR"/tmux.conf "$HOME"/.tmux.conf
 
+# tmuxinator
+ln -ins "$BASEDIR"/tmuxinator "$HOME"/.tmuxinator
+
 # git
 ln -ins "$BASEDIR"/gitconfig "$HOME"/.gitconfig
 ln -ins "$BASEDIR"/gitignore "$HOME"/.gitignore_global
