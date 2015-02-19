@@ -9,3 +9,6 @@ font/*
 
 # alfred
 alfred/Alfred.alfredpreferences/workflows/*
+
+# tmuxinator
+tmuxinator/*
