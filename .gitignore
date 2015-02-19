@@ -6,3 +6,6 @@ vim/undo/*
 
 # font
 font/*
+
+# alfred
+alfred/Alfred.alfredpreferences/workflows/*
