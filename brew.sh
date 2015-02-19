@@ -100,6 +100,7 @@ brew cask install --force send-to-kindle
 brew cask install --force skitch
 brew cask install --force sourcetree
 brew cask install --force vagrant
+brew cask install --force myphonedesktop
 
 
 ###########################
