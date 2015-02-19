@@ -62,6 +62,7 @@ todo
 - [x] git
 - [x] Homebrew
 - [ ] Alfred
+    + [ ] initialize script
 
 
 ### Create docs or script for install
