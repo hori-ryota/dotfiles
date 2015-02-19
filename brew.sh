@@ -92,6 +92,22 @@ brew cask install --force genymotion
 # Image optimization
 brew cask install --force imageoptim
 
+# For QuickLook
+## For no filename extension
+brew cask install --force qlstephen
+## For markdown
+brew cask install --force qlmarkdown
+## For json
+brew cask install --force quicklook-json
+## For csv
+brew cask install --force quicklook-csv
+## For zip
+brew cask install --force betterzipql
+## For .pkg
+brew cask install --force suspicious-package
+## For code highlight
+brew cask install --force qlcolorcode
+
 # Others
 brew cask install --force caffeine
 brew cask install --force dropbox
