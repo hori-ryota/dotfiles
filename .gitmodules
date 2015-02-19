@@ -37,9 +37,6 @@
 [submodule "alfred/workflows/alfred-qiita-workflow"]
 	path = alfred/workflows/alfred-qiita-workflow
 	url = https://github.com/uetchy/alfred-qiita-workflow
-[submodule "alfred/workflows/alfred-kaomoji-workflow"]
-	path = alfred/workflows/alfred-kaomoji-workflow
-	url = https://github.com/turusuke/alfred-kaomoji-workflow
 [submodule "alfred/workflows/alfred-codic-workflow"]
 	path = alfred/workflows/alfred-codic-workflow
 	url = https://github.com/ton1517/alfred-codic-workflow
