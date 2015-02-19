@@ -1,14 +1,14 @@
 # vim
-vim/backup/*
-vim/plugged/*
-vim/swap/*
-vim/undo/*
+vim/backup/
+vim/plugged/
+vim/swap/
+vim/undo/
 
 # font
-font/*
+font/
 
 # alfred
-alfred/Alfred.alfredpreferences/workflows/*
+alfred/Alfred.alfredpreferences/workflows/
 
 # tmuxinator
-tmuxinator/*
+tmuxinator/
