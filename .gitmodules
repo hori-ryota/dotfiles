@@ -4,3 +4,48 @@
 [submodule "iTerm/color/hybrid"]
 	path = iTerm/color/hybrid
 	url = https://gist.github.com/w0ng/5e0a431531670e05dc4f
+[submodule "alfred/workflows/alfred-youtube-workflow"]
+	path = alfred/workflows/alfred-youtube-workflow
+	url = https://github.com/simonbs/alfred-youtube-workflow
+[submodule "alfred/workflows/alfred-encode-decode-workflow"]
+	path = alfred/workflows/alfred-encode-decode-workflow
+	url = https://github.com/willfarrell/alfred-encode-decode-workflow
+[submodule "alfred/workflows/alfred-process-killer"]
+	path = alfred/workflows/alfred-process-killer
+	url = https://github.com/ngreenstein/alfred-process-killer
+[submodule "alfred/workflows/alfred-pkgman-workflow"]
+	path = alfred/workflows/alfred-pkgman-workflow
+	url = https://github.com/willfarrell/alfred-pkgman-workflow
+[submodule "alfred/workflows/Alfred-AirDrop-Workflow"]
+	path = alfred/workflows/Alfred-AirDrop-Workflow
+	url = https://github.com/paulheyer/Alfred-AirDrop-Workflow
+[submodule "alfred/workflows/alfred2-workflow-appstore"]
+	path = alfred/workflows/alfred2-workflow-appstore
+	url = https://github.com/yisiqi/alfred2-workflow-appstore
+[submodule "alfred/workflows/alfred-dash-workflow"]
+	path = alfred/workflows/alfred-dash-workflow
+	url = https://github.com/willfarrell/alfred-dash-workflow
+[submodule "alfred/workflows/alfred-stackoverflow"]
+	path = alfred/workflows/alfred-stackoverflow
+	url = https://github.com/deanishe/alfred-stackoverflow
+[submodule "alfred/workflows/alfred2-font-awesome-workflow"]
+	path = alfred/workflows/alfred2-font-awesome-workflow
+	url = https://github.com/ruedap/alfred2-font-awesome-workflow
+[submodule "alfred/workflows/alfred-caniuse-workflow"]
+	path = alfred/workflows/alfred-caniuse-workflow
+	url = https://github.com/willfarrell/alfred-caniuse-workflow
+[submodule "alfred/workflows/alfred-qiita-workflow"]
+	path = alfred/workflows/alfred-qiita-workflow
+	url = https://github.com/uetchy/alfred-qiita-workflow
+[submodule "alfred/workflows/alfred-kaomoji-workflow"]
+	path = alfred/workflows/alfred-kaomoji-workflow
+	url = https://github.com/turusuke/alfred-kaomoji-workflow
+[submodule "alfred/workflows/alfred-codic-workflow"]
+	path = alfred/workflows/alfred-codic-workflow
+	url = https://github.com/ton1517/alfred-codic-workflow
+[submodule "alfred/workflows/alfred-lgtmin-workflow"]
+	path = alfred/workflows/alfred-lgtmin-workflow
+	url = https://github.com/geckotang/alfred-lgtmin-workflow
+[submodule "alfred/workflows/todoist-alfred-workflow"]
+	path = alfred/workflows/todoist-alfred-workflow
+	url = https://github.com/160grad/todoist-alfred-workflow
