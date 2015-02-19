@@ -7,5 +7,6 @@
 	tags = tag -l
 	remotes = remote -v
 	delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
-        n = now --all --stat
-        pbcopy = !printf "$1" | pbcopy
+  n = now --all --stat
+  pbcopy = !printf "$1" | pbcopy
+  pull-master = !git checkout master && git fetch --prune && git merge origin/master
