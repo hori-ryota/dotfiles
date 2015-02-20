@@ -100,6 +100,9 @@ Plug 'marijnh/tern_for_vim', {
 Plug 'jiangmiao/simple-javascript-indenter', {
             \ 'for': 'javascript'
             \ }
+Plug 'heavenshell/vim-jsdoc', {
+            \ 'for': 'javascript'
+            \ }
 Plug 'briancollins/vim-jst', {
             \ 'for': ['jst', 'ejs']
             \ }
