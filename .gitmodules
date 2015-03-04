@@ -40,9 +40,15 @@
 [submodule "alfred/workflows/alfred-codic-workflow"]
 	path = alfred/workflows/alfred-codic-workflow
 	url = https://github.com/ton1517/alfred-codic-workflow
-[submodule "alfred/workflows/alfred-lgtmin-workflow"]
-	path = alfred/workflows/alfred-lgtmin-workflow
-	url = https://github.com/geckotang/alfred-lgtmin-workflow
 [submodule "alfred/workflows/todoist-alfred-workflow"]
 	path = alfred/workflows/todoist-alfred-workflow
 	url = https://github.com/160grad/todoist-alfred-workflow
+[submodule "alfred/workflows/alfred2-google-workflow"]
+	path = alfred/workflows/alfred2-google-workflow
+	url = git@github.com:zhaocai/alfred2-google-workflow.git
+[submodule "alfred/workflows/alfred2-hipchat-emoticons-workflow"]
+	path = alfred/workflows/alfred2-hipchat-emoticons-workflow
+	url = git@github.com:aortbals/alfred2-hipchat-emoticons-workflow.git
+[submodule "alfred/workflows/emoji-workflow"]
+	path = alfred/workflows/emoji-workflow
+	url = git://github.com/1000ch/emoji-workflow.git
