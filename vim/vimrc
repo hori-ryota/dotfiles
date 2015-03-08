@@ -211,6 +211,7 @@ augroup FileTypeDetect "{{{
     autocmd BufRead,BufNewFile *.hatena                 setfiletype markdown
     autocmd BufRead,BufNewFile *.pp                     setfiletype puppet
     autocmd BufRead,BufNewFile *.scss                   setfiletype scss
+    autocmd BufRead,BufNewFile *.styl,*.stylus          setfiletype stylus
     autocmd BufRead,BufNewFile *.py                     setfiletype python
     autocmd BufRead,BufNewFile *.html                   setfiletype html
     autocmd BufRead,BufNewFile *.go                     setfiletype go

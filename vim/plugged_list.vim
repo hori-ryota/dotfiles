@@ -143,6 +143,13 @@ Plug 'mattn/emmet-vim', {
             \ 'for': ['html', 'ejs', 'erb']
             \ }
 
+""""""""""""
+"  Stylus  "
+""""""""""""
+Plug 'wavded/vim-stylus', {
+            \ 'for': 'stylus'
+            \}
+
 """"""""""""""
 "  Markdown  "
 """"""""""""""
