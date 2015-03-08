@@ -1,5 +1,5 @@
 function! s:local_scss()
-    setlocal ts=4 sts=4 sw=4
+    setlocal ts=4 sts=0 sw=4
 endfunction
 
 augroup settings_scss
