@@ -111,13 +111,16 @@ brew cask install --force qlcolorcode
 # Website link checker
 brew cask install --force integrity
 
+# Kindle
+brew cask install --force kindle
+brew cask install --force send-to-kindle
+
 # Others
 brew cask install --force appcleaner
 brew cask install --force caffeine
 brew cask install --force dropbox
 brew cask install --force evernote
 brew cask install --force myphonedesktop
-brew cask install --force send-to-kindle
 brew cask install --force skitch
 brew cask install --force sourcetree
 brew cask install --force vagrant
