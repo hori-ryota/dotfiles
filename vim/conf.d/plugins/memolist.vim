@@ -8,7 +8,7 @@ let g:memolist_memo_date = "%Y-%m-%d %H:%M"
 "" let g:memolist_memo_date = "%D %T"
 
 " tags prompt (default 0)
-let g:memolist_prompt_tags = 1
+"" let g:memolist_prompt_tags = 1
 
 " categories prompt (default 0)
 let g:memolist_prompt_categories = 1
@@ -35,7 +35,7 @@ let g:memolist_qfixgrep = 1
 let g:memolist_template_dir_path = "~/.vim/template/memolist"
 
 " remove filename prefix (default 0)
-let g:memolist_filename_prefix_none = 1
+"" let g:memolist_filename_prefix_none = 1
 
 " use various Ex commands (default '')
 let g:memolist_ex_cmd = 'CtrlP'
