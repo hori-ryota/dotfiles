@@ -89,6 +89,9 @@ brew cask install --force skype
 brew cask install --force virtualbox
 brew cask install --force genymotion
 
+# Orchestration tools
+brew cask install --force terraform
+
 # Image optimization
 brew cask install --force imageoptim
 
