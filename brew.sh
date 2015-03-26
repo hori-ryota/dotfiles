@@ -84,6 +84,7 @@ brew cask install --force todoist
 brew cask install --force goofy
 brew cask install --force hipchat
 brew cask install --force skype
+brew cask install --force slack
 
 # Virtual environment
 brew cask install --force virtualbox
