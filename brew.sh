@@ -38,6 +38,8 @@ brew install phantomjs
 ## ruby
 brew install rbenv
 brew install ruby-build
+## Docker
+brew install boot2docker
 
 
 ##########
