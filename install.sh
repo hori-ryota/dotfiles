@@ -38,3 +38,6 @@ if ! grep /usr/local/bin/zsh /etc/shells > /dev/null 2>&1; then
   sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
   chsh -s /usr/local/bin/zsh
 fi
+
+# install fonts for powerline
+# [Zsh - AntigenでPreztoを導入 - Qiita](http://qiita.com/iri/items/2f9a39b9c47320f4c225)
