@@ -9,6 +9,7 @@ font/
 
 # alfred
 alfred/Alfred.alfredpreferences/workflows/
+alfred/Alfred.alfredpreferences/preferences/local/
 
 # tmuxinator
 tmuxinator/
