@@ -113,6 +113,13 @@ Plug 'kchmck/vim-coffee-script', {
             \ 'for': 'coffee'
             \ }
 
+""""""""""""
+"  go  "
+""""""""""""
+Plug 'vim-jp/vim-go-extra', {
+            \ 'for': 'go'
+            \ }
+
 """"""""""
 "  Ruby  "
 """"""""""

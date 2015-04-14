@@ -32,6 +32,7 @@ brew install reattach-to-user-namespace
 # For development
 ## golang
 brew install go
+brew install hg
 ## nodejs
 brew install nodebrew
 brew install phantomjs

@@ -12,3 +12,7 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # tmuxinator
 export EDITOR='vim'
+
+# go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
