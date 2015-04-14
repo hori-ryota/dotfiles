@@ -40,6 +40,9 @@ brew install rbenv
 brew install ruby-build
 ## Docker
 brew install boot2docker
+# Orchestration tools
+brew install terraform
+brew install ansible
 
 
 ##########
@@ -91,9 +94,6 @@ brew cask install --force slack
 # Virtual environment
 brew cask install --force virtualbox
 brew cask install --force genymotion
-
-# Orchestration tools
-brew cask install --force terraform
 
 # Image optimization
 brew cask install --force imageoptim
