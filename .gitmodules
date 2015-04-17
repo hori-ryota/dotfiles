@@ -1,6 +1,6 @@
 [submodule "zprezto"]
 	path = zprezto
-	url = git://github.com/sorin-ionescu/prezto.git
+	url = https://github.com/sorin-ionescu/prezto
 [submodule "iTerm/color/hybrid"]
 	path = iTerm/color/hybrid
 	url = https://gist.github.com/w0ng/5e0a431531670e05dc4f
@@ -45,10 +45,10 @@
 	url = https://github.com/160grad/todoist-alfred-workflow
 [submodule "alfred/workflows/alfred2-google-workflow"]
 	path = alfred/workflows/alfred2-google-workflow
-	url = git@github.com:zhaocai/alfred2-google-workflow.git
+	url = https://github.com/zhaocai/alfred2-google-workflow
 [submodule "alfred/workflows/alfred2-hipchat-emoticons-workflow"]
 	path = alfred/workflows/alfred2-hipchat-emoticons-workflow
-	url = git@github.com:aortbals/alfred2-hipchat-emoticons-workflow.git
+	url = https://github.com/aortbals/alfred2-hipchat-emoticons-workflow
 [submodule "alfred/workflows/emoji-workflow"]
 	path = alfred/workflows/emoji-workflow
-	url = git://github.com/1000ch/emoji-workflow.git
+	url = https://github.com/1000ch/emoji-workflow
