@@ -146,13 +146,11 @@ brew cask install --force font-source-code-pro-for-powerline
 #  Install from AppStore  #
 ###########################
 
-# Active Users
 # Growl
 # Line
 # Pocket
 # PopClip
 # Reeder 2
-# Visits
 # Xcode
 # 夜フクロウ
 
