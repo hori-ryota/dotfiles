@@ -23,7 +23,6 @@ brew install hub
 brew install python
 brew install lua
 brew install vim --with-lua
-brew install fontforge --with-python
 
 # tmux
 brew install tmux
@@ -44,6 +43,7 @@ brew install boot2docker
 # Orchestration tools
 brew install terraform
 brew install ansible
+
 
 
 ##########
@@ -132,6 +132,15 @@ brew cask install --force skitch
 brew cask install --force sourcetree
 brew cask install --force vagrant
 
+#########
+# Fonts #
+#########
+
+# Add repository
+brew tap caskroom/fonts
+
+# install
+brew cask install --force font-source-code-pro-for-powerline
 
 ###########################
 #  Install from AppStore  #
