@@ -16,3 +16,6 @@ export EDITOR='vim'
 # go
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
+
+# Java
+export JAVA_HOME=`/usr/libexec/java_home -v 1.7`

@@ -182,6 +182,13 @@ Plug 'elzr/vim-json', {
             \ 'for': 'javascript'
             \ }
 
+"""""""""""""
+"  Ansible  "
+"""""""""""""
+Plug 'chase/vim-ansible-yaml', {
+            \ 'for': ['yaml', 'ansible']
+            \ }
+
 """"""""""
 "  Misc  "
 """"""""""
