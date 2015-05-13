@@ -52,3 +52,6 @@
 [submodule "alfred/workflows/emoji-workflow"]
 	path = alfred/workflows/emoji-workflow
 	url = https://github.com/1000ch/emoji-workflow
+[submodule "alfred/workflows/AlfredGoogleTranslateWorkflow"]
+	path = alfred/workflows/AlfredGoogleTranslateWorkflow
+	url = https://github.com/thomashempel/AlfredGoogleTranslateWorkflow.git
