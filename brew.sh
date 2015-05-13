@@ -89,7 +89,6 @@ brew cask install --force todoist
 # Chat
 brew cask install --force goofy
 brew cask install --force hipchat
-brew cask install --force skype
 brew cask install --force slack
 
 # Virtual environment
@@ -152,7 +151,6 @@ brew cask install --force font-source-code-pro-for-powerline
 # PopClip
 # Reeder 2
 # Xcode
-# 夜フクロウ
 
 ############
 #  Others  #
