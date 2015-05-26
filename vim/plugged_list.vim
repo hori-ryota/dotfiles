@@ -157,20 +157,20 @@ Plug 'wavded/vim-stylus', {
 """"""""""""""
 "  Markdown  "
 """"""""""""""
-" Depended by vim-markdown
 Plug 'godlygeek/tabular', {
             \ 'for': 'markdown'
             \ }
-
-Plug 'rcmdnk/vim-markdown', {
+            \ |
+            \ Plug 'rcmdnk/vim-markdown', {
             \ 'for': 'markdown'
             \ }
-" Depended by previm
+
+" Preview
 Plug 'tyru/open-browser.vim', {
             \ 'for': 'markdown'
             \ }
-" Preview
-Plug 'kannokanno/previm', {
+            \ |
+            \ Plug 'kannokanno/previm', {
             \ 'for': 'markdown'
             \ }
 
@@ -203,10 +203,8 @@ Plug 'majutsushi/tagbar', {
 Plug 't9md/vim-quickhl', {
             \ 'on': '<Plug>(quickhl-'
             \ }
-" Depended by memolist
-Plug 'fuenor/qfixgrep'
 " memo
-Plug 'glidenote/memolist.vim'
+Plug 'fuenor/qfixgrep' | Plug 'glidenote/memolist.vim'
 " concentration mode
 Plug 'junegunn/goyo.vim', {
             \ 'on': 'Goyo'
