@@ -6,9 +6,12 @@ let s:script_dir = expand('<sfile>:p:h')
 "{{{
 set clipboard+=unnamed " Yanks go on clipboard instead
 let mapleader = ','
-nnoremap <space>v :<C-u>edit $HOME/.vimrc<CR> " Open vimrc
-nnoremap <space>s :<C-u>source $HOME/.vimrc<CR> " Reflect vimrc
-nnoremap <space>d :<C-u>tabnew $HOME/.dotfiles/vim/vimrc<CR> "Open dotfiles vimrc 
+" Open vimrc
+nnoremap <space>v :<C-u>tabnew $HOME/.dotfiles/vim/vimrc<CR>:<C-u>CD<CR>
+" Reflect vimrc
+nnoremap <space>s :<C-u>source $HOME/.vimrc<CR>
+" Open dotfiles
+nnoremap <space>d :<C-u>tabnew $HOME/.dotfiles<CR>:<C-u>CD<CR>
 " Character encoding
 set encoding=utf-8
 set termencoding=utf-8
