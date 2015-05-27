@@ -8,5 +8,7 @@ IDOTDIR=$BASEDIR/install
 . $IDOTDIR/brew.sh
 . $IDOTDIR/symlinks.sh
 . $IDOTDIR/changedefaultshell.sh
+
+. $IDOTDIR/vim-plug.sh
 . $IDOTDIR/go.sh
 . $IDOTDIR/quickLook.sh

@@ -3,6 +3,7 @@ vim/backup/
 vim/plugged/
 vim/swap/
 vim/undo/
+vim/autoload/plug.vim
 
 # font
 font/
