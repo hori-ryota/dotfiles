@@ -10,3 +10,5 @@
   n = now --all --stat
   pbcopy = !printf "$1" | pbcopy
   pull-master = !git checkout master && git fetch --prune && git merge origin/master && git delete-merged-branches
+[core]
+	editor = vim
