@@ -36,7 +36,7 @@ Plug 'Valloric/YouCompleteMe', {
 """""""""""""
 "  Snippet  "
 """""""""""""
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'honza/vim-snippets' | Plug 'SirVer/ultisnips'
 
 """""""""""
 "  Filer  "
@@ -112,9 +112,9 @@ Plug 'kchmck/vim-coffee-script', {
             \ 'for': 'coffee'
             \ }
 
-""""""""""""
+""""""""
 "  go  "
-""""""""""""
+""""""""
 Plug 'vim-jp/vim-go-extra', {
             \ 'for': 'go'
             \ }
@@ -204,9 +204,5 @@ Plug 't9md/vim-quickhl', {
             \ }
 " memo
 Plug 'fuenor/qfixgrep' | Plug 'glidenote/memolist.vim'
-" concentration mode
-Plug 'junegunn/goyo.vim', {
-            \ 'on': 'Goyo'
-            \ }
 
 call plug#end()
