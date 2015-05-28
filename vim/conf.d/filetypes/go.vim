@@ -1,10 +1,10 @@
-" vim-go
-let g:go_bin_path = expand("~/go/bin")
-let $GOROOT = '/usr/local/go'
-let $GOPATH = expand("~/go")
-
 function! s:setup_golang()
-    inoremap <C-l> fmt
+
+    set noexpandtab
+    set tabstop=4
+    set shiftwidth=4
+
+    inoremap <C-l> :Fmt
 
     nnoremap <Leader>ff :<C-u>Godoc<Space>
     nnoremap <Leader>dd :exe "Godoc"<CR>
@@ -16,6 +16,8 @@ function! s:setup_golang()
     nmap <Leader>gd <Plug>(go-def)
     nmap <Leader>gds <Plug>(go-doc-split)
     nmap <Leader>gdv <Plug>(go-doc-vertical)
+
+    autocmd BufWritePre <buffer> Fmt
 endfunction
 
 augroup settings_golang
