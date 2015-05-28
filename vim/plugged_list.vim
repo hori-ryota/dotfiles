@@ -36,8 +36,7 @@ Plug 'Valloric/YouCompleteMe', {
 """""""""""""
 "  Snippet  "
 """""""""""""
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 """""""""""
 "  Filer  "
