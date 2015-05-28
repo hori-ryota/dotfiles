@@ -30,7 +30,7 @@ Plug 'w0ng/vim-hybrid'
 "  YouCompleteMe  "
 """""""""""""""""""
 Plug 'Valloric/YouCompleteMe', {
-            \ 'do': 'brew install cmake; ./install.sh --clang-completer'
+            \ 'do': 'brew install cmake; ./install.sh --clang-completer --gocode-completer'
             \ }
 
 """""""""""""
@@ -115,7 +115,7 @@ Plug 'kchmck/vim-coffee-script', {
 """"""""
 "  go  "
 """"""""
-Plug 'vim-jp/vim-go-extra', {
+Plug 'fatih/vim-go', {
             \ 'for': 'go'
             \ }
 

@@ -1,23 +1,24 @@
 function! s:setup_golang()
 
-    set noexpandtab
-    set tabstop=4
-    set shiftwidth=4
+nmap <buffer> <leader>r <Plug>(go-run)
+nmap <buffer> <leader>b <Plug>(go-build)
+nmap <buffer> <leader>t <Plug>(go-test)
+nmap <buffer> <leader>c <Plug>(go-coverage)
 
-    inoremap <C-l> :Fmt
+nmap <buffer> <Leader>ds <Plug>(go-def-split)
+nmap <buffer> <Leader>dv <Plug>(go-def-vertical)
+nmap <buffer> <Leader>dt <Plug>(go-def-tab)
 
-    nnoremap <Leader>ff :<C-u>Godoc<Space>
-    nnoremap <Leader>dd :exe "Godoc"<CR>
+nmap <buffer> <Leader>gd <Plug>(go-doc)
+nmap <buffer> <Leader>gv <Plug>(go-doc-vertical)
+nmap <buffer> <Leader>gb <Plug>(go-doc-browser)
 
-    nmap <Leader>gr <Plug>(go-run)
-    nmap <Leader>gi <Plug>(go-info)
-    nmap <Leader>gt <Plug>(go-test)
-    nmap <Leader>gf <Plug>(go-files)
-    nmap <Leader>gd <Plug>(go-def)
-    nmap <Leader>gds <Plug>(go-doc-split)
-    nmap <Leader>gdv <Plug>(go-doc-vertical)
+nmap <buffer> <Leader>s <Plug>(go-implements)
 
-    autocmd BufWritePre <buffer> Fmt
+nmap <buffer> <Leader>i <Plug>(go-info)
+
+nmap <buffer> <Leader>e <Plug>(go-rename)
+
 endfunction
 
 augroup settings_golang
