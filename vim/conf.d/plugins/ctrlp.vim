@@ -1,6 +1,8 @@
 " Default mappings
-let g:ctrlp_map = '<C-p><C-p>'
+"" let g:ctrlp_map = '<C-p>'
 "" let g:ctrlp_cmd = 'CtrlP'
+
+let g:ctrlp_map = '<C-p><C-p>'
 
 let g:ctrlp_working_path_mode = 'ra'
 
