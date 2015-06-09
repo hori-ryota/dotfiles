@@ -58,7 +58,7 @@ brew install caskroom/cask/brew-cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # clean
-brew cask cleanup
+#brew cask cleanup
 
 # General
 brew cask install --force iterm2
