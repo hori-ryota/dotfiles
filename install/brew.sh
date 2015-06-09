@@ -39,7 +39,10 @@ brew install phantomjs
 brew install rbenv
 brew install ruby-build
 ## Docker
-brew install boot2docker
+#brew install boot2docker
+brew install docker
+brew install docker-machine
+brew install docker-compose
 # Orchestration tools
 brew install terraform
 brew install ansible
