@@ -10,5 +10,4 @@ IDOTDIR=$BASEDIR/install
 . $IDOTDIR/changedefaultshell.sh
 
 . $IDOTDIR/vim-plug.sh
-. $IDOTDIR/go.sh
 . $IDOTDIR/quickLook.sh
