@@ -185,7 +185,14 @@ Plug 'elzr/vim-json', {
 "  Ansible  "
 """""""""""""
 Plug 'chase/vim-ansible-yaml', {
-            \ 'for': ['yaml', 'ansible']
+            \ 'for': 'ansible'
+            \ }
+
+"""""""""""""""
+"  Terraform  "
+"""""""""""""""
+Plug 'markcornick/vim-terraform', {
+            \ 'for': ['terraform', 'javascript']
             \ }
 
 """"""""""
