@@ -173,6 +173,11 @@ Plug 'tyru/open-browser.vim', {
             \ 'for': 'markdown'
             \ }
 
+" Gist
+Plug 'lambdalisue/vim-gista', {
+            \ 'on': ['Gista', '<Plug>(gista-']
+            \ }
+
 """"""""""
 "  JSON  "
 """"""""""
@@ -193,6 +198,13 @@ Plug 'chase/vim-ansible-yaml', {
 """""""""""""""
 Plug 'markcornick/vim-terraform', {
             \ 'for': ['terraform', 'javascript']
+            \ }
+
+""""""""""""""
+"  PlantUML  "
+""""""""""""""
+Plug 'aklt/plantuml-syntax', {
+            \ 'for': ['pu', 'uml', 'plantuml']
             \ }
 
 """"""""""
