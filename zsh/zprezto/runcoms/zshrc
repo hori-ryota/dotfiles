@@ -18,7 +18,7 @@ fi
 alias man='LANG=ja_JP.UTF-8 /usr/bin/man'
 alias javac='javac -J-Dfile.encoding=UTF-8'
 alias java='java -Dfile.encoding=UTF-8'
-alias git=hub
+eval "$(hub alias -s)"
 # ローカルのnode_modulesからの利用
 alias npm-exec='PATH=$(npm bin):$PATH'
 alias gh='ghq list -p | pe cd'
