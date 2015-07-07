@@ -55,3 +55,6 @@
 [submodule "alfred/workflows/AlfredGoogleTranslateWorkflow"]
 	path = alfred/workflows/AlfredGoogleTranslateWorkflow
 	url = https://github.com/thomashempel/AlfredGoogleTranslateWorkflow.git
+[submodule "alfred/workflows/packal-updater"]
+	path = alfred/workflows/packal-updater
+	url = https://github.com/shawnrice/packal-updater.git
