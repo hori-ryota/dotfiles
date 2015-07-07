@@ -51,6 +51,7 @@ Plug 'scrooloose/nerdtree', {
 Plug 't9md/vim-choosewin', {
             \ 'on': '<Plug>(choosewin)'
             \ }
+Plug 'Yggdroot/indentLine'
 
 """"""""""""
 "  Editor  "
