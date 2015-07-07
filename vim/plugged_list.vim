@@ -160,7 +160,7 @@ Plug 'godlygeek/tabular', {
             \ 'for': 'markdown'
             \ }
             \ |
-            \ Plug 'rcmdnk/vim-markdown', {
+            \ Plug 'hori-ryota/vim-markdown', {
             \ 'for': 'markdown'
             \ }
 
