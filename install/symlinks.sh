@@ -1,31 +1,31 @@
 #!/bin/sh
 
 # zsh with prezto
-ln -ins "$BASEDIR"/zprezto "$HOME"/.zprezto
-ln -ins "$ZDOTDIR"/zprezto/runcoms/zlogin "$HOME"/.zlogin
-ln -ins "$ZDOTDIR"/zprezto/runcoms/zlogout "$HOME"/.zlogout
-ln -ins "$ZDOTDIR"/zprezto/runcoms/zpreztorc "$HOME"/.zpreztorc
-ln -ins "$ZDOTDIR"/zprezto/runcoms/zprofile "$HOME"/.zprofile
-ln -ins "$ZDOTDIR"/zprezto/runcoms/zshenv "$HOME"/.zshenv
-ln -ins "$ZDOTDIR"/zprezto/runcoms/zshrc "$HOME"/.zshrc
+ln -snf "$BASEDIR"/zprezto "$HOME"/.zprezto
+ln -snf "$ZDOTDIR"/zprezto/runcoms/zlogin "$HOME"/.zlogin
+ln -snf "$ZDOTDIR"/zprezto/runcoms/zlogout "$HOME"/.zlogout
+ln -snf "$ZDOTDIR"/zprezto/runcoms/zpreztorc "$HOME"/.zpreztorc
+ln -snf "$ZDOTDIR"/zprezto/runcoms/zprofile "$HOME"/.zprofile
+ln -snf "$ZDOTDIR"/zprezto/runcoms/zshenv "$HOME"/.zshenv
+ln -snf "$ZDOTDIR"/zprezto/runcoms/zshrc "$HOME"/.zshrc
 
 # vim
-ln -ins "$BASEDIR"/vim "$HOME"/.vim
-ln -ins "$VDOTDIR"/vimrc "$HOME"/.vimrc
+ln -snf "$BASEDIR"/vim "$HOME"/.vim
+ln -snf "$VDOTDIR"/vimrc "$HOME"/.vimrc
 
 # tmux
-ln -ins "$BASEDIR"/tmux.conf "$HOME"/.tmux.conf
+ln -snf "$BASEDIR"/tmux.conf "$HOME"/.tmux.conf
 
 # tmuxinator
-ln -ins "$BASEDIR"/tmuxinator "$HOME"/.tmuxinator
+ln -snf "$BASEDIR"/tmuxinator "$HOME"/.tmuxinator
 
 # git
-ln -ins "$BASEDIR"/gitconfig "$HOME"/.gitconfig
-ln -ins "$BASEDIR"/gitignore "$HOME"/.gitignore_global
+ln -snf "$BASEDIR"/gitconfig "$HOME"/.gitconfig
+ln -snf "$BASEDIR"/gitignore "$HOME"/.gitignore_global
 
 # alfred
-ln -ins "$BASEDIR"/alfred "$HOME"/.alfred
+ln -snf "$BASEDIR"/alfred "$HOME"/.alfred
 
 # tern (For javascript)
-ln -ins "$BASEDIR"/tern-project "$HOME"/.tern-project
+ln -snf "$BASEDIR"/tern-project "$HOME"/.tern-project
 
