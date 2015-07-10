@@ -166,6 +166,25 @@
 				<string>Inject package into package.json dependencies (paste to front most app).</string>
 			</dict>
 		</array>
+		<key>641E4359-7656-456E-93F2-11FE0F755254</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1A806429-BBAB-4227-B0C9-46E96CD3E492</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>135ECB8C-557A-41D9-BF9A-6439A5EA949E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>67851157-5987-4B55-BDD9-90A9347C46A5</key>
 		<array>
 			<dict>
@@ -549,7 +568,7 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Package Managers (v2.10)</string>
+	<string>Package Managers (v3.03)</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -576,11 +595,13 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
 				<string>error_reporting(0);
-require_once('code/cache.php');
+require_once('code/Cache.php');
 
 $cache = new Cache();
 
@@ -651,11 +672,13 @@ foreach($cache-&gt;dbs as $key =&gt; $url) {
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
 				<string>error_reporting(0);
-require_once('code/cache.php');
+require_once('code/Cache.php');
 
 $cache = new Cache();
 
@@ -740,12 +763,10 @@ $cache-&gt;clear();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/bower.php');
+require_once('code/Bower.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Bower();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search bower for "{query}"</string>
 				<key>title</key>
@@ -786,12 +807,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/yo.php');
+require_once('code/Yo.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Yo();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search Yeoman for "{query}"</string>
 				<key>title</key>
@@ -857,12 +876,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/grunt.php');
+require_once('code/Grunt.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Grunt();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search Grunt for "{query}"</string>
 				<key>title</key>
@@ -903,12 +920,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/gulp.php');
+require_once('code/Gulp.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Gulp();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search gulp for "{query}"</string>
 				<key>title</key>
@@ -949,12 +964,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/npm.php');
+require_once('code/Npm.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Npm();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search npm for "{query}"</string>
 				<key>title</key>
@@ -995,12 +1008,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/composer.php');
+require_once('code/Composer.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Composer();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search Composer for "{query}"</string>
 				<key>title</key>
@@ -1041,12 +1052,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/pear.php');
+require_once('code/Pear.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Pear();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search PEAR for "{query}"</string>
 				<key>title</key>
@@ -1087,12 +1096,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/gems.php');
+require_once('code/Gems.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Gems();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search Ruby Gems for "{query}"</string>
 				<key>title</key>
@@ -1133,12 +1140,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/pypi.php');
+require_once('code/Pypi.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Pypi();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search Python for "{query}"</string>
 				<key>title</key>
@@ -1179,12 +1184,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/alcatraz.php');
+require_once('code/Alcatraz.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Alcatraz();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search Alcatraz for "{query}"</string>
 				<key>title</key>
@@ -1225,12 +1228,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/cocoa.php');
+require_once('code/Cocoa.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Cocoa();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search CocoaPods for "{query}"</string>
 				<key>title</key>
@@ -1271,12 +1272,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/brew.php');
+require_once('code/Brew.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Brew();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search homebrew for "{query}"</string>
 				<key>title</key>
@@ -1290,6 +1289,50 @@ echo $repo-&gt;xml();</string>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
 			<string>78A70680-7C8A-4CC4-AE71-A070E3E8CCD9</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>keyword</key>
+				<string>hex</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching hex for "{query}"</string>
+				<key>script</key>
+				<string>$query = &lt;&lt;&lt;EOD
+{query}
+EOD;
+
+require_once('code/Hex.php');
+
+$repo = new WillFarrell\AlfredPkgMan\Hex();
+echo $repo-&gt;search($query);</string>
+				<key>subtext</key>
+				<string>Search hex for "{query}"</string>
+				<key>title</key>
+				<string>Search hex</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>641E4359-7656-456E-93F2-11FE0F755254</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -1317,12 +1360,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/apt-get.php');
+require_once('code/AptGet.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\AptGet();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search apt-get for "{query}"</string>
 				<key>title</key>
@@ -1363,12 +1404,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/puppet.php');
+require_once('code/Puppet.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Puppet();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search puppet for "{query}"</string>
 				<key>title</key>
@@ -1409,12 +1448,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/rpm.php');
+require_once('code/Rpm.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Rpm();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search rpm for "{query}"</string>
 				<key>title</key>
@@ -1434,6 +1471,8 @@ echo $repo-&gt;xml();</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -1478,12 +1517,10 @@ open $url</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/maven.php');
+require_once('code/Maven.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Maven();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search Maven for "{query}"</string>
 				<key>title</key>
@@ -1518,52 +1555,8 @@ echo $repo-&gt;xml();</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>63</integer>
-				<key>keyword</key>
-				<string>gradle</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
+				<key>concurrently</key>
 				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Searching for "{query}"</string>
-				<key>script</key>
-				<string>$query = &lt;&lt;&lt;EOD
-{query}
-EOD;
-
-//error_reporting(0);
-require_once('code/gradle.php');
-
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
-				<key>subtext</key>
-				<string>Search Gradle for "{query}"</string>
-				<key>title</key>
-				<string>Search Gradle</string>
-				<key>type</key>
-				<integer>1</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>CDC59D6D-6D7A-48F9-BFC3-72DAF712EF19</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -1592,6 +1585,50 @@ echo $id</string>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>keyword</key>
+				<string>gradle</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>$query = &lt;&lt;&lt;EOD
+{query}
+EOD;
+
+require_once('code/Gradle.php');
+
+$repo = new WillFarrell\AlfredPkgMan\Gradle();
+echo $repo-&gt;search($query);</string>
+				<key>subtext</key>
+				<string>Search Gradle for "{query}"</string>
+				<key>title</key>
+				<string>Search Gradle</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>CDC59D6D-6D7A-48F9-BFC3-72DAF712EF19</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>keyword</key>
 				<string>chef</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
@@ -1608,12 +1645,10 @@ echo $id</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/chef.php');
+require_once('code/Chef.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Chef();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search chef for "{query}"</string>
 				<key>title</key>
@@ -1633,6 +1668,8 @@ echo $repo-&gt;xml();</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
@@ -1692,12 +1729,10 @@ echo $pkgstr</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/docker.php');
+require_once('code/Docker.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Docker();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search docker for "{query}"</string>
 				<key>title</key>
@@ -1738,12 +1773,10 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/raspbian.php');
+require_once('code/Raspbian.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Raspbian();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
 				<string>Search Raspbian for "{query}"</string>
 				<key>title</key>
@@ -1784,16 +1817,14 @@ echo $repo-&gt;xml();</string>
 {query}
 EOD;
 
-//error_reporting(0);
-require_once('code/atom.php');
+require_once('code/Apm.php');
 
-$repo = new Repo();
-$repo-&gt;search($query);
-echo $repo-&gt;xml();</string>
+$repo = new WillFarrell\AlfredPkgMan\Apm();
+echo $repo-&gt;search($query);</string>
 				<key>subtext</key>
-				<string>Search atom for "{query}"</string>
+				<string>Search apm for "{query}"</string>
 				<key>title</key>
-				<string>Search atom</string>
+				<string>Search apm</string>
 				<key>type</key>
 				<integer>1</integer>
 				<key>withspace</key>
@@ -1808,46 +1839,87 @@ echo $repo-&gt;xml();</string>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string>Quick package/plugin/component (repo) lookup of for your favourite package managers. Currently supports *Alcatraz* to *Yeoman Generators*. 
+	<string>Quick package/plugin/component (repo) lookup for your favourite package managers. Currently supports *Alcatraz* to *Yeoman Generators*.
 
 ## Commands
-`pkgman cleardb`: Clear local database cache files
-`pkgman cachedb`: Update local database cache files
 
-`alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
-`apt-get {query}`: [Linux Packages](https://apps.ubuntu.com)
-`bower {query}`: [Bower Components](http://bower.io) for JavaScript
-`brew {query}`: [Homebrew Plugins](http://braumeister.org)
-`chef {query}`: [Chef Cookbooks](http://supermarket.getchef.com)
-`cocoa {query}`: CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
-`composer {query}`: PHP [Composer Packages](http://getcomposer.org)
-`docker {query}`: [Docker Images](http://www.docker.io)
-`gems {query}`: [Ruby Gems](http://rubygems.org)
-`gradle {query}`: Java [Gradle Packages](http://www.gradle.org)
-`grunt {query}`: nodeJS task-runner [Grunt Plugins](http://gruntjs.com)
-`gulp {query}`: nodeJS task-runner [Gulp plugins](http://gulpjs.com)
-`maven {query}`: Java [Maven Libraries](http://mvnrepository.com)
-`npm {query}`: nodeJS [NPM Packages](https://www.npmjs.org)
-`pear {query}`: PHP [Pear Packages](http://pear.php.net)
-`puppet {query}`: [Puppet Modules](https://forge.puppetlabs.com)
-`pypi {query}`: [Python Packages](https://pypi.python.org)
-`raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
-`rpm {query}`: [Linux Packages](http://rpmfind.net)
-`yo {query}`: [Yeoman Generators](http://yoeman.io)
+* `pkgman cleardb`: Clear local database cache files
+* `pkgman cachedb`: Update local database cache files
+
+* `alcatraz {query}`: [Cocoa Packages](http://alcatraz.io/)
+* `apt-get {query}`: [Linux Packages](https://apps.ubuntu.com)
+* `atom {query}`: [Atom Packages](https://atom.io)
+* `bower {query}`: [Bower Components](http://bower.io) for JavaScript
+* `brew {query}`: [Homebrew Plugins](http://braumeister.org)
+* `chef {query}`: [Chef Cookbooks](https://supermarket.chef.io)
+* `cocoa {query}`: CocoaPods can be upgraded to CocoaDocs by changing `$apple_docs` to true in the script.
+* `composer {query}`: PHP [Composer Packages](https://packagist.org)
+* `docker {query}`: [Docker Images](http://registry.hub.docker.io)
+* `gems {query}`: [Ruby Gems](http://rubygems.org)
+* `gradle {query}`: Java [Gradle Packages](http://www.gradle.org)
+* `grunt {query}`: nodeJS task-runner [Grunt Plugins](http://gruntjs.com)
+* `gulp {query}`: nodeJS task-runner [Gulp plugins](http://gulpjs.com)
+* `hex {query}`: Elixir [Hex Packages](http://hex.pm)
+* `maven {query}`: Java [Maven Libraries](http://mvnrepository.com)
+* `npm {query}`: nodeJS [NPM Packages](https://www.npmjs.org)
+* `pear {query}`: PHP [Pear Packages](http://pear.php.net)
+* `puppet {query}`: [Puppet Modules](https://forge.puppetlabs.com)
+* `pypi {query}`: [Python Packages](https://pypi.python.org)
+* `raspbian {query}`: [Rasberry Pi Packages](http://www.raspbian.org)
+* `rpm {query}`: [Linux Packages](http://rpmfind.net)
+* `yo {query}`: [Yeoman Generators](http://yeoman.io)
 
 ## Action Modifiers
-`default`: open README page url 
-`cmd`: copy name/id to frontmost app
-`shift`: cope config file name/id and version to frontmost app
+
+* `default`: open README page url
+* `cmd`: copy name/id to frontmost app
+* `shift`: copy config file name/id and version to frontmost app
 
 ## Additional Notes
+
 All workflows require constant internet connection.
 
 Workflows can break from time to time due to changes by the provider of the repo. If you notice a workflow stops working, post it at https://github.com/willfarrell/alfred-pkgman-workflow/issues.
 
-All repos have caching enabled to speed up common queries. These caches are refreshed after 14 days and may take longer then expected to return results during update. You can force a cache refresh by running `pkgman cachedb` to re-download the databases (applies to `alcatraz`, `grunt`, `cocoa`). Alternatively you can run `pkgman cleardb` to remove all stored cache, but this isn't recommended. Clearing your cache is recommended after an update if the package manager you use had a bug previously.
+All repos have caching enabled to speed up common queries. These caches are refreshed after 14 days and may take longer than expected to return results during update. You can force a cache refresh by running `pkgman cachedb` to re-download the databases (applies to `alcatraz`, `grunt`, `cocoa`). Alternatively you can run `pkgman cleardb` to remove all stored cache, but this isn't recommended. Clearing your cache is recommended after an update if the package manager you use had a bug previously.
 
-The Python Package Index is very slow due to a lack on API and pagination. A min query length has been put in place to help speed this up. You can change it in the script, `$min_query_length = 3`. Perhaps someone with a python background can improve this.</string>
+The Python Package Index is very slow due to a lack on API and pagination. A min query length has been put in place to help speed this up. You can change it in the script, `$min_query_length = 3`. Perhaps someone with a python background can improve this.
+
+![][bower]
+![][npm]
+![][yo]
+![][grunt]
+![][gulp]
+![][alcatraz]
+![][cocoa]
+![][composer]
+![][pear]
+![][pypi]
+![][gems]
+![][maven]
+![][brew]
+![][rpm]
+![][docker]
+![][chef]
+![][hex]
+
+[alcatraz]: ./screenshots/alcatraz.png "Sample alcatraz result"
+[bower]: ./screenshots/bower.png "Sample bower result"
+[brew]: ./screenshots/brew.png "Sample brew result"
+[chef]: ./screenshots/chef.png "Sample chef result"
+[cocoa]: ./screenshots/cocoa.png "Sample cocoa result"
+[composer]: ./screenshots/composer.png "Sample composer result"
+[docker]: ./screenshots/docker.png "Sample docker result"
+[gems]: ./screenshots/gems.png "Sample gems result"
+[grunt]: ./screenshots/grunt.png "Sample grunt result"
+[gulp]: ./screenshots/gulp.png "Sample gulp result"
+[hex]: ./screenshots/hex.png "Sample hex resuls"
+[maven]: ./screenshots/maven.png "Sample maven result"
+[npm]: ./screenshots/npm.png "Sample npm result"
+[pear]: ./screenshots/pear.png "Sample pear result"
+[pypi]: ./screenshots/pypi.png "Sample pypi result"
+[rpm]: ./screenshots/rpm.png "Sample rpm result"
+[yo]: ./screenshots/yo.png "Sample yo result"</string>
 	<key>uidata</key>
 	<dict>
 		<key>0376C25E-AF4F-4F76-B9BC-AD9E998CE4A3</key>
@@ -1863,7 +1935,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 		<key>135ECB8C-557A-41D9-BF9A-6439A5EA949E</key>
 		<dict>
 			<key>ypos</key>
-			<real>2100</real>
+			<real>2080</real>
 		</dict>
 		<key>18B0C07D-A101-4267-B306-7925DE8A30C9</key>
 		<dict>
@@ -1914,6 +1986,11 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 		<dict>
 			<key>ypos</key>
 			<real>640</real>
+		</dict>
+		<key>641E4359-7656-456E-93F2-11FE0F755254</key>
+		<dict>
+			<key>ypos</key>
+			<real>1560</real>
 		</dict>
 		<key>67851157-5987-4B55-BDD9-90A9347C46A5</key>
 		<dict>
@@ -1993,7 +2070,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 		<key>D882F2C5-CA0E-4D23-B1CC-28AC8AD1DB0E</key>
 		<dict>
 			<key>ypos</key>
-			<real>1570</real>
+			<real>1660</real>
 		</dict>
 		<key>D8F2FDC0-B462-4C50-8A42-9E6A511395A8</key>
 		<dict>
@@ -2018,7 +2095,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 		<key>F1559F42-7F85-4A26-A604-6E31BD686380</key>
 		<dict>
 			<key>ypos</key>
-			<real>1670</real>
+			<real>1770</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>

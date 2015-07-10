@@ -1,4 +1,4 @@
 {
-	"version": 2.03,
-	"remote_json": "https://raw.githubusercontent.com/willfarrell/alfred-pkgman-workflow/master/current-version.json"
+	"version": 3.02,
+	"remote_json": "https://github.com/willfarrell/alfred-pkgman-workflow/releases/download/3.01/Package.Managers.alfredworkflow"
 }

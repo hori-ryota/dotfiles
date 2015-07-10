@@ -427,6 +427,7 @@ function settings() {
       <p>
       Keep
       <select name='backups' class='number-of-backups'>
+        <option <?php if ($config->backups == 0) echo 'selected'; ?>>zero backups</option>
         <option <?php if ($config->backups == 1) echo 'selected'; ?>>one backup</option>
         <option <?php if ($config->backups == 2) echo 'selected'; ?>>two backups</option>
         <option <?php if ($config->backups == 3) echo 'selected'; ?>>three backups</option>
@@ -652,12 +653,21 @@ function status() {
       $packal[] = $k;
     }
   endforeach;
+
+  $connection = checkConnection();
 ?>
 
 <h1>Status</h1>
 
 <div class='status-body'>
+    <?php
+      if ( $connection !== FALSE ) {
+        ?>
+        <div id="fusion_ad">
+          <a href="http://fusionads.net" class='hijack'>Powered by Fusion</a>
+        </div>
 <?php 
+      }
   if ( $updates ) {
 ?>
 <div class='updates-available'>
@@ -671,7 +681,7 @@ function status() {
   <p id='manifest-status'>
     The manifest was last updated <strong><?php echo "$time" ; ?></strong>
     <?php
-      if ( checkConnection() !== FALSE )
+      if ( $connection !== FALSE )
         echo "<span class='update-manifest'>(Update)</span>";    
     ?>
   </p>
@@ -717,6 +727,7 @@ if ( count( $meta[ 'myWorkflows'] ) > 0 ) {
   </div>
 </div>
 </div>
+<?php if ( isset( $meta[ 'availableOnPackal' ] ) && ( count( $meta[ 'availableOnPackal' ] ) > 0 ) ) : ?>
 <p class='clearfix'> </p>
 <div>
   <p>
@@ -739,6 +750,7 @@ if ( count( $meta[ 'myWorkflows'] ) > 0 ) {
   </div>
 </div>
 </div>
+<?php endif; ?>
 <p class='clearfix'> </p>
   <div>
     <p>
@@ -762,6 +774,40 @@ if ( count( $meta[ 'myWorkflows'] ) > 0 ) {
 }
 ?>
 </div>
+<?php
+  if ( $connection !== FALSE ) {
+    ?>
+  <script type="text/javascript">
+    (function(){
+      var fusion = document.createElement('script');
+      fusion.src = window.location.protocol + '//adn.fusionads.net/api/1.0/ad.js?zoneid=299&rand=' + Math.floor(Math.random()*9999999);
+      fusion.async = true;
+      (document.head || document.getElementsByTagName('head')[0]).appendChild(fusion);
+    })();
+    // function tag() {
+    //   // 
+    //   console.log( 'hello' );
+    // }
+  </script>
+  <script>
+    myVar = setTimeout( function() {
+      $( '.fusionentire' ).find( 'a' ).each( function() {
+        $( this ).addClass( 'hijack' );
+      });
+      $( '.hijack' ).click( function() {
+        event.preventDefault();
+        link = $( this ).attr( 'href' );
+        $.get( "packal.php", { action: 'openDirectory', 'directory': link } );
+      });
+        // console.log( document.getElementsByClassName( 'fusionentire' ).querySelectorAll( 'a' ) );
+      }, 1500);
+  </script>
+  <script>
+
+</script>
+  <?php
+}
+?>
   <script type='text/javascript'>
   $( "#myworkflows" ).accordion({ active: false, collapsible: true });
   $( "#frompackal" ).accordion({ active: false, collapsible: true });
@@ -879,15 +925,9 @@ function about() {
   </p>
   <p class='clearfix'></p>
   <div style='text-align: center;'>
-  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-    <input type="hidden" name="cmd" value="_donations">
-    <input type="hidden" name="business" value="rice@shawnrice.org">
-    <input type="hidden" name="item_name" value="Donation">
-    <input type="hidden" name="currency_code" value="USD">
-    <input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-    <input type="image" src="assets/images/paypal.gif" name="submit" alt="PayPal - The safer, easier way to pay online!">
-    <img alt="" border="0" src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
-  </form>
+  <a href='https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=rice@shawnrice.com' class='hijack'>
+    <img src='assets/images/paypal.gif' alt="PayPal - The safer, easier way to pay online!" />
+  </a>
   </div>
   <h2>License</h2>
   <p>Code is provided AS IS under the GPLv3 license.</p>
@@ -1094,7 +1134,7 @@ function writeBlacklist() {
   else
     $blacklist[] = $bundle;
 
-  file_put_contents( "$data/config/blacklist.json", json_encode( $blacklist ) );
+  file_put_contents( "$data/config/blacklist.json", utf8_encode( json_encode( $blacklist ) ) );
 }
 
 

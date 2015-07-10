@@ -10,7 +10,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>DF3A17F0-109C-498C-953A-1EA26ABBE2E2</string>
+				<string>D377451B-43B5-45EF-9C57-7A18A8DDD55D</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -50,6 +50,17 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>4C8946D6-A7DF-4232-9688-EA291BF89AF0</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E037422F-BB78-4C52-9EC9-D23FCF6CA31A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>5E2199C2-314D-447F-BA91-52B1AC449F40</key>
 		<array>
 			<dict>
@@ -63,6 +74,17 @@
 		</array>
 		<key>739C48C5-6C99-4B62-AAB4-E23DCD2035B5</key>
 		<array/>
+		<key>D377451B-43B5-45EF-9C57-7A18A8DDD55D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>DF3A17F0-109C-498C-953A-1EA26ABBE2E2</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>DF3A17F0-109C-498C-953A-1EA26ABBE2E2</key>
 		<array>
 			<dict>
@@ -122,7 +144,7 @@
 				<key>modifiers</key>
 				<integer>131072</integer>
 				<key>modifiersubtext</key>
-				<string>Deauthorize workflow</string>
+				<string>Open on getpocket.com</string>
 			</dict>
 		</array>
 		<key>EFEB9D23-17CE-4FAF-8A7D-F9A1D8134606</key>
@@ -151,7 +173,7 @@
 	<key>createdby</key>
 	<string>Fabio Niephaus</string>
 	<key>description</key>
-	<string>Manage your Pocket list with Alfred</string>
+	<string>Manage Your Pocket List With Alfred</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -161,6 +183,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
@@ -178,6 +202,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
@@ -195,6 +221,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
@@ -237,9 +265,50 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>pocket</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Contacting getpocket.com...</string>
+				<key>script</key>
+				<string>python pocket.py "{query}"</string>
+				<key>subtext</key>
+				<string>Manage Your Pocket List With Alfred</string>
+				<key>title</key>
+				<string>Pocket</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>E037422F-BB78-4C52-9EC9-D23FCF6CA31A</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
 				<integer>0</integer>
 				<key>leftcursor</key>
 				<false/>
@@ -258,35 +327,8 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>keyword</key>
-				<string>pocket</string>
-				<key>runningsubtext</key>
-				<string>Contacting getpocket.com...</string>
-				<key>script</key>
-				<string>python pocket_alfred.py "{query}"</string>
-				<key>subtext</key>
-				<string>Manage your Pocket list with Alfred</string>
-				<key>title</key>
-				<string>Pocket</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>E037422F-BB78-4C52-9EC9-D23FCF6CA31A</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
@@ -304,6 +346,21 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>triggerid</key>
+				<string>open</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.external</string>
+			<key>uid</key>
+			<string>4C8946D6-A7DF-4232-9688-EA291BF89AF0</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
@@ -321,10 +378,12 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
-				<integer>127</integer>
+				<integer>102</integer>
 				<key>script</key>
-				<string>python pocket_launcher.py --deauthorize "{query}"</string>
+				<string>python pocket_launcher.py --website "{query}"</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -338,10 +397,33 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>keyword</key>
+				<string>_pocket-add</string>
+				<key>subtext</key>
+				<string>Tags need to be separated by comma.</string>
+				<key>text</key>
+				<string>Add Custom Tags</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>D377451B-43B5-45EF-9C57-7A18A8DDD55D</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string>python pocket_save.py</string>
+				<string>python pocket_save.py "{query}"</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
@@ -358,6 +440,10 @@
 				<key>action</key>
 				<integer>0</integer>
 				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
 				<integer>0</integer>
 				<key>leftcursor</key>
 				<false/>
@@ -398,6 +484,11 @@
 			<key>ypos</key>
 			<real>120</real>
 		</dict>
+		<key>4C8946D6-A7DF-4232-9688-EA291BF89AF0</key>
+		<dict>
+			<key>ypos</key>
+			<real>360</real>
+		</dict>
 		<key>5E2199C2-314D-447F-BA91-52B1AC449F40</key>
 		<dict>
 			<key>ypos</key>
@@ -412,6 +503,11 @@
 		<dict>
 			<key>ypos</key>
 			<real>250</real>
+		</dict>
+		<key>D377451B-43B5-45EF-9C57-7A18A8DDD55D</key>
+		<dict>
+			<key>ypos</key>
+			<real>670</real>
 		</dict>
 		<key>DF3A17F0-109C-498C-953A-1EA26ABBE2E2</key>
 		<dict>
@@ -435,6 +531,6 @@
 		</dict>
 	</dict>
 	<key>webaddress</key>
-	<string>https://github.com/fniephaus/alfred2/</string>
+	<string>https://github.com/fniephaus/alfred-pocket/</string>
 </dict>
 </plist>

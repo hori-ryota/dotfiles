@@ -221,7 +221,8 @@
 	</array>
 	<key>readme</key>
 	<string>See https://github.com/shawnrice/packal
-Or http://www.packal.org</string>
+Or http://www.packal.org
+Or http://www.packal.org/workflow/packal-updater</string>
 	<key>uidata</key>
 	<dict>
 		<key>1F4D4C11-58BD-413E-9E17-D93F880D403C</key>
@@ -261,6 +262,6 @@ Or http://www.packal.org</string>
 		</dict>
 	</dict>
 	<key>webaddress</key>
-	<string>http://www.packal.org</string>
+	<string>http://www.packal.org/workflow/packal-updater</string>
 </dict>
 </plist>
