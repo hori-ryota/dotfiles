@@ -9,7 +9,6 @@ vim/autoload/plug.vim
 font/
 
 # alfred
-alfred/Alfred.alfredpreferences/workflows/
 alfred/Alfred.alfredpreferences/preferences/local/
 
 # tmuxinator
