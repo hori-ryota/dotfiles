@@ -1,10 +1,10 @@
 export HISTTIMEFORMAT=' %F %T ' # Historyファイルのフォーマット
 export PAGER="/usr/bin/less -R"
 
-# Homebrew
+# Homebrewのための設定
 export PATH=/usr/local/bin:$PATH
 export PATH=${HOME}/local/bin:$PATH
-export HOMEBREW_BREWFILE=~/.brewfile
+# For brew cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # nodebrew
