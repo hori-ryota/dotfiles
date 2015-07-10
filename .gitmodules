@@ -4,12 +4,3 @@
 [submodule "iTerm/color/hybrid"]
 	path = iTerm/color/hybrid
 	url = https://gist.github.com/w0ng/5e0a431531670e05dc4f
-[submodule "alfred/workflows/todoist-alfred-workflow"]
-	path = alfred/workflows/todoist-alfred-workflow
-	url = https://github.com/160grad/todoist-alfred-workflow
-[submodule "alfred/workflows/alfred2-hipchat-emoticons-workflow"]
-	path = alfred/workflows/alfred2-hipchat-emoticons-workflow
-	url = https://github.com/aortbals/alfred2-hipchat-emoticons-workflow
-[submodule "alfred/workflows/alfred-lgtmin-workflow"]
-	path = alfred/workflows/alfred-lgtmin-workflow
-	url = https://github.com/geckotang/alfred-lgtmin-workflow.git
