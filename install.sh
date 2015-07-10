@@ -10,4 +10,5 @@ IDOTDIR=$BASEDIR/install
 . $IDOTDIR/changedefaultshell.sh
 
 . $IDOTDIR/vim-plug.sh
+. $IDOTDIR/alfred.sh
 . $IDOTDIR/quickLook.sh
