@@ -28,4 +28,3 @@ ln -snf "$BASEDIR"/alfred "$HOME"/.alfred
 
 # tern (For javascript)
 ln -snf "$BASEDIR"/tern-project "$HOME"/.tern-project
-
