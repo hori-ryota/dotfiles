@@ -5,6 +5,7 @@ vim/swap/
 vim/undo/
 vim/autoload/plug.vim
 vim/autoload/plug.vim.old
+vim/.netrwhist
 
 # font
 font/
