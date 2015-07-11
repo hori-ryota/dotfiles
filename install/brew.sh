@@ -46,6 +46,8 @@ brew install docker-compose
 # Orchestration tools
 brew install terraform
 brew install ansible
+# Image
+brew install optipng
 
 
 
@@ -127,11 +129,8 @@ brew cask install --force send-to-kindle
 # Others
 brew cask install --force appcleaner
 brew cask install --force dropbox
-brew cask install --force evernote
 brew cask install --force insomniax
-brew cask install --force myphonedesktop
 brew cask install --force skitch
-brew cask install --force sourcetree
 brew cask install --force vagrant
 
 #########
