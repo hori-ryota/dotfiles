@@ -6,6 +6,8 @@ dest="$HOME"/Library/Preferences/
 
 for source in ${sources}
 do
-  rm -rf "${dest}/${source##*/}"
-  ln -snf $source "${dest}/${source##*/}"
+  echo ${source##*/}
+  echo "${dest}${source##*/}"
+  rm -rf "${dest}${source##*/}"
+  ln -snf $source "${dest}${source##*/}"
 done
