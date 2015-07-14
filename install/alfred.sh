@@ -2,7 +2,7 @@
 
 # force sync local dir
 localPreferences="$BASEDIR"/alfred/Alfred.alfredpreferences/preferences/local/*
-commonLocalPreferences="$BASEDIR"/alfred/commonLocalPreferences/**/*.plist
+commonLocalPreferences=`find "$BASEDIR"/alfred/commonLocalPreferences -name *.plist`
 
 for localPreference in ${localPreferences}
 do
