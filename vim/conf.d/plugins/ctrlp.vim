@@ -6,7 +6,8 @@ let g:ctrlp_map = '<C-p><C-p>'
 
 let g:ctrlp_working_path_mode = 'ra'
 
-let g:ctrlp_user_command = 'find %s -type f | grep -v "DS_Store\|\.git/\|\.hg/\|\.svn/\|optimized/\|compiled/\|node_modules/\|bower_components/\|dest/\|target/\|public/\|Alfred.alfredpreferences/\|alfred/workflows/\|plugged/"'        " MacOSX/Linux
+" need 'go get github.com/mattn/files'
+let g:ctrlp_user_command = 'files -A -i "^(\.DS_Store|\.git|\.hg|\.svn|optimized|compiled|node_modules|bower_components|dest|target|public|Alfred.alfredpreferences|plugged)$" %s'
 
 nnoremap <C-p>p :<C-u>CtrlP<CR>
 nnoremap <C-p>b :<C-u>CtrlPBuffer<CR>

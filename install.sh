@@ -13,3 +13,4 @@ IDOTDIR=$BASEDIR/install
 . $IDOTDIR/preferences.sh
 . $IDOTDIR/alfred.sh
 . $IDOTDIR/quickLook.sh
+. $IDOTDIR/go.sh
