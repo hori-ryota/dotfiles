@@ -64,6 +64,8 @@ Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-commentary'
 " reuse register
 Plug 'LeafCage/yankround.vim'
+" easily search for, substitute, and abbreviate multiple variants of a word
+Plug 'tpope/vim-abolish'
 
 """"""""""""
 "  Motion  "
