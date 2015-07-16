@@ -19,19 +19,31 @@ endfunction
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 "}}}
 
-"""""""""""""""""
-"  tab key map  "
-"""""""""""""""""
-nnoremap <silent> <C-t>l :tabnext<CR>
-nnoremap <silent> <C-t>h :tabprev<CR>
-nnoremap <silent> <C-t>c :tabclose<CR>
-nnoremap <silent> <C-t>n :tabnew<CR>
-for n in range(1,9)
-  execute 'nnoremap <silent> <C-t>'.n ':tabnext '.n.'<CR>'
-endfor
-
 """"""""""""""""""""
 "  buffer key map  "
 """"""""""""""""""""
-nnoremap <silent> <Leader>bb :bprevious<CR>
-nnoremap <silent> <Leader>bf :bnext<CR>
+nnoremap <silent> <space>bp :<C-u>bprevious<CR>
+nnoremap <silent> <space>bn :<C-u>bnext<CR>
+
+""""""""""""""""""""""
+"  quickfix key map  "
+""""""""""""""""""""""
+nnoremap <silent> <space>cc :<C-u>cc<CR>
+nnoremap <silent> <space>co :<C-u>copen<CR>
+nnoremap <silent> <space>cO :<C-u>cclose<CR>
+nnoremap <silent> <space>cn :<C-u>cnext<CR>
+nnoremap <silent> <space>cN :<C-u>clast<CR>
+nnoremap <silent> <space>cp :<C-u>cprevious<CR>
+nnoremap <silent> <space>cP :<C-u>cfirst<CR>
+nnoremap <silent> <space>cfn :<C-u>cnfile<CR>
+nnoremap <silent> <space>cfp :<C-u>cpfile<CR>
+
+nnoremap <silent> <space>ll :<C-u>ll<CR>
+nnoremap <silent> <space>lo :<C-u>lopen<CR>
+nnoremap <silent> <space>lO :<C-u>lclose<CR>
+nnoremap <silent> <space>ln :<C-u>lnext<CR>
+nnoremap <silent> <space>lN :<C-u>llast<CR>
+nnoremap <silent> <space>lp :<C-u>lprevious<CR>
+nnoremap <silent> <space>lP :<C-u>lfirst<CR>
+nnoremap <silent> <space>lfn :<C-u>lnfile<CR>
+nnoremap <silent> <space>lfp :<C-u>lpfile<CR>

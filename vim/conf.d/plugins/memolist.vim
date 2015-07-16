@@ -41,8 +41,8 @@ let g:memolist_template_dir_path = "~/.vim/template/memolist"
 let g:memolist_ex_cmd = 'CtrlP'
 let g:memolist_ex_cmd = 'NERDTree'
 
-nnoremap <Leader>mn :MemoNew<CR>
-nnoremap <Leader>ml :MemoList<CR>
-nnoremap <Leader>mg :MemoGrep<CR>
+nnoremap <Leader>mn :<C-u>MemoNew<CR>
+nnoremap <Leader>ml :<C-u>MemoList<CR>
+nnoremap <Leader>mg :<C-u>MemoGrep<CR>
 " use CtrlP
-nnoremap <Leader>mf :exe "CtrlP" g:memolist_path<cr><f5>
+nnoremap <Leader>mf :<C-u>exe "CtrlP" g:memolist_path<cr><f5>
