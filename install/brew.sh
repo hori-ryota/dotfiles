@@ -59,6 +59,8 @@ brew install optipng
 brew install caskroom/cask/brew-cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
+brew tap caskroom/versions
+
 # clean
 #brew cask cleanup
 
@@ -97,8 +99,7 @@ brew cask install --force hipchat
 brew cask install --force slack
 
 # Virtual environment
-brew cask install --force virtualbox
-brew cask install --force genymotion
+brew cask install --force virtualbox43691406
 
 # Image optimization
 brew cask install --force imageoptim
@@ -124,7 +125,6 @@ brew cask install --force integrity
 
 # Kindle
 brew cask install --force kindle
-brew cask install --force send-to-kindle
 
 # Others
 brew cask install --force appcleaner
