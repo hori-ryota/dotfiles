@@ -122,6 +122,13 @@ Plug 'fatih/vim-go', {
             \ 'for': 'go'
             \ }
 
+""""""""""""""""""""""
+"  Protocol Buffers  "
+""""""""""""""""""""""
+Plug 'uarun/vim-protobuf', {
+            \ 'for': 'proto'
+            \ }
+
 """"""""""
 "  Ruby  "
 """"""""""
