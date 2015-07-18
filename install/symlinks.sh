@@ -9,6 +9,9 @@ ln -snf "$ZDOTDIR"/runcoms/zprofile "$HOME"/.zprofile
 ln -snf "$ZDOTDIR"/runcoms/zshenv "$HOME"/.zshenv
 ln -snf "$ZDOTDIR"/runcoms/zshrc "$HOME"/.zshrc
 
+# zsh
+ln -snf "$ZDOTDIR" "$HOME"/.zsh
+
 # vim
 ln -snf "$BASEDIR"/vim "$HOME"/.vim
 ln -snf "$VDOTDIR"/vimrc "$HOME"/.vimrc

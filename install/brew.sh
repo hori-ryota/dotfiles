@@ -8,7 +8,6 @@ brew upgrade
 
 # General
 brew install zsh
-brew install zsh-completions
 
 brew install ack
 brew install curl

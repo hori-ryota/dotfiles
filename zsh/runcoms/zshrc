@@ -25,3 +25,8 @@ fi
 
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+
+# for zsh completions
+fpath=(~/.zsh/zsh-completions/src $fpath)
+fpath=(~/.zsh/completions $fpath)
+rm -f ~/.zcompdump; compinit

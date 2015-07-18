@@ -4,3 +4,6 @@
 [submodule "iTerm/color/hybrid"]
 	path = iTerm/color/hybrid
 	url = https://gist.github.com/w0ng/5e0a431531670e05dc4f
+[submodule "zsh/zsh-completions"]
+	path = zsh/zsh-completions
+	url = git://github.com/zsh-users/zsh-completions.git
