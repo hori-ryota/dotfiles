@@ -7,11 +7,5 @@ vim/autoload/plug.vim
 vim/autoload/plug.vim.old
 vim/.netrwhist
 
-# font
-font/
-
 # alfred
 alfred/Alfred.alfredpreferences/preferences/local/
-
-# tmuxinator
-tmuxinator/
