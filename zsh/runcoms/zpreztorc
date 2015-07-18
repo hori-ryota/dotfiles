@@ -24,19 +24,20 @@ zstyle ':prezto:load' zfunction 'zargs' 'zmv'
 # Set the Prezto modules to load (browse modules).
 # The order matters.
 zstyle ':prezto:load' pmodule \
-  'environment' \
-  'terminal' \
-  'editor' \
-  'history' \
-  'directory' \
-  'spectrum' \
-  'utility' \
   'completion' \
-  'prompt' \
+  'directory' \
+  'editor' \
+  'environment' \
   'git' \
-  'osx' \
-  'syntax-highlighting' \
+  'history' \
   'history-substring-search'
+  'osx' \
+  'prompt' \
+  'spectrum' \
+  'syntax-highlighting' \
+  'terminal' \
+  'tmux' \
+  'utility' \
 
 #
 # Editor
@@ -152,10 +153,10 @@ zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
 #
 
 # Auto start a session when Zsh is launched in a local terminal.
-# zstyle ':prezto:module:tmux:auto-start' local 'yes'
+zstyle ':prezto:module:tmux:auto-start' local 'yes'
 
 # Auto start a session when Zsh is launched in a SSH connection.
-# zstyle ':prezto:module:tmux:auto-start' remote 'yes'
+zstyle ':prezto:module:tmux:auto-start' remote 'yes'
 
 # Integrate with iTerm2.
-# zstyle ':prezto:module:tmux:iterm' integrate 'yes'
+zstyle ':prezto:module:tmux:iterm' integrate 'yes'
