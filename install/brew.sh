@@ -68,6 +68,9 @@ brew tap caskroom/versions
 brew cask install --force iterm2
 brew cask install --force 1password
 
+# Java
+brew cask install java
+
 # Launcher
 brew cask install --force alfred
 
