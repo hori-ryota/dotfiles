@@ -30,14 +30,14 @@ zstyle ':prezto:load' pmodule \
   'environment' \
   'git' \
   'history' \
-  'history-substring-search'
+  'history-substring-search' \
   'osx' \
   'prompt' \
   'spectrum' \
   'syntax-highlighting' \
   'terminal' \
   'tmux' \
-  'utility' \
+  'utility'
 
 #
 # Editor
