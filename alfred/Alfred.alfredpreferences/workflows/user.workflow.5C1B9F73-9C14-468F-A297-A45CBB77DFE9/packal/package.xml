@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Download YouTube Videos</name>
-  <version>1.0</version>
-  <bundle>com.DonaldBurr.youtube-dl</bundle>
-  <updated>1422837011</updated>
-  <file>download_youtube_video.alfredworkflow</file>
-</workflow>
