@@ -14,6 +14,8 @@ brew install curl
 brew install tree
 brew install wget
 
+brew install the_silver_searcher
+
 # Version control system
 brew install git
 brew install hub
