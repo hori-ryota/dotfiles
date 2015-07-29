@@ -220,6 +220,8 @@ Plug 'aklt/plantuml-syntax', {
 """"""""""
 "  Misc  "
 """"""""""
+" the_silver_searcher
+Plug 'rking/ag.vim'
 " quickrun
 Plug 'thinca/vim-quickrun'
 " list tags
