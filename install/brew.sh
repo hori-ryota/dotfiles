@@ -82,8 +82,8 @@ brew cask install --force google-japanese-ime
 # Fast Keywords Concatenator
 brew cask install --force karabiner
 
-# Replace finder
-brew cask install --force path-finder
+# Extend finder
+brew cask install --force xtrafinder
 
 # Window manager
 brew cask install --force xquartz
