@@ -66,76 +66,76 @@ brew tap caskroom/versions
 #brew cask cleanup
 
 # General
-brew cask install --force iterm2
-brew cask install --force 1password
+brew cask install iterm2 #--force
+brew cask install 1password #--force
 
 # Java
 brew cask install java
 
 # Launcher
-brew cask install --force alfred
+brew cask install alfred #--force
 
 # Browser
-brew cask install --force google-chrome
+brew cask install google-chrome #--force
 
 # IME
-brew cask install --force google-japanese-ime
+brew cask install google-japanese-ime #--force
 
 # Fast Keywords Concatenator
-brew cask install --force karabiner
+brew cask install karabiner #--force
 
 # Extend finder
-brew cask install --force xtrafinder
+brew cask install xtrafinder #--force
 
 # Window manager
-brew cask install --force xquartz
-brew cask install --force shiftit
+brew cask install xquartz #--force
+brew cask install shiftit #--force
 
 # Document manager
-brew cask install --force dash
+brew cask install dash #--force
 
 # Todo manager
-brew cask install --force todoist
+brew cask install todoist #--force
 
 # Chat
-brew cask install --force goofy
-brew cask install --force hipchat
-brew cask install --force slack
+brew cask install goofy #--force
+brew cask install hipchat #--force
+brew cask install slack #--force
 
 # Virtual environment
-brew cask install --force virtualbox43691406
+brew cask install virtualbox43691406 #--force
 
 # Image optimization
-brew cask install --force imageoptim
+brew cask install imageoptim #--force
 
 # For QuickLook
 ## For no filename extension
-brew cask install --force qlstephen
+brew cask install qlstephen #--force
 ## For markdown
-brew cask install --force qlmarkdown
+brew cask install qlmarkdown #--force
 ## For json
-brew cask install --force quicklook-json
+brew cask install quicklook-json #--force
 ## For csv
-brew cask install --force quicklook-csv
+brew cask install quicklook-csv #--force
 ## For zip
-brew cask install --force betterzipql
+brew cask install betterzipql #--force
 ## For .pkg
-brew cask install --force suspicious-package
+brew cask install suspicious-package #--force
 ## For code highlight
-brew cask install --force qlcolorcode
+brew cask install qlcolorcode #--force
 
 # Website link checker
-brew cask install --force integrity
+brew cask install integrity #--force
 
 # Kindle
-brew cask install --force kindle
+brew cask install kindle #--force
 
 # Others
-brew cask install --force appcleaner
-brew cask install --force dropbox
-brew cask install --force insomniax
-brew cask install --force skitch
-brew cask install --force vagrant
+brew cask install appcleaner #--force
+brew cask install dropbox #--force
+brew cask install insomniax #--force
+brew cask install skitch #--force
+brew cask install vagrant #--force
 
 #########
 # Fonts #
@@ -145,7 +145,7 @@ brew cask install --force vagrant
 brew tap caskroom/fonts
 
 # install
-brew cask install --force font-source-han-code-jp
+brew cask install font-source-han-code-jp #--force
 
 ###########################
 #  Install from AppStore  #
