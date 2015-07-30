@@ -1,7 +1,6 @@
 function! s:local_markdown()
-    setlocal tw=0
-    setlocal ts=4
-    setlocal sw=4
+    setlocal tabstop=4
+    setlocal shiftwidth=4
 endfunction
 
 augroup settings_markdown

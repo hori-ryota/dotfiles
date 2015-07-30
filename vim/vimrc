@@ -11,7 +11,7 @@ nnoremap <space>v :<C-u>tabnew $HOME/.dotfiles/vim/vimrc<CR>:<C-u>CD<CR>
 " Reflect vimrc
 nnoremap <space>s :<C-u>source $HOME/.vimrc<CR>
 " Open dotfiles
-nnoremap <space>d :<C-u>tabnew $HOME/.dotfiles<CR>:<C-u>CD<CR>
+nnoremap <space>d :<C-u>tabnew $HOME/.dotfiles/README.md<CR>:<C-u>CD<CR>
 " Character encoding
 set encoding=utf-8
 set termencoding=utf-8

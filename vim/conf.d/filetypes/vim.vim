@@ -1,5 +1,6 @@
 function! s:local_vim()
-    setlocal ts=4 sts=4 sw=4
+    setlocal tabstop=4
+    setlocal shiftwidth=4
 endfunction
 
 augroup settings_vim
