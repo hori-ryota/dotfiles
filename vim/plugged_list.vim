@@ -75,6 +75,8 @@ Plug 'Lokaltog/vim-easymotion'
 Plug 'osyo-manga/vim-over'
 
 Plug 'rhysd/clever-f.vim'
+" pairs of handy bracket mappings
+Plug 'tpope/vim-unimpaired'
 
 """""""""""""""""
 "  Programming  "
