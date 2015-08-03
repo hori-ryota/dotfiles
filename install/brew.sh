@@ -49,6 +49,8 @@ brew install terraform
 brew install ansible
 # Image
 brew install optipng
+# mysql
+brew install mycli
 
 
 
