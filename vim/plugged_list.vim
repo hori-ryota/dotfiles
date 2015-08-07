@@ -198,6 +198,13 @@ Plug 'elzr/vim-json', {
             \ 'for': 'javascript'
             \ }
 
+""""""""""""""""
+"  Dockerfile  "
+""""""""""""""""
+Plug 'ekalinin/Dockerfile.vim', {
+            \ 'for': 'dockerfile'
+            \ }
+
 """""""""""""
 "  Ansible  "
 """""""""""""
