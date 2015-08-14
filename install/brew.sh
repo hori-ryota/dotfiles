@@ -147,7 +147,7 @@ brew cask install vagrant #--force
 brew tap caskroom/fonts
 
 # install
-brew cask install font-source-han-code-jp #--force
+brew cask install font-source-code-pro-for-powerline #--force
 
 ###########################
 #  Install from AppStore  #
