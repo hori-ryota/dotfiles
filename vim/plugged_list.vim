@@ -89,7 +89,12 @@ Plug 'scrooloose/syntastic'
 """"""""""""""
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'gregsexton/gitv'
+Plug 'cohama/agit.vim'
+Plug 'idanarye/vim-merginal'
+" Gist
+Plug 'lambdalisue/vim-gista', {
+            \ 'on': ['Gista', '<Plug>(gista-']
+            \ }
 
 """"""""""""""""
 "  Javascript  "
@@ -183,11 +188,6 @@ Plug 'tyru/open-browser.vim', {
             \ |
             \ Plug 'kannokanno/previm', {
             \ 'for': 'markdown'
-            \ }
-
-" Gist
-Plug 'lambdalisue/vim-gista', {
-            \ 'on': ['Gista', '<Plug>(gista-']
             \ }
 
 """"""""""

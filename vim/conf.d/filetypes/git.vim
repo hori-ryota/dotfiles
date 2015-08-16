@@ -11,8 +11,9 @@ nnoremap <silent> <space>gs :<C-u>Gstatus<CR>
 nnoremap <silent> <space>gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> <space>gh :<C-u>GitGutterLineHighlightsToggle<CR>
 
-nnoremap <silent> <space>gv :<C-u>Gitv --all<CR>
-nnoremap <silent> <space>gV :<C-u>Gitv! --all<CR>
-vnoremap <silent> <space>gV :<C-u>Gitv! --all<CR>
+nnoremap <silent> <space>gl :<C-u>Agit<CR>
+nnoremap <silent> <space>gL :<C-u>AgitFile<CR>
+
+nnoremap <silent> <space>gm :<C-u>MerginalToggle<CR>
 
 cabbrev git Git
