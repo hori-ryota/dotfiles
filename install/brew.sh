@@ -100,7 +100,6 @@ brew cask install dash #--force
 brew cask install todoist #--force
 
 # Chat
-brew cask install goofy #--force
 brew cask install hipchat #--force
 brew cask install slack #--force
 
