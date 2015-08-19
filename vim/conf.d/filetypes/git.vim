@@ -10,6 +10,9 @@ nnoremap <silent> <space>gc :<C-u>Gcommit<CR>
 nnoremap <silent> <space>gs :<C-u>Gstatus<CR>
 nnoremap <silent> <space>gg :<C-u>GitGutterToggle<CR>
 nnoremap <silent> <space>gh :<C-u>GitGutterLineHighlightsToggle<CR>
+nnoremap <silent> <space>gr :<C-u>Gbrowse<CR>
+nnoremap <silent> <space>gd :<C-u>Gdiff<CR>
+nnoremap <silent> <space>gbl :<C-u>Gblame<CR>
 
 nnoremap <silent> <space>gl :<C-u>Agit<CR>
 nnoremap <silent> <space>gL :<C-u>AgitFile<CR>

@@ -73,8 +73,6 @@ Plug 'tpope/vim-abolish'
 Plug 'Lokaltog/vim-easymotion'
 " highlight substitute target
 Plug 'osyo-manga/vim-over'
-
-Plug 'rhysd/clever-f.vim'
 " pairs of handy bracket mappings
 Plug 'tpope/vim-unimpaired'
 
