@@ -1,1 +1,1 @@
-nmap <space>T :<C-u>TagbarToggle<CR>
+nmap <space>t :<C-u>TagbarToggle<CR>

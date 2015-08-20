@@ -234,7 +234,6 @@ Plug 'thinca/vim-quickrun'
 " list tags
 Plug 'majutsushi/tagbar', {
             \ 'do': 'brew install ctags',
-            \ 'on': 'TagbarToggle'
             \ }
 " mark and highlight words
 Plug 't9md/vim-quickhl', {
