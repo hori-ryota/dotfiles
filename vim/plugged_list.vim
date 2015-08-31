@@ -16,6 +16,11 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'cocopon/lightline-hybrid.vim'
 Plug 'itchyny/lightline.vim'
 
+"""""""""""""
+"  history  "
+"""""""""""""
+Plug 'sjl/gundo.vim'
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Color Scheme                                "
