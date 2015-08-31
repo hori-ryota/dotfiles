@@ -4,6 +4,7 @@ function! s:setup_golang()
     nmap <buffer> <leader>b <Plug>(go-build)
     nmap <buffer> <leader>t <Plug>(go-test)
     nmap <buffer> <leader>c <Plug>(go-coverage)
+    nmap <buffer> <leader>T <Plug>(go-test-func)
 
     nmap <buffer> <Leader>gd <Plug>(go-doc)
     nmap <buffer> <Leader>gs <Plug>(go-doc-split)
@@ -17,21 +18,22 @@ function! s:setup_golang()
     nmap <buffer> <Leader>dt <Plug>(go-def-tab)
 
     nmap <buffer> <Leader>de <Plug>(go-describe)
-    nmap <buffer> <Leader>dc <Plug>(go-callstack)
-    nmap <buffer> <Leader>dr <Plug>(go-referres)
+    nmap <buffer> <Leader>dc <Plug>(go-callers)
+    nmap <buffer> <Leader>dr <Plug>(go-referrers)
 
     nmap <buffer> <Leader>s <Plug>(go-implements)
 
-    nmap <buffer> <Leader>i <Plug>(go-info)
+    nmap <buffer> <Leader>I <Plug>(go-info)
 
-    nmap <buffer> <Leader>e <Plug>(go-rename)
+    nmap <buffer> <Leader>R <Plug>(go-rename)
 
     nmap <buffer> <Leader>v <Plug>(go-vet)
 
-    nnoremap <buffer> <Leader>I :<C-u>GoImport<space>
+    nnoremap <buffer> <Leader>i :<C-u>GoImport<space>
     nnoremap <buffer> <Leader>D :<C-u>GoDrop<space>
-    nnoremap <buffer> <Leader>II :<C-u>GoImports<CR>
-    nnoremap <buffer> <Leader>E :<C-u>GoErrCheck<CR>
+    nnoremap <buffer> <Leader>ii :<C-u>GoImports<CR>
+    nnoremap <buffer> <Leader>e :<C-u>GoErrCheck<CR>
+    nnoremap <buffer> <Leader>E :<C-u>GoErrCheck ./...<CR>
 
     nnoremap <buffer> <Leader>p :<C-u>GoPlay<CR>
     vnoremap <buffer> <Leader>p :GoPlay<CR>
