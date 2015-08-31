@@ -85,7 +85,15 @@ Plug 'tpope/vim-unimpaired'
 "  Programming  "
 """""""""""""""""
 " syntax check
-Plug 'scrooloose/syntastic'
+Plug 'osyo-manga/vim-watchdogs'
+Plug 'osyo-manga/shabadou.vim'
+Plug 'Shougo/vimproc.vim', {
+      \ 'do': 'make -f make_mac.mak'
+      \ }
+Plug 'KazuakiM/vim-qfsigns'
+Plug 'KazuakiM/vim-qfstatusline'
+Plug 'cohama/vim-hier'
+Plug 'dannyob/quickfixstatus'
 
 """"""""""""""
 "  Git/Gist  "
