@@ -188,7 +188,7 @@ Plug 'godlygeek/tabular', {
             \ 'for': 'markdown'
             \ }
             \ |
-            \ Plug 'hori-ryota/vim-markdown', {
+            \ Plug 'gabrielelana/vim-markdown', {
             \ 'for': 'markdown'
             \ }
 
