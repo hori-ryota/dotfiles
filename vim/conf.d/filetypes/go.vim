@@ -1,3 +1,9 @@
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
 function! s:setup_golang()
 
     nmap <buffer> <leader>r <Plug>(go-run)
@@ -44,3 +50,4 @@ augroup settings_golang
     autocmd!
     autocmd FileType go call s:setup_golang()
 augroup END
+
