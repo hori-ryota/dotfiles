@@ -104,7 +104,7 @@ brew cask install hipchat #--force
 brew cask install slack #--force
 
 # Virtual environment
-brew cask install virtualbox43691406 #--force
+brew cask install virtualbox #--force
 
 # Image optimization
 brew cask install imageoptim #--force
@@ -163,5 +163,4 @@ brew cask install font-source-code-pro-for-powerline #--force
 #  Others  #
 ############
 
-# Tunnelblick
 # TrueCrypt
