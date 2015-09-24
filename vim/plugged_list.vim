@@ -132,6 +132,9 @@ Plug 'cakebaker/scss-syntax.vim', {
 Plug 'kchmck/vim-coffee-script', {
             \ 'for': 'coffee'
             \ }
+Plug 'mxw/vim-jsx', {
+            \ 'for': 'javascript'
+            \ }
 
 """"""""
 "  go  "
@@ -235,6 +238,16 @@ Plug 'markcornick/vim-terraform', {
 """"""""""""""
 Plug 'aklt/plantuml-syntax', {
             \ 'for': ['pu', 'uml', 'plantuml']
+            \ }
+
+"""""""""
+"  SQL  "
+"""""""""
+Plug 'vim-scripts/SQLUtilities', {
+            \ 'for': 'sql'
+            \ }
+Plug 'vim-scripts/Align', {
+            \ 'for': 'sql'
             \ }
 
 """"""""""

@@ -31,7 +31,7 @@ set wrap
 set tabstop=2
 set expandtab
 set nosmarttab
-set softtabstop=0
+set softtabstop=-1 " When 'sts' is negative, the value of 'shiftwidth' is used
 set shiftwidth=2
 set shiftround
 
@@ -108,7 +108,7 @@ set wildmode=list:longest,full
 set cmdheight=1                 " コマンドライン行を1行に
 " カーソルを左右させるキーのうち、ここで指定したものでは、
 " カーソルが行頭／末にあるときに前／次行に移動できるようになる。
-set whichwrap=b,s,h,l,<,>,[,]   
+set whichwrap=b,s,h,l,<,>,[,]
 " インサートモードですべて消す
 set backspace=indent,eol,start
 set shortmess=filtoOA           " shorten messages
@@ -140,8 +140,8 @@ augroup END
 "                          Window operation Config                           "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 横分割時は下へ､ 縦分割時は右へ新しいウィンドウが開くようにする
-set splitbelow
-set splitright
+" set splitbelow
+" set splitright
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                              Highlight Config                              "
@@ -202,23 +202,23 @@ augroup END
 "" ftdetects
 augroup FileTypeDetect "{{{
     autocmd!
-    autocmd BufRead,BufNewFile *.java                   setfiletype java
-    autocmd BufRead,BufNewFile Capfile,Gemfile,Rakefile setfiletype ruby
-    autocmd BufRead,BufNewFile *.json,*.gyp,*.js        setfiletype javascript
-    autocmd BufRead,BufNewFile *.{md,mdwn,mkd,mkdn,mark*,txt,text} setfiletype markdown
     autocmd BufRead,BufNewFile *.PL,*.psgi,*.t          setfiletype perl
-    autocmd BufRead,BufNewFile .tmux.conf,tmux.conf     setfiletype tmux
-    autocmd BufRead,BufNewFile *.jade                   setfiletype jade
-    autocmd BufRead,BufNewFile *.less                   setfiletype less
     autocmd BufRead,BufNewFile *.coffee                 setfiletype coffee
+    autocmd BufRead,BufNewFile *.go                     setfiletype go
     autocmd BufRead,BufNewFile *.hatena                 setfiletype markdown
+    autocmd BufRead,BufNewFile *.html                   setfiletype html
+    autocmd BufRead,BufNewFile *.jade                   setfiletype jade
+    autocmd BufRead,BufNewFile *.java                   setfiletype java
+    autocmd BufRead,BufNewFile *.json,*.gyp,*.js        setfiletype javascript
+    autocmd BufRead,BufNewFile *.less                   setfiletype less
     autocmd BufRead,BufNewFile *.pp                     setfiletype puppet
+    autocmd BufRead,BufNewFile *.py                     setfiletype python
     autocmd BufRead,BufNewFile *.scss                   setfiletype scss
     autocmd BufRead,BufNewFile *.styl,*.stylus          setfiletype stylus
-    autocmd BufRead,BufNewFile *.py                     setfiletype python
-    autocmd BufRead,BufNewFile *.html                   setfiletype html
-    autocmd BufRead,BufNewFile *.go                     setfiletype go
     autocmd BufRead,BufNewFile *.tex                    setfiletype tex
+    autocmd BufRead,BufNewFile *.{md,mdwn,mkd,mkdn,mark*,txt,text} setfiletype markdown
+    autocmd BufRead,BufNewFile .tmux.conf,tmux.conf     setfiletype tmux
+    autocmd BufRead,BufNewFile Capfile,Gemfile,Rakefile setfiletype ruby
     autocmd BufWinEnter,BufNewFile *_spec.rb            setfiletype ruby.rspec
 augroup END
 "}}}
