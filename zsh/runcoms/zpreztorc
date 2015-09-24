@@ -25,19 +25,17 @@ zstyle ':prezto:load' zfunction 'zargs' 'zmv'
 # The order matters.
 zstyle ':prezto:load' pmodule \
   'completion' \
-  'directory' \
   'editor' \
   'environment' \
   'git' \
   'history' \
   'history-substring-search' \
-  'osx' \
   'prompt' \
   'spectrum' \
   'syntax-highlighting' \
   'terminal' \
   'tmux' \
-  'utility'
+  'utility' \
 
 #
 # Editor
@@ -47,14 +45,14 @@ zstyle ':prezto:load' pmodule \
 zstyle ':prezto:module:editor' key-bindings 'vi'
 
 # Auto convert .... to ../..
-zstyle ':prezto:module:editor' dot-expansion 'yes'
+# zstyle ':prezto:module:editor' dot-expansion 'yes'
 
 #
 # Git
 #
 
 # Ignore submodules when they are 'dirty', 'untracked', 'all', or 'none'.
-zstyle ':prezto:module:git:status:ignore' submodules 'all'
+# zstyle ':prezto:module:git:status:ignore' submodules 'all'
 
 #
 # GNU Utility
@@ -81,7 +79,7 @@ zstyle ':prezto:module:history-substring-search' globbing-flags ''
 #
 
 # Set the Pacman frontend.
-zstyle ':prezto:module:pacman' frontend 'yaourt'
+# zstyle ':prezto:module:pacman' frontend 'yaourt'
 
 #
 # Prompt
@@ -97,7 +95,7 @@ zstyle ':prezto:module:prompt' theme 'paradox'
 #
 
 # Auto switch the Ruby version on directory change.
-zstyle ':prezto:module:ruby:chruby' auto-switch 'yes'
+# zstyle ':prezto:module:ruby:chruby' auto-switch 'yes'
 
 #
 # Screen
