@@ -267,5 +267,7 @@ Plug 't9md/vim-quickhl', {
             \ }
 " memo
 Plug 'fuenor/qfixgrep' | Plug 'glidenote/memolist.vim'
+" use histogram algorithm for vimdiff
+Plug 'chrisbra/vim-diff-enhanced'
 
 call plug#end()
