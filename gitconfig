@@ -17,6 +17,7 @@
 	default = simple
 [diff]
 	tool = vimdiff
+	algorithm = histogram
 [difftool]
 	prompt = false
 [merge]
