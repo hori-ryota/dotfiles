@@ -15,6 +15,8 @@ brew install tree
 brew install wget
 
 brew install the_silver_searcher
+brew install peco
+brew install jq
 
 # Version control system
 brew install git
