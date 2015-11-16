@@ -29,8 +29,14 @@ let g:quickrun_config["watchdogs_checker/go_all"] = {
             \ "exec": "%c vet %s:p; errcheck ./%s:.:h/...",
             \ "errorformat": '%f:%l:%c: %m, vet: %.%\+: %f:%l:%c: %m,%W%f:%l: %m',
             \ }
+" errcheckがvendor未対応なのでいったんbuildとvetに
+let g:quickrun_config["watchdogs_checker/go_build"] = {
+            \ "command": "go",
+            \ "exec": "%c vet %s:p; %c build %s:p",
+            \ "errorformat": '%f:%l:%c: %m, vet: %.%\+: %f:%l:%c: %m,%W%f:%l: %m',
+            \ }
 let g:quickrun_config["go/watchdogs_checker"] = {
-            \ "type": "watchdogs_checker/go_all"
+            \ "type": "watchdogs_checker/go_build"
             \ }
 " let g:quickrun_config["go/watchdogs_checker"] = {
 "             \ "type"
