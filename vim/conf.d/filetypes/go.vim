@@ -1,4 +1,5 @@
 let g:go_fmt_options = '-s'
+let g:go_metalinter_deadline = '10s'
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
@@ -62,6 +63,8 @@ function! s:setup_golang()
     nmap <buffer> <Leader>R <Plug>(go-rename)
 
     nmap <buffer> <Leader>v <Plug>(go-vet)
+    nmap <buffer> <Leader>m <Plug>(go-metalinter)
+    nnoremap <buffer> <Leader>M :<C-u>GoMetaLinter ./...<CR>
 
     nnoremap <buffer> <Leader>i :<C-u>GoImport<space>
     nnoremap <buffer> <Leader>D :<C-u>GoDrop<space>
