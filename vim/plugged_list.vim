@@ -21,6 +21,11 @@ Plug 'itchyny/lightline.vim'
 """""""""""""
 Plug 'sjl/gundo.vim'
 
+""""""""""""""
+"   content  "
+""""""""""""""
+
+Plug 'vim-scripts/diffchar.vim'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "                                Color Scheme                                "

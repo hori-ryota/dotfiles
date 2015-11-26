@@ -95,7 +95,9 @@ set ruler                   " show the cursor position all the time
 augroup cch
     autocmd!
     autocmd WinLeave * set nocursorline
-    autocmd WinEnter,BufRead * set cursorline
+    if !&diff
+        autocmd WinEnter,BufRead * set cursorline
+    endif
 augroup END
 highlight clear CursorLine
 highlight CursorLine ctermbg=black
