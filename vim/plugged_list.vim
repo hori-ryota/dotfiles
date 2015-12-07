@@ -245,6 +245,13 @@ Plug 'aklt/plantuml-syntax', {
             \ 'for': ['pu', 'uml', 'plantuml']
             \ }
 
+"""""""""""""""
+"   Graphviz  "
+"""""""""""""""
+Plug 'wannesm/wmgraphviz.vim', {
+            \ 'for': 'dot'
+            \ }
+
 """""""""
 "  SQL  "
 """""""""
