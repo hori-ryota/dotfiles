@@ -6,6 +6,7 @@ let s:script_dir = expand('<sfile>:p:h')
 "{{{
 set clipboard+=unnamed " Yanks go on clipboard instead
 let mapleader = ','
+let maplocalleader = ','
 " Open vimrc
 nnoremap <space>v :<C-u>tabnew $HOME/.dotfiles/vim/vimrc<CR>:<C-u>CD<CR>
 " Reflect vimrc
