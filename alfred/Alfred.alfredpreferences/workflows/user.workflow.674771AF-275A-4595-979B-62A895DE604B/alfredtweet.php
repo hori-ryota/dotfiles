@@ -383,7 +383,7 @@ class AlfredTweet
 		$result = $this->twitter->get(
 			'statuses/home_timeline',
 			array(
-				'count' => 10
+				'count' => 15
 			)
 		);
 		if ( $result->error ):
@@ -464,6 +464,20 @@ class AlfredTweet
 				'user_id' => $id,
 				'include_entities' => false
 			)
+		);
+
+		if ( $result->error ):
+			echo $result->error;
+			return false;
+		else:
+			return $result;
+		endif;
+	}
+
+	public function retweet( $id )
+	{
+		$result = $this->twitter->post(
+			'statuses/retweet/'.$id.'.json'
 		);
 
 		if ( $result->error ):

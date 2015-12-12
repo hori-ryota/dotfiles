@@ -17,6 +17,17 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>0CEB36BE-585C-4B6A-AE75-DAA851151E88</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1FA82DA3-1563-4B6E-AAAA-B8B3AA820E30</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>1511D264-EC55-442C-9481-25F1FE31E548</key>
 		<array>
 			<dict>
@@ -118,6 +129,17 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>6DCB10E3-7E90-44E9-A4E5-88C6795FB4CA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>58E8ED07-FD7C-41E4-A6AC-F34F33F556BD</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>0CEB36BE-585C-4B6A-AE75-DAA851151E88</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -349,8 +371,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
@@ -392,8 +412,6 @@ $twitter-&gt;follow({query});
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
@@ -485,8 +503,6 @@ $twitter-&gt;unfollow({query});
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
@@ -506,8 +522,6 @@ $alfredtweet-&gt;block({query});</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
@@ -521,6 +535,31 @@ $alfredtweet-&gt;unblock({query});</string>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>9A555992-F78F-4609-B6B3-6FE99C79F4BA</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>AlfredTweet</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>C6C7DF43-0DA2-4449-8CBA-AC6B0B1C0C9B</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -566,31 +605,6 @@ $alfredtweet-&gt;unblock({query});</string>
 			<key>type</key>
 			<string>alfred.workflow.output.notification</string>
 			<key>uid</key>
-			<string>C6C7DF43-0DA2-4449-8CBA-AC6B0B1C0C9B</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>output</key>
-				<integer>0</integer>
-				<key>removeextension</key>
-				<false/>
-				<key>sticky</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>AlfredTweet</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
 			<string>6265830F-E2A6-4983-B256-3A8626D41572</string>
 			<key>version</key>
 			<integer>0</integer>
@@ -598,8 +612,6 @@ $alfredtweet-&gt;unblock({query});</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
 				<key>escaping</key>
 				<integer>4</integer>
 				<key>script</key>
@@ -647,15 +659,13 @@ $alfredtweet-&gt;tweet( $text );</string>
 				<false/>
 				<key>modsmode</key>
 				<integer>2</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
 			<string>1F92B38B-3C7B-48F8-BE02-7EC7A65800A4</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>0</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -666,14 +676,6 @@ $alfredtweet-&gt;tweet( $text );</string>
 				<integer>36</integer>
 				<key>keyword</key>
 				<string>tw</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
 				<key>script</key>
 				<string>php -f counter.php -- "{query}"</string>
 				<key>subtext</key>
@@ -701,14 +703,6 @@ $alfredtweet-&gt;tweet( $text );</string>
 				<integer>36</integer>
 				<key>keyword</key>
 				<string>playing</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
 				<key>script</key>
 				<string>php -f playing.php</string>
 				<key>subtext</key>
@@ -730,8 +724,6 @@ $alfredtweet-&gt;tweet( $text );</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
 				<key>escaping</key>
 				<integer>36</integer>
 				<key>script</key>
@@ -776,8 +768,6 @@ $alfredtweet-&gt;tweet("{query}");</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>script</key>
@@ -847,14 +837,6 @@ $alfredtweet-&gt;tweet("{query}");</string>
 				<integer>63</integer>
 				<key>keyword</key>
 				<string>mentions</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
 				<key>runningsubtext</key>
 				<string>Fetching Twitter mentions …</string>
 				<key>script</key>
@@ -988,8 +970,6 @@ end alfred_script</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
 				<key>escaping</key>
 				<integer>0</integer>
 				<key>script</key>
@@ -1082,8 +1062,6 @@ endforeach;</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
 				<key>escaping</key>
 				<integer>36</integer>
 				<key>script</key>
@@ -1111,14 +1089,6 @@ $at-&gt;destroylist( $in );</string>
 				<integer>36</integer>
 				<key>keyword</key>
 				<string>lists</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
 				<key>runningsubtext</key>
 				<string>Fetching your lists</string>
 				<key>script</key>
@@ -1153,6 +1123,31 @@ echo $w-&gt;toxml();</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>AlfredTweet</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>741417ED-7A82-4F4D-987D-74E83158E54C</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>keyword</key>
@@ -1174,8 +1169,6 @@ echo $w-&gt;toxml();</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
 				<key>escaping</key>
 				<integer>36</integer>
 				<key>script</key>
@@ -1217,31 +1210,6 @@ $create = $at-&gt;createlist( $in );</string>
 			<key>type</key>
 			<string>alfred.workflow.output.notification</string>
 			<key>uid</key>
-			<string>741417ED-7A82-4F4D-987D-74E83158E54C</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>output</key>
-				<integer>0</integer>
-				<key>removeextension</key>
-				<false/>
-				<key>sticky</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>AlfredTweet</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
 			<string>DB9B08FA-A36C-4ACA-B0A8-FD3088E6906D</string>
 			<key>version</key>
 			<integer>0</integer>
@@ -1249,8 +1217,6 @@ $create = $at-&gt;createlist( $in );</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
 				<key>escaping</key>
 				<integer>36</integer>
 				<key>script</key>
@@ -1284,14 +1250,6 @@ $at-&gt;dm( $user, $message );</string>
 				<integer>36</integer>
 				<key>keyword</key>
 				<string>dm</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
 				<key>script</key>
 				<string>require('workflows.php');
 require('sqlitedb.php');
@@ -1353,14 +1311,6 @@ echo $w-&gt;toxml();</string>
 				<integer>36</integer>
 				<key>keyword</key>
 				<string>search</string>
-				<key>queuedelaycustom</key>
-				<integer>1</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<false/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
 				<key>runningsubtext</key>
 				<string>Searching Twitter</string>
 				<key>script</key>
@@ -1415,6 +1365,99 @@ echo $w-&gt;toxml();</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>62</integer>
+				<key>keyword</key>
+				<string>tweets</string>
+				<key>runningsubtext</key>
+				<string>Grabbing recent tweets ...</string>
+				<key>script</key>
+				<string>require('workflows.php');
+require('alfredtweet.php');
+
+$w = new Workflows();
+$a = new AlfredTweet();
+
+$tweets = $a-&gt;timeline();
+
+foreach( $tweets as $tweet ):
+	$w-&gt;result( 'alfredtweet.timeline.tweet', $tweet-&gt;id_str, $tweet-&gt;user-&gt;screen_name, $tweet-&gt;text, 'icon.png', 'yes' );
+endforeach;
+
+echo $w-&gt;toxml();</string>
+				<key>subtext</key>
+				<string>View the most recent tweets from your Twitter timeline</string>
+				<key>title</key>
+				<string>View Timeline</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>58E8ED07-FD7C-41E4-A6AC-F34F33F556BD</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Retweeted</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>1FA82DA3-1563-4B6E-AAAA-B8B3AA820E30</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>62</integer>
+				<key>script</key>
+				<string>require('workflows.php');
+require('alfredtweet.php');
+
+$w = new Workflows();
+$a = new AlfredTweet();
+
+$in = "{query}";
+
+$tweet = $a-&gt;retweet( $in );
+
+echo "Retweeted ". $tweet-&gt;text;</string>
+				<key>type</key>
+				<integer>1</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>0CEB36BE-585C-4B6A-AE75-DAA851151E88</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -1425,6 +1468,11 @@ echo $w-&gt;toxml();</string>
 			<key>ypos</key>
 			<real>1330</real>
 		</dict>
+		<key>0CEB36BE-585C-4B6A-AE75-DAA851151E88</key>
+		<dict>
+			<key>ypos</key>
+			<real>1690</real>
+		</dict>
 		<key>1511D264-EC55-442C-9481-25F1FE31E548</key>
 		<dict>
 			<key>ypos</key>
@@ -1434,6 +1482,11 @@ echo $w-&gt;toxml();</string>
 		<dict>
 			<key>ypos</key>
 			<real>490</real>
+		</dict>
+		<key>1FA82DA3-1563-4B6E-AAAA-B8B3AA820E30</key>
+		<dict>
+			<key>ypos</key>
+			<real>1690</real>
 		</dict>
 		<key>22F4B251-2B17-4E29-9BAE-24912A747341</key>
 		<dict>
@@ -1469,6 +1522,11 @@ echo $w-&gt;toxml();</string>
 		<dict>
 			<key>ypos</key>
 			<real>10</real>
+		</dict>
+		<key>58E8ED07-FD7C-41E4-A6AC-F34F33F556BD</key>
+		<dict>
+			<key>ypos</key>
+			<real>1690</real>
 		</dict>
 		<key>5D7C8EF6-2EB4-494B-8CB8-267BFBBFE350</key>
 		<dict>
