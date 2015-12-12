@@ -33,4 +33,4 @@ ln -snf "$BASEDIR"/alfred "$HOME"/.alfred
 ln -snf "$BASEDIR"/ideavimrc "$HOME"/.ideavimrc
 
 # tern (For javascript)
-ln -snf "$BASEDIR"/tern-project "$HOME"/.tern-project
+ln -snf "$BASEDIR"/tern-config "$HOME"/.tern-config
