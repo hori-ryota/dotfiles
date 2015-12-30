@@ -61,7 +61,7 @@ brew install mycli
 ##########
 
 # Install cask
-brew install caskroom/cask/brew-cask
+brew tap caskroom/cask
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 brew tap caskroom/versions
