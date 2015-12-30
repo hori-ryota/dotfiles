@@ -98,9 +98,6 @@ brew cask install shiftit #--force
 # Document manager
 brew cask install dash #--force
 
-# Todo manager
-brew cask install todoist #--force
-
 # Chat
 brew cask install hipchat #--force
 brew cask install slack #--force
@@ -160,6 +157,7 @@ brew cask install font-source-code-pro-for-powerline #--force
 # PopClip
 # Reeder 2
 # Xcode
+# todoist
 
 ############
 #  Others  #
