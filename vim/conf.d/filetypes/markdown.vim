@@ -1,4 +1,6 @@
 let g:markdown_enable_spell_checking = 0
+let g:markdown_mapping_switch_status = '<Learder>x'
+
 
 function! s:local_markdown()
     setlocal tabstop=4
