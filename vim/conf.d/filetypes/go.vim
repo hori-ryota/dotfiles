@@ -1,5 +1,16 @@
 let g:go_fmt_options = '-s'
-let g:go_metalinter_deadline = '10s'
+" metalinterにオプションを付ける方法が用意されていなかったのでとりあえず無理やり混ぜ込む
+let g:go_metalinter_deadline = '10s --tests'
+let g:go_metalinter_enabled = [
+            \ 'aligncheck',
+            \ 'deadcode',
+            \ 'errcheck',
+            \ 'ineffassign',
+            \ 'interfacer',
+            \ 'structcheck',
+            \ 'varcheck',
+            \ 'vet',
+            \ ]
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
