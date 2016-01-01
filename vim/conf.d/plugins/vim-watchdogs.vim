@@ -5,8 +5,13 @@ if !exists("g:quickrun_config")
 endif
 let g:quickrun_config["watchdogs_checker/_"] = {
             \ "outputter/quickfix/open_cmd": "",
+            \ "hook/qfsigns_update/enable_exit": 1,
+            \ "hook/qfsigns_update/priority_exit": 3,
+            \ "hook/close_quickfix/enable_exit": 1,
+            \ "hook/back_window/enable_exit": 0,
+            \ "hook/back_window/priority_exit": 1,
             \ "hook/qfstatusline_update/enable_exit": 1,
-            \ "hook/qfstatusline_update/priority_exit": 4,
+            \ "hook/qfstatusline_update/priority_exit": 2,
             \ "runner/vimproc/updatetime": 40,
             \ }
 
