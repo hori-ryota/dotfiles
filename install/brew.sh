@@ -53,6 +53,8 @@ brew install ansible
 brew install optipng
 # mysql
 brew install mycli
+# ffmpeg
+brew install ffmpeg --with-freetype --with-fdk-aac --with-libvo-aacenc  --with-libvorbis --with-libvpx --with-openjpeg --with-theora --with-opencore-amr
 
 
 
@@ -99,7 +101,6 @@ brew cask install shiftit #--force
 brew cask install dash #--force
 
 # Chat
-brew cask install hipchat #--force
 brew cask install slack #--force
 
 # Virtual environment
