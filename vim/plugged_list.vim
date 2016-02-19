@@ -233,7 +233,7 @@ Plug 'chase/vim-ansible-yaml', {
 """""""""""""""
 "  Terraform  "
 """""""""""""""
-Plug 'markcornick/vim-terraform', {
+Plug 'hashivim/vim-terraform', {
             \ 'for': ['terraform', 'javascript']
             \ }
 
