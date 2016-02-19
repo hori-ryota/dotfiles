@@ -4,7 +4,7 @@ let s:script_dir = expand('<sfile>:p:h')
 "                               General Config                               "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
-set clipboard+=unnamed " Yanks go on clipboard instead
+" set clipboard+=unnamed " Yanks go on clipboard instead
 let mapleader = ','
 let maplocalleader = ','
 " Open vimrc
