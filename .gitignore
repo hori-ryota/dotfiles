@@ -1,11 +1,12 @@
 # vim
+vim/.netrwhist
+vim/autoload/plug.vim
+vim/autoload/plug.vim.old
 vim/backup/
 vim/plugged/
 vim/swap/
 vim/undo/
-vim/autoload/plug.vim
-vim/autoload/plug.vim.old
-vim/.netrwhist
+vim/view/
 
 # alfred
 alfred/Alfred.alfredpreferences/preferences/local/
