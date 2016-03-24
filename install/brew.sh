@@ -90,9 +90,6 @@ brew cask install google-japanese-ime #--force
 # Fast Keywords Concatenator
 brew cask install karabiner #--force
 
-# Extend finder
-brew cask install xtrafinder #--force
-
 # Window manager
 brew cask install xquartz #--force
 brew cask install shiftit #--force
