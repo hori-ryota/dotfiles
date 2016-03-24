@@ -54,7 +54,7 @@ brew install optipng
 # mysql
 brew install mycli
 # ffmpeg
-brew install ffmpeg --with-freetype --with-fdk-aac --with-libvo-aacenc  --with-libvorbis --with-libvpx --with-openjpeg --with-theora --with-opencore-amr
+brew install ffmpeg --with-freetype --with-fdk-aac --with-libvo-aacenc  --with-libvorbis --with-libvpx --with-openjpeg --with-theora --with-opencore-amr --with-openssl
 
 
 
