@@ -1,638 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-	<key>bundleid</key>
-	<string>com.dangerphil.ytc</string>
-	<key>connections</key>
-	<dict>
-		<key>16A70CF0-A125-4D37-8BE7-FE6422E515E9</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>F231915D-6C9F-474C-8B4E-3832AC659E22</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
-		<key>4695539B-AF5B-45F2-A90E-42CB089F2E30</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>4D8EAA45-839F-4BA7-925C-B93F89DAAE68</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
-		<key>5BB9DADA-E6FA-4CF4-A1CE-DC837FE8FC91</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>F73ABD0C-C539-4C87-80C4-56CC986F6877</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>EADC8615-179B-4EE5-8FB2-61E1BF5AD430</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
-		<key>8C31B741-5B5A-42E5-B584-5598EAFACAFC</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>CCE28EC8-76C7-4E30-B538-53C465A5B0DF</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
-		<key>9B244CF8-1B93-49B1-AA9B-4DFF19120386</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>D84A9DEA-29E5-4230-8A15-AE4211A193A9</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
-		<key>BE83AA15-3B31-4072-AFD1-3407D1A82521</key>
-		<array/>
-		<key>C797011E-E2C3-49B7-9972-CA0F40B2E2BE</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>A26AE5B2-2FE4-406A-B67B-A25E06E9CCDF</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
-		<key>D6D46CF7-B2AD-4370-B80A-93B1EFA7AA5E</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>C9AFB203-DED7-4CC9-969D-CFB5A58F631B</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
-		<key>E1E5B0F4-B004-4753-B4CB-A7E1DF428B9C</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>5BB9DADA-E6FA-4CF4-A1CE-DC837FE8FC91</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
-		<key>F90A1720-3599-41D9-AACC-2C6A1E105AD4</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>A26AE5B2-2FE4-406A-B67B-A25E06E9CCDF</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-			</dict>
-		</array>
-	</dict>
-	<key>createdby</key>
-	<string>DangerPhil</string>
-	<key>description</key>
-	<string>Controls Youtube Video Playing in Google Chrome</string>
-	<key>disabled</key>
-	<false/>
-	<key>name</key>
-	<string>Youtube Control (Google Chrome)</string>
-	<key>objects</key>
-	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>escaping</key>
-				<integer>5</integer>
-				<key>keyword</key>
-				<string>yti</string>
-				<key>runningsubtext</key>
-				<string>Finding Youtube Video</string>
-				<key>script</key>
-				<string># get the workflow's source folderset workflowFolder to do shell script "pwd"# load the Workflow libraryset wlib to load script POSIX file (workflowFolder &amp; "/q_workflow.scpt")# create a new Workflow Classset wf to wlib's new_workflow()# setup javascript snippets# code to retrieve video's durationset durationtitle to "
-if (document.getElementsByClassName('ytp-time-current').length &gt; 0) {
-var timecurrent =
-  document.getElementsByClassName('ytp-time-current')[0].innerHTML;
-var totaltime = 
-  document.getElementsByClassName('ytp-time-duration')[0].innerHTML;
-if (timecurrent &amp;&amp; totaltime) {
-  document.title = timecurrent + '/' + totaltime;
-}
-}
-"# code to retrieve channel imageset imageurltitle to "
-document.title = document.getElementsByClassName('yt-user-photo')[0].childNodes[1].childNodes[1].childNodes[1].childNodes[1].getAttribute('src');
-"# code to retrieve whether you are subscribed to the channelset subscribedtitle to "
-document.title = (document.querySelectorAll('[data-is-subscribed]').length === 1).toString();
-"set likedtitle to "
-document.title = (document.getElementById('watch-like').className.indexOf('yt-uix-button-toggled') &gt;= 0).toString();
-"set dislikedtitle to "
-document.title = (document.getElementById('watch-dislike').className.indexOf('yt-uix-button-toggled') &gt;= 0).toString();
-"# code to retrieve channel nameset channelnametitle to "
-document.title = document.getElementsByClassName('yt-user-photo')[0].childNodes[1].childNodes[1].childNodes[1].childNodes[1].getAttribute('alt');
-"# code to set the tab titleset returntitle to "document.title = '[[replace]]';"try	tell application "Google Chrome"		# find the first tab thats on the play youtube video page		repeat with t in tabs of windows			tell t				if URL starts with "http://www.youtube.com/watch" or URL starts with "https://www.youtube.com/watch" then					set found to true					# capture current video title					set playing to title										# escape apostrophes and ampersands in video title - these are nasty					set AppleScript's text item delimiters to "'"					set the item_list to every text item of playing					set AppleScript's text item delimiters to "\\'"					set escapedplaying to the item_list as string					set AppleScript's text item delimiters to "&amp;"					set the item_list to every text item of escapedplaying					set AppleScript's text item delimiters to "\\&amp;"					set escapedplaying to the item_list as string					set AppleScript's text item delimiters to the "[[replace]]"					set the item_list to every text item of returntitle					set AppleScript's text item delimiters to the escapedplaying					set returntitle to the item_list as string										# retrieve duration					execute javascript durationtitle					set duration to title										# retrieve imageurl					execute javascript imageurltitle					set imageurl to title					execute javascript returntitle					log imageurl					do shell script "curl -o \"" &amp; workflowFolder &amp; "/channelimage.jpg\" " &amp; imageurl										# retrieve channel name					execute javascript channelnametitle					set channelname to title										# retrieve whether we are subscribed to the channel					execute javascript subscribedtitle					set subscribed to title										# retrieve whether the video is liked					execute javascript likedtitle					set liked to title										# retrieve whether the video is dislike					execute javascript dislikedtitle					set disliked to title										# set the title back to the video title					execute javascript returntitle				end if							end tell			if found then				exit repeat			end if		end repeat	end tell		if playing is duration then set duration to "NA"	set text item delimiters to " - Youtube"	set strip to text item 1 of playing	set playing to the strip as string		if liked is "true" then		set playing to playing &amp; " (" &amp; duration &amp; ") " &amp; "Liked"	else if disliked is "true" then		set playing to playing &amp; " (" &amp; duration &amp; ") " &amp; "Disliked"	else		set playing to playing &amp; " (" &amp; duration &amp; ")"	end if		if subscribed is "true" then		set channelname to channelname &amp; " (Subscribed)"	end if		#add suggestion	add_result of wf without isValid given theUid:"", theArg:missing value, theTitle:playing, theAutocomplete:"", theSubtitle:channelname, theIcon:"channelimage.jpg", theType:""		# show all the results in Alfred	wf's to_xml("")on error	#add error	add_result of wf without isValid given theUid:"", theArg:missing value, theTitle:"There doesn't seem to be a video playing", theAutocomplete:"", theSubtitle:"Is Google Chrome running?", theIcon:"icon.jpg", theType:""		# show all the results in Alfred	wf's to_xml("")end try</string>
-				<key>subtext</key>
-				<string>Now Playing</string>
-				<key>title</key>
-				<string>Now Playing Information</string>
-				<key>type</key>
-				<integer>6</integer>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>BE83AA15-3B31-4072-AFD1-3407D1A82521</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>applescript</key>
-				<string>on alfred_script(q)
-tell application "Google Chrome"	repeat with t in tabs of windows		tell t			if URL starts with "http://www.youtube.com/watch" or URL starts with "https://www.youtube.com/watch" then				execute javascript "
-        var player =
-          document.getElementById('movie_player') ||
-          document.getElementsByTagName('embed')[0];
-        if (player) {
-          if (player.getPlayerState() === 1) {
-            player.pauseVideo();
-          } else {
-            player.playVideo();
-          }
-        }
-        "				exit repeat			end if		end tell	end repeatend tell
-end alfred_script</string>
-				<key>cachescript</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.applescript</string>
-			<key>uid</key>
-			<string>C9AFB203-DED7-4CC9-969D-CFB5A58F631B</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>ytp</string>
-				<key>subtext</key>
-				<string>Play or Pause Youtube</string>
-				<key>text</key>
-				<string>Play/Pause</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>D6D46CF7-B2AD-4370-B80A-93B1EFA7AA5E</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>ytn</string>
-				<key>subtext</key>
-				<string>Play the next video in a Youtube Playlist</string>
-				<key>text</key>
-				<string>Next Playlist Video</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>16A70CF0-A125-4D37-8BE7-FE6422E515E9</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>applescript</key>
-				<string>on alfred_script(q)
-tell application "Google Chrome"	repeat with t in tabs of windows		tell t			if URL starts with "http://www.youtube.com/watch" or URL starts with "https://www.youtube.com/watch" then				execute javascript "
-        var player =
-          document.getElementById('movie_player') ||
-          document.getElementsByTagName('embed')[0];
-        var next = document.getElementsByClassName('next-playlist-list-item')[0];
-        if (player &amp;&amp; next) {
-          next.click();
-        }
-        "				exit repeat			end if		end tell	end repeatend tell
-end alfred_script</string>
-				<key>cachescript</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.applescript</string>
-			<key>uid</key>
-			<string>F231915D-6C9F-474C-8B4E-3832AC659E22</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>ytb</string>
-				<key>subtext</key>
-				<string>Play the previous video in a Youtube Playlist</string>
-				<key>text</key>
-				<string>Previous Playlist Video</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>C797011E-E2C3-49B7-9972-CA0F40B2E2BE</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>applescript</key>
-				<string>on alfred_script(q)
-tell application "Google Chrome"	repeat with t in tabs of windows		tell t			if URL starts with "http://www.youtube.com/watch" or URL starts with "https://www.youtube.com/watch" then				execute javascript "
-        var player =
-          document.getElementById('movie_player') ||
-          document.getElementsByTagName('embed')[0];
-        var next = document.getElementsByClassName('prev-playlist-list-item')[0];
-        if (player &amp;&amp; next) {
-          next.click();
-        }
-        "				exit repeat			end if		end tell	end repeatend tell
-end alfred_script</string>
-				<key>cachescript</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.applescript</string>
-			<key>uid</key>
-			<string>A26AE5B2-2FE4-406A-B67B-A25E06E9CCDF</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>ytpr</string>
-				<key>subtext</key>
-				<string>Play the previous song in a Youtube Playlist</string>
-				<key>text</key>
-				<string>Previous Playlist Video</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>F90A1720-3599-41D9-AACC-2C6A1E105AD4</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>ytl</string>
-				<key>subtext</key>
-				<string>Like Video on Youtube</string>
-				<key>text</key>
-				<string>Like Video</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>8C31B741-5B5A-42E5-B584-5598EAFACAFC</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>applescript</key>
-				<string>on alfred_script(q)
-tell application "Google Chrome"	repeat with t in tabs of windows		tell t			if URL starts with "http://www.youtube.com/watch" or URL starts with "https://www.youtube.com/watch" then				execute javascript "
-if (document.getElementById('watch-like').className.indexOf('yt-uix-button-toggled') &lt; 0) {
-	document.getElementById('watch-like').click();}
-"				exit repeat			end if		end tell	end repeatend tell
-end alfred_script</string>
-				<key>cachescript</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.applescript</string>
-			<key>uid</key>
-			<string>CCE28EC8-76C7-4E30-B538-53C465A5B0DF</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>yts</string>
-				<key>subtext</key>
-				<string>Subscribe to the Youtube Channel</string>
-				<key>text</key>
-				<string>Subscribe</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>4695539B-AF5B-45F2-A90E-42CB089F2E30</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>applescript</key>
-				<string>on alfred_script(q)	tell application "Google Chrome"		repeat with t in tabs of windows			tell t				if URL starts with "http://www.youtube.com/watch" or URL starts with "https://www.youtube.com/watch" then					execute javascript "
-  if (document.querySelectorAll('[data-is-subscribed]').length === 0) {
-    var subscribe = document.querySelectorAll('.yt-uix-subscription-button')[0];
-     subscribe.click();
-  }
-        "					exit repeat				end if			end tell		end repeat	end tellend alfred_script</string>
-				<key>cachescript</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.applescript</string>
-			<key>uid</key>
-			<string>4D8EAA45-839F-4BA7-925C-B93F89DAAE68</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>output</key>
-				<integer>0</integer>
-				<key>removeextension</key>
-				<false/>
-				<key>sticky</key>
-				<false/>
-				<key>title</key>
-				<string>Video URL Copied</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>F73ABD0C-C539-4C87-80C4-56CC986F6877</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>applescript</key>
-				<string>on alfred_script(q)
-tell application "Google Chrome"	repeat with t in tabs of windows		tell t			if URL starts with "http://www.youtube.com/watch" or URL starts with "https://www.youtube.com/watch" then				set vidurl to URL				set AppleScript's text item delimiters to "&amp;"				set the item_list to every text item of vidurl				set strip to text item 1 of vidurl				set vidurl to the strip as string				return vidurl				exit repeat			end if		end tell	end repeatend tell
-end alfred_script</string>
-				<key>cachescript</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.applescript</string>
-			<key>uid</key>
-			<string>5BB9DADA-E6FA-4CF4-A1CE-DC837FE8FC91</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>ytc</string>
-				<key>subtext</key>
-				<string>Copy Youtube video URL to the clipboard</string>
-				<key>text</key>
-				<string>Copy Video URL To Clipboard</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>E1E5B0F4-B004-4753-B4CB-A7E1DF428B9C</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>autopaste</key>
-				<false/>
-				<key>clipboardtext</key>
-				<string>{query}</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.clipboard</string>
-			<key>uid</key>
-			<string>EADC8615-179B-4EE5-8FB2-61E1BF5AD430</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>ytd</string>
-				<key>subtext</key>
-				<string>Dislike Video on Youtube</string>
-				<key>text</key>
-				<string>Dislike Video</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>9B244CF8-1B93-49B1-AA9B-4DFF19120386</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>applescript</key>
-				<string>on alfred_script(q)
-tell application "Google Chrome"	repeat with t in tabs of windows		tell t			if URL starts with "http://www.youtube.com/watch" or URL starts with "https://www.youtube.com/watch" then				execute javascript "
-if (document.getElementById('watch-dislike').className.indexOf('yt-uix-button-toggled') &lt; 0) {
-	document.getElementById('watch-dislike').click();}
-"				exit repeat			end if		end tell	end repeatend tell
-end alfred_script</string>
-				<key>cachescript</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.applescript</string>
-			<key>uid</key>
-			<string>D84A9DEA-29E5-4230-8A15-AE4211A193A9</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-	</array>
-	<key>readme</key>
-	<string></string>
-	<key>uidata</key>
-	<dict>
-		<key>16A70CF0-A125-4D37-8BE7-FE6422E515E9</key>
-		<dict>
-			<key>ypos</key>
-			<real>230</real>
-		</dict>
-		<key>4695539B-AF5B-45F2-A90E-42CB089F2E30</key>
-		<dict>
-			<key>ypos</key>
-			<real>670</real>
-		</dict>
-		<key>4D8EAA45-839F-4BA7-925C-B93F89DAAE68</key>
-		<dict>
-			<key>ypos</key>
-			<real>670</real>
-		</dict>
-		<key>5BB9DADA-E6FA-4CF4-A1CE-DC837FE8FC91</key>
-		<dict>
-			<key>ypos</key>
-			<real>780</real>
-		</dict>
-		<key>8C31B741-5B5A-42E5-B584-5598EAFACAFC</key>
-		<dict>
-			<key>ypos</key>
-			<real>560</real>
-		</dict>
-		<key>9B244CF8-1B93-49B1-AA9B-4DFF19120386</key>
-		<dict>
-			<key>ypos</key>
-			<real>900</real>
-		</dict>
-		<key>A26AE5B2-2FE4-406A-B67B-A25E06E9CCDF</key>
-		<dict>
-			<key>ypos</key>
-			<real>390</real>
-		</dict>
-		<key>BE83AA15-3B31-4072-AFD1-3407D1A82521</key>
-		<dict>
-			<key>ypos</key>
-			<real>10</real>
-		</dict>
-		<key>C797011E-E2C3-49B7-9972-CA0F40B2E2BE</key>
-		<dict>
-			<key>ypos</key>
-			<real>340</real>
-		</dict>
-		<key>C9AFB203-DED7-4CC9-969D-CFB5A58F631B</key>
-		<dict>
-			<key>ypos</key>
-			<real>120</real>
-		</dict>
-		<key>CCE28EC8-76C7-4E30-B538-53C465A5B0DF</key>
-		<dict>
-			<key>ypos</key>
-			<real>560</real>
-		</dict>
-		<key>D6D46CF7-B2AD-4370-B80A-93B1EFA7AA5E</key>
-		<dict>
-			<key>ypos</key>
-			<real>120</real>
-		</dict>
-		<key>D84A9DEA-29E5-4230-8A15-AE4211A193A9</key>
-		<dict>
-			<key>ypos</key>
-			<real>900</real>
-		</dict>
-		<key>E1E5B0F4-B004-4753-B4CB-A7E1DF428B9C</key>
-		<dict>
-			<key>ypos</key>
-			<real>780</real>
-		</dict>
-		<key>EADC8615-179B-4EE5-8FB2-61E1BF5AD430</key>
-		<dict>
-			<key>ypos</key>
-			<real>840</real>
-		</dict>
-		<key>F231915D-6C9F-474C-8B4E-3832AC659E22</key>
-		<dict>
-			<key>ypos</key>
-			<real>230</real>
-		</dict>
-		<key>F73ABD0C-C539-4C87-80C4-56CC986F6877</key>
-		<dict>
-			<key>ypos</key>
-			<real>720</real>
-		</dict>
-		<key>F90A1720-3599-41D9-AACC-2C6A1E105AD4</key>
-		<dict>
-			<key>ypos</key>
-			<real>450</real>
-		</dict>
-	</dict>
-	<key>webaddress</key>
-	<string></string>
-</dict>
-</plist>

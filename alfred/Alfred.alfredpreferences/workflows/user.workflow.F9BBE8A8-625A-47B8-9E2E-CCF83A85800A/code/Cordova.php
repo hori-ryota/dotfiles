@@ -4,12 +4,12 @@ namespace WillFarrell\AlfredPkgMan;
 require_once('Cache.php');
 require_once('Repo.php');
 
-class Gulp extends Repo
+class Cordova extends Repo
 {
-	protected $id         = 'gulp';
+	protected $id         = 'cordova';
 	protected $kind       = 'plugins';
-	protected $url        = 'http://gulpjs.com';
-	protected $search_url = 'http://npmsearch.com/query?fields=name,keywords,rating,description,author,modified,homepage,version&q=keywords:gulpfriendly&q=keywords:gulpplugin&size=20&sort=rating:desc&start=0&q=';
+	protected $url        = 'https://cordova.apache.org/plugins/?q=';
+	protected $search_url = 'https://npmsearch.com/query?fields=name,keywords,license,description,author,modified,homepage,version,rating&q=keywords:%22ecosystem:cordova%22&sort=rating:desc&size=20&start=0&q=';
 	//protected $has_db     = true;
 
 	public function search($query)
@@ -63,6 +63,6 @@ class Gulp extends Repo
 }
 
 // Test code, uncomment to debug this script from the command-line
-// $repo = new Gulp();
+// $repo = new Cordova();
 // echo $repo->search('min');
 ?>

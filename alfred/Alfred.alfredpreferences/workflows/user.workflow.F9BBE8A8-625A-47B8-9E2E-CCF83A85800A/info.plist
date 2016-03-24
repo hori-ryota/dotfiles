@@ -4,6 +4,8 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.farrell.pkgman.alfredworkflow</string>
+	<key>category</key>
+	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
 		<key>0376C25E-AF4F-4F76-B9BC-AD9E998CE4A3</key>
@@ -137,6 +139,33 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+			</dict>
+		</array>
+		<key>5D46DE45-AD0E-4A12-8AE6-BFC129AA4C0F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1A806429-BBAB-4227-B0C9-46E96CD3E492</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>135ECB8C-557A-41D9-BF9A-6439A5EA949E</string>
+				<key>modifiers</key>
+				<integer>1048576</integer>
+				<key>modifiersubtext</key>
+				<string>Copy package name to front most app.</string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>D16CFAE9-21B6-44DD-965D-73EC1BE630C2</string>
+				<key>modifiers</key>
+				<integer>131072</integer>
+				<key>modifiersubtext</key>
+				<string>Inject package into Terminal (paste to front most app).</string>
 			</dict>
 		</array>
 		<key>5F73C46B-877B-4BC6-A231-E72525BBCEB2</key>
@@ -568,7 +597,7 @@
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
-	<string>Package Managers (v3.03)</string>
+	<string>Package Managers (v3.06)</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -1801,6 +1830,50 @@ echo $repo-&gt;search($query);</string>
 				<key>escaping</key>
 				<integer>63</integer>
 				<key>keyword</key>
+				<string>cordova</string>
+				<key>queuedelaycustom</key>
+				<integer>1</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}"</string>
+				<key>script</key>
+				<string>$query = &lt;&lt;&lt;EOD
+{query}
+EOD;
+
+require_once('code/Cordova.php');
+
+$repo = new WillFarrell\AlfredPkgMan\Cordova();
+echo $repo-&gt;search($query);</string>
+				<key>subtext</key>
+				<string>Search Cordova for "{query}"</string>
+				<key>title</key>
+				<string>Search Cordova</string>
+				<key>type</key>
+				<integer>1</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>5D46DE45-AD0E-4A12-8AE6-BFC129AA4C0F</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>keyword</key>
 				<string>atom</string>
 				<key>queuedelaycustom</key>
 				<integer>1</integer>
@@ -1925,7 +1998,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 		<key>0376C25E-AF4F-4F76-B9BC-AD9E998CE4A3</key>
 		<dict>
 			<key>ypos</key>
-			<real>2460</real>
+			<real>2420</real>
 		</dict>
 		<key>0A704625-29E6-450E-8F2C-8E4EC7179899</key>
 		<dict>
@@ -1982,6 +2055,11 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>5D46DE45-AD0E-4A12-8AE6-BFC129AA4C0F</key>
+		<dict>
+			<key>ypos</key>
+			<real>2580</real>
+		</dict>
 		<key>5F73C46B-877B-4BC6-A231-E72525BBCEB2</key>
 		<dict>
 			<key>ypos</key>
@@ -2000,7 +2078,7 @@ The Python Package Index is very slow due to a lack on API and pagination. A min
 		<key>689DD809-6CBA-476F-9299-4D22CAF07D9F</key>
 		<dict>
 			<key>ypos</key>
-			<real>2630</real>
+			<real>2750</real>
 		</dict>
 		<key>6DA4E86D-6897-4E36-811B-EA9340364E48</key>
 		<dict>
