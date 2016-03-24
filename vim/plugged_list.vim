@@ -181,6 +181,13 @@ Plug 'tpope/vim-rails', {
             \ 'for': 'ruby'
             \ }
 
+""""""""""""
+"  Kotlin  "
+""""""""""""
+Plug 'udalov/kotlin-vim', {
+            \ 'for': 'kotlin'
+            \ }
+
 """"""""""
 "  html  "
 """"""""""

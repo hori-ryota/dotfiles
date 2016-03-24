@@ -220,6 +220,7 @@ augroup FileTypeDetect "{{{
     autocmd BufRead,BufNewFile *.styl,*.stylus          setfiletype stylus
     autocmd BufRead,BufNewFile *.tex                    setfiletype tex
     autocmd BufRead,BufNewFile *.ts                     setfiletype typescript
+    autocmd BufRead,BufNewFile *.kt                     setfiletype kotlin
     autocmd BufRead,BufNewFile *.yml,*.yaml,*.lock      setfiletype yaml
     autocmd BufRead,BufNewFile *.{md,mdwn,mkd,mkdn,mark*,txt,text} setfiletype markdown
     autocmd BufRead,BufNewFile .tmux.conf,tmux.conf     setfiletype tmux
