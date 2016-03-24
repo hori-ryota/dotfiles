@@ -1,6 +1,11 @@
 " For 'scrooloose/syntastic'
 let g:ycm_show_diagnostics_ui = 0
 
+nnoremap <leader>dd :<C-u>YcmCompleter GoTo<CR>
+nnoremap <leader>dr :<C-u>YcmCompleter GoToReferences<CR>
+nnoremap <leader>gd :<C-u>YcmCompleter GetDoc<CR>
+nnoremap <leader>I :<C-u>YcmCompleter GetType<CR>
+
 
 let g:ycm_filetype_blacklist = {}
 

@@ -40,7 +40,7 @@ Plug 'w0ng/vim-hybrid'
 "  YouCompleteMe  "
 """""""""""""""""""
 Plug 'Valloric/YouCompleteMe', {
-            \ 'do': 'brew install cmake; ./install.sh --clang-completer --gocode-completer'
+            \ 'do': 'brew install cmake; ./install.py --clang-completer --gocode-completer --tern-completer'
             \ }
 
 """""""""""""
