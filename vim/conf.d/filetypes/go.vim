@@ -5,6 +5,7 @@ let g:go_metalinter_enabled = [
             \ 'aligncheck',
             \ 'deadcode',
             \ 'errcheck',
+            \ 'gofmt',
             \ 'ineffassign',
             \ 'interfacer',
             \ 'structcheck',
@@ -62,6 +63,10 @@ function! s:setup_golang()
     nmap <buffer> <Leader>ds <Plug>(go-def-split)
     nmap <buffer> <Leader>dv <Plug>(go-def-vertical)
     nmap <buffer> <Leader>dt <Plug>(go-def-tab)
+
+    nmap <buffer> <Leader>ad <Plug>(go-alternate-edit)
+    nmap <buffer> <Leader>as <Plug>(go-alternate-split)
+    nmap <buffer> <Leader>av <Plug>(go-alternate-vertical)
 
     nmap <buffer> <Leader>de <Plug>(go-describe)
     nmap <buffer> <Leader>dc <Plug>(go-callers)
