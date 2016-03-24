@@ -140,6 +140,14 @@ Plug 'mxw/vim-jsx', {
             \ 'for': 'javascript'
             \ }
 
+""""""""""""""""
+"  TypeScript  "
+""""""""""""""""
+Plug 'leafgarland/typescript-vim', {
+            \ 'do': 'npm install -g clausreinke/typescript-tools typescript',
+            \ 'for': 'typescript'
+            \ }
+
 """"""""
 "  go  "
 """"""""
