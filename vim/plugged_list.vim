@@ -281,6 +281,8 @@ Plug 'vim-scripts/Align', {
 """"""""""
 " the_silver_searcher
 Plug 'rking/ag.vim'
+" replacement in quickfix
+Plug 'thinca/vim-qfreplace'
 " quickrun
 Plug 'thinca/vim-quickrun'
 " list tags
