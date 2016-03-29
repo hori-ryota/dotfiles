@@ -49,8 +49,6 @@ brew install docker-compose
 # Orchestration tools
 brew install terraform
 brew install ansible
-# Image
-brew install optipng
 # mysql
 brew install mycli
 # ffmpeg
@@ -103,9 +101,6 @@ brew cask install slack #--force
 # Virtual environment
 brew cask install virtualbox #--force
 
-# Image optimization
-brew cask install imageoptim #--force
-
 # For QuickLook
 ## For no filename extension
 brew cask install qlstephen #--force
@@ -121,9 +116,6 @@ brew cask install betterzipql #--force
 brew cask install suspicious-package #--force
 ## For code highlight
 brew cask install qlcolorcode #--force
-
-# Website link checker
-brew cask install integrity #--force
 
 # Kindle
 brew cask install kindle #--force
