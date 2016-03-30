@@ -874,6 +874,11 @@ nnoremap <silent> <space>gbl :<C-u>Gblame<CR>
 nnoremap <silent> <space>gl :<C-u>Agit<CR>
 nnoremap <silent> <space>gL :<C-u>AgitFile<CR>
 
+function! s:setup_agit()
+    nmap <buffer> ch <Plug>(agit-git-cherry-pick)
+    nmap <buffer> Rv <Plug>(agit-git-revert)
+endfunction
+
 nnoremap <silent> <space>gm :<C-u>MerginalToggle<CR>
 
 cabbrev git Git
@@ -1060,6 +1065,7 @@ endfunction
 "{{{
 augroup my_setup_filetype_configuration
     autocmd!
+    autocmd FileType agit       call s:setup_agit()
     autocmd FileType css        call s:setup_css()
     autocmd FileType go         call s:setup_golang()
     autocmd FileType javascript call s:setup_javascript()
