@@ -24,6 +24,7 @@
 	tool = vimdiff
 [mergetool]
 	prompt = false
+	keepBackup = false
 [url "git@github.com:"]
 	pushinsteadof = "https://github.com/"
 	pushinsteadof = "git://github.com/"
