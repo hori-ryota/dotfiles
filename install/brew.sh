@@ -24,8 +24,7 @@ brew install hub
 
 # Vim
 brew install python
-brew install lua
-brew install vim --with-lua
+brew install vim --with-lua --with-luajit --override-system-vi
 
 # tmux
 brew install tmux
