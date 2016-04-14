@@ -1,10 +1,7 @@
 let s:script_dir = expand('<sfile>:p:h')
 let s:vim_dir = $HOME . '/.vim'
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                               General Config                               "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
+"{{{ General Config
 " set clipboard+=unnamed " Yanks go on clipboard instead
 let mapleader = ','
 let maplocalleader = ','
@@ -24,10 +21,7 @@ set fileencoding=utf-8
 set fileformats=unix,mac,dos
 "}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                               Editor Config                                "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{ 
+"{{{ Editor Config
 set autoindent
 set smartindent
 set wrap
@@ -54,10 +48,7 @@ endif
 set foldmethod=marker
 "}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              Undo/Swap Config                              "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
+"{{{ Undo/Swap Config
 " path
 let s:vim_local_dir = s:vim_dir . '.local'
 let g:local_backup_dir = s:vim_local_dir . '/backup'
@@ -90,10 +81,7 @@ endif
 "
 ""}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                 UI Config                                  "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
+"{{{ UI Config
 set ruler                   " show the cursor position all the time
 " highlight cursor line in current window
 augroup vimrc-auto-cursorline
@@ -165,10 +153,7 @@ augroup Redraw
 augroup END
 "}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              Highlight Config                              "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
+"{{{ Highlight Config
 syntax on
 
 " 行末にスペースをハイライト
@@ -197,10 +182,7 @@ if has('syntax')
 endif
 "}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                               Search Config                                "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
+"{{{ Search Config
 "" Search
 set history=100             " keep 100 lines of command line histories
 set ignorecase
@@ -217,12 +199,8 @@ augroup Search
 augroup END
 "}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              Filetype Config                               "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"" ftdetects
-augroup FileTypeDetect "{{{
+"{{{ FileTypeDetect
+augroup FileTypeDetect
     autocmd!
     autocmd BufRead,BufNewFile *.PL,*.psgi,*.t          setfiletype perl
     autocmd BufRead,BufNewFile *.coffee                 setfiletype coffee
@@ -248,18 +226,281 @@ augroup FileTypeDetect "{{{
 augroup END
 "}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              vim-plug Config                               "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
-source $HOME/.vim/plugged_list.vim
+"{{{ vim-plug Config
+call plug#begin('~/.vim/plugged')
+
+"{{{ General
+
+"{{{ crtlp
+Plug 'ctrlpvim/ctrlp.vim'
 "}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                               Comment Config                               "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{ Status bar
+" color scheme for lightline
+Plug 'cocopon/lightline-hybrid.vim'
+Plug 'itchyny/lightline.vim'
+"}}}
 
-" Commenting blocks of code."{{{
+"{{{ history
+Plug 'sjl/gundo.vim'
+"}}}
+
+"{{{ content
+Plug 'vim-scripts/diffchar.vim'
+"}}}
+
+"}}}
+
+"{{{ Color Scheme
+Plug 'w0ng/vim-hybrid'
+"}}}
+
+"{{{ Programming
+
+"{{{ YouCompleteMe
+Plug 'Valloric/YouCompleteMe', {
+            \ 'do': 'brew install cmake; ./install.py --clang-completer --gocode-completer --tern-completer'
+            \ }
+"}}}
+
+"{{{ Snippet
+Plug 'honza/vim-snippets' | Plug 'SirVer/ultisnips'
+"}}}
+
+"{{{ Filer
+Plug 'scrooloose/nerdtree', {
+            \ 'on': 'NERDTreeToggle'
+            \ }
+"}}}
+
+"{{{ Visual
+Plug 't9md/vim-choosewin', {
+            \ 'on': '<Plug>(choosewin)'
+            \ }
+Plug 'Yggdroot/indentLine'
+"}}}
+
+"{{{ Editor
+" edit surround easy
+Plug 'tpope/vim-surround'
+" Aligning Text
+Plug 'junegunn/vim-easy-align'
+" comment stuff out
+Plug 'tpope/vim-commentary'
+" reuse register
+Plug 'LeafCage/yankround.vim'
+" easily search for, substitute, and abbreviate multiple variants of a word
+Plug 'tpope/vim-abolish'
+"}}}
+
+"{{{ Motion
+Plug 'Lokaltog/vim-easymotion'
+" highlight substitute target
+Plug 'osyo-manga/vim-over'
+" pairs of handy bracket mappings
+Plug 'tpope/vim-unimpaired'
+"}}}
+
+"{{{ syntax check
+" syntax check
+Plug 'osyo-manga/vim-watchdogs'
+Plug 'osyo-manga/shabadou.vim'
+Plug 'Shougo/vimproc.vim', {
+      \ 'do': 'make -f make_mac.mak'
+      \ }
+Plug 'KazuakiM/vim-qfstatusline'
+Plug 'cohama/vim-hier'
+Plug 'dannyob/quickfixstatus'
+"}}}
+
+"{{{ Git/Gist
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'cohama/agit.vim'
+Plug 'idanarye/vim-merginal'
+" Gist
+Plug 'lambdalisue/vim-gista', {
+            \ 'on': ['Gista', '<Plug>(gista-']
+            \ }
+"}}}
+
+"{{{ Javascript
+Plug 'pangloss/vim-javascript', {
+            \ 'for': 'javascript'
+            \ }
+Plug 'marijnh/tern_for_vim', {
+            \ 'do': 'npm install',
+            \ 'for': 'javascript'
+            \ }
+Plug 'briancollins/vim-jst', {
+            \ 'for': ['jst', 'ejs']
+            \ }
+Plug 'groenewege/vim-less', {
+            \ 'for': 'less'
+            \ }
+Plug 'digitaltoad/vim-jade', {
+            \ 'for': 'jade'
+            \ }
+Plug 'cakebaker/scss-syntax.vim', {
+            \ 'for': 'scss'
+            \ }
+Plug 'kchmck/vim-coffee-script', {
+            \ 'for': 'coffee'
+            \ }
+Plug 'mxw/vim-jsx', {
+            \ 'for': 'javascript'
+            \ }
+"}}}
+
+"{{{ TypeScript
+Plug 'leafgarland/typescript-vim', {
+            \ 'do': 'npm install -g clausreinke/typescript-tools typescript',
+            \ 'for': 'typescript'
+            \ }
+"}}}
+
+"{{{ go
+Plug 'fatih/vim-go', {
+            \ 'for': 'go'
+            \ }
+"}}}
+
+"{{{ Protocol Buffers
+Plug 'uarun/vim-protobuf', {
+            \ 'for': 'proto'
+            \ }
+"}}}
+
+"{{{ Ruby
+Plug 'vim-ruby/vim-ruby', {
+            \ 'for': ['ruby', 'eruby', 'haml']
+            \ }
+Plug 'ruby-matchit', {
+            \ 'for': ['ruby', 'eruby', 'haml']
+            \ }
+Plug 'skwp/vim-rspec', {
+            \ 'for': 'ruby'
+            \ }
+Plug 'Keithbsmiley/rspec.vim', {
+            \ 'for': 'ruby'
+            \ }
+Plug 'tpope/vim-rails', {
+            \ 'for': 'ruby'
+            \ }
+"}}}
+
+"{{{ Kotlin
+Plug 'udalov/kotlin-vim', {
+            \ 'for': 'kotlin'
+            \ }
+"}}}
+
+"{{{ html
+" emmet
+Plug 'mattn/emmet-vim', {
+            \ 'for': ['html', 'ejs', 'erb']
+            \ }
+"}}}
+
+"{{{ Stylus
+Plug 'wavded/vim-stylus', {
+            \ 'for': 'stylus'
+            \}
+"}}}
+
+"{{{ Markdown
+Plug 'godlygeek/tabular', {
+            \ 'for': 'markdown'
+            \ }
+            \ |
+            \ Plug 'gabrielelana/vim-markdown', {
+            \ 'for': 'markdown'
+            \ }
+
+" Preview
+Plug 'tyru/open-browser.vim', {
+            \ 'for': 'markdown'
+            \ }
+            \ |
+            \ Plug 'kannokanno/previm', {
+            \ 'for': 'markdown'
+            \ }
+"}}}
+
+"{{{ JSON
+" Preview
+Plug 'elzr/vim-json', {
+            \ 'for': 'javascript'
+            \ }
+"}}}
+
+"{{{ Dockerfile
+Plug 'ekalinin/Dockerfile.vim', {
+            \ 'for': 'dockerfile'
+            \ }
+"}}}
+
+"{{{ Ansible
+Plug 'chase/vim-ansible-yaml', {
+            \ 'for': 'ansible'
+            \ }
+"}}}
+
+"{{{ Terraform
+Plug 'hashivim/vim-terraform', {
+            \ 'for': ['terraform', 'javascript']
+            \ }
+"}}}
+
+"{{{ PlantUML
+Plug 'aklt/plantuml-syntax', {
+            \ 'for': ['pu', 'uml', 'plantuml']
+            \ }
+"}}}
+
+"{{{ Graphviz
+Plug 'wannesm/wmgraphviz.vim', {
+            \ 'for': 'dot'
+            \ }
+"}}}
+
+"{{{ SQL
+Plug 'vim-scripts/SQLUtilities', {
+            \ 'for': 'sql'
+            \ }
+Plug 'vim-scripts/Align', {
+            \ 'for': 'sql'
+            \ }
+"}}}
+
+"}}}
+
+"{{{ Misc
+" the_silver_searcher
+Plug 'rking/ag.vim'
+" replacement in quickfix
+Plug 'thinca/vim-qfreplace'
+" quickrun
+Plug 'thinca/vim-quickrun'
+" list tags
+Plug 'majutsushi/tagbar', {
+            \ 'do': 'brew install ctags',
+            \ }
+" mark and highlight words
+Plug 't9md/vim-quickhl', {
+            \ 'on': '<Plug>(quickhl-'
+            \ }
+" memo
+Plug 'fuenor/qfixgrep' | Plug 'glidenote/memolist.vim'
+" use histogram algorithm for vimdiff
+Plug 'chrisbra/vim-diff-enhanced'
+"}}}
+
+call plug#end()
+"}}}
+
+"{{{ Comment Config
+" Commenting blocks of code.
 augroup CommentSettings
     autocmd!
     autocmd FileType c,cpp,java,scala,go  set commentstring=//\ %s
@@ -273,15 +514,9 @@ augroup CommentSettings
 augroup END
 "}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                               Plugin Config                                "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
+"{{{ Plugin Config
 
-"""""""""""
-"  ctrlp  "
-"""""""""""
-"{{{
+"{{{ ctrlp
 " Default mappings
 "" let g:ctrlp_map = '<C-p>'
 "" let g:ctrlp_cmd = 'CtrlP'
@@ -308,17 +543,11 @@ nnoremap <C-p>x :<C-u>CtrlPMixed<CR>
 nnoremap <C-p>y :<C-u>CtrlPYankRound<CR>
 "}}}
 
-""""""""""""""
-"  diffcher  "
-""""""""""""""
-"{{{
+"{{{ diffcher
 let g:DiffUnit = "Word1"
 "}}}
 
-"""""""""""""""
-"  emmet-vim  "
-"""""""""""""""
-"{{{
+"{{{ emmet-vim
 let g:user_emmet_leader_key=','
 
 let g:user_emmet_settings = {
@@ -328,24 +557,15 @@ let g:user_emmet_settings = {
             \ }
 "}}}
 
-"""""""""""
-"  gundo  "
-"""""""""""
-"{{{
+"{{{ gundo
 nnoremap <space>u :<C-u>GundoToggle<CR>
 "}}}
 
-""""""""""""""""
-"  indentLine  "
-""""""""""""""""
-"{{{
+"{{{ indentLine
 let g:indentLine_color_term = 236
 "}}}
 
-"""""""""""""""
-"  lightline  "
-"""""""""""""""
-"{{{
+"{{{ lightline
 let g:lightline = {
             \ 'colorscheme': 'hybrid',
             \ 'mode_map': { 'c': 'NORMAL' },
@@ -468,10 +688,7 @@ let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
 "}}}
 
-""""""""""""""
-"  memolist  "
-""""""""""""""
-"{{{
+"{{{ memolist
 let g:memolist_path = "~/Dropbox/memo"
 " suffix type (default markdown)
 let g:memolist_memo_suffix = "txt"
@@ -522,48 +739,30 @@ nnoremap <Leader>mg :<C-u>MemoGrep<CR>
 nnoremap <Leader>mf :<C-u>exe "CtrlP" g:memolist_path<cr><f5>
 "}}}
 
-""""""""""""""
-"  NERDTree  "
-""""""""""""""
-"{{{
+"{{{ NERDTree
 nnoremap <silent> <space>e :<C-u>NERDTreeToggle<CR>
 let g:NERDTreeMinimalUI=1
 "}}}
 
-"""""""""""""""""""""
-"  plantuml-syntax  "
-"""""""""""""""""""""
-"{{{
+"{{{ plantuml-syntax
 let g:plantuml_executable_script = '~/.dotfiles/plantuml.sh'
 "}}}
 
-""""""""""""
-"  Previm  "
-""""""""""""
-"{{{
+"{{{ Previm
 " realtime preview
 let g:previm_enable_realtime = 1
 "}}}
 
-""""""""""""
-"  tagbar  "
-""""""""""""
-"{{{
+"{{{ tagbar
 nmap <space>t :<C-u>TagbarToggle<CR>
 "}}}
 
-""""""""""""""""""
-"  tern_for_vim  "
-""""""""""""""""""
-"{{{
+"{{{ tern_for_vim
 let g:tern_show_argument_hints = 'on_hold'
 let g:tern_show_signature_in_pum = 1
 "}}}
 
-"""""""""""""""
-"  UltiSnips  "
-"""""""""""""""
-"{{{
+"{{{ UltiSnips
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
 let g:UltiSnipsExpandTrigger = '<c-k>'
 let g:UltiSnipsJumpForwardTrigger = '<c-k>'
@@ -571,10 +770,7 @@ let g:UltiSnipsJumpBackwardTrigger = '<c-j>'
 let g:UltiSnipsListSnippets = '<c-l>'
 "}}}
 
-"""""""""""""""""""
-"  vim-choosewin  "
-"""""""""""""""""""
-"{{{
+"{{{ vim-choosewin 
 " invoke with '-'
 nmap  -  <Plug>(choosewin)
 
@@ -599,17 +795,11 @@ let g:choosewin_statusline_replace = 0 " don't replace statusline
 let g:choosewin_tabline_replace    = 0 " don't replace tabline
 "}}}
 
-"""""""""""""""""""""""
-"  vim-diff-enhanced  "
-"""""""""""""""""""""""
-"{{{
+"{{{ vim-diff-enhanced
 let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=histogram")'
 "}}}
 
-""""""""""""""""""""
-"  vim-easy-align  "
-""""""""""""""""""""
-"{{{
+"{{{ vim-easy-align
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
 vmap <Enter> <Plug>(EasyAlign)
 
@@ -625,10 +815,7 @@ let g:easy_align_delimiters['"'] = {
             \ }
 "}}}
 
-""""""""""""""""""""
-"  vim-easymotion  "
-""""""""""""""""""""
-"{{{
+"{{{ vim-easymotion
 " based on [Vim-EasyMotionでカーソル移動を爆速にして生産性をもっと向上させる - haya14busa](http://haya14busa.com/mastering-vim-easymotion/)
 " =======================================
 " Boost your productivity with EasyMotion
@@ -689,35 +876,23 @@ xmap g/ <Plug>(easymotion-sn)
 omap g/ <Plug>(easymotion-tn)
 "}}}
 
-""""""""""""""""
-"  vim-hybrid  "
-""""""""""""""""
-"{{{
+"{{{ vim-hybrid
 let g:hybrid_use_Xresources = 1
 set background=dark
 colorscheme hybrid
 "}}}
 
-"""""""""""""
-"  vim-jsx  "
-"""""""""""""
-"{{{
+"{{{ vim-jsx
 let g:hybrid_use_Xresources = 1
 set background=dark
 colorscheme hybrid
 "}}}
 
-""""""""""""""
-"  vim-over  "
-""""""""""""""
-"{{{
+"{{{ vim-over
 nnoremap <silent> <Leader>s :<C-u>OverCommandLine<CR>
 "}}}
 
-"""""""""""""""""
-"  vim-quickhl  "
-"""""""""""""""""
-"{{{
+"{{{ vim-quickhl
 nmap <Space>m <Plug>(quickhl-manual-this)
 xmap <Space>m <Plug>(quickhl-manual-this)
 nmap <Space>M <Plug>(quickhl-manual-reset)
@@ -728,10 +903,7 @@ nmap <Space>] <Plug>(quickhl-tag-toggle)
 map ,h <Plug>(operator-quickhl-manual-this-motion)
 "}}}
 
-""""""""""""""""""
-"  vim-quickrun  "
-""""""""""""""""""
-"{{{
+"{{{ vim-quickrun
 let g:quickrun_config = get(g:, 'quickrun_config', {})
 let g:quickrun_config._ = {
             \ 'runner': 'vimproc',
@@ -739,10 +911,7 @@ let g:quickrun_config._ = {
             \ }
 "}}}
 
-"""""""""""""""""""
-"  vim-watchdogs  "
-"""""""""""""""""""
-"{{{
+"{{{ vim-watchdogs
 let g:watchdogs_check_BufWritePost_enable = 1
 
 if !exists("g:quickrun_config")
@@ -791,10 +960,7 @@ call watchdogs#setup(g:quickrun_config)
 let g:Qfstatusline#UpdateCmd = function('lightline#update')
 "}}}
 
-"""""""""""""""
-"  yankround  "
-"""""""""""""""
-"{{{
+"{{{ yankround
 let g:yankround_use_ctrlp = 1
 let g:yankround_max_history = 50
 
@@ -810,10 +976,7 @@ cmap <C-r> <Plug>(yankround-insert-register)
 cmap <C-y> <Plug>(yankround-pop)
 "}}}
 
-"""""""""""""""""""
-"  YouCompleteMe  "
-"""""""""""""""""""
-"{{{
+"{{{ YouCompleteMe
 " For 'scrooloose/syntastic'
 let g:ycm_show_diagnostics_ui = 0
 
@@ -837,25 +1000,16 @@ let g:ycm_filepath_completion_use_working_dir = 1
 
 "}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              File Type Config                              "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
+"{{{ File Type Config
 
-"""""""""
-"  css  "
-"""""""""
-"{{{
+"{{{ css
 function! s:setup_css()
     setlocal tabstop=4
     setlocal shiftwidth=4
 endfunction
 "}}}
 
-"""""""""
-"  git  "
-"""""""""
-"{{{
+"{{{ git
 " TODO: fold level
 let g:gitgutter_enabled = 0
 let g:gitgutter_eager = 0
@@ -884,10 +1038,7 @@ nnoremap <silent> <space>gm :<C-u>MerginalToggle<CR>
 cabbrev git Git
 "}}}
 
-""""""""
-"  go  "
-""""""""
-"{{{
+"{{{ go
 let g:go_fmt_options = '-s'
 " metalinterにオプションを付ける方法が用意されていなかったのでとりあえず無理やり混ぜ込む
 let g:go_metalinter_deadline = '10s --tests'
@@ -983,10 +1134,7 @@ function! s:setup_golang()
 endfunction
 "}}}
 
-""""""""""""""""
-"  javascript  "
-""""""""""""""""
-"{{{
+"{{{ javascript
 function! s:setup_javascript()
     nnoremap <buffer> <Leader>gd :<C-u>TernDoc<CR>
     nnoremap <buffer> <Leader>gb :<C-u>TernDocBrowse<CR>
@@ -1000,10 +1148,7 @@ function! s:setup_javascript()
 endfunction
 "}}}
 
-""""""""""""""
-"  markdown  "
-""""""""""""""
-"{{{
+"{{{ markdown
 let g:markdown_enable_spell_checking = 0
 let g:markdown_mapping_switch_status = '<Learder>x'
 
@@ -1013,56 +1158,41 @@ function! s:setup_markdown()
 endfunction
 "}}}
 
-"""""""""""
-"  proto  "
-"""""""""""
-"{{{
+"{{{ proto
 function! s:setup_proto()
     setlocal tabstop=4
     setlocal shiftwidth=4
 endfunction
 "}}}
 
-""""""""""
-"  scss  "
-""""""""""
-"{{{
+"{{{ scss
 function! s:setup_scss()
     setlocal tabstop=4
     setlocal shiftwidth=4
 endfunction
 "}}}
 
-""""""""""""
-"  stylus  "
-""""""""""""
-"{{{
+"{{{ stylus
 function! s:setup_scss()
     setlocal tabstop=4
     setlocal shiftwidth=4
 endfunction
 "}}}
 
-""""""""""""""""
-"  typescript  "
-""""""""""""""""
-"{{{
+"{{{ typescript
 function! s:setup_typescript()
     nnoremap <buffer> <leader>dd :<C-u>YcmCompleter GoToDefinition<CR>
 endfunction
 "}}}
 
-"""""""""
-"  vim  "
-"""""""""
-"{{{
+"{{{ vim
 function! s:setup_vimscript()
     setlocal tabstop=4
     setlocal shiftwidth=4
 endfunction
 "}}}
 
-"{{{
+"{{{ filetype configuration
 augroup my_setup_filetype_configuration
     autocmd!
     autocmd FileType agit       call s:setup_agit()
@@ -1080,10 +1210,7 @@ augroup END
 
 "}}}
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                                  vimdiff                                   "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
+"{{{ vimdiff
 set diffopt+=vertical
 if &diff
     map <leader>1 :diffget LOCAL<CR>
@@ -1092,16 +1219,9 @@ if &diff
 endif
 "}}}
 
+"{{{ Personal Script
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"                              Personal Script                               "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
-
-"""""""""""""""""""""""""""""""""""""
-"  Change current directory easily  "
-"""""""""""""""""""""""""""""""""""""
-"{{{
+"{{{ Change current directory easily
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
 function! s:ChangeCurrentDir(directory, bang)
     if a:directory == ''
@@ -1119,13 +1239,10 @@ endfunction
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 "}}}
 
-"""""""""""""""""""""""""""""
-"  バイナリ編集(xxd)モード  "
-"""""""""""""""""""""""""""""
-"{{{
+"{{{ バイナリ編集(xxd)モード
 "[vimでバイナリを表示し、値を変更したい - rderaログ](http://d.hatena.ne.jp/rdera/20081022/1224682665)
 "（vim -b での起動、もしくは *.bin ファイルを開くと発動します）
-augroup BinaryXXD
+aug roup BinaryXXD
     autocmd!
     autocmd BufReadPre  *.bin let &binary =1
     autocmd BufReadPost * if &binary | silent %!xxd -g 1
@@ -1137,8 +1254,5 @@ augroup END
 "}}}
 
 "}}}
-
-
-set runtimepath+=$HOME/.vim/
 
 " vim: set filetype=vim :
