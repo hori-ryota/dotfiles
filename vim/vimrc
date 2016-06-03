@@ -325,24 +325,21 @@ Plug 'lambdalisue/vim-gista', {
 "}}}
 
 "{{{ Javascript
-Plug 'pangloss/vim-javascript', {
-            \ 'for': 'javascript'
+Plug 'othree/yajs.vim', {
+            \ 'for': ['javascript', 'html', 'ejs', 'erb', 'jst', 'jade']
+            \ }
+Plug 'gavocanov/vim-js-indent', {
+            \ 'for': ['javascript', 'html', 'ejs', 'erb', 'jst', 'jade']
             \ }
 Plug 'marijnh/tern_for_vim', {
             \ 'do': 'npm install',
-            \ 'for': 'javascript'
+            \ 'for': ['javascript', 'html', 'ejs', 'erb', 'jst', 'jade']
             \ }
 Plug 'briancollins/vim-jst', {
             \ 'for': ['jst', 'ejs']
             \ }
-Plug 'groenewege/vim-less', {
-            \ 'for': 'less'
-            \ }
 Plug 'digitaltoad/vim-jade', {
             \ 'for': 'jade'
-            \ }
-Plug 'cakebaker/scss-syntax.vim', {
-            \ 'for': 'scss'
             \ }
 Plug 'kchmck/vim-coffee-script', {
             \ 'for': 'coffee'
@@ -398,11 +395,23 @@ Plug 'udalov/kotlin-vim', {
 "{{{ html
 " emmet
 Plug 'mattn/emmet-vim', {
-            \ 'for': ['html', 'ejs', 'erb']
+            \ 'for': ['html', 'ejs', 'erb', 'jst', 'jade']
+            \ }
+Plug 'othree/html5.vim', {
+            \ 'for': ['html', 'ejs', 'erb', 'jst', 'jade']
             \ }
 "}}}
 
-"{{{ Stylus
+"{{{ css
+Plug 'hail2u/vim-css3-syntax', {
+            \ 'for': ['html', 'ejs', 'erb', 'jst', 'jade', 'css']
+            \ }
+Plug 'groenewege/vim-less', {
+            \ 'for': 'less'
+            \ }
+Plug 'cakebaker/scss-syntax.vim', {
+            \ 'for': 'scss'
+            \ }
 Plug 'wavded/vim-stylus', {
             \ 'for': 'stylus'
             \}
@@ -1001,6 +1010,12 @@ let g:ycm_filepath_completion_use_working_dir = 1
 "}}}
 
 "{{{ File Type Config
+"
+"{{{ html
+function! s:setup_html()
+    let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
+endfunction
+"}}}
 
 "{{{ css
 function! s:setup_css()
@@ -1198,6 +1213,7 @@ augroup my_setup_filetype_configuration
     autocmd FileType agit       call s:setup_agit()
     autocmd FileType css        call s:setup_css()
     autocmd FileType go         call s:setup_golang()
+    autocmd FileType html       call s:setup_html()
     autocmd FileType javascript call s:setup_javascript()
     autocmd FileType markdown   call s:setup_markdown()
     autocmd FileType proto      call s:setup_proto()
