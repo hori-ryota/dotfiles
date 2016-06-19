@@ -72,7 +72,7 @@ brew tap caskroom/versions
 #brew cask cleanup
 
 # General
-brew cask install iterm2 #--force
+brew cask install iterm2-beta #--force
 brew cask install 1password #--force
 
 # Java
