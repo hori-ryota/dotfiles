@@ -1154,11 +1154,13 @@ function! s:setup_golang()
     nmap <buffer> <Leader>m <Plug>(go-metalinter)
     nnoremap <buffer> <Leader>M :<C-u>GoMetaLinter ./...<CR>
 
-    nnoremap <buffer> <Leader>i :<C-u>GoImport<space>
+    nmap <buffer> <Leader>i <Plug>(go-import)
     nnoremap <buffer> <Leader>D :<C-u>GoDrop<space>
-    nnoremap <buffer> <Leader>ii :<C-u>GoImports<CR>
+    nmap <buffer> <Leader>ii <Plug>(go-imports)
     nnoremap <buffer> <Leader>e :<C-u>GoErrCheck<CR>
     nnoremap <buffer> <Leader>E :<C-u>GoErrCheck ./...<CR>
+
+    nmap <buffer> <Leader>G <Plug>(go-generate)
 
     nnoremap <buffer> <Leader>p :<C-u>GoPlay<CR>
     vnoremap <buffer> <Leader>p :GoPlay<CR>
