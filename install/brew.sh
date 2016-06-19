@@ -22,14 +22,6 @@ brew install jq
 brew install git
 brew install hub
 
-# Vim
-brew install python
-brew install vim --with-lua --with-luajit --with-python3 --override-system-vi
-
-# tmux
-brew install tmux
-brew install reattach-to-user-namespace
-
 # For development
 ## golang
 brew install go --with-cc-common
@@ -56,6 +48,12 @@ brew install mycli
 # ffmpeg
 brew install ffmpeg --with-freetype --with-fdk-aac --with-libvo-aacenc  --with-libvorbis --with-libvpx --with-openjpeg --with-theora --with-opencore-amr --with-openssl
 
+# Vim
+brew install vim --with-lua --with-luajit --with-python3 --override-system-vi
+
+# tmux
+brew install tmux
+brew install reattach-to-user-namespace
 
 
 ##########
