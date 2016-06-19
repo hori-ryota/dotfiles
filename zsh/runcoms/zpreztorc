@@ -30,13 +30,12 @@ zstyle ':prezto:load' pmodule \
   'git' \
   'history' \
   'history-substring-search' \
-  'prompt' \
-  'python' \
   'spectrum' \
   'syntax-highlighting' \
   'terminal' \
   'tmux' \
   'utility' \
+  'prompt' # need to be placed last
 
 #
 # Editor
