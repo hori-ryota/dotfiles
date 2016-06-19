@@ -40,6 +40,9 @@ brew install phantomjs
 ## ruby
 brew install rbenv
 brew install ruby-build
+## Python
+brew install pyenv
+brew install pyenv-virtualenv
 ## Docker
 #brew install boot2docker
 brew install docker
