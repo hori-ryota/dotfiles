@@ -35,11 +35,6 @@ brew install ruby-build
 ## Python
 brew install pyenv
 brew install pyenv-virtualenv
-## Docker
-#brew install boot2docker
-brew install docker
-brew install docker-machine
-brew install docker-compose
 # Orchestration tools
 brew install terraform
 brew install ansible
@@ -100,6 +95,8 @@ brew cask install slack #--force
 
 # Virtual environment
 brew cask install virtualbox #--force
+## Docker
+brew cask install docker
 
 # For QuickLook
 ## For no filename extension
