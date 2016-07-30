@@ -132,7 +132,7 @@ brew cask install vagrant #--force
 brew tap caskroom/fonts
 
 # install
-brew cask install font-source-code-pro-for-powerline #--force
+brew cask install font-sauce-code-powerline #--force
 
 ###########################
 #  Install from AppStore  #
