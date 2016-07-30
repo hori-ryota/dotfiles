@@ -215,9 +215,10 @@ augroup FileTypeDetect
     autocmd BufRead,BufNewFile *.py                     setfiletype python
     autocmd BufRead,BufNewFile *.scss                   setfiletype scss
     autocmd BufRead,BufNewFile *.styl,*.stylus          setfiletype stylus
-    autocmd BufRead,BufNewFile *.tex                    setfiletype tex
-    autocmd BufRead,BufNewFile *.ts                     setfiletype typescript
     autocmd BufRead,BufNewFile *.kt                     setfiletype kotlin
+    autocmd BufRead,BufNewFile *.tex                    setfiletype tex
+    autocmd BufRead,BufNewFile *.tfstate                setfiletype tfstate
+    autocmd BufRead,BufNewFile *.ts                     setfiletype typescript
     autocmd BufRead,BufNewFile *.yml,*.yaml,*.lock      setfiletype yaml
     autocmd BufRead,BufNewFile *.{md,mdwn,mkd,mkdn,mark*,txt,text} setfiletype markdown
     autocmd BufRead,BufNewFile .tmux.conf,tmux.conf     setfiletype tmux
@@ -269,6 +270,9 @@ Plug 'honza/vim-snippets' | Plug 'SirVer/ultisnips'
 
 "{{{ Filer
 Plug 'scrooloose/nerdtree', {
+            \ 'on': 'NERDTreeToggle'
+            \ }
+Plug 'Xuyuanp/nerdtree-git-plugin', {
             \ 'on': 'NERDTreeToggle'
             \ }
 "}}}
@@ -389,6 +393,12 @@ Plug 'Keithbsmiley/rspec.vim', {
             \ }
 Plug 'tpope/vim-rails', {
             \ 'for': 'ruby'
+            \ }
+"}}}
+
+"{{{ Gradle
+Plug 'tfnico/vim-gradle', {
+            \ 'for': 'groovy'
             \ }
 "}}}
 
@@ -546,8 +556,8 @@ let g:ctrlp_user_command = 'files -A -i "^(\.DS_Store|\.git|\.hg|\.svn|optimized
 nnoremap <C-p>p :<C-u>CtrlP<CR>
 nnoremap <C-p>b :<C-u>CtrlPBuffer<CR>
 nnoremap <C-p>m :<C-u>CtrlPMRU<CR>
-nnoremap <C-p>t :<C-u>CtrlPTag<CR>
-nnoremap <C-p>bt :<C-u>CtrlPBufTag<CR>
+nnoremap <C-p>T :<C-u>CtrlPTag<CR>
+nnoremap <C-p>t :<C-u>CtrlPBufTag<CR>
 nnoremap <C-p>q :<C-u>CtrlPQuickfix<CR>
 nnoremap <C-p>d :<C-u>CtrlPDir<CR>
 nnoremap <C-p>r :<C-u>CtrlPPTS<CR>
@@ -757,6 +767,7 @@ nnoremap <Leader>mf :<C-u>exe "CtrlP" g:memolist_path<cr><f5>
 "{{{ NERDTree
 nnoremap <silent> <space>e :<C-u>NERDTreeToggle<CR>
 let g:NERDTreeMinimalUI=1
+let g:NERDTreeShowHidden=1
 "}}}
 
 "{{{ plantuml-syntax
@@ -1088,6 +1099,8 @@ let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_operators = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
 let g:go_highlight_build_constraints = 1
 let g:tagbar_type_go = {
             \ 'ctagstype' : 'go',
@@ -1116,6 +1129,8 @@ let g:tagbar_type_go = {
             \ 'ctagsbin'  : 'gotags',
             \ 'ctagsargs' : '-sort -silent'
             \ }
+
+let g:go_def_reuse_buffer = 1
 
 function! s:setup_golang()
 
@@ -1164,10 +1179,17 @@ function! s:setup_golang()
 
     nnoremap <buffer> <Leader>p :<C-u>GoPlay<CR>
     vnoremap <buffer> <Leader>p :GoPlay<CR>
+
+    " for ctrlp
+    nnoremap <C-p>t :<C-u>GoDecls<CR>
+    nnoremap <C-p>T :<C-u>GoDeclsDir<CR>
 endfunction
 "}}}
 
 "{{{ javascript
+
+let g:vim_json_syntax_conceal = 0
+
 function! s:setup_javascript()
     nnoremap <buffer> <Leader>gd :<C-u>TernDoc<CR>
     nnoremap <buffer> <Leader>gb :<C-u>TernDocBrowse<CR>
