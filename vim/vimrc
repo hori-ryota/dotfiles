@@ -184,7 +184,7 @@ endif
 
 "{{{ Search Config
 "" Search
-set history=100             " keep 100 lines of command line histories
+set history=1000            " keep 1000 lines of command line histories
 set ignorecase
 set smartcase
 set wrapscan                " Searches wrap around the end of the file
@@ -529,13 +529,14 @@ call plug#end()
 augroup CommentSettings
     autocmd!
     autocmd FileType c,cpp,java,scala,go  set commentstring=//\ %s
-    autocmd FileType javascript           set commentstring=//\ %s
-    autocmd FileType sh,ruby,python       set commentstring=#\ %s
     autocmd FileType conf,fstab           set commentstring=#\ %s
-    autocmd FileType tex                  set commentstring=%\ %s
+    autocmd FileType javascript           set commentstring=//\ %s
     autocmd FileType mail                 set commentstring=>\ %s
-    autocmd FileType vim                  set commentstring=\"\ %s
+    autocmd FileType sh,ruby,python       set commentstring=#\ %s
     autocmd FileType sql                  set commentstring=--\ %s
+    autocmd FileType tex                  set commentstring=%\ %s
+    autocmd FileType tmux                 set commentstring=#\ %s
+    autocmd FileType vim                  set commentstring=\"\ %s
 augroup END
 "}}}
 
