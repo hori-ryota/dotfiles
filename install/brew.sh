@@ -122,7 +122,6 @@ brew cask install appcleaner #--force
 brew cask install dropbox #--force
 brew cask install insomniax #--force
 brew cask install skitch #--force
-brew cask install vagrant #--force
 
 #########
 # Fonts #
