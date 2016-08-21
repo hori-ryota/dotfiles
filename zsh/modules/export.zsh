@@ -25,5 +25,6 @@ export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export LC_ALL=en_US.UTF-8
 
 # python
+export PYTHON_CONFIGURE_OPTS="--enable-framework"
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 export DYLD_LIBRARY_PATH=/usr/local/cuda/lib:$DYLD_LIBRARY_PATH
