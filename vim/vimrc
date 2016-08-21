@@ -1222,6 +1222,14 @@ function! s:setup_javascript()
 endfunction
 "}}}
 
+"{{ make
+function! s:setup_make()
+    setlocal noexpandtab
+    setlocal tabstop=8
+    setlocal shiftwidth=8
+endfunction
+"}}}
+
 "{{{ markdown
 let g:markdown_enable_spell_checking = 0
 let g:markdown_mapping_switch_status = '<Learder>x'
@@ -1274,6 +1282,7 @@ augroup my_setup_filetype_configuration
     autocmd FileType go         call s:setup_golang()
     autocmd FileType html       call s:setup_html()
     autocmd FileType javascript call s:setup_javascript()
+    autocmd FileType make       call s:setup_make()
     autocmd FileType markdown   call s:setup_markdown()
     autocmd FileType proto      call s:setup_proto()
     autocmd FileType scss       call s:setup_scss()
