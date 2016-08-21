@@ -9,21 +9,25 @@ class Search
     private static $parts;
     private static $user;
 
-    public static function run($query)
+    public static function run($scope, $query, $hotkey)
     {
-        if (' ' !== $query[0] && 'e' !== $query && 'e ' !== substr($query, 0, 2)) {
-            return '';
+        self::$enterprise = 'enterprise' === $scope;
+
+        Workflow::init(self::$enterprise, $query, $hotkey);
+
+        if (!$hotkey) {
+            if ('' === $query) {
+                self::addEmptyQueryCommand();
+                return Workflow::getItemsAsXml();
+            }
+            if (' ' !== $query[0]) {
+                return '';
+            }
         }
 
-        self::$enterprise = 'e' === $query[0];
-        if (self::$enterprise) {
-            $query = substr($query, 1);
-        }
         $query = ltrim($query);
         self::$query = $query;
         self::$parts = $parts = explode(' ', $query);
-
-        Workflow::init(self::$enterprise, $query);
 
         if (Workflow::checkUpdate()) {
             self::addUpdateCommands();
@@ -96,6 +100,16 @@ class Search
         }
 
         return Workflow::getItemsAsXml();
+    }
+
+    private static function addEmptyQueryCommand()
+    {
+        Workflow::addItem(Item::create()
+            ->title(self::$enterprise ? 'ghe' : 'gh')
+            ->subtitle('Search or type a command' . (self::$enterprise ? ' (GitHub Enterprise)' : ''))
+            ->comparator('')
+            ->valid(false)
+        , false);
     }
 
     private static function addUpdateCommands()
@@ -318,7 +332,8 @@ class Search
                 'pulls'   => array('Show open pull requests', 'pull-request'),
                 'pulse'   => array('See recent activity'),
                 'wiki'    => array('Pull up the wiki'),
-                'commits' => array('View commit history')
+                'commits' => array('View commit history'),
+                'releases'=> array('See latest releases')
             );
             foreach ($subs as $key => $sub) {
                 Workflow::addItem(Item::create()
@@ -404,10 +419,31 @@ class Search
 
     private static function addMyCommands()
     {
+        $parts = self::$parts;
+        if (isset($parts[2]) && in_array($parts[1], array('pulls', 'issues'))) {
+            $icon = $parts[1] === 'pulls' ? 'pull-request' : 'issue';
+            $items = $icon . 's';
+            $subs = array(
+                'created' => array($parts[1], 'View your ' . $items),
+                'assigned' => array($parts[1] . '/assigned', 'View your assigned ' . $items),
+                'mentioned' => array($parts[1] . '/mentioned', 'View ' . $items . ' that mentioned you'),
+            );
+            foreach ($subs as $key => $sub) {
+                Workflow::addItem(Item::create()
+                    ->title('my ' . $parts[1] . ' ' . $key)
+                    ->subtitle($sub[1])
+                    ->icon($icon)
+                    ->arg('/' . $sub[0])
+                    ->prio(1)
+                );
+            }
+            return;
+        }
+
         $myPages = array(
             'dashboard'     => array('', 'View your dashboard'),
-            'pulls'         => array('pulls', 'View your pull requests', 'pull-request'),
-            'issues'        => array('issues', 'View your issues', 'issue'),
+            'pulls '         => array('pulls', 'View your pull requests', 'pull-request'),
+            'issues '        => array('issues', 'View your issues', 'issue'),
             'stars'         => array('stars', 'View your starred repositories'),
             'profile'       => array(self::$user->login, 'View your public user profile', 'user'),
             'settings'      => array('settings', 'View or edit your account settings'),
@@ -417,7 +453,7 @@ class Search
             Workflow::addItem(Item::create()
                 ->title('my ' . $key)
                 ->subtitle($my[1])
-                ->icon(isset($my[2]) ? $my[2] : $key)
+                ->icon(isset($my[2]) ? $my[2] : rtrim($key))
                 ->arg('/' . $my[0])
                 ->prio(1)
             );
@@ -455,13 +491,19 @@ class Search
             );
         }
 
-        Workflow::addItem(Item::create()
-            ->title('> changelog')
-            ->subtitle('View the changelog')
-            ->icon('file')
-            ->arg('https://github.com/gharlan/alfred-github-workflow/blob/master/CHANGELOG.md')
+        $cmds = array(
+            'help' => 'readme',
+            'changelog' => 'changelog',
         );
+        foreach ($cmds as $cmd => $file) {
+            Workflow::addItem(Item::create()
+                ->title('> ' . $cmd)
+                ->subtitle('View the ' . $file)
+                ->icon('file')
+                ->arg('https://github.com/gharlan/alfred-github-workflow/blob/master/' . strtoupper($file) . '.md')
+            );
+        }
     }
 }
 
-print Search::run($argv[1]);
+print Search::run($argv[1], $argv[2], getenv('hotkey'));

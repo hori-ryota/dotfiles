@@ -66,6 +66,11 @@ class Curl
                 curl_close($ch);
                 curl_multi_remove_handle(self::$multiHandle, $ch);
             }
+            if ($running || !$finish) {
+                if (curl_multi_select(self::$multiHandle, 1) === -1) {
+                    usleep(250);
+                }
+            }
         } while ($running || !$finish);
 
         $this->running = false;
@@ -93,7 +98,9 @@ class Curl
         $options[CURLOPT_URL] = $request->url;
         $header = array();
         $header[] = 'X-Url: ' . $request->url;
-        $header[] = 'Authorization: token ' . Workflow::getAccessToken();
+        if ($request->token) {
+            $header[] = 'Authorization: token ' . $request->token;
+        }
         if ($request->etag) {
             $header[] = 'If-None-Match: ' . $request->etag;
         }
@@ -115,12 +122,14 @@ class CurlRequest
 {
     public $url;
     public $etag;
+    public $token;
     public $callback;
 
-    public function __construct($url, $etag, $callback)
+    public function __construct($url, $etag, $token, $callback)
     {
         $this->url = $url;
         $this->etag = $etag;
+        $this->token = $token;
         $this->callback = $callback;
     }
 }
