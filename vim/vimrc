@@ -1095,8 +1095,6 @@ function! s:setup_agit()
 endfunction
 
 nnoremap <silent> <space>gm :<C-u>MerginalToggle<CR>
-
-cabbrev git Git
 "}}}
 
 "{{{ go
