@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Google Translate Alfred Workflow</name>
-  <version>3.0.2</version>
-  <bundle>scriptme.alfred.googletranslate</bundle>
-  <updated>1444471933</updated>
-  <file>google_translate.alfredworkflow</file>
-</workflow>
