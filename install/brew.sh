@@ -42,9 +42,11 @@ brew install ansible
 brew install mycli
 # ffmpeg
 brew install ffmpeg --with-freetype --with-fdk-aac --with-libvo-aacenc  --with-libvorbis --with-libvpx --with-openjpeg --with-theora --with-opencore-amr --with-openssl
+# Graphviz
+brew install graphviz
 
 # Vim
-brew install vim --with-lua --with-luajit --with-python3 --override-system-vi
+brew install vim --with-lua --with-luajit --with-python3 --with-override-system-vi
 
 # tmux
 brew install tmux
