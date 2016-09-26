@@ -508,6 +508,8 @@ Plug 'rking/ag.vim'
 Plug 'thinca/vim-qfreplace'
 " quickrun
 Plug 'thinca/vim-quickrun'
+" qargs
+Plug 'henrik/vim-qargs'
 " list tags
 Plug 'majutsushi/tagbar', {
             \ 'do': 'brew install ctags',
