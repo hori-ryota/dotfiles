@@ -27,4 +27,5 @@ export LC_ALL=en_US.UTF-8
 # python
 export PYTHON_CONFIGURE_OPTS="--enable-framework"
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
+export PATH=$PATH:/usr/local/cuda/bin
 export DYLD_LIBRARY_PATH=/usr/local/cuda/lib:$DYLD_LIBRARY_PATH
