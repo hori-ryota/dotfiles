@@ -790,6 +790,8 @@ nnoremap <Leader>mf :<C-u>exe "CtrlP" g:memolist_path<cr><f5>
 nnoremap <silent> <space>e :<C-u>NERDTreeToggle<CR>
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeShowHidden=1
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
 "}}}
 
 "{{{ plantuml-syntax
@@ -1222,7 +1224,7 @@ function! s:setup_javascript()
 endfunction
 "}}}
 
-"{{ make
+"{{{ make
 function! s:setup_make()
     setlocal noexpandtab
     setlocal tabstop=8
