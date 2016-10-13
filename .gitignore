@@ -1,3 +1,5 @@
+.cache/
+
 # vim
 vim/.netrwhist
 vim/autoload/plug.vim

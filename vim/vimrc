@@ -210,12 +210,13 @@ augroup FileTypeDetect
     autocmd BufRead,BufNewFile *.jade                   setfiletype jade
     autocmd BufRead,BufNewFile *.java                   setfiletype java
     autocmd BufRead,BufNewFile *.json,*.gyp,*.js        setfiletype javascript
+    autocmd BufRead,BufNewFile *.kt                     setfiletype kotlin
     autocmd BufRead,BufNewFile *.less                   setfiletype less
+    autocmd BufRead,BufNewFile *.m3u8                   setfiletype m3u8
     autocmd BufRead,BufNewFile *.pp                     setfiletype puppet
     autocmd BufRead,BufNewFile *.py                     setfiletype python
     autocmd BufRead,BufNewFile *.scss                   setfiletype scss
     autocmd BufRead,BufNewFile *.styl,*.stylus          setfiletype stylus
-    autocmd BufRead,BufNewFile *.kt                     setfiletype kotlin
     autocmd BufRead,BufNewFile *.tex                    setfiletype tex
     autocmd BufRead,BufNewFile *.tfstate                setfiletype tfstate
     autocmd BufRead,BufNewFile *.ts                     setfiletype typescript
@@ -600,7 +601,8 @@ let g:user_emmet_leader_key=','
 let g:user_emmet_settings = {
             \   'variables': {
             \     'lang': 'ja'
-            \   }
+            \   },
+            \   'indentation': '  '
             \ }
 "}}}
 
@@ -818,6 +820,8 @@ let g:UltiSnipsExpandTrigger = '<c-k>'
 let g:UltiSnipsJumpForwardTrigger = '<c-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<c-j>'
 let g:UltiSnipsListSnippets = '<c-l>'
+let g:UltiSnipsSnippetsDir = s:vim_dir . '/UltiSnips'
+let g:UltiSnipsEditSplit = 'context'
 "}}}
 
 "{{{ vim-choosewin 
@@ -1061,7 +1065,7 @@ let g:ycm_filepath_completion_use_working_dir = 1
 "}}}
 
 "{{{ File Type Config
-"
+
 "{{{ html
 function! s:setup_html()
     let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
@@ -1276,6 +1280,34 @@ function! s:setup_vimscript()
 endfunction
 "}}}
 
+"{{{ snippets
+function! s:setup_snippets()
+    setlocal noexpandtab
+endfunction
+"}}}
+
+"{{{ revealjs
+function! s:setup_revealjs()
+    nnoremap <buffer> <Leader>b :<C-u>!npm run build<CR>
+    nnoremap <buffer> <Leader>r :<C-u>!npm run start<CR>
+    nnoremap <buffer> <Leader>t :<C-u>!npm run test<CR>
+endfunction
+"}}}
+
+"{{{ talkiejs
+function! s:setup_talkiejs()
+    nnoremap <buffer> <Leader>b :<C-u>!npm run build<CR>
+    nnoremap <buffer> <Leader>r :<C-u>!npm run start<CR>
+    nnoremap <buffer> <Leader>w :<C-u>!npm run d<CR>
+    nnoremap <buffer> <Leader>t :<C-u>!npm run test<CR>
+endfunction
+"}}}
+"
+"{{{ m3u8
+function! s:setup_m3u8()
+endfunction
+"}}}
+
 "{{{ filetype configuration
 augroup my_setup_filetype_configuration
     autocmd!
@@ -1284,11 +1316,15 @@ augroup my_setup_filetype_configuration
     autocmd FileType go         call s:setup_golang()
     autocmd FileType html       call s:setup_html()
     autocmd FileType javascript call s:setup_javascript()
+    autocmd FileType m3u8       call s:setup_m3u8()
     autocmd FileType make       call s:setup_make()
     autocmd FileType markdown   call s:setup_markdown()
     autocmd FileType proto      call s:setup_proto()
+    autocmd FileType revealjs   call s:setup_revealjs()
     autocmd FileType scss       call s:setup_scss()
+    autocmd FileType snippets   call s:setup_snippets()
     autocmd FileType stylus     call s:setup_stylus()
+    autocmd FileType talkiejs   call s:setup_talkiejs()
     autocmd FileType typescript call s:setup_typescript()
     autocmd FileType vim        call s:setup_vimscript()
 augroup END
