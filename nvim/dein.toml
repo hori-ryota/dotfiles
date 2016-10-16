@@ -1,0 +1,332 @@
+#{{{ General
+
+#{{{ crtlp
+[[plugins]]
+repo = 'ctrlpvim/ctrlp.vim'
+[[plugins]]
+repo = 'FelikZ/ctrlp-py-matcher'
+#}}}
+
+#{{{ Status bar
+# color scheme for lightline
+[[plugins]]
+repo = 'cocopon/lightline-hybrid.vim'
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+#}}}
+
+#{{{ history
+[[plugins]]
+repo = 'sjl/gundo.vim'
+#}}}
+
+#{{{ content
+[[plugins]]
+repo = 'vim-scripts/diffchar.vim'
+#}}}
+
+#}}}
+
+#{{{ Color Scheme
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+#}}}
+
+#{{{ Programming
+
+#{{{ YouCompleteMe
+[[plugins]]
+repo = 'Valloric/YouCompleteMe'
+build = 'brew install cmake; ./install.py --clang-completer --gocode-completer --tern-completer'
+#}}}
+
+#{{{ Snippet
+[[plugins]]
+repo = 'honza/vim-snippets'
+[[plugins]]
+repo = 'SirVer/ultisnips'
+depends = 'honza/vim-snippets'
+#}}}
+
+#{{{ Filer
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+on_cmd = 'NERDTreeToggle'
+[[plugins]]
+repo = 'Xuyuanp/nerdtree-git-plugin'
+on_cmd = 'NERDTreeToggle'
+#}}}
+
+#{{{ Visual
+[[plugins]]
+repo = 't9md/vim-choosewin'
+on_cmd = '<Plug>(choosewin)'
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+#}}}
+
+#{{{ Editor
+# edit surround easy
+[[plugins]]
+repo = 'tpope/vim-surround'
+# Aligning Text
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+# comment stuff out
+[[plugins]]
+repo = 'tpope/vim-commentary'
+# reuse register
+[[plugins]]
+repo = 'LeafCage/yankround.vim'
+# easily search for, substitute, and abbreviate multiple variants of a word
+[[plugins]]
+repo = 'tpope/vim-abolish'
+#}}}
+
+#{{{ Motion
+[[plugins]]
+repo = 'Lokaltog/vim-easymotion'
+# highlight substitute target
+[[plugins]]
+repo = 'osyo-manga/vim-over'
+# pairs of handy bracket mappings
+[[plugins]]
+repo = 'tpope/vim-unimpaired'
+#}}}
+
+#{{{ syntax check
+# syntax check
+[[plugins]]
+repo = 'osyo-manga/vim-watchdogs'
+[[plugins]]
+repo = 'osyo-manga/shabadou.vim'
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make -f make_mac.mak'
+[[plugins]]
+repo = 'KazuakiM/vim-qfstatusline'
+[[plugins]]
+repo = 'cohama/vim-hier'
+[[plugins]]
+repo = 'dannyob/quickfixstatus'
+#}}}
+
+#{{{ Git/Gist
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+[[plugins]]
+repo = 'cohama/agit.vim'
+[[plugins]]
+repo = 'idanarye/vim-merginal'
+# Gist
+[[plugins]]
+repo = 'lambdalisue/vim-gista'
+on_cmd = ['Gista', '<Plug>(gista-']
+#}}}
+
+#{{{ Javascript
+[[plugins]]
+repo = 'othree/yajs.vim'
+on_ft = ['javascript', 'html', 'ejs', 'erb', 'jst', 'jade']
+[[plugins]]
+repo = 'gavocanov/vim-js-indent'
+on_ft = ['javascript', 'html', 'ejs', 'erb', 'jst', 'jade']
+[[plugins]]
+repo = 'marijnh/tern_for_vim'
+build = 'npm install'
+on_ft = ['javascript', 'html', 'ejs', 'erb', 'jst', 'jade']
+[[plugins]]
+repo = 'briancollins/vim-jst'
+on_ft = ['jst', 'ejs']
+[[plugins]]
+repo = 'digitaltoad/vim-jade'
+on_ft = 'jade'
+[[plugins]]
+repo = 'kchmck/vim-coffee-script'
+on_ft = 'coffee'
+[[plugins]]
+repo = 'mxw/vim-jsx'
+on_ft = 'javascript'
+#}}}
+
+#{{{ TypeScript
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+build = 'npm install -g clausreinke/typescript-tools typescript'
+on_ft = 'typescript'
+#}}}
+
+#{{{ go
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = 'go'
+#}}}
+
+#{{{ Protocol Buffers
+[[plugins]]
+repo = 'uarun/vim-protobuf'
+on_ft = 'proto'
+#}}}
+
+#{{{ Python
+[[plugins]]
+repo = 'hynek/vim-python-pep8-indent'
+on_ft = 'python'
+#}}}
+
+#{{{ Ruby
+[[plugins]]
+repo = 'vim-ruby/vim-ruby'
+on_ft = ['ruby', 'eruby', 'haml']
+[[plugins]]
+repo = 'ruby-matchit'
+on_ft = ['ruby', 'eruby', 'haml']
+[[plugins]]
+repo = 'skwp/vim-rspec'
+on_ft = 'ruby'
+[[plugins]]
+repo = 'Keithbsmiley/rspec.vim'
+on_ft = 'ruby'
+[[plugins]]
+repo = 'tpope/vim-rails'
+on_ft = 'ruby'
+#}}}
+
+#{{{ Gradle
+[[plugins]]
+repo = 'tfnico/vim-gradle'
+on_ft = 'groovy'
+#}}}
+
+#{{{ Kotlin
+[[plugins]]
+repo = 'udalov/kotlin-vim'
+on_ft = 'kotlin'
+#}}}
+
+#{{{ html
+# emmet
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = ['html', 'ejs', 'erb', 'jst', 'jade']
+[[plugins]]
+repo = 'othree/html5.vim'
+on_ft = ['html', 'ejs', 'erb', 'jst', 'jade']
+#}}}
+
+#{{{ css
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+on_ft = ['html', 'ejs', 'erb', 'jst', 'jade', 'css']
+[[plugins]]
+repo = 'groenewege/vim-less'
+on_ft = 'less'
+[[plugins]]
+repo = 'cakebaker/scss-syntax.vim'
+on_ft = 'scss'
+[[plugins]]
+repo = 'wavded/vim-stylus'
+on_ft = 'stylus'
+#}}}
+
+#{{{ Markdown
+[[plugins]]
+repo = 'godlygeek/tabular'
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'gabrielelana/vim-markdown'
+on_ft = 'markdown'
+
+# Preview
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'kannokanno/previm'
+on_ft = 'markdown'
+depends = 'tyru/open-browser.vim'
+#}}}
+
+#{{{ JSON
+# Preview
+[[plugins]]
+repo = 'elzr/vim-json'
+on_ft = 'javascript'
+#}}}
+
+#{{{ Dockerfile
+[[plugins]]
+repo = 'ekalinin/Dockerfile.vim'
+on_ft = 'dockerfile'
+#}}}
+
+#{{{ Ansible
+[[plugins]]
+repo = 'chase/vim-ansible-yaml'
+on_ft = 'ansible'
+#}}}
+
+#{{{ Terraform
+[[plugins]]
+repo = 'hashivim/vim-terraform'
+on_ft = ['terraform', 'javascript']
+#}}}
+
+#{{{ PlantUML
+[[plugins]]
+repo = 'aklt/plantuml-syntax'
+on_ft = ['pu', 'uml', 'plantuml']
+#}}}
+
+#{{{ Graphviz
+[[plugins]]
+repo = 'wannesm/wmgraphviz.vim'
+on_ft = 'dot'
+#}}}
+
+#{{{ SQL
+[[plugins]]
+repo = 'vim-scripts/SQLUtilities'
+on_ft = 'sql'
+[[plugins]]
+repo = 'vim-scripts/Align'
+on_ft = 'sql'
+#}}}
+
+#}}}
+
+#{{{ Misc
+# the_silver_searcher
+[[plugins]]
+repo = 'rking/ag.vim'
+# replacement in quickfix
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+# quickrun
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+# qargs
+[[plugins]]
+repo = 'henrik/vim-qargs'
+# list tags
+[[plugins]]
+repo = 'majutsushi/tagbar'
+build = 'brew install ctags'
+# mark and highlight words
+[[plugins]]
+repo = 't9md/vim-quickhl'
+on_cmd = '<Plug>(quickhl-'
+# memo
+[[plugins]]
+repo = 'fuenor/qfixgrep'
+[[plugins]]
+repo = 'glidenote/memolist.vim'
+depends = 'fuenor/qfixgrep'
+# use histogram algorithm for vimdiff
+[[plugins]]
+repo = 'chrisbra/vim-diff-enhanced'
+#}}}

@@ -1,4 +1,5 @@
 .cache/
+cache/
 
 # vim
 vim/.netrwhist

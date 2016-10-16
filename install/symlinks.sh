@@ -12,9 +12,9 @@ ln -snf "$ZDOTDIR"/runcoms/zshrc "$HOME"/.zshrc
 # zsh
 ln -snf "$ZDOTDIR" "$HOME"/.zsh
 
-# vim
-ln -snf "$BASEDIR"/vim "$HOME"/.vim
-ln -snf "$VDOTDIR"/vimrc "$HOME"/.vimrc
+# nvim
+ln -snf "$BASEDIR"/nvim "$XDG_CONFIG_HOME"/nvim
+ln -snf "$BASEDIR"/nvim/cache/dein "$XDG_CACHE_HOME"/dein
 
 # tmux
 ln -snf "$BASEDIR"/tmux.conf "$HOME"/.tmux.conf
