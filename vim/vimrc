@@ -1,11 +1,12 @@
 let s:script_dir = expand('<sfile>:p:h')
-let s:vim_dir = $HOME . '/.vim'
+let g:vim_dir = $HOME . '/.vim'
 
 "{{{ General Config
 " set clipboard+=unnamed " Yanks go on clipboard instead
 let mapleader = ','
 let maplocalleader = ','
 " Open vimrc
+nnoremap <space>v :<C-u>tabnew <C-r>=g:vim_dir<CR>/vimrc<CR>:<C-u>CD<CR>
 nnoremap <space>v :<C-u>tabnew $HOME/.dotfiles/vim/vimrc<CR>:<C-u>CD<CR>
 " Reflect vimrc
 nnoremap <space>s :<C-u>source $HOME/.vimrc<CR>
@@ -50,7 +51,7 @@ set foldmethod=marker
 
 "{{{ Undo/Swap Config
 " path
-let s:vim_local_dir = s:vim_dir . '.local'
+let s:vim_local_dir = g:vim_dir . '.local'
 let g:local_backup_dir = s:vim_local_dir . '/backup'
 let g:local_swap_dir = s:vim_local_dir . '/swap'
 let g:local_undo_dir = s:vim_local_dir . '/undo'
@@ -461,6 +462,11 @@ Plug 'elzr/vim-json', {
             \ }
 "}}}
 
+"{{{ TOML
+Plug 'cespare/vim-toml', {
+            \ 'for': 'toml'
+            \ }
+
 "{{{ Dockerfile
 Plug 'ekalinin/Dockerfile.vim', {
             \ 'for': 'dockerfile'
@@ -820,7 +826,7 @@ let g:UltiSnipsExpandTrigger = '<c-k>'
 let g:UltiSnipsJumpForwardTrigger = '<c-k>'
 let g:UltiSnipsJumpBackwardTrigger = '<c-j>'
 let g:UltiSnipsListSnippets = '<c-l>'
-let g:UltiSnipsSnippetsDir = s:vim_dir . '/UltiSnips'
+let g:UltiSnipsSnippetsDir = g:vim_dir . '/UltiSnips'
 let g:UltiSnipsEditSplit = 'context'
 "}}}
 
@@ -1206,8 +1212,8 @@ function! s:setup_golang()
     vnoremap <buffer> <Leader>p :GoPlay<CR>
 
     " for ctrlp
-    nnoremap <C-p>t :<C-u>GoDecls<CR>
-    nnoremap <C-p>T :<C-u>GoDeclsDir<CR>
+    nnoremap <buffer> <C-p>t :<C-u>GoDecls<CR>
+    nnoremap <buffer> <C-p>T :<C-u>GoDeclsDir<CR>
 endfunction
 "}}}
 
@@ -1261,7 +1267,7 @@ endfunction
 "}}}
 
 "{{{ stylus
-function! s:setup_scss()
+function! s:setup_stylus()
     setlocal tabstop=4
     setlocal shiftwidth=4
 endfunction
