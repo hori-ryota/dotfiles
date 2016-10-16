@@ -1302,9 +1302,16 @@ function! s:setup_talkiejs()
     nnoremap <buffer> <Leader>t :<C-u>!npm run test<CR>
 endfunction
 "}}}
-"
+
 "{{{ m3u8
 function! s:setup_m3u8()
+endfunction
+"}}}
+
+"{{{ dot
+let g:WMGraphviz_output='png'
+function! s:setup_dot()
+    nnoremap <silent> <buffer> <LocalLeader>lp :GraphvizCompilePDF<CR>
 endfunction
 "}}}
 
@@ -1313,6 +1320,7 @@ augroup my_setup_filetype_configuration
     autocmd!
     autocmd FileType agit       call s:setup_agit()
     autocmd FileType css        call s:setup_css()
+    autocmd FileType dot        call s:setup_dot()
     autocmd FileType go         call s:setup_golang()
     autocmd FileType html       call s:setup_html()
     autocmd FileType javascript call s:setup_javascript()
