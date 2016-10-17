@@ -466,6 +466,7 @@ Plug 'elzr/vim-json', {
 Plug 'cespare/vim-toml', {
             \ 'for': 'toml'
             \ }
+"}}}
 
 "{{{ Dockerfile
 Plug 'ekalinin/Dockerfile.vim', {

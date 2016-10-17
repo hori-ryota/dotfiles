@@ -6,9 +6,9 @@ let g:vim_dir = $XDG_CONFIG_HOME . '/nvim'
 let mapleader = ','
 let maplocalleader = ','
 " Open vimrc
-nnoremap <space>v :<C-u>tabnew <C-r>$MYVIMRC<CR>:<C-u>CD<CR>
+nnoremap <space>v :<C-u>tabnew <C-r>=$MYVIMRC<CR><CR>:<C-u>CD<CR>
 " Reflect vimrc
-nnoremap <space>s :<C-u>source <C-r>$MYVIMRC<CR>
+nnoremap <space>s :<C-u>source <C-r>=$MYVIMRC<CR><CR>
 " Open dotfiles
 nnoremap <space>d :<C-u>tabnew $HOME/.dotfiles/README.md<CR>:<C-u>CD<CR>
 " Character encoding
@@ -217,7 +217,9 @@ augroup FileTypeDetect
     autocmd BufRead,BufNewFile *.styl,*.stylus          setfiletype stylus
     autocmd BufRead,BufNewFile *.tex                    setfiletype tex
     autocmd BufRead,BufNewFile *.tfstate                setfiletype tfstate
+    autocmd BufRead,BufNewFile *.toml                   setfiletype toml
     autocmd BufRead,BufNewFile *.ts                     setfiletype typescript
+    autocmd BufRead,BufNewFile *.vim                    setfiletype vim
     autocmd BufRead,BufNewFile *.yml,*.yaml,*.lock      setfiletype yaml
     autocmd BufRead,BufNewFile *.{md,mdwn,mkd,mkdn,mark*,txt,text} setfiletype markdown
     autocmd BufRead,BufNewFile .tmux.conf,tmux.conf     setfiletype tmux
@@ -232,15 +234,18 @@ let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 if !isdirectory(s:dein_repo_dir)
-  call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
+    call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
 let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
 if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir, [$MYVIMRC, s:toml_file])
-  call dein#load_toml(s:toml_file)
-  call dein#end()
-  call dein#save_state()
+    call dein#begin(s:dein_dir, [$MYVIMRC, s:toml_file])
+    call dein#load_toml(s:toml_file)
+    call dein#end()
+    call dein#save_state()
+endif
+if has('vim_starting') && dein#check_install()
+    call dein#install()
 endif
 
 "}}}
@@ -414,7 +419,7 @@ endfunction
 
 "{{{ typescript
 function! s:setup_typescript()
-    nnoremap <buffer> <leader>dd :<C-u>YcmCompleter GoToDefinition<CR>
+    " nnoremap <buffer> <leader>dd :<C-u>YcmCompleter GoToDefinition<CR>
 endfunction
 "}}}
 

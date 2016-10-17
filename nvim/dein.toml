@@ -1,5 +1,8 @@
 #{{{ General
 
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
 #{{{ crtlp
 [[plugins]]
 repo = 'ctrlpvim/ctrlp.vim'
@@ -50,11 +53,16 @@ hook_add = '''
 repo = 'FelikZ/ctrlp-py-matcher'
 #}}}
 
+#{{{ config
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+#}}}
+
 #{{{ Status bar
 # color scheme for lightline
 [[plugins]]
 repo = 'cocopon/lightline-hybrid.vim'
-
+depends = 'vim-hybrid'
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
@@ -184,9 +192,10 @@ hook_add = '''
 
 #{{{ history
 [[plugins]]
-repo = 'sjl/gundo.vim'
+repo = 'simnalamburt/vim-mundo'
 hook_add = '''
-    nnoremap <space>u :<C-u>GundoToggle<CR>
+    let g:mundo_prefer_python3 = 1
+    nnoremap <space>u :<C-u>MundoToggle<CR>
 '''
 #}}}
 
@@ -215,40 +224,113 @@ hook_add = '''
 
 #{{{ Programming
 
-#{{{ YouCompleteMe
+#{{{ deoplete
 [[plugins]]
-repo = 'Valloric/YouCompleteMe'
-build = 'brew install cmake; ./install.py --clang-completer --gocode-completer --tern-completer'
-hook_add = '''
-    " For 'scrooloose/syntastic'
-    let g:ycm_show_diagnostics_ui = 0
+repo = 'Shougo/deoplete.nvim'
+depends = 'context_filetype.vim'
+if = "has('nvim')"
+on_i = 1
+hook_source = '''
+    let g:deoplete#enable_at_startup = 1
+    " <TAB>: completion.
+    inoremap <silent><expr> <TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ deoplete#mappings#manual_complete()
+    function! s:check_back_space() abort "{{{
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction"}}}
 
-    nnoremap <leader>dd :<C-u>YcmCompleter GoTo<CR>
-    nnoremap <leader>dr :<C-u>YcmCompleter GoToReferences<CR>
-    nnoremap <leader>gd :<C-u>YcmCompleter GetDoc<CR>
-    nnoremap <leader>I :<C-u>YcmCompleter GetType<CR>
+    " <S-TAB>: completion back.
+    inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
 
-    let g:ycm_filetype_blacklist = {}
+    inoremap <expr><C-g> deoplete#mappings#undo_completion()
+    " <C-l>: redraw candidates
+    inoremap <expr><C-l> deoplete#mappings#refresh()
 
-    let g:ycm_complete_in_comments = 1
-    let g:ycm_complete_in_strings = 1
-    let g:ycm_collect_identifiers_from_tags_files = 1
-    let g:ycm_seed_identifiers_with_syntax = 1
-    let g:ycm_add_preview_to_completeopt = 1
-    let g:ycm_autoclose_preview_window_after_completion = 1
-    let g:ycm_autoclose_preview_window_after_insertion = 1
-    let g:ycm_filepath_completion_use_working_dir = 1
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function() abort
+      return deoplete#mappings#close_popup() . "\<CR>"
+    endfunction
+
+    inoremap <expr> '  pumvisible() ? deoplete#mappings#close_popup() : "'"
+
+    " call deoplete#custom#set('_', 'matchers', ['matcher_head'])
+    call deoplete#custom#set('ghc', 'sorters', ['sorter_word'])
+    " call deoplete#custom#set('buffer', 'mark', '')
+    " call deoplete#custom#set('_', 'matchers', ['matcher_full_fuzzy'])
+    " call deoplete#custom#set('_', 'disabled_syntaxes', ['Comment', 'String'])
+    " call deoplete#custom#set('buffer', 'mark', '*')
+
+    " Use auto delimiter
+    " call deoplete#custom#set('_', 'converters',
+    "       \ ['converter_auto_paren',
+    "       \  'converter_auto_delimiter', 'remove_overlap'])
+    call deoplete#custom#set('_', 'converters', [
+          \ 'converter_remove_paren',
+          \ 'converter_remove_overlap',
+          \ 'converter_truncate_abbr',
+          \ 'converter_truncate_menu',
+          \ 'converter_auto_delimiter',
+          \ ])
+
+    " call deoplete#custom#set('buffer', 'min_pattern_length', 9999)
+    call deoplete#custom#set('clang', 'input_pattern', '\.\w*|\.->\w*|\w+::\w*')
+    call deoplete#custom#set('clang', 'max_pattern_length', -1)
+
+    let g:deoplete#keyword_patterns = {}
+    let g:deoplete#keyword_patterns._ = '[a-zA-Z_]\k*\(?'
+    " let g:deoplete#keyword_patterns.tex = '\\?[a-zA-Z_]\w*'
+    let g:deoplete#keyword_patterns.tex = '[^\w|\s][a-zA-Z_]\w*'
+
+    let g:deoplete#omni#input_patterns = {}
+    let g:deoplete#omni#input_patterns.python = ''
+    let g:deoplete#omni#functions = {}
+    let g:deoplete#omni#functions.lua = 'xolox#lua#omnifunc'
+
+    " inoremap <silent><expr> <C-t> deoplete#mappings#manual_complete('file')
+
+    let g:deoplete#enable_refresh_always = 1
+    let g:deoplete#enable_camel_case = 1
+    " let g:deoplete#auto_complete_start_length = 3
+
+    " deoplete-clang "{{{
+    " libclang shared library path
+    let g:deoplete#sources#clang#libclang_path = '/usr/lib/libclang.so'
+
+    " clang builtin header path
+    let g:deoplete#sources#clang#clang_header = '/usr/include/clang'
+
+    " libclang default compile flags
+    let g:deoplete#sources#clang#flags = ['-x', 'c++', '-std=c++11']
+
+    " compile_commands.json directory path
+    " Not file path. Need build directory path
+    " let g:deoplete#sources#clang#clang_complete_database =
+    "       \ expand('~/src/neovim/build')
+
+    " let g:deoplete#enable_profile = 1
+    " call deoplete#enable_logging('DEBUG', 'deoplete.log')
+    " call deoplete#custom#set('clang', 'debug_enabled', 1)
 '''
 #}}}
 
 #{{{ Snippet
 [[plugins]]
 repo = 'honza/vim-snippets'
+on_i = 1
+
 [[plugins]]
 repo = 'SirVer/ultisnips'
 depends = 'vim-snippets'
-hook_add = '''
+on_i = 1
+hook_source = '''
     " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
     let g:UltiSnipsExpandTrigger = '<c-k>'
     let g:UltiSnipsJumpForwardTrigger = '<c-k>'
@@ -269,13 +351,16 @@ hook_add = '''
     let g:NERDTreeDirArrowExpandable = '▸'
     let g:NERDTreeDirArrowCollapsible = '▾'
 '''
+
 [[plugins]]
 repo = 'Xuyuanp/nerdtree-git-plugin'
+on_cmd = 'NERDTreeToggle'
 #}}}
 
 #{{{ Visual
 [[plugins]]
 repo = 't9md/vim-choosewin'
+on_map = '<Plug>(choosewin)'
 hook_add = '''
     " invoke with '-'
     nmap  -  <Plug>(choosewin)
@@ -300,6 +385,7 @@ hook_add = '''
     let g:choosewin_statusline_replace = 0 " don't replace statusline
     let g:choosewin_tabline_replace    = 0 " don't replace tabline
 '''
+
 [[plugins]]
 repo = 'Yggdroot/indentLine'
 hook_add = '''
@@ -308,11 +394,10 @@ hook_add = '''
 #}}}
 
 #{{{ Editor
-# edit surround easy
-[[plugins]]
+[[plugins]] # edit surround easy
 repo = 'tpope/vim-surround'
-# Aligning Text
-[[plugins]]
+
+[[plugins]] # Aligning Text
 repo = 'junegunn/vim-easy-align'
 hook_add = '''
     " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
@@ -329,29 +414,28 @@ hook_add = '''
                 \ 'ignore_groups': ['!Comment']
                 \ }
 '''
-# comment stuff out
-[[plugins]]
+[[plugins]] # comment stuff out
 repo = 'tpope/vim-commentary'
-# reuse register
-[[plugins]]
+
+[[plugins]] # reuse register
 repo = 'LeafCage/yankround.vim'
 hook_add = '''
-let g:yankround_use_ctrlp = 1
-let g:yankround_max_history = 50
+    let g:yankround_use_ctrlp = 1
+    let g:yankround_max_history = 50
 
-nmap p <Plug>(yankround-p)
-xmap p <Plug>(yankround-p)
-nmap P <Plug>(yankround-P)
-nmap gp <Plug>(yankround-gp)
-xmap gp <Plug>(yankround-gp)
-nmap gP <Plug>(yankround-gP)
-nmap <C-k> <Plug>(yankround-prev)
-nmap <C-j> <Plug>(yankround-next)
-cmap <C-r> <Plug>(yankround-insert-register)
-cmap <C-y> <Plug>(yankround-pop)
+    nmap p <Plug>(yankround-p)
+    xmap p <Plug>(yankround-p)
+    nmap P <Plug>(yankround-P)
+    nmap gp <Plug>(yankround-gp)
+    xmap gp <Plug>(yankround-gp)
+    nmap gP <Plug>(yankround-gP)
+    nmap <C-k> <Plug>(yankround-prev)
+    nmap <C-j> <Plug>(yankround-next)
+    cmap <C-r> <Plug>(yankround-insert-register)
+    cmap <C-y> <Plug>(yankround-pop)
 '''
-# easily search for, substitute, and abbreviate multiple variants of a word
-[[plugins]]
+
+[[plugins]] # easily search for, substitute, and abbreviate multiple variants of a word
 repo = 'tpope/vim-abolish'
 #}}}
 
@@ -418,20 +502,19 @@ hook_add = '''
     xmap g/ <Plug>(easymotion-sn)
     omap g/ <Plug>(easymotion-tn)
 '''
-# highlight substitute target
-[[plugins]]
+
+[[plugins]] # highlight substitute target
 repo = 'osyo-manga/vim-over'
 hook_add = '''
     nnoremap <silent> <Leader>s :<C-u>OverCommandLine<CR>
 '''
-# pairs of handy bracket mappings
-[[plugins]]
+
+[[plugins]] # pairs of handy bracket mappings
 repo = 'tpope/vim-unimpaired'
 #}}}
 
 #{{{ syntax check
-# syntax check
-[[plugins]]
+[[plugins]] # syntax check
 repo = 'osyo-manga/vim-watchdogs'
 depends = [
   'shabadou.vim',
@@ -444,6 +527,10 @@ on_event = ['FocusLost', 'CursorHold']
 hook_add = '''
     let g:watchdogs_check_BufWritePost_enable = 1
 
+    " for lightline
+    let g:Qfstatusline#UpdateCmd = function('lightline#update')
+'''
+hook_source = '''
     if !exists("g:quickrun_config")
         let g:quickrun_config = {}
     endif
@@ -496,23 +583,25 @@ hook_add = '''
 
     " for html
     let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
-
-    " for lightline
-    let g:Qfstatusline#UpdateCmd = function('lightline#update')
 '''
 hook_post_source = '''
     " watchdogs.vim の設定を追加
     call watchdogs#setup(g:quickrun_config)
 '''
+
 [[plugins]]
 repo = 'osyo-manga/shabadou.vim'
+
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 build = 'make -f make_mac.mak'
+
 [[plugins]]
 repo = 'KazuakiM/vim-qfstatusline'
+
 [[plugins]]
 repo = 'cohama/vim-hier'
+
 [[plugins]]
 repo = 'dannyob/quickfixstatus'
 #}}}
@@ -520,25 +609,31 @@ repo = 'dannyob/quickfixstatus'
 #{{{ Git/Gist
 [[plugins]]
 repo = 'tpope/vim-fugitive'
+
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
+
 [[plugins]]
 repo = 'cohama/agit.vim'
+
 [[plugins]]
 repo = 'idanarye/vim-merginal'
-# Gist
-[[plugins]]
+
+[[plugins]] # Gist
 repo = 'lambdalisue/vim-gista'
-on_cmd = ['Gista', '<Plug>(gista-']
+on_cmd = 'Gista'
+on_map = '<Plug>(gista-'
 #}}}
 
 #{{{ Javascript
 [[plugins]]
 repo = 'othree/yajs.vim'
 on_ft = ['javascript', 'html', 'ejs', 'erb', 'jst', 'jade']
+
 [[plugins]]
 repo = 'gavocanov/vim-js-indent'
 on_ft = ['javascript', 'html', 'ejs', 'erb', 'jst', 'jade']
+
 [[plugins]]
 repo = 'marijnh/tern_for_vim'
 build = 'npm install'
@@ -547,15 +642,19 @@ hook_source = '''
     let g:tern_show_argument_hints = 'on_hold'
     let g:tern_show_signature_in_pum = 1
 '''
+
 [[plugins]]
 repo = 'briancollins/vim-jst'
 on_ft = ['jst', 'ejs']
+
 [[plugins]]
 repo = 'digitaltoad/vim-jade'
 on_ft = 'jade'
+
 [[plugins]]
 repo = 'kchmck/vim-coffee-script'
 on_ft = 'coffee'
+
 [[plugins]]
 repo = 'mxw/vim-jsx'
 on_ft = 'javascript'
@@ -571,7 +670,7 @@ on_ft = 'typescript'
 #{{{ go
 [[plugins]]
 repo = 'fatih/vim-go'
-on_ft = 'go'
+#on_ft = 'go'
 hook_source = '''
     let g:go_fmt_options = '-s'
     " metalinterにオプションを付ける方法が用意されていなかったのでとりあえず無理やり混ぜ込む
@@ -623,7 +722,11 @@ hook_source = '''
 
     let g:go_def_reuse_buffer = 1
 '''
-#}}}
+
+[[plugins]]
+repo = 'zchee/deoplete-go'
+on_ft = 'go'
+}}}
 
 #{{{ Protocol Buffers
 [[plugins]]
@@ -633,6 +736,10 @@ on_ft = 'proto'
 
 #{{{ Python
 [[plugins]]
+repo = 'zchee/deoplete-jedi'
+on_ft = 'python'
+
+[[plugins]]
 repo = 'hynek/vim-python-pep8-indent'
 on_ft = 'python'
 #}}}
@@ -641,15 +748,19 @@ on_ft = 'python'
 [[plugins]]
 repo = 'vim-ruby/vim-ruby'
 on_ft = ['ruby', 'eruby', 'haml']
+
 [[plugins]]
 repo = 'ruby-matchit'
 on_ft = ['ruby', 'eruby', 'haml']
+
 [[plugins]]
 repo = 'skwp/vim-rspec'
 on_ft = 'ruby'
+
 [[plugins]]
 repo = 'Keithbsmiley/rspec.vim'
 on_ft = 'ruby'
+
 [[plugins]]
 repo = 'tpope/vim-rails'
 on_ft = 'ruby'
@@ -665,6 +776,12 @@ on_ft = 'groovy'
 [[plugins]]
 repo = 'udalov/kotlin-vim'
 on_ft = 'kotlin'
+#}}}
+
+#{{{ clang
+[[plugins]]
+repo = 'zchee/deoplete-clang'
+on_ft = ['c', 'cpp']
 #}}}
 
 #{{{ html
@@ -731,10 +848,15 @@ hook_source = '''
 #}}}
 
 #{{{ JSON
-# Preview
-[[plugins]]
+[[plugins]] # Preview
 repo = 'elzr/vim-json'
 on_ft = 'javascript'
+#}}}
+
+#{{{ TOML
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
 #}}}
 
 #{{{ Dockerfile
@@ -777,6 +899,7 @@ hook_source = '''
 [[plugins]]
 repo = 'vim-scripts/SQLUtilities'
 on_ft = 'sql'
+
 [[plugins]]
 repo = 'vim-scripts/Align'
 on_ft = 'sql'
@@ -785,14 +908,13 @@ on_ft = 'sql'
 #}}}
 
 #{{{ Misc
-# the_silver_searcher
-[[plugins]]
+[[plugins]] # the_silver_searcher
 repo = 'rking/ag.vim'
-# replacement in quickfix
-[[plugins]]
+
+[[plugins]] # replacement in quickfix
 repo = 'thinca/vim-qfreplace'
-# quickrun
-[[plugins]]
+
+[[plugins]] # quickrun
 repo = 'thinca/vim-quickrun'
 hook_add = '''
     let g:quickrun_config = get(g:, 'quickrun_config', {})
@@ -801,19 +923,19 @@ hook_add = '''
                 \ 'runner/vimproc/updatetime': 40,
                 \ }
 '''
-# qargs
-[[plugins]]
+[[plugins]] # qargs
 repo = 'henrik/vim-qargs'
-# list tags
-[[plugins]]
+
+[[plugins]] # list tags
 repo = 'majutsushi/tagbar'
 build = 'brew install ctags'
 hook_add = '''
     nmap <space>t :<C-u>TagbarToggle<CR>
 '''
-# mark and highlight words
-[[plugins]]
+
+[[plugins]] # mark and highlight words
 repo = 't9md/vim-quickhl'
+on_map = '<Plug>(quickhl-'
 hook_add = '''
     nmap <Space>m <Plug>(quickhl-manual-this)
     xmap <Space>m <Plug>(quickhl-manual-this)
@@ -824,9 +946,11 @@ hook_add = '''
     nmap <Space>] <Plug>(quickhl-tag-toggle)
     map ,h <Plug>(operator-quickhl-manual-this-motion)
 '''
+
 # memo
 [[plugins]]
 repo = 'fuenor/qfixgrep'
+
 [[plugins]]
 repo = 'glidenote/memolist.vim'
 depends = 'qfixgrep'
@@ -881,8 +1005,7 @@ hook_add = '''
     nnoremap <Leader>mf :<C-u>exe "CtrlP" g:memolist_path<cr><f5>
 '''
 
-# use histogram algorithm for vimdiff
-[[plugins]]
+[[plugins]] # use histogram algorithm for vimdiff
 repo = 'chrisbra/vim-diff-enhanced'
 hook_add = '''
     let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=histogram")'
