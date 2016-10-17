@@ -49,6 +49,7 @@ hook_add = '''
     nnoremap <C-p>x :<C-u>CtrlPMixed<CR>
     nnoremap <C-p>y :<C-u>CtrlPYankRound<CR>
 '''
+
 [[plugins]]
 repo = 'FelikZ/ctrlp-py-matcher'
 #}}}
@@ -414,6 +415,7 @@ hook_add = '''
                 \ 'ignore_groups': ['!Comment']
                 \ }
 '''
+
 [[plugins]] # comment stuff out
 repo = 'tpope/vim-commentary'
 
@@ -517,11 +519,11 @@ repo = 'tpope/vim-unimpaired'
 [[plugins]] # syntax check
 repo = 'osyo-manga/vim-watchdogs'
 depends = [
-  'shabadou.vim',
-  'vimproc.vim',
-  'vim-qfstatusline',
-  'vim-hier',
-  'quickfixstatus',
+    'shabadou.vim',
+    'vimproc.vim',
+    'vim-qfstatusline',
+    'vim-hier',
+    'quickfixstatus',
 ]
 on_event = ['FocusLost', 'CursorHold']
 hook_add = '''
@@ -670,7 +672,7 @@ on_ft = 'typescript'
 #{{{ go
 [[plugins]]
 repo = 'fatih/vim-go'
-#on_ft = 'go'
+on_ft = 'go'
 hook_source = '''
     let g:go_fmt_options = '-s'
     " metalinterにオプションを付ける方法が用意されていなかったのでとりあえず無理やり混ぜ込む
@@ -719,14 +721,12 @@ hook_source = '''
                 \ 'ctagsbin'  : 'gotags',
                 \ 'ctagsargs' : '-sort -silent'
                 \ }
-
-    let g:go_def_reuse_buffer = 1
 '''
 
 [[plugins]]
 repo = 'zchee/deoplete-go'
 on_ft = 'go'
-}}}
+#}}}
 
 #{{{ Protocol Buffers
 [[plugins]]
@@ -799,6 +799,7 @@ hook_source = '''
                 \   'indentation': '  '
                 \ }
 '''
+
 [[plugins]]
 repo = 'othree/html5.vim'
 on_ft = ['html', 'ejs', 'erb', 'jst', 'jade']
@@ -808,12 +809,15 @@ on_ft = ['html', 'ejs', 'erb', 'jst', 'jade']
 [[plugins]]
 repo = 'hail2u/vim-css3-syntax'
 on_ft = ['html', 'ejs', 'erb', 'jst', 'jade', 'css']
+
 [[plugins]]
 repo = 'groenewege/vim-less'
 on_ft = 'less'
+
 [[plugins]]
 repo = 'cakebaker/scss-syntax.vim'
 on_ft = 'scss'
+
 [[plugins]]
 repo = 'wavded/vim-stylus'
 on_ft = 'stylus'
@@ -923,6 +927,7 @@ hook_add = '''
                 \ 'runner/vimproc/updatetime': 40,
                 \ }
 '''
+
 [[plugins]] # qargs
 repo = 'henrik/vim-qargs'
 

@@ -12,7 +12,9 @@ nnoremap <space>s :<C-u>source <C-r>=$MYVIMRC<CR><CR>
 " Open dotfiles
 nnoremap <space>d :<C-u>tabnew $HOME/.dotfiles/README.md<CR>:<C-u>CD<CR>
 " Character encoding
-set encoding=utf-8
+if has('vim_starting')
+    set encoding=utf-8
+endif
 set termencoding=utf-8
 set fileencoding=utf-8
 " Automatic end-of-file format detection
@@ -247,6 +249,14 @@ endif
 if has('vim_starting') && dein#check_install()
     call dein#install()
 endif
+
+if !has('vim_starting')
+    call dein#call_hook('source')
+    call dein#call_hook('post_source')
+endif
+
+syntax enable
+filetype plugin indent on
 
 "}}}
 
