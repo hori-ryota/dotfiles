@@ -727,6 +727,7 @@ hook_source = '''
                 \ 'ctagsbin'  : 'gotags',
                 \ 'ctagsargs' : '-sort -silent'
                 \ }
+    let g:go_term_enabled = 1
 '''
 
 [[plugins]]
