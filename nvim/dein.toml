@@ -3,55 +3,61 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-#{{{ crtlp
+#{{{ denite.nvim
 [[plugins]]
-repo = 'ctrlpvim/ctrlp.vim'
+repo = 'Shougo/denite.nvim'
+on_cmd = 'Denite'
 hook_add = '''
-    " Default mappings
-    "" let g:ctrlp_map = '<C-p>'
-    "" let g:ctrlp_cmd = 'CtrlP'
+    nmap <silent> <C-p><C-f> :<C-u>Denite filetype<CR>
+    nmap <silent> <C-p>p     :<C-u>Denite file_rec<CR>
+    nmap <silent> <C-p><C-p> :<C-u>Denite file_rec:
+    nmap <silent> <C-p>GO    :<C-u>Denite file_rec:$GOPATH/src<CR>
+    nmap <silent> <C-p>l     :<C-u>Denite line<CR>
+    nmap <silent> <C-p>g     :<C-u>Denite grep<CR>
+    nmap <silent> <C-p><C-g> :<C-u>Denite grep:
+    nmap <silent> <C-p>c     :<C-u>Denite command<CR>
+    nmap <silent> <C-p>o     :<C-u>Denite file_mru<CR>
+    nmap <silent> <C-p>y     :<C-u>Denite neoyank<CR>
+    nmap <silent> <C-p>m     :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
+'''
+hook_source = '''
+    call denite#custom#var('file_rec', 'command',
+          \ ['ag', '--follow', '--nocolor', '--nogroup', '--hidden',
+          \ '--ignore', '.git', ' --ignore', '.DS_Store', '--ignore', 'node_modules', '--ignore', 'Alfred.alfredpreferences',
+          \ '-g', ''])
 
-    let g:ctrlp_map = '<C-p><C-p>'
+    call denite#custom#var('grep', 'command', ['ag'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'final_opts', [])
+    call denite#custom#var('grep', 'separator', [])
+    call denite#custom#var('grep', 'default_opts',
+          \ ['--nocolor', '--nogroup', '--follow', '--hidden', '--column',
+          \ '--ignore', '.git', ' --ignore', '.DS_Store', '--ignore', 'node_modules', '--ignore', 'Alfred.alfredpreferences',
+          \ ])
 
-    let g:ctrlp_working_path_mode = 'wa'
+    call denite#custom#source(
+          \ 'file_mru', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
+    call denite#custom#source('file_rec', 'matchers', ['matcher_cpsm'])
+    call denite#custom#source('file_mru', 'converters',
+          \ ['converter_relative_word'])
 
-    let g:ctrlp_match_window = 'max:50'
-
-    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-
-    " Set delay to prevent extra search
-    let g:ctrlp_lazy_update = 350
-
-    " Do not clear filenames cache, to improve CtrlP startup
-    " You can manualy clear it by <F5>
-    let g:ctrlp_clear_cache_on_exit = 0
-
-    " Set no file limit, we are building a big project
-    let g:ctrlp_max_files = 0
-
-    " If ag is available use it as filename list generator instead of 'find'
-    if executable("ag")
-        set grepprg=ag\ --nogroup\ --nocolor
-        let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''.DS_Store'' --ignore ''node_modules'' --ignore ''Alfred.alfredpreferences'' --hidden -g ""'
-    endif
-
-    nnoremap <C-p>p :<C-u>CtrlP<CR>
-    nnoremap <C-p>b :<C-u>CtrlPBuffer<CR>
-    nnoremap <C-p>m :<C-u>CtrlPMRU<CR>
-    nnoremap <C-p>T :<C-u>CtrlPTag<CR>
-    nnoremap <C-p>t :<C-u>CtrlPBufTag<CR>
-    nnoremap <C-p>q :<C-u>CtrlPQuickfix<CR>
-    nnoremap <C-p>d :<C-u>CtrlPDir<CR>
-    nnoremap <C-p>r :<C-u>CtrlPPTS<CR>
-    nnoremap <C-p>u :<C-u>CtrlPUndo<CR>
-    nnoremap <C-p>l :<C-u>CtrlPLine<CR>
-    nnoremap <C-p>c :<C-u>CtrlPChange<CR>
-    nnoremap <C-p>x :<C-u>CtrlPMixed<CR>
-    nnoremap <C-p>y :<C-u>CtrlPYankRound<CR>
+    call denite#custom#map('_', "\<C-j>", 'move_to_next_line')
+    call denite#custom#map('_', "\<C-k>", 'move_to_prev_line')
 '''
 
 [[plugins]]
-repo = 'FelikZ/ctrlp-py-matcher'
+repo = 'Shougo/neomru.vim'
+on_source = ['unite.vim', 'denite.nvim']
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+on_event = 'TextYankPost'
+on_source = ['unite.vim', 'denite.nvim']
+
+[[plugins]]
+repo = 'nixprime/cpsm'
+on_source = 'denite.nvim'
+build = 'env PY3=ON ./install.sh'
 #}}}
 
 #{{{ config

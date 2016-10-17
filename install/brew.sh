@@ -35,6 +35,7 @@ brew install ruby-build
 ## Python
 brew install pyenv
 brew install pyenv-virtualenv
+brew install boost
 # Orchestration tools
 brew install terraform
 brew install ansible
