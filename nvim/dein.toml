@@ -32,7 +32,7 @@ hook_source = '''
     call denite#custom#var('grep', 'separator', [])
     call denite#custom#var('grep', 'default_opts',
           \ ['--nocolor', '--nogroup', '--follow', '--hidden', '--column',
-          \ '--ignore', '.git', ' --ignore', '.DS_Store', '--ignore', 'node_modules', '--ignore', 'Alfred.alfredpreferences',
+          \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences'
           \ ])
 
     call denite#custom#source(
@@ -78,7 +78,7 @@ hook_add = '''
                 \ 'colorscheme': 'hybrid',
                 \ 'mode_map': { 'c': 'NORMAL' },
                 \ 'active': {
-                \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+                \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
                 \   'right': [ [ 'neomake', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
                 \ },
                 \ 'component_function': {
@@ -88,7 +88,6 @@ hook_add = '''
                 \   'filetype': 'LightLineFiletype',
                 \   'fileencoding': 'LightLineFileencoding',
                 \   'mode': 'LightLineMode',
-                \   'ctrlpmark': 'CtrlPMark',
                 \ },
                 \ 'component_expand': {
                 \   'neomake': 'LightlineNeomake',
@@ -155,33 +154,6 @@ hook_add = '''
                     \ &ft == 'vimfiler' ? 'VimFiler' :
                     \ &ft == 'vimshell' ? 'VimShell' :
                     \ winwidth(0) > 60 ? lightline#mode() : ''
-    endfunction
-
-    function! CtrlPMark()
-        if expand('%:t') =~ 'ControlP'
-            call lightline#link('iR'[g:lightline.ctrlp_regex])
-            return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
-                        \ , g:lightline.ctrlp_next], 0)
-        else
-            return ''
-        endif
-    endfunction
-
-    let g:ctrlp_status_func = {
-                \ 'main': 'CtrlPStatusFunc_1',
-                \ 'prog': 'CtrlPStatusFunc_2',
-                \ }
-
-    function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
-        let g:lightline.ctrlp_regex = a:regex
-        let g:lightline.ctrlp_prev = a:prev
-        let g:lightline.ctrlp_item = a:item
-        let g:lightline.ctrlp_next = a:next
-        return lightline#statusline(0)
-    endfunction
-
-    function! CtrlPStatusFunc_2(str)
-        return lightline#statusline(0)
     endfunction
 
     let g:tagbar_status_func = 'TagbarStatusFunc'
