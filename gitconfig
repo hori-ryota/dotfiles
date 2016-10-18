@@ -12,7 +12,7 @@
   pull-master = !git checkout master && git fetch --prune && git merge origin/master && git delete-merged-branches
   pulll = !git checkout $1 && git fetch --prune && git merge origin/$1 && git delete-merged-branches
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = ~/.gitignore_global
 [push]
 	default = simple
@@ -23,9 +23,8 @@
 	prompt = false
 [merge]
 	tool = vimdiff
-[mergetool]
-	prompt = false
-	keepBackup = false
+[mergetool "vimdiff"]
+  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [url "git@github.com:"]
 	pushinsteadof = "https://github.com/"
 	pushinsteadof = "git://github.com/"
