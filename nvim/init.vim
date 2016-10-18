@@ -238,7 +238,9 @@ let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 if !isdirectory(s:dein_repo_dir)
     call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
-let &runtimepath = s:dein_repo_dir .",". &runtimepath
+if has('vim_starting')
+    let &runtimepath = s:dein_repo_dir .",". &runtimepath
+endif
 let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
 if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir, [$MYVIMRC, s:toml_file])

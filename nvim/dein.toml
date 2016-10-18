@@ -23,7 +23,7 @@ hook_add = '''
 hook_source = '''
     call denite#custom#var('file_rec', 'command',
           \ ['ag', '--follow', '--nocolor', '--nogroup', '--hidden',
-          \ '--ignore', '.git', ' --ignore', '.DS_Store', '--ignore', 'node_modules', '--ignore', 'Alfred.alfredpreferences',
+          \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences'
           \ '-g', ''])
 
     call denite#custom#var('grep', 'command', ['ag'])
