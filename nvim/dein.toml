@@ -23,7 +23,7 @@ hook_add = '''
 hook_source = '''
     call denite#custom#var('file_rec', 'command',
           \ ['ag', '--follow', '--nocolor', '--nogroup', '--hidden',
-          \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences'
+          \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences',
           \ '-g', ''])
 
     call denite#custom#var('grep', 'command', ['ag'])
@@ -306,21 +306,28 @@ hook_source = '''
 
 #{{{ Snippet
 [[plugins]]
-repo = 'honza/vim-snippets'
-on_i = 1
+repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
-repo = 'SirVer/ultisnips'
-depends = 'vim-snippets'
-on_i = 1
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_event = 'InsertCharPre'
+on_ft = 'snippet'
 hook_source = '''
-    " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-    let g:UltiSnipsExpandTrigger = '<c-k>'
-    let g:UltiSnipsJumpForwardTrigger = '<c-k>'
-    let g:UltiSnipsJumpBackwardTrigger = '<c-j>'
-    let g:UltiSnipsListSnippets = '<c-l>'
-    let g:UltiSnipsSnippetsDir = g:vim_dir . '/UltiSnips'
-    let g:UltiSnipsEditSplit = 'context'
+    imap <silent><c-K> <Plug>(neosnippet_jump_or_expand)
+    smap <silent><c-K> <Plug>(neosnippet_jump_or_expand)
+    xmap <silent><c-k> <Plug>(neosnippet_expand_target)
+    imap <silent><c-k> <Plug>(neosnippet_expand_or_jump)
+    smap <silent><c-k> <Plug>(neosnippet_expand_or_jump)
+    xmap <silent><c-K> <Plug>(neosnippet_register_oneshot_snippet)
+
+    let g:neosnippet#enable_snipmate_compatibility = 1
+    let g:neosnippet#enable_complete_done = 1
+    let g:neosnippet#expand_word_boundary = 1
+
+    let g:neosnippet#snippets_directory = g:vim_dir . '/snippets'
+
+    inoremap <silent> (( <C-r>=neosnippet#anonymous('\left(${1}\right)${0}')<CR>
 '''
 #}}}
 
