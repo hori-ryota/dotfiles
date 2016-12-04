@@ -13,7 +13,7 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # tmuxinator
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # go
 export GOPATH=$HOME/go
