@@ -3,63 +3,6 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-#{{{ denite.nvim
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-on_cmd = 'Denite'
-hook_add = '''
-    nmap <silent> <C-p><C-f> :<C-u>Denite filetype<CR>
-    nmap <silent> <C-p>p     :<C-u>Denite file_rec<CR>
-    nmap <silent> <C-p><C-p> :<C-u>Denite file_rec:
-    nmap <silent> <C-p>GO    :<C-u>Denite file_rec:$GOPATH/src<CR>
-    nmap <silent> <C-p>l     :<C-u>Denite line<CR>
-    nmap <silent> <C-p>g     :<C-u>Denite grep<CR>
-    nmap <silent> <C-p><C-g> :<C-u>Denite grep:
-    nmap <silent> <C-p>c     :<C-u>Denite command<CR>
-    nmap <silent> <C-p>o     :<C-u>Denite file_mru<CR>
-    nmap <silent> <C-p>y     :<C-u>Denite neoyank<CR>
-    nmap <silent> <C-p>m     :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
-'''
-hook_source = '''
-    call denite#custom#var('file_rec', 'command',
-          \ ['ag', '--follow', '--nocolor', '--nogroup', '--hidden',
-          \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences',
-          \ '-g', ''])
-
-    call denite#custom#var('grep', 'command', ['ag'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'final_opts', [])
-    call denite#custom#var('grep', 'separator', [])
-    call denite#custom#var('grep', 'default_opts',
-          \ ['--nocolor', '--nogroup', '--follow', '--hidden', '--column',
-          \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences'
-          \ ])
-
-    call denite#custom#source(
-          \ 'file_mru', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
-    call denite#custom#source('file_rec', 'matchers', ['matcher_cpsm'])
-    call denite#custom#source('file_mru', 'converters',
-          \ ['converter_relative_word'])
-
-    call denite#custom#map('_', "\<C-j>", 'move_to_next_line')
-    call denite#custom#map('_', "\<C-k>", 'move_to_prev_line')
-'''
-
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-on_source = ['unite.vim', 'denite.nvim']
-
-[[plugins]]
-repo = 'Shougo/neoyank.vim'
-on_event = 'TextYankPost'
-on_source = ['unite.vim', 'denite.nvim']
-
-[[plugins]]
-repo = 'nixprime/cpsm'
-on_source = 'denite.nvim'
-build = 'env PY3=ON ./install.sh'
-#}}}
-
 #{{{ config
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
@@ -168,7 +111,7 @@ hook_add = '''
         return lightline#statusline(0)
     endfunction
 
-    function LightlineNeomake()
+    function! LightlineNeomake()
         return '%{neomake#statusline#LoclistStatus()}'
     endfunction
 
@@ -213,73 +156,11 @@ hook_add = '''
 #{{{ Programming
 
 #{{{ deoplete
+# for deoplete
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
-depends = 'context_filetype.vim'
-if = "has('nvim')"
-on_i = 1
-hook_source = '''
-    let g:deoplete#enable_at_startup = 1
-    let g:deoplete#enable_camel_case = 1
-    augroup deocomplete_completedone
-        autocmd!
-        autocmd CompleteDone * pclose!
-    augroup END
-    " <TAB>: completion.
-    inoremap <silent><expr> <TAB>
-                \ pumvisible() ? "\<C-n>" :
-                \ <SID>check_back_space() ? "\<TAB>" :
-                \ deoplete#mappings#manual_complete()
-    function! s:check_back_space() abort "{{{
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction "}}}
-
-    " <S-TAB>: completion back.
-    inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
-
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
-
-    inoremap <expr><C-g> deoplete#mappings#undo_completion()
-    " <C-l>: redraw candidates
-    inoremap <expr><C-l> deoplete#mappings#refresh()
-
-    " <CR>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function() abort
-      return deoplete#mappings#close_popup() . "\<CR>"
-    endfunction
-
-    inoremap <expr> '  pumvisible() ? deoplete#mappings#close_popup() : "'"
-'''
-#}}}
-
-#{{{ Snippet
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-
-[[plugins]]
-repo = 'Shougo/neosnippet.vim'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_event = 'InsertCharPre'
-on_ft = 'snippet'
-hook_source = '''
-    imap <silent><c-K> <Plug>(neosnippet_jump_or_expand)
-    smap <silent><c-K> <Plug>(neosnippet_jump_or_expand)
-    xmap <silent><c-k> <Plug>(neosnippet_expand_target)
-    imap <silent><c-k> <Plug>(neosnippet_expand_or_jump)
-    smap <silent><c-k> <Plug>(neosnippet_expand_or_jump)
-    xmap <silent><c-K> <Plug>(neosnippet_register_oneshot_snippet)
-
-    let g:neosnippet#enable_snipmate_compatibility = 1
-    let g:neosnippet#enable_complete_done = 1
-    let g:neosnippet#expand_word_boundary = 1
-
-    let g:neosnippet#snippets_directory = g:vim_dir . '/snippets'
-
-    inoremap <silent> (( <C-r>=neosnippet#anonymous('\left(${1}\right)${0}')<CR>
+repo = 'Shougo/echodoc.vim'
+hook_add = '''
+    let g:echodoc_enable_at_startup = 1
 '''
 #}}}
 
@@ -292,40 +173,6 @@ hook_add = '''
     let g:NERDTreeShowHidden=1
     let g:NERDTreeDirArrowExpandable = '▸'
     let g:NERDTreeDirArrowCollapsible = '▾'
-'''
-
-[[plugins]]
-repo = 'Xuyuanp/nerdtree-git-plugin'
-on_cmd = 'NERDTreeToggle'
-#}}}
-
-#{{{ Visual
-[[plugins]]
-repo = 't9md/vim-choosewin'
-on_map = '<Plug>(choosewin)'
-hook_add = '''
-    " invoke with '-'
-    nmap  -  <Plug>(choosewin)
-
-    " use overlay feature
-    let g:choosewin_overlay_enable = 1
-
-    " workaround for overlay font broken on mutibyte buffer.
-    let g:choosewin_overlay_clear_multibyte = 1
-
-    " tmux like overlay color
-    let g:choosewin_color_overlay = {
-                \ 'gui': ['DodgerBlue3', 'DodgerBlue3' ],
-                \ 'cterm': [ 25, 25 ]
-                \ }
-    let g:choosewin_color_overlay_current = {
-                \ 'gui': ['firebrick1', 'firebrick1' ],
-                \ 'cterm': [ 124, 124 ]
-                \ }
-
-    let g:choosewin_blink_on_land      = 0 " dont' blink at land
-    let g:choosewin_statusline_replace = 0 " don't replace statusline
-    let g:choosewin_tabline_replace    = 0 " don't replace tabline
 '''
 #}}}
 
@@ -444,7 +291,7 @@ repo = 'osyo-manga/shabadou.vim'
 
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
-build = 'make -f make_mac.mak'
+build = 'make'
 
 [[plugins]]
 repo = 'cohama/vim-hier'
@@ -465,327 +312,6 @@ repo = 'cohama/agit.vim'
 
 [[plugins]]
 repo = 'idanarye/vim-merginal'
-
-[[plugins]] # Gist
-repo = 'lambdalisue/vim-gista'
-on_cmd = 'Gista'
-on_map = '<Plug>(gista-'
-#}}}
-
-#{{{ Javascript
-[[plugins]]
-repo = 'othree/yajs.vim'
-on_ft = ['javascript', 'html', 'ejs', 'erb', 'jst', 'jade']
-
-[[plugins]]
-repo = 'gavocanov/vim-js-indent'
-on_ft = ['javascript', 'html', 'ejs', 'erb', 'jst', 'jade']
-
-[[plugins]]
-repo = 'marijnh/tern_for_vim'
-build = 'npm install'
-on_ft = ['javascript', 'html', 'ejs', 'erb', 'jst', 'jade']
-hook_source = '''
-    let g:tern_show_argument_hints = 'on_hold'
-    let g:tern_show_signature_in_pum = 1
-'''
-
-[[plugins]]
-repo = 'briancollins/vim-jst'
-on_ft = ['jst', 'ejs']
-
-[[plugins]]
-repo = 'digitaltoad/vim-jade'
-on_ft = 'jade'
-
-[[plugins]]
-repo = 'kchmck/vim-coffee-script'
-on_ft = 'coffee'
-
-[[plugins]]
-repo = 'mxw/vim-jsx'
-on_ft = 'javascript'
-#}}}
-
-#{{{ TypeScript
-[[plugins]]
-repo = 'leafgarland/typescript-vim'
-build = 'npm install -g clausreinke/typescript-tools typescript'
-on_ft = 'typescript'
-#}}}
-
-#{{{ go
-[[plugins]]
-repo = 'fatih/vim-go'
-on_ft = 'go'
-hook_source = '''
-    let g:go_fmt_options = '-s'
-    " metalinterにオプションを付ける方法が用意されていなかったのでとりあえず無理やり混ぜ込む
-    let g:go_metalinter_deadline = '10s --tests'
-    let g:go_metalinter_enabled = [
-                \ 'deadcode',
-                \ 'errcheck',
-                \ 'gofmt',
-                \ 'ineffassign',
-                \ 'interfacer',
-                \ 'structcheck',
-                \ 'varcheck',
-                \ 'vet',
-                \ ]
-    let g:go_highlight_functions = 1
-    let g:go_highlight_methods = 1
-    let g:go_highlight_structs = 1
-    let g:go_highlight_operators = 1
-    let g:go_highlight_types = 1
-    let g:go_highlight_fields = 1
-    let g:go_highlight_build_constraints = 1
-    let g:tagbar_type_go = {
-                \ 'ctagstype' : 'go',
-                \ 'kinds'     : [
-                \ 'p:package',
-                \ 'i:imports:1',
-                \ 'c:constants',
-                \ 'v:variables',
-                \ 't:types',
-                \ 'n:interfaces',
-                \ 'w:fields',
-                \ 'e:embedded',
-                \ 'm:methods',
-                \ 'r:constructor',
-                \ 'f:functions'
-                \ ],
-                \ 'sro' : '.',
-                \ 'kind2scope' : {
-                \ 't' : 'ctype',
-                \ 'n' : 'ntype'
-                \ },
-                \ 'scope2kind' : {
-                \ 'ctype' : 't',
-                \ 'ntype' : 'n'
-                \ },
-                \ 'ctagsbin'  : 'gotags',
-                \ 'ctagsargs' : '-sort -silent'
-                \ }
-    let g:go_term_enabled = 1
-
-    " for neomake
-    let s:goargs = go#package#ImportPath(expand('%:p:h'))
-    let g:neomake_go_errcheck_maker = {
-                \ 'exe': 'errcheck',
-                \ 'args': ['-abspath', s:goargs],
-                \ 'append_file': 0,
-                \ "errorformat":
-                    \ '%E%f:%l:%c: %m'
-                    \ . ',%W%f:%l:%c %#%m'
-                \ }
-    let g:neomake_go_enabled_makers = ['errcheck', 'govet']
-'''
-
-[[plugins]]
-repo = 'zchee/deoplete-go'
-build = 'make'
-on_ft = 'go'
-hooK_source = '''
-    let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
-
-    let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-    let g:deoplete#sources#go#pointer = 1
-    let g:deoplete#sources#go#use_cache = 1
-    let g:deoplete#sources#go#json_directory =  = s:cache_home . '/deoplete/go/$GOOS_$GOARCH'
-    let g:deoplete#sources#go#cgo = 1
-'''
-#}}}
-
-#{{{ Protocol Buffers
-[[plugins]]
-repo = 'uarun/vim-protobuf'
-on_ft = 'proto'
-#}}}
-
-#{{{ Python
-[[plugins]]
-repo = 'zchee/deoplete-jedi'
-on_ft = 'python'
-
-[[plugins]]
-repo = 'hynek/vim-python-pep8-indent'
-on_ft = 'python'
-#}}}
-
-#{{{ Ruby
-[[plugins]]
-repo = 'vim-ruby/vim-ruby'
-on_ft = ['ruby', 'eruby', 'haml']
-
-[[plugins]]
-repo = 'ruby-matchit'
-on_ft = ['ruby', 'eruby', 'haml']
-
-[[plugins]]
-repo = 'skwp/vim-rspec'
-on_ft = 'ruby'
-
-[[plugins]]
-repo = 'Keithbsmiley/rspec.vim'
-on_ft = 'ruby'
-
-[[plugins]]
-repo = 'tpope/vim-rails'
-on_ft = 'ruby'
-#}}}
-
-#{{{ Gradle
-[[plugins]]
-repo = 'tfnico/vim-gradle'
-on_ft = 'groovy'
-#}}}
-
-#{{{ Kotlin
-[[plugins]]
-repo = 'udalov/kotlin-vim'
-on_ft = 'kotlin'
-#}}}
-
-#{{{ clang
-[[plugins]]
-repo = 'zchee/deoplete-clang'
-on_ft = ['c', 'cpp']
-#}}}
-
-#{{{ html
-# emmet
-[[plugins]]
-repo = 'mattn/emmet-vim'
-on_ft = ['html', 'ejs', 'erb', 'jst', 'jade']
-hook_source = '''
-    let g:user_emmet_leader_key=','
-
-    let g:user_emmet_settings = {
-                \   'variables': {
-                \     'lang': 'ja'
-                \   },
-                \   'indentation': '  '
-                \ }
-'''
-
-[[plugins]]
-repo = 'othree/html5.vim'
-on_ft = ['html', 'ejs', 'erb', 'jst', 'jade']
-#}}}
-
-#{{{ css
-[[plugins]]
-repo = 'hail2u/vim-css3-syntax'
-on_ft = ['html', 'ejs', 'erb', 'jst', 'jade', 'css']
-
-[[plugins]]
-repo = 'groenewege/vim-less'
-on_ft = 'less'
-
-[[plugins]]
-repo = 'cakebaker/scss-syntax.vim'
-on_ft = 'scss'
-
-[[plugins]]
-repo = 'wavded/vim-stylus'
-on_ft = 'stylus'
-#}}}
-
-#{{{ Markdown
-[[plugins]]
-repo = 'godlygeek/tabular'
-on_ft = 'markdown'
-
-[[plugins]]
-repo = 'gabrielelana/vim-markdown'
-on_ft = 'markdown'
-hook_source = '''
-    let g:markdown_enable_spell_checking = 0
-    let g:markdown_mapping_switch_status = '<Learder>x'
-'''
-
-# Preview
-[[plugins]]
-repo = 'tyru/open-browser.vim'
-on_ft = 'markdown'
-
-[[plugins]]
-repo = 'kannokanno/previm'
-on_ft = 'markdown'
-depends = 'open-browser.vim'
-hook_source = '''
-    " realtime preview
-    let g:previm_enable_realtime = 1
-'''
-#}}}
-
-#{{{ JSON
-[[plugins]] # Preview
-repo = 'elzr/vim-json'
-on_ft = 'javascript'
-#}}}
-
-#{{{ TOML
-[[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
-#}}}
-
-#{{{ Dockerfile
-[[plugins]]
-repo = 'ekalinin/Dockerfile.vim'
-on_ft = 'dockerfile'
-#}}}
-
-#{{{ Ansible
-[[plugins]]
-repo = 'chase/vim-ansible-yaml'
-on_ft = 'ansible'
-#}}}
-
-#{{{ Terraform
-[[plugins]]
-repo = 'hashivim/vim-terraform'
-on_ft = ['terraform', 'javascript']
-#}}}
-
-#{{{ Hashicorp Configuration Language
-[[plugins]]
-repo = 'fatih/vim-hclfmt'
-on_ft = ['terraform', 'javascript']
-hook_source = '''
-    let g:hcl_fmt_autosave = 0
-    let g:tf_fmt_autosave = 0
-    let g:nomad_fmt_autosave = 0
-'''
-#}}}
-
-#{{{ PlantUML
-[[plugins]]
-repo = 'aklt/plantuml-syntax'
-on_ft = ['pu', 'uml', 'plantuml']
-hook_source = '''
-    let g:plantuml_executable_script = '$HOME/.dotfiles/plantuml.sh'
-'''
-#}}}
-
-#{{{ Graphviz
-[[plugins]]
-repo = 'wannesm/wmgraphviz.vim'
-on_ft = 'dot'
-hook_source = '''
-    let g:WMGraphviz_output='png'
-'''
-#}}}
-
-#{{{ SQL
-[[plugins]]
-repo = 'vim-scripts/SQLUtilities'
-on_ft = 'sql'
-
-[[plugins]]
-repo = 'vim-scripts/Align'
-on_ft = 'sql'
 #}}}
 
 #}}}
@@ -815,20 +341,6 @@ repo = 'majutsushi/tagbar'
 build = 'brew install ctags'
 hook_add = '''
     nmap <space>t :<C-u>TagbarToggle<CR>
-'''
-
-[[plugins]] # mark and highlight words
-repo = 't9md/vim-quickhl'
-on_map = '<Plug>(quickhl-'
-hook_add = '''
-    nmap <Space>m <Plug>(quickhl-manual-this)
-    xmap <Space>m <Plug>(quickhl-manual-this)
-    nmap <Space>M <Plug>(quickhl-manual-reset)
-    xmap <Space>M <Plug>(quickhl-manual-reset)
-
-    nmap <Space>j <Plug>(quickhl-cword-toggle)
-    nmap <Space>] <Plug>(quickhl-tag-toggle)
-    map ,h <Plug>(operator-quickhl-manual-this-motion)
 '''
 
 # memo

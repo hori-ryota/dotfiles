@@ -1,10 +1,13 @@
 let s:script_dir = expand('<sfile>:p:h')
 let g:vim_dir = $XDG_CONFIG_HOME . '/nvim'
 
+filetype off
+filetype plugin indent off
+
 "{{{ General Config
 " set clipboard+=unnamed " Yanks go on clipboard instead
-let mapleader = ','
-let maplocalleader = ','
+let g:mapleader = ','
+let g:maplocalleader = ','
 " Open vimrc
 nnoremap <space>v :<C-u>tabnew <C-r>=$MYVIMRC<CR><CR>:<C-u>CD<CR>
 " Reflect vimrc
@@ -17,8 +20,11 @@ if has('vim_starting')
 endif
 set termencoding=utf-8
 set fileencoding=utf-8
+scriptencoding utf-8
 " Automatic end-of-file format detection
 set fileformats=unix,mac,dos
+let g:python_host_prog = expand('$HOME') . '/.pyenv/shims/python'
+let g:python3_host_prog = expand('$HOME') . '/.pyenv/shims/python3'
 "}}}
 
 "{{{ Editor Config
@@ -57,13 +63,13 @@ let g:local_undo_dir = s:vim_local_dir . '/undo'
 
 " create necessary directories
 if !filewritable(g:local_backup_dir)
-    call mkdir(g:local_backup_dir, "p")
+    call mkdir(g:local_backup_dir, 'p')
 endif
 if !filewritable(g:local_swap_dir)
-    call mkdir(g:local_swap_dir, "p")
+    call mkdir(g:local_swap_dir, 'p')
 endif
 if !filewritable(g:local_undo_dir)
-    call mkdir(g:local_undo_dir, "p")
+    call mkdir(g:local_undo_dir, 'p')
 endif
 
 " スワップ用のディレクトリ
@@ -78,51 +84,16 @@ if has('persistent_undo')
     let &undodir = g:local_undo_dir
     set undofile
 endif
-"
 ""}}}
 
 "{{{ UI Config
-set ruler                   " show the cursor position all the time
-" highlight cursor line in current window
-augroup vimrc-auto-cursorline
-    autocmd!
-    autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
-    autocmd CursorHold,CursorHoldI * call s:auto_cursorline('CursorHold')
-    autocmd WinEnter * call s:auto_cursorline('WinEnter')
-    autocmd WinLeave * call s:auto_cursorline('WinLeave')
-
-    let s:cursorline_lock = 0
-    function! s:auto_cursorline(event)
-        if a:event ==# 'WinEnter'
-            setlocal cursorline
-            let s:cursorline_lock = 2
-        elseif a:event ==# 'WinLeave'
-            setlocal nocursorline
-        elseif a:event ==# 'CursorMoved'
-            if s:cursorline_lock
-                if 1 < s:cursorline_lock
-                    let s:cursorline_lock = 1
-                else
-                    setlocal nocursorline
-                    let s:cursorline_lock = 0
-                endif
-            endif
-        elseif a:event ==# 'CursorHold'
-            setlocal cursorline
-            let s:cursorline_lock = 1
-        endif
-    endfunction
-augroup END
-
-highlight clear CursorLine
-highlight CursorLine ctermbg=black
-
+set ruler                       " show the cursor position all the time
 set showcmd                     " コマンドの一部を画面下に表示
 set number                      " 行番号の表示
 set nolazyredraw                " don't redraw while executing macros
 set wildmenu                    " turn on wild menu
 set wildmode=list:longest,full
-set cmdheight=1                 " コマンドライン行を1行に
+set cmdheight=2                 " コマンドライン行を2行に（1行が理想だが、'Shougo/echodoc用に2行にしている）
 " カーソルを左右させるキーのうち、ここで指定したものでは、
 " カーソルが行頭／末にあるときに前／次行に移動できるようになる。
 set whichwrap=b,s,h,l,<,>,[,]
@@ -136,26 +107,13 @@ set matchtime=3                 " duration to show matching brace (1/10 sec)
 set laststatus=2                " The last window always have status line
 set scrolloff=5             " Keep at least 5 lines above and below the cursor
 set visualbell t_vb=        " No beep sound
-" Treat octal and hexadecimal number as decimal number
-" octal  Numbers that start with a zero will be considered to be octal
-"        Example: Using CTRL-A on "007" results in "010"
-" hex    Numbers starting with "0x" or "0X" will be considered to be hexadecimal
-"        Example: Using CTRL-X on "0x100" results in "0x0ff"
-set nrformats-=octal,hex,alpha
-if has("mouse") " Enable the use of the mouse in all modes
+set nrformats=hex,bin
+if has('mouse') " Enable the use of the mouse in all modes
     set mouse=a
 endif
-
-" フォーカスが移った場合に常にredraw
-augroup Redraw
-    autocmd!
-    autocmd FocusGained * redraw!
-augroup END
 "}}}
 
 "{{{ Highlight Config
-syntax on
-
 " 行末にスペースをハイライト
 function! WhiteSpaceEOL()
     highlight WhiteSpaceEOL ctermbg=red guibg=red
@@ -166,20 +124,18 @@ function! ZenkakuSpace()
     highlight ZenkakuSpace ctermbg=green guibg=green
 endfunction
 
-if has('syntax')
-    augroup WhiteSpaceEol
-        autocmd!
-        autocmd ColorScheme       * call WhiteSpaceEOL()
-        autocmd VimEnter,WinEnter * match WhiteSpaceEOL /\s\+$/
-    augroup END
-    call WhiteSpaceEOL()
-    augroup ZenkakuSpace
-        autocmd!
-        autocmd ColorScheme       * call ZenkakuSpace()
-        autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
-    augroup END
-    call ZenkakuSpace()
-endif
+augroup WhiteSpaceEol
+    autocmd!
+    autocmd ColorScheme       * call WhiteSpaceEOL()
+    autocmd VimEnter,WinEnter * match WhiteSpaceEOL /\s\+$/
+augroup END
+call WhiteSpaceEOL()
+augroup ZenkakuSpace
+    autocmd!
+    autocmd ColorScheme       * call ZenkakuSpace()
+    autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
+augroup END
+call ZenkakuSpace()
 "}}}
 
 "{{{ Search Config
@@ -187,7 +143,6 @@ endif
 set history=1000            " keep 1000 lines of command line histories
 set ignorecase
 set smartcase
-set wrapscan                " Searches wrap around the end of the file
 " While typing a search command, show where the pattern matches
 set incsearch
 set hlsearch                " highlighting matches
@@ -234,17 +189,22 @@ augroup END
 
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-if !isdirectory(s:dein_repo_dir)
-    call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
+if &runtimepath !~# '/dein.vim'
+    let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+    if !isdirectory(s:dein_repo_dir)
+        call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
+    endif
+
+    execute 'set runtimepath+=' . s:dein_repo_dir
 endif
-if has('vim_starting')
-    let &runtimepath = s:dein_repo_dir .",". &runtimepath
-endif
-let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
 if dein#load_state(s:dein_dir)
-    call dein#begin(s:dein_dir, [$MYVIMRC, s:toml_file])
-    call dein#load_toml(s:toml_file)
+    call dein#begin(s:dein_dir)
+
+    let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
+    let s:lazy_toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein_lazy.toml'
+    call dein#load_toml(s:toml_file, {'lazy': 0})
+    call dein#load_toml(s:lazy_toml_file, {'lazy': 1})
+
     call dein#end()
     call dein#save_state()
 endif
@@ -257,25 +217,22 @@ if !has('vim_starting')
     call dein#call_hook('post_source')
 endif
 
-syntax enable
-filetype plugin indent on
-
 "}}}
 
 "{{{ Comment Config
 " Commenting blocks of code.
 augroup CommentSettings
     autocmd!
-    autocmd FileType c,cpp,java,scala,go  set commentstring=//\ %s
-    autocmd FileType conf,fstab           set commentstring=#\ %s
-    autocmd FileType dot                  set commentstring=//\ %s
-    autocmd FileType javascript           set commentstring=//\ %s
-    autocmd FileType mail                 set commentstring=>\ %s
-    autocmd FileType sh,ruby,python       set commentstring=#\ %s
-    autocmd FileType sql                  set commentstring=--\ %s
-    autocmd FileType tex                  set commentstring=%\ %s
-    autocmd FileType tmux                 set commentstring=#\ %s
-    autocmd FileType vim                  set commentstring=\"\ %s
+    autocmd FileType c,cpp,java,scala,go  setlocal commentstring=//\ %s
+    autocmd FileType conf,fstab           setlocal commentstring=#\ %s
+    autocmd FileType dot                  setlocal commentstring=//\ %s
+    autocmd FileType javascript           setlocal commentstring=//\ %s
+    autocmd FileType mail                 setlocal commentstring=>\ %s
+    autocmd FileType sh,ruby,python       setlocal commentstring=#\ %s
+    autocmd FileType sql                  setlocal commentstring=--\ %s
+    autocmd FileType tex                  setlocal commentstring=%\ %s
+    autocmd FileType tmux                 setlocal commentstring=#\ %s
+    autocmd FileType vim                  setlocal commentstring=\"\ %s
 augroup END
 "}}}
 
@@ -325,7 +282,8 @@ nnoremap <silent> <space>gm :<C-u>MerginalToggle<CR>
 function! s:setup_golang()
 
     nmap <buffer> <leader>r <Plug>(go-run)
-    nmap <buffer> <leader>b <Plug>(go-build)
+    " nmap <buffer> <leader>b <Plug>(go-build)
+    nmap <buffer> <leader>b :<C-u>make<CR>
     nmap <buffer> <leader>t <Plug>(go-test)
     nmap <buffer> <leader>c <Plug>(go-coverage)
     nmap <buffer> <leader>T <Plug>(go-test-func)
@@ -515,13 +473,13 @@ endif
 "{{{ Change current directory easily
 command! -nargs=? -complete=dir -bang CD  call s:ChangeCurrentDir('<args>', '<bang>')
 function! s:ChangeCurrentDir(directory, bang)
-    if a:directory == ''
+    if a:directory ==? ''
         lcd %:p:h
     else
         execute 'lcd' . a:directory
     endif
 
-    if a:bang == ''
+    if a:bang ==? ''
         pwd
     endif
 endfunction
@@ -530,20 +488,9 @@ endfunction
 nnoremap <silent> <Space>cd :<C-u>CD<CR>
 "}}}
 
-"{{{ バイナリ編集(xxd)モード
-"[vimでバイナリを表示し、値を変更したい - rderaログ](http://d.hatena.ne.jp/rdera/20081022/1224682665)
-"（vim -b での起動、もしくは *.bin ファイルを開くと発動します）
-aug roup BinaryXXD
-    autocmd!
-    autocmd BufReadPre  *.bin let &binary =1
-    autocmd BufReadPost * if &binary | silent %!xxd -g 1
-    autocmd BufReadPost * set ft=xxd | endif
-    autocmd BufWritePre * if &binary | %!xxd -r | endif
-    autocmd BufWritePost * if &binary | silent %!xxd -g 1
-    autocmd BufWritePost * set nomod | endif
-augroup END
 "}}}
 
-"}}}
+filetype plugin indent on
+syntax enable
 
 " vim: set filetype=vim :
