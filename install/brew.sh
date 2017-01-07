@@ -42,7 +42,47 @@ brew install ansible
 # mysql
 brew install mycli
 # ffmpeg
-brew install ffmpeg --with-freetype --with-fdk-aac --with-libvo-aacenc  --with-libvorbis --with-libvpx --with-openjpeg --with-theora --with-opencore-amr --with-openssl
+brew install ffmpeg \
+  -with-chromaprint \
+  --with-fdk-aac \
+  --with-fontconfig \
+  --with-freetype \
+  --with-frei0r \
+  --with-game-music-emu \
+  --with-libass \
+  --with-libbluray \
+  --with-libbs2b \
+  --with-libcaca \
+  --with-libebur128 \
+  --with-libgsm \
+  --with-libmodplug \
+  --with-libsoxr \
+  --with-libssh \
+  --with-libvidstab \
+  --with-libvorbis \
+  --with-libvpx \
+  --with-opencore-amr \
+  --with-openh264 \
+  --with-openjpeg \
+  --with-openssl \
+  --with-opus \
+  --with-rtmpdump \
+  --with-rubberband \
+  --with-schroedinger \
+  --with-sdl2 \
+  --with-snappy \
+  --with-speex \
+  --with-tesseract \
+  --with-theora \
+  --with-tools \
+  --with-two-lame \
+  --with-wavpack \
+  --with-webp \
+  --with-x265 \
+  --with-xz \
+  --with-zeromq \
+  --with-zimg
+
 # Graphviz
 brew install graphviz
 
