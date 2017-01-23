@@ -125,6 +125,11 @@ on_event = 'InsertCharPre'
 on_ft = 'snippet'
 
 [[plugins]]
+repo = 'honza/vim-snippets'
+on_event = 'InsertCharPre'
+on_ft = 'snippet'
+
+[[plugins]]
 repo = 'Shougo/neosnippet.vim'
 depends = ['neosnippet-snippets', 'context_filetype.vim']
 on_event = 'InsertCharPre'
@@ -315,6 +320,11 @@ hooK_source = '''
     let g:deoplete#sources#go#json_directory =  = s:cache_home . '/deoplete/go/$GOOS_$GOARCH'
     let g:deoplete#sources#go#cgo = 1
 '''
+
+[[plugins]]
+repo = 'buoto/gotests-vim'
+build = 'go get -u github.com/cweill/gotests/...'
+on_ft = 'go'
 #}}}
 
 #{{{ Protocol Buffers

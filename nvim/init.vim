@@ -328,9 +328,6 @@ function! s:setup_golang()
     nnoremap <buffer> <Leader>p :<C-u>GoPlay<CR>
     vnoremap <buffer> <Leader>p :GoPlay<CR>
 
-    " for ctrlp
-    nnoremap <buffer> <C-p>t :<C-u>GoDecls<CR>
-    nnoremap <buffer> <C-p>T :<C-u>GoDeclsDir<CR>
 endfunction
 "}}}
 
