@@ -6,7 +6,6 @@ XDG_CACHE_HOME=$HOME/.cache
 
 BASEDIR="$HOME"/.dotfiles
 ZDOTDIR=$BASEDIR/zsh
-VDOTDIR=$BASEDIR/vim
 IDOTDIR=$BASEDIR/install
 
 . $IDOTDIR/brew.sh
