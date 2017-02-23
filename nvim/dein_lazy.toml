@@ -291,18 +291,6 @@ hook_source = '''
                 \ 'ctagsargs' : '-sort -silent'
                 \ }
     let g:go_term_enabled = 1
-
-    " for neomake
-    let s:goargs = go#package#ImportPath(expand('%:p:h'))
-    let g:neomake_go_errcheck_maker = {
-                \ 'exe': 'errcheck',
-                \ 'args': ['-abspath', s:goargs],
-                \ 'append_file': 0,
-                \ "errorformat":
-                    \ '%E%f:%l:%c: %m'
-                    \ . ',%W%f:%l:%c %#%m'
-                \ }
-    let g:neomake_go_enabled_makers = ['errcheck', 'govet']
 '''
 
 [[plugins]]

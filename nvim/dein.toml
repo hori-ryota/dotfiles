@@ -27,7 +27,7 @@ hook_add = '''
                 \ 'mode_map': { 'c': 'NORMAL' },
                 \ 'active': {
                 \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
-                \   'right': [ [ 'neomake', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+                \   'right': [ [ 'ale', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
                 \ },
                 \ 'component_function': {
                 \   'fugitive': 'LightLineFugitive',
@@ -38,10 +38,10 @@ hook_add = '''
                 \   'mode': 'LightLineMode',
                 \ },
                 \ 'component_expand': {
-                \   'neomake': 'LightlineNeomake',
+                \   'ale': 'ALEStatus',
                 \ },
                 \ 'component_type': {
-                \   'neomake': 'error',
+                \   'ale': 'error',
                 \ },
                 \ 'subseparator': { 'left': '|', 'right': '|' }
                 \ }
@@ -111,8 +111,8 @@ hook_add = '''
         return lightline#statusline(0)
     endfunction
 
-    function! LightlineNeomake()
-        return '%{neomake#statusline#LoclistStatus()}'
+    function! ALEStatus()
+        return '%{ale#statusline#Status()}'
     endfunction
 
     let g:unite_force_overwrite_statusline = 0
@@ -281,9 +281,13 @@ repo = 'tpope/vim-unimpaired'
 
 #{{{ syntax check
 [[plugins]] # syntax check
-repo = 'neomake/neomake'
+repo = 'w0rp/ale'
 hook_add = '''
-    autocmd! BufWritePost * Neomake
+    let g:ale_lint_on_enter = 0
+    let g:ale_lint_on_save = 1
+    let g:ale_lint_on_text_changed = 0
+    let g:ale_echo_msg_format = '%s [%linter%](%severity%)'
+    let g:ale_statusline_format = ['E%d', 'W%d', '']
 '''
 
 [[plugins]]
