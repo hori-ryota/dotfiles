@@ -527,4 +527,8 @@ hook_add = '''
 [[plugins]]
 repo = 'shinespark/vim-list2tree'
 on_cmd = 'List2Tree'
+
+[[plugin]] # hugo
+repo = 'robertbasic/vim-hugo-helper'
+on_ft = 'markdown'
 #}}}
