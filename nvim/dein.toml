@@ -410,6 +410,9 @@ hook_add = '''
     let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=histogram")'
 '''
 
+[[plugins]]
+repo = 'AndrewRadev/linediff.vim'
+
 [[plugins]] # switch between a single-line statement and a multi-line one
 repo = 'AndrewRadev/splitjoin.vim'
 
