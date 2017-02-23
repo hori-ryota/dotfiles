@@ -416,4 +416,12 @@ repo = 'AndrewRadev/linediff.vim'
 [[plugins]] # switch between a single-line statement and a multi-line one
 repo = 'AndrewRadev/splitjoin.vim'
 
+[[plugins]]
+repo = 'itchyny/calendar.vim'
+hook_add = '''
+    let g:calendar_google_calendar = 1
+    let g:calendar_google_task = 1
+    let g:calendar_frame = 'default'
+'''
+
 #}}}
