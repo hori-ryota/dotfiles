@@ -22,6 +22,9 @@ ln -snf "$BASEDIR"/tmux.conf "$HOME"/.tmux.conf
 # tmuxinator
 ln -snf "$BASEDIR"/tmuxinator "$HOME"/.tmuxinator
 
+# Xresources
+ln -snf "$BASEDIR"/Xresources "$HOME"/.Xresources
+
 # git
 ln -snf "$BASEDIR"/gitconfig "$HOME"/.gitconfig
 ln -snf "$BASEDIR"/gitignore "$HOME"/.gitignore_global
