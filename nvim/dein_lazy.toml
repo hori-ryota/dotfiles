@@ -477,6 +477,12 @@ repo = 'ekalinin/Dockerfile.vim'
 on_ft = 'dockerfile'
 #}}}
 
+#{{{ nginx
+[[plugins]]
+repo = 'evanmiller/nginx-vim-syntax'
+on_ft= 'nginx'
+#}}}
+
 #{{{ Ansible
 [[plugins]]
 repo = 'chase/vim-ansible-yaml'

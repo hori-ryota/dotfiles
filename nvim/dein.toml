@@ -145,6 +145,7 @@ hook_add = '''
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
     let g:hybrid_use_Xresources = 1
+    let g:hybrid_reduced_contrast = 1
     set background=dark
     augroup colorscheme_hybrid
       autocmd!
