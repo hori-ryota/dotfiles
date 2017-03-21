@@ -229,6 +229,10 @@ on_ft = 'coffee'
 [[plugins]]
 repo = 'mxw/vim-jsx'
 on_ft = 'javascript'
+
+[[plugins]]
+repo = 'moll/vim-node'
+on_ft = 'javascript'
 #}}}
 
 #{{{ TypeScript
@@ -236,6 +240,11 @@ on_ft = 'javascript'
 repo = 'leafgarland/typescript-vim'
 build = 'npm install -g clausreinke/typescript-tools typescript'
 on_ft = 'typescript'
+
+# [[plugins]]
+# repo = 'mhartington/nvim-typescript'
+# on_ft = 'typescript'
+# depends = 'deoplete.nvim'
 #}}}
 
 #{{{ go
