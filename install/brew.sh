@@ -10,7 +10,7 @@ brew upgrade
 brew install zsh
 
 brew install ack
-brew install curl
+brew install curl --with-openssl --with-rtmpdump --with-nghttp2
 brew install tree
 brew install wget
 
@@ -43,7 +43,7 @@ brew install ansible
 brew install mycli
 # ffmpeg
 brew install ffmpeg \
-  -with-chromaprint \
+  --with-chromaprint \
   --with-fdk-aac \
   --with-fontconfig \
   --with-freetype \
@@ -88,6 +88,7 @@ brew install graphviz
 
 # Vim
 brew install vim --with-lua --with-luajit --with-python3 --with-override-system-vi
+brew install neovim
 
 # tmux
 brew install tmux
