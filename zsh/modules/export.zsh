@@ -16,7 +16,7 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 export EDITOR='nvim'
 
 # go
-export GOPATH=$HOME/go
+export GOPATH=$HOME/dev
 export PATH=$PATH:$GOPATH/bin
 export GO15VENDOREXPERIMENT=1
 

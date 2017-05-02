@@ -31,6 +31,18 @@ function peco-select-history() {
 zle -N peco-select-history
 bindkey '^r' peco-select-history
 
+# search ghq src with peco
+function peco-src () {
+  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-src
+bindkey '^]' peco-src
+
 # ローカルの設定ファイルがあればそれを読み込み
 if [ -f "$HOME/.zshrc.local" ]; then
   source "$HOME/.zshrc.local"
