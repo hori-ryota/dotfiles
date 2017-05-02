@@ -510,9 +510,6 @@ hook_source = '''
 [[plugins]]
 repo = 'aklt/plantuml-syntax'
 on_ft = ['pu', 'uml', 'plantuml']
-hook_source = '''
-    let g:plantuml_executable_script = '$HOME/.dotfiles/plantuml.sh'
-'''
 #}}}
 
 #{{{ Graphviz

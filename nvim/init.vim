@@ -181,14 +181,18 @@ augroup FileTypeDetect
     autocmd BufRead,BufNewFile *.{md,mdwn,mkd,mkdn,mark*,txt,text} setfiletype markdown
     autocmd BufRead,BufNewFile .tmux.conf,tmux.conf     setfiletype tmux
     autocmd BufRead,BufNewFile Capfile,Gemfile,Rakefile setfiletype ruby
-    autocmd BufWinEnter,BufNewFile *_spec.rb            setfiletype ruby.rspec
+    autocmd BufRead,BufNewFile *_spec.rb                setfiletype ruby.rspec
+    autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml    setfiletype plantuml
 augroup END
 "}}}
 
 "{{{ dein.vim Config
 
+let g:dein#install_progress_type = 'title'
+let g:dein#enable_notification = 1
+
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
-let s:dein_dir = s:cache_home . '/dein'
+let s:dein_dir   = s:cache_home . '/dein'
 if &runtimepath !~# '/dein.vim'
     let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
     if !isdirectory(s:dein_repo_dir)
@@ -198,11 +202,11 @@ if &runtimepath !~# '/dein.vim'
     execute 'set runtimepath+=' . s:dein_repo_dir
 endif
 if dein#load_state(s:dein_dir)
-    call dein#begin(s:dein_dir)
+    call dein#begin(s:dein_dir, expand('<sfile>'))
 
-    let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
+    let s:toml_file      = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
     let s:lazy_toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein_lazy.toml'
-    call dein#load_toml(s:toml_file, {'lazy': 0})
+    call dein#load_toml(s:toml_file,      {'lazy': 0})
     call dein#load_toml(s:lazy_toml_file, {'lazy': 1})
 
     call dein#end()
@@ -431,6 +435,14 @@ function! s:setup_dot()
 endfunction
 "}}}
 
+"{{{ plantuml
+function! s:setup_plantuml()
+    command! OpenUml :!start chrome %
+    nnoremap <silent> <buffer> <LocalLeader>b :make<CR>
+    nnoremap <silent> <buffer> <LocalLeader>r :OpenUml<CR>
+endfunction
+"}}}
+
 "{{{ filetype configuration
 augroup my_setup_filetype_configuration
     autocmd!
@@ -443,6 +455,7 @@ augroup my_setup_filetype_configuration
     autocmd FileType m3u8       call s:setup_m3u8()
     autocmd FileType make       call s:setup_make()
     autocmd FileType markdown   call s:setup_markdown()
+    autocmd FileType plantuml   call s:setup_plantuml()
     autocmd FileType proto      call s:setup_proto()
     autocmd FileType revealjs   call s:setup_revealjs()
     autocmd FileType scss       call s:setup_scss()

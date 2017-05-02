@@ -87,9 +87,12 @@ brew install ffmpeg \
 # Graphviz
 brew install graphviz
 
+# PlantUML
+brew install plantuml
+
 # Vim
 brew install vim --with-lua --with-luajit --with-python3 --with-override-system-vi
-brew install neovim
+brew install neovim/neovim/neovim
 
 # tmux
 brew install tmux
