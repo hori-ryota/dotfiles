@@ -16,6 +16,7 @@ hook_add = '''
     nmap <silent> <C-p>c     :<C-u>Denite command<CR>
     nmap <silent> <C-p>o     :<C-u>Denite file_mru<CR>
     nmap <silent> <C-p>y     :<C-u>Denite neoyank<CR>
+    nmap <silent> <C-p>]     :<C-u>Denite ghq<CR>
     nmap <silent> <C-p>m     :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
 '''
 hook_source = '''
@@ -67,6 +68,10 @@ on_source = ['unite.vim', 'denite.nvim']
 repo = 'nixprime/cpsm'
 on_source = 'denite.nvim'
 build = 'env PY3=ON ./install.sh'
+
+[[plugins]]
+repo = 'Jagua/vim-denite-ghq'
+on_source = 'denite.nvim'
 #}}}
 
 #}}}
