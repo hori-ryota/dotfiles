@@ -78,20 +78,19 @@ build = 'env PY3=ON ./install.sh'
 repo = 'Shougo/deoplete.nvim'
 depends = 'context_filetype.vim'
 if = "has('nvim')"
-on_i = 1
+# on_event = 'InsertCharPre'
 hook_source = '''
     let g:deoplete#enable_at_startup = 1
     let g:deoplete#enable_camel_case = 1
-    let g:deoplete#max_menu_width = 80
-    augroup deocomplete_completedone
-        autocmd!
-        autocmd CompleteDone * pclose!
-    augroup END
+    let g:deoplete#max_list = 10000
+    let g:deoplete#max_menu_width = 0
+    let g:deoplete#max_abbr_width = 0
+    let g:deoplete#auto_complete_delay = 0
     " <TAB>: completion.
     inoremap <silent><expr> <TAB>
                 \ pumvisible() ? "\<C-n>" :
                 \ <SID>check_back_space() ? "\<TAB>" :
-                \ deoplete#mappings#manual_complete()
+                \ deoplete#manual_complete()
     function! s:check_back_space() abort "{{{
         let col = col('.') - 1
         return !col || getline('.')[col - 1]  =~ '\s'
@@ -101,20 +100,20 @@ hook_source = '''
     inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
     " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> deoplete#mappings#smart_close_popup()."\<C-h>"
+    inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
 
-    inoremap <expr><C-g> deoplete#mappings#undo_completion()
+    inoremap <expr><C-g> deoplete#undo_completion()
     " <C-l>: redraw candidates
-    inoremap <expr><C-l> deoplete#mappings#refresh()
+    inoremap <expr><C-l> deoplete#refresh()
 
     " <CR>: close popup and save indent.
     inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
     function! s:my_cr_function() abort
-      return deoplete#mappings#close_popup() . "\<CR>"
+      return deoplete#close_popup() . "\<CR>"
     endfunction
 
-    inoremap <expr> '  pumvisible() ? deoplete#mappings#close_popup() : "'"
+    inoremap <expr> '  pumvisible() ? deoplete#close_popup() : "'"
 '''
 #}}}
 
@@ -252,38 +251,65 @@ on_ft = 'typescript'
 repo = 'fatih/vim-go'
 on_ft = 'go'
 hook_source = '''
-    let g:go_fmt_options = '-s'
-    " metalinterにオプションを付ける方法が用意されていなかったのでとりあえず無理やり混ぜ込む
-    let g:go_metalinter_deadline = '10s --tests'
+    let g:go_info_mode = 'guru'
+    let g:go_def_mapping_enabled = 0
+    let g:go_snippet_engine = "neosnippet.vim"
+    let g:go_snippet_case_type = "camelcase"
 
-    let g:go_metalinter_enabled = [
-                \ 'deadcode',
-                \ 'errcheck',
-                \ 'gas',
-                \ 'goconst',
-                \ 'gocyclo',
-                \ 'gofmt',
-                \ 'goimports',
-                \ 'gosimple',
-                \ 'gotype',
-                \ 'ineffassign',
-                \ 'interfacer',
-                \ 'misspell',
-                \ 'staticcheck',
-                \ 'structcheck',
-                \ 'unconvert',
-                \ 'unused',
-                \ 'varcheck',
-                \ 'vet',
-                \ ]
-
+    let g:go_highlight_array_whitespace_error = 1
+    let g:go_highlight_chan_whitespace_error = 1
+    let g:go_highlight_extra_types = 1
+    let g:go_highlight_space_tab_error = 1
+    let g:go_highlight_trailing_whitespace_error = 1
     let g:go_highlight_functions = 1
     let g:go_highlight_methods = 1
-    let g:go_highlight_structs = 1
-    let g:go_highlight_operators = 1
     let g:go_highlight_types = 1
     let g:go_highlight_fields = 1
     let g:go_highlight_build_constraints = 1
+    let g:go_highlight_generate_tags = 1
+    let g:go_highlight_string_spellcheck = 1
+    let g:go_highlight_format_strings = 1
+
+    " let g:go_fmt_options = '-s'
+
+    let g:go_metalinter_enabled = [
+                " \ 'aligncheck',
+                \ 'deadcode',
+                " \ 'dupl',
+                \ 'errcheck',
+                \ 'gas',
+                " \ 'goconst',
+                \ 'gocyclo',
+                \ 'gofmt',
+                \ 'goimports',
+                " \ 'golint',
+                \ 'gosimple',
+                " \ 'gotype',
+                \ 'ineffassign',
+                \ 'interfacer',
+                " \ 'lll',
+                \ 'misspell',
+                \ 'safesql',
+                \ 'staticcheck',
+                \ 'structcheck',
+                " \ 'test',
+                " \ 'testify',
+                \ 'unconvert',
+                \ 'unparam',
+                \ 'unused',
+                \ 'varcheck',
+                \ 'vet',
+                " \ 'vetshadow',
+                \ ]
+
+    " metalinterにオプションを付ける方法が用意されていなかったのでとりあえず無理やり混ぜ込む
+    let g:go_metalinter_deadline = '30s --tests'
+
+    let g:go_term_enabled = 1
+
+    let g:go_gocode_autobuild = 0
+    let g:go_gocode_unimported_packages = 1
+
     let g:tagbar_type_go = {
                 \ 'ctagstype' : 'go',
                 \ 'kinds'     : [
@@ -311,23 +337,24 @@ hook_source = '''
                 \ 'ctagsbin'  : 'gotags',
                 \ 'ctagsargs' : '-sort -silent'
                 \ }
-    let g:go_term_enabled = 1
 '''
 
 [[plugins]]
 repo = 'zchee/deoplete-go'
 depends = 'deoplete.nvim'
 build = 'make'
-on_i = 1
+on_event = 'InsertCharPre'
 on_ft = 'go'
-hooK_source = '''
+hook_source = '''
     let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 
     let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
     let g:deoplete#sources#go#pointer = 1
     let g:deoplete#sources#go#use_cache = 1
-    let g:deoplete#sources#go#json_directory =  = s:cache_home . '/deoplete/go/$GOOS_$GOARCH'
-    let g:deoplete#sources#go#cgo = 1
+    let g:deoplete#sources#go#json_directory = s:cache_home . '/deoplete/go/$GOOS_$GOARCH'
+    let g:deoplete#sources#go#cgo = 0
+    let g:deoplete#sources#go#package_dot = 1
+    " let g:deoplete#sources#go#auto_goos = 1
 '''
 
 [[plugins]]

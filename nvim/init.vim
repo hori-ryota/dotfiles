@@ -4,6 +4,11 @@ let g:vim_dir = $XDG_CONFIG_HOME . '/nvim'
 filetype off
 filetype plugin indent off
 
+"{{{ for debug
+command! -bar TimerStart let start_time = reltime()
+command! -bar TimerEnd   echom reltimestr(reltime(start_time)) | unlet start_time
+"}}}
+
 "{{{ General Config
 " set clipboard+=unnamed " Yanks go on clipboard instead
 let g:mapleader = ','
@@ -52,6 +57,7 @@ if v:version >= 703
     set colorcolumn=80
 endif
 set foldmethod=marker
+set completeopt=menuone
 "}}}
 
 "{{{ Undo/Swap Config
@@ -105,8 +111,8 @@ set nostartofline               " don't jump to the start of line when scrolling
 set showmatch                   " brackets/braces that is
 set matchtime=3                 " duration to show matching brace (1/10 sec)
 set laststatus=2                " The last window always have status line
-set scrolloff=5             " Keep at least 5 lines above and below the cursor
-set visualbell t_vb=        " No beep sound
+set scrolloff=5                 " Keep at least 5 lines above and below the cursor
+set visualbell t_vb=            " No beep sound
 set nrformats=hex,bin
 if has('mouse') " Enable the use of the mouse in all modes
     set mouse=a

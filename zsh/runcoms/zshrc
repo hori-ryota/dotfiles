@@ -9,10 +9,6 @@ fi
 # aliases
 # ローカルのnode_modulesからの利用
 alias npm-exec='PATH=$(npm bin):$PATH'
-alias gh='ghq list -p | pe cd'
-alias brew-cask-clean-outdated='for c in /usr/local/Caskroom/*; do vl=(`ls -t $c`) && for v in "${vl[@]:1}"; do rm -rf "$c/$v"; done; done'
-alias brew-cask-update='for c in `brew cask list`; do ! brew cask info $c | grep -qF "Not installed" || brew cask install $c; done && brew-cask-clean-outdated'
-alias brew-cask-reinstall-force='for c in `brew cask list`; do brew cask install $c --force; done && brew-cask-clean-outdated'
 
 # search history with peco
 function peco-select-history() {
