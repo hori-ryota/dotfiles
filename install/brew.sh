@@ -95,7 +95,7 @@ brew install vim --with-lua --with-luajit --with-python3 --with-override-system-
 brew install neovim/neovim/neovim
 
 # tmux
-brew install tmux
+brew install tmux --with-utf8proc
 brew install reattach-to-user-namespace
 
 
@@ -179,7 +179,7 @@ brew cask install skitch #--force
 brew tap caskroom/fonts
 
 # install
-brew cask install font-sauce-code-powerline #--force
+brew cask install font-source-code-pro-for-powerline #--force
 
 ###########################
 #  Install from AppStore  #

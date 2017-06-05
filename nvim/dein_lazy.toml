@@ -139,12 +139,12 @@ depends = ['neosnippet-snippets', 'context_filetype.vim']
 on_event = 'InsertCharPre'
 on_ft = 'snippet'
 hook_source = '''
-    imap <silent><c-K> <Plug>(neosnippet_jump_or_expand)
-    smap <silent><c-K> <Plug>(neosnippet_jump_or_expand)
+    imap <silent><c-j> <Plug>(neosnippet_jump_or_expand)
+    smap <silent><c-j> <Plug>(neosnippet_jump_or_expand)
     xmap <silent><c-k> <Plug>(neosnippet_expand_target)
     imap <silent><c-k> <Plug>(neosnippet_expand_or_jump)
     smap <silent><c-k> <Plug>(neosnippet_expand_or_jump)
-    xmap <silent><c-K> <Plug>(neosnippet_register_oneshot_snippet)
+    xmap <silent><c-j> <Plug>(neosnippet_register_oneshot_snippet)
 
     let g:neosnippet#enable_snipmate_compatibility = 1
     let g:neosnippet#enable_complete_done = 1
@@ -161,36 +161,6 @@ hook_source = '''
 [[plugins]]
 repo = 'Xuyuanp/nerdtree-git-plugin'
 on_cmd = 'NERDTreeToggle'
-#}}}
-
-#{{{ Visual
-[[plugins]]
-repo = 't9md/vim-choosewin'
-on_map = '<Plug>(choosewin)'
-hook_add = '''
-    " invoke with '-'
-    nmap  -  <Plug>(choosewin)
-
-    " use overlay feature
-    let g:choosewin_overlay_enable = 1
-
-    " workaround for overlay font broken on mutibyte buffer.
-    let g:choosewin_overlay_clear_multibyte = 1
-
-    " tmux like overlay color
-    let g:choosewin_color_overlay = {
-                \ 'gui': ['DodgerBlue3', 'DodgerBlue3' ],
-                \ 'cterm': [ 25, 25 ]
-                \ }
-    let g:choosewin_color_overlay_current = {
-                \ 'gui': ['firebrick1', 'firebrick1' ],
-                \ 'cterm': [ 124, 124 ]
-                \ }
-
-    let g:choosewin_blink_on_land      = 0 " dont' blink at land
-    let g:choosewin_statusline_replace = 0 " don't replace statusline
-    let g:choosewin_tabline_replace    = 0 " don't replace tabline
-'''
 #}}}
 
 #{{{ Git/Gist
@@ -284,7 +254,7 @@ hook_source = '''
                 \ 'errcheck',
                 \ 'gas',
                 " \ 'goconst',
-                \ 'gocyclo',
+                " \ 'gocyclo',
                 \ 'gofmt',
                 \ 'goimports',
                 " \ 'golint',
@@ -312,7 +282,7 @@ hook_source = '''
 
     let g:go_term_enabled = 1
 
-    let g:go_gocode_autobuild = 0
+    " let g:go_gocode_autobuild = 0
     let g:go_gocode_unimported_packages = 1
 
     let g:tagbar_type_go = {
@@ -390,7 +360,7 @@ repo = 'vim-ruby/vim-ruby'
 on_ft = ['ruby', 'eruby', 'haml']
 
 [[plugins]]
-repo = 'ruby-matchit'
+repo = 'vim-scripts/ruby-matchit'
 on_ft = ['ruby', 'eruby', 'haml']
 
 [[plugins]]
@@ -479,7 +449,7 @@ hook_source = '''
 # Preview
 [[plugins]]
 repo = 'tyru/open-browser.vim'
-on_ft = 'markdown'
+on_ft = ['markdown', 'html']
 
 [[plugins]]
 repo = 'kannokanno/previm'
@@ -506,7 +476,7 @@ on_ft = 'toml'
 #{{{ Dockerfile
 [[plugins]]
 repo = 'ekalinin/Dockerfile.vim'
-on_ft = 'dockerfile'
+on_ft = ['dockerfile', 'docker-compose']
 #}}}
 
 #{{{ nginx

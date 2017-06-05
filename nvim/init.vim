@@ -30,6 +30,15 @@ scriptencoding utf-8
 set fileformats=unix,mac,dos
 let g:python_host_prog = expand('$HOME') . '/.pyenv/shims/python'
 let g:python3_host_prog = expand('$HOME') . '/.pyenv/shims/python3'
+set timeout
+set timeoutlen=750
+set ttimeoutlen=250
+
+"NeoVim handles ESC keys as alt+key set this to solve the problem
+if has('nvim')
+    set ttimeout
+    set ttimeoutlen=0
+endif
 "}}}
 
 "{{{ Editor Config
@@ -295,7 +304,7 @@ function! s:setup_golang()
     " nmap <buffer> <leader>b <Plug>(go-build)
     nmap <buffer> <leader>b :<C-u>make<CR>
     nmap <buffer> <leader>t <Plug>(go-test)
-    nmap <buffer> <leader>c <Plug>(go-coverage)
+    nmap <buffer> <leader>c <Plug>(go-coverage-toggle)
     nmap <buffer> <leader>T <Plug>(go-test-func)
 
     nmap <buffer> <Leader>gd <Plug>(go-doc)
