@@ -20,29 +20,14 @@ nnoremap <space>s :<C-u>source <C-r>=$MYVIMRC<CR><CR>
 " Open dotfiles
 nnoremap <space>d :<C-u>tabnew $HOME/.dotfiles/README.md<CR>:<C-u>CD<CR>
 " Character encoding
-if has('vim_starting')
-    set encoding=utf-8
-endif
-set termencoding=utf-8
-set fileencoding=utf-8
 scriptencoding utf-8
 " Automatic end-of-file format detection
 set fileformats=unix,mac,dos
 let g:python_host_prog = expand('$HOME') . '/.pyenv/shims/python'
 let g:python3_host_prog = expand('$HOME') . '/.pyenv/shims/python3'
-set timeout
-set timeoutlen=750
-set ttimeoutlen=250
-
-"NeoVim handles ESC keys as alt+key set this to solve the problem
-if has('nvim')
-    set ttimeout
-    set ttimeoutlen=0
-endif
 "}}}
 
 "{{{ Editor Config
-set autoindent
 set smartindent
 set wrap
 
@@ -70,59 +55,26 @@ set completeopt=menuone
 "}}}
 
 "{{{ Undo/Swap Config
-" path
-let s:vim_local_dir = g:vim_dir . '.local'
-let g:local_backup_dir = s:vim_local_dir . '/backup'
-let g:local_swap_dir = s:vim_local_dir . '/swap'
-let g:local_undo_dir = s:vim_local_dir . '/undo'
-
-" create necessary directories
-if !filewritable(g:local_backup_dir)
-    call mkdir(g:local_backup_dir, 'p')
-endif
-if !filewritable(g:local_swap_dir)
-    call mkdir(g:local_swap_dir, 'p')
-endif
-if !filewritable(g:local_undo_dir)
-    call mkdir(g:local_undo_dir, 'p')
-endif
-
-" スワップ用のディレクトリ
-let &directory = g:local_swap_dir
-let &backupdir = g:local_backup_dir
-
 set backup
 set writebackup
-
-"" Persistent undo
-if has('persistent_undo')
-    let &undodir = g:local_undo_dir
-    set undofile
-endif
-""}}}
+set undofile
+"}}}
 
 "{{{ UI Config
-set ruler                       " show the cursor position all the time
-set showcmd                     " コマンドの一部を画面下に表示
 set number                      " 行番号の表示
 set nolazyredraw                " don't redraw while executing macros
-set wildmenu                    " turn on wild menu
 set wildmode=list:longest,full
 set cmdheight=2                 " コマンドライン行を2行に（1行が理想だが、'Shougo/echodoc用に2行にしている）
 " カーソルを左右させるキーのうち、ここで指定したものでは、
 " カーソルが行頭／末にあるときに前／次行に移動できるようになる。
 set whichwrap=b,s,h,l,<,>,[,]
-" インサートモードですべて消す
-set backspace=indent,eol,start
 set shortmess=filtoOA           " shorten messages
 set report=0                    " tell us about changes
 set nostartofline               " don't jump to the start of line when scrolling
 set showmatch                   " brackets/braces that is
 set matchtime=3                 " duration to show matching brace (1/10 sec)
-set laststatus=2                " The last window always have status line
 set scrolloff=5                 " Keep at least 5 lines above and below the cursor
 set visualbell t_vb=            " No beep sound
-set nrformats=hex,bin
 if has('mouse') " Enable the use of the mouse in all modes
     set mouse=a
 endif
@@ -155,18 +107,18 @@ call ZenkakuSpace()
 
 "{{{ Search Config
 "" Search
-set history=1000            " keep 1000 lines of command line histories
 set ignorecase
 set smartcase
-" While typing a search command, show where the pattern matches
-set incsearch
-set hlsearch                " highlighting matches
 " turn off highlight by Esc x 2
 nmap <ESC><ESC> :<C-u>nohlsearch<CR><ESC>
 augroup Search
     autocmd!
     autocmd QuickFixCmdPost *grep cwindow
 augroup END
+"}}}
+
+"{{{ shows interactive results
+set inccommand=split
 "}}}
 
 "{{{ FileTypeDetect
@@ -253,6 +205,10 @@ augroup CommentSettings
     autocmd FileType tmux                 setlocal commentstring=#\ %s
     autocmd FileType vim                  setlocal commentstring=\"\ %s
 augroup END
+"}}}
+
+"{{{ Terminal Config
+tnoremap <Esc> <C-\><C-n>
 "}}}
 
 "{{{ File Type Config
