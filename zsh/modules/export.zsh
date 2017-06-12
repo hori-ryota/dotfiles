@@ -27,7 +27,7 @@ export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 export LC_ALL=en_US.UTF-8
 
 # python
-export PYTHON_CONFIGURE_OPTS="--enable-framework --enable-unicode=ucs2"
+export PYTHON_CONFIGURE_OPTS="--enable-framework --enable-unicode=ucs4"
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 export CUDA_HOME=/usr/local/cuda
 export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$CUDA_HOME/lib
