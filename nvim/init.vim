@@ -59,6 +59,7 @@ set completeopt=menuone
 
 "{{{ Undo/Swap Config
 set backup
+set backupdir=$XDG_DATA_HOME/nvim/backup
 set writebackup
 set undofile
 "}}}
