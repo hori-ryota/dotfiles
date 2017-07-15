@@ -394,9 +394,6 @@ on_ft = 'kotlin'
 #}}}
 
 #{{{ clang
-[[plugins]]
-repo = 'zchee/deoplete-clang'
-on_ft = ['c', 'cpp']
 #}}}
 
 #{{{ html
