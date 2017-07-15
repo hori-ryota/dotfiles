@@ -25,6 +25,9 @@ scriptencoding utf-8
 set fileformats=unix,mac,dos
 let g:python_host_prog = expand('$HOME') . '/.pyenv/shims/python'
 let g:python3_host_prog = expand('$HOME') . '/.pyenv/shims/python3'
+set timeout
+set ttimeout
+set ttimeoutlen=10
 "}}}
 
 "{{{ Editor Config
