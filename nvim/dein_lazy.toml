@@ -277,20 +277,21 @@ hook_source = '''
                 \ 'gofmt',
                 \ 'goimports',
                 " \ 'golint',
-                \ 'gosimple',
+                " \ 'gosimple', use megacheck
                 " \ 'gotype',
                 \ 'ineffassign',
                 \ 'interfacer',
                 " \ 'lll',
+                \ 'megacheck',
                 \ 'misspell',
                 \ 'safesql',
-                \ 'staticcheck',
+                " \ 'staticcheck', use megacheck
                 \ 'structcheck',
                 " \ 'test',
                 " \ 'testify',
                 \ 'unconvert',
                 \ 'unparam',
-                \ 'unused',
+                " \ 'unused', use megacheck
                 \ 'varcheck',
                 \ 'vet',
                 " \ 'vetshadow',
@@ -298,6 +299,7 @@ hook_source = '''
 
     " metalinterにオプションを付ける方法が用意されていなかったのでとりあえず無理やり混ぜ込む
     let g:go_metalinter_deadline = '30s --tests'
+    let g:go_metalinter_excludes = ['.*\.pb\.go', '.*_mock\.go']
 
     let g:go_term_enabled = 1
 
