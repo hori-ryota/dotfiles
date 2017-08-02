@@ -156,15 +156,6 @@ hook_add = '''
 
 #{{{ Programming
 
-#{{{ deoplete
-# for deoplete
-[[plugins]]
-repo = 'Shougo/echodoc.vim'
-hook_add = '''
-    let g:echodoc_enable_at_startup = 1
-'''
-#}}}
-
 #{{{ Filer
 [[plugins]]
 repo = 'scrooloose/nerdtree'
