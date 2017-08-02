@@ -279,6 +279,7 @@ function! s:setup_golang()
     nmap <buffer> <Leader>gt <Plug>(go-doc-tab)
 
     nmap <buffer> <Leader>dd <Plug>(go-def)
+    nmap <buffer> <C-]> <Plug>(go-def)
     nmap <buffer> <Leader>ds <Plug>(go-def-split)
     nmap <buffer> <Leader>dv <Plug>(go-def-vertical)
     nmap <buffer> <Leader>dt <Plug>(go-def-tab)
@@ -324,6 +325,7 @@ function! s:setup_javascript()
     nnoremap <buffer> <Leader>gb :<C-u>TernDocBrowse<CR>
     nnoremap <buffer> <Leader>I :<C-u>TernType<CR>
     nnoremap <buffer> <Leader>dd :<C-u>TernDef<CR>
+    nnoremap <buffer> <C-]> :<C-u>TernDef<CR>
     nnoremap <buffer> <Leader>dp :<C-u>TernDefPreview<CR>
     nnoremap <buffer> <Leader>ds :<C-u>TernDefSplit<CR>
     nnoremap <buffer> <Leader>dt :<C-u>TernDefTab<CR>
