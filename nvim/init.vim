@@ -58,10 +58,15 @@ set completeopt=menuone
 "}}}
 
 "{{{ Undo/Swap Config
+let s:backup_dir = $XDG_DATA_HOME . '/nvim/backup'
 set backup
-set backupdir=$XDG_DATA_HOME/nvim/backup
+execute 'set backupdir=' . s:backup_dir
 set writebackup
 set undofile
+" create necessary directories
+if !filewritable(s:backup_dir)
+    call mkdir(s:backup_dir, 'p')
+endif
 "}}}
 
 "{{{ UI Config
