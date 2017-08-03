@@ -7,6 +7,10 @@ filetype plugin indent off
 "{{{ for debug
 command! -bar TimerStart let start_time = reltime()
 command! -bar TimerEnd   echom reltimestr(reltime(start_time)) | unlet start_time
+" VimShowHlGroup: Show highlight group name under a cursor
+command! VimShowHlGroup echo synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+" VimShowHlItem: Show highlight item name under a cursor
+command! VimShowHlItem echo synIDattr(synID(line("."), col("."), 1), "name")
 "}}}
 
 "{{{ General Config
@@ -102,7 +106,7 @@ function! ZenkakuSpace()
     highlight ZenkakuSpace ctermbg=green guibg=green
 endfunction
 
-augroup WhiteSpaceEol
+augroup WhiteSpaceEOL
     autocmd!
     autocmd ColorScheme       * call WhiteSpaceEOL()
     autocmd VimEnter,WinEnter * match WhiteSpaceEOL /\s\+$/
