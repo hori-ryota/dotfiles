@@ -488,6 +488,12 @@ nnoremap <silent> <Space>cd :<C-u>CD<CR>
 
 "}}}
 
+"{{{ local settings
+if filereadable(expand('~/.vimrc.local'))
+    source ~/.vimrc.local
+endif
+"}}}
+
 filetype plugin indent on
 syntax enable
 
