@@ -251,6 +251,9 @@ repo = 'dannyob/quickfixstatus'
 repo = 'tpope/vim-fugitive'
 
 [[plugins]]
+repo = 'tpope/vim-rhubarb'
+
+[[plugins]]
 repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
