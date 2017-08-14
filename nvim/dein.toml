@@ -6,6 +6,23 @@ repo = 'Shougo/dein.vim'
 #{{{ config
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+#}}}
+
+#{{{ fmt
+[[plugins]]
+repo = 'sbdchd/neoformat'
+hook_add = '''
+augroup neoformat
+  autocmd!
+  autocmd FileType java autocmd! neoformat BufWritePre * undojoin | Neoformat
+augroup END
+'''
+build = '''
+brew install astyle
+'''
 #}}}
 
 #{{{ temporary filetype

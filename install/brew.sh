@@ -98,6 +98,9 @@ brew install neovim/neovim/neovim
 brew install tmux --with-utf8proc
 brew install reattach-to-user-namespace
 
+# formatter
+brew install astyle
+
 
 ##########
 #  Cask  #
