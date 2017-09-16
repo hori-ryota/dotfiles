@@ -30,3 +30,5 @@
 	pushinsteadof = "git://github.com/"
 [ghq]
 	root = ~/dev/src
+[mergetool]
+	keepBackup = false

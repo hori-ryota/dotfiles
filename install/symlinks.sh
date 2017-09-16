@@ -37,3 +37,6 @@ ln -snf "$BASEDIR"/ideavimrc "$HOME"/.ideavimrc
 
 # tern (For javascript)
 ln -snf "$BASEDIR"/tern-config "$HOME"/.tern-config
+
+# astyle
+ln -snf "$BASEDIR"/astylerc "$HOME"/.astylerc

@@ -3,6 +3,7 @@
 .python-version
 .cache/
 *.log
+tags
 
 ### https://raw.github.com/github/gitignore/2500b4c80a732ea72aba9517a0866bcd4d47d429/Global/OSX.gitignore
 

@@ -315,6 +315,9 @@ hook_add = '''
 # memo
 [[plugins]]
 repo = 'fuenor/qfixgrep'
+hook_add = '''
+    let QFixWin_EnableMode = 0
+'''
 
 [[plugins]]
 repo = 'glidenote/memolist.vim'
@@ -387,6 +390,7 @@ hook_add = '''
     let g:calendar_google_calendar = 1
     let g:calendar_google_task = 1
     let g:calendar_frame = 'default'
+    let g:calendar_first_day = 'monday'
 '''
 
 #}}}
