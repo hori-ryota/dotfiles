@@ -15,9 +15,9 @@ repo = 'editorconfig/editorconfig-vim'
 [[plugins]]
 repo = 'sbdchd/neoformat'
 hook_add = '''
-augroup neoformat
+augroup my_neoformat
     autocmd!
-    autocmd FileType java autocmd! neoformat BufWritePre * undojoin | Neoformat
+    autocmd BufWritePre *.java undojoin | Neoformat
 augroup END
 '''
 build = '''
@@ -245,7 +245,8 @@ hook_add = '''
                     \ ],
                 \ 'html': [
                     \ 'htmlhint'
-                    \ ]
+                    \ ],
+                \ 'java': []
                 \ }
 '''
 

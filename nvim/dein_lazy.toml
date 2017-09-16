@@ -444,6 +444,17 @@ hook_source = '''
     vmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
     let g:JavaComplete_UsePython3 = 1
     let g:JavaComplete_EnableDefaultMappings = 0
+
+    nmap <leader>ia <Plug>(JavaComplete-Imports-AddMissing)
+    nmap <leader>id <Plug>(JavaComplete-Imports-RemoveUnused)
+    nmap <leader>is <Plug>(JavaComplete-Imports-SortImports)
+
+    augroup my_javacomplete
+        autocmd!
+        " autocmd BufWritePre * JCimportsAddMissing
+        " autocmd BufWritePre * JCimportsRemoveUnused
+        autocmd BufWritePre * JCimportsSort
+    augroup END
 '''
 #}}}
 
