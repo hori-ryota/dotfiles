@@ -362,6 +362,13 @@ function! s:setup_proto()
     setlocal shiftwidth=4
 endfunction
 "}}}
+"
+"{{{ python
+function! s:setup_python()
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+endfunction
+"}}}
 
 "{{{ scss
 function! s:setup_scss()
@@ -446,6 +453,7 @@ augroup my_setup_filetype_configuration
     autocmd FileType markdown   call s:setup_markdown()
     autocmd FileType plantuml   call s:setup_plantuml()
     autocmd FileType proto      call s:setup_proto()
+    autocmd FileType python     call s:setup_python()
     autocmd FileType revealjs   call s:setup_revealjs()
     autocmd FileType scss       call s:setup_scss()
     autocmd FileType snippets   call s:setup_snippets()

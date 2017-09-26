@@ -43,3 +43,6 @@ ln -snf "$BASEDIR"/astylerc "$HOME"/.astylerc
 
 # gtags
 ln -snf "$BASEDIR"/globalrc "$HOME"/.globalrc
+
+# python
+ln -snf "$BASEDIR"/flake8 "$XDG_CONFIG_HOME"/flake8
