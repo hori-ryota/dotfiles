@@ -40,3 +40,6 @@ ln -snf "$BASEDIR"/tern-config "$HOME"/.tern-config
 
 # astyle
 ln -snf "$BASEDIR"/astylerc "$HOME"/.astylerc
+
+# gtags
+ln -snf "$BASEDIR"/globalrc "$HOME"/.globalrc
