@@ -19,6 +19,7 @@ augroup my_neoformat
     autocmd!
     autocmd BufWritePre *.java undojoin | Neoformat
 augroup END
+let g:neoformat_run_all_formatters = 1
 '''
 build = '''
 brew install astyle

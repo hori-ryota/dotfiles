@@ -6,18 +6,20 @@ repo = 'Shougo/denite.nvim'
 depends = 'cpsm'
 on_cmd = 'Denite'
 hook_add = '''
-    nmap <silent> <C-p><C-f> :<C-u>Denite filetype<CR>
-    nmap <silent> <C-p>p     :<C-u>Denite file_rec<CR>
-    nmap <silent> <C-p><C-p> :<C-u>Denite file_rec:
-    nmap <silent> <C-p>l     :<C-u>Denite line<CR>
-    nmap <silent> <C-p>g     :<C-u>Denite grep<CR>
-    nmap <silent> <C-p><C-g> :<C-u>Denite grep:
-    nmap <silent> <C-p>:     :<C-u>Denite command<CR>
-    nmap <silent> <C-p>h     :<C-u>Denite command_history<CR>
-    nmap <silent> <C-p>o     :<C-u>Denite file_mru<CR>
-    nmap <silent> <C-p>y     :<C-u>Denite neoyank<CR>
-    nmap <silent> <C-p>]     :<C-u>Denite ghq<CR>
-    nmap <silent> <C-p>m     :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
+    nmap <silent> <Space>ft       :<C-u>Denite filetype<CR>
+    nmap <silent> <Space><Space>  :<C-u>Denite file_rec<CR>
+    nmap <silent> <Space>i<Space> :<C-u>Denite file_rec:
+    nmap <silent> <Space>/        :<C-u>Denite line<CR>
+    nmap <silent> <Space>r        :<C-u>Denite grep<CR>
+    nmap <silent> <Space>ir       :<C-u>Denite grep:
+    nmap <silent> <Space>:        :<C-u>Denite command<CR>
+    nmap <silent> <Space>;        :<C-u>Denite command_history<CR>
+    nmap <silent> <Space>o        :<C-u>Denite file_mru<CR>
+    nmap <silent> <Space>y        :<C-u>Denite neoyank<CR>
+    nmap <silent> <Space>p        :<C-u>Denite ghq<CR>
+    nmap <silent> <Space>m        :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
+    nmap <silent> <space>c        :<C-u>Denite -mode=normal -auto-resize quickfix<CR>
+    nmap <silent> <space>l        :<C-u>Denite -mode=normal -auto-resize location_list<CR>
 '''
 hook_source = '''
     call denite#custom#var('file_rec', 'command',
@@ -73,6 +75,10 @@ build = 'env PY3=ON ./install.sh'
 
 [[plugins]]
 repo = 'Jagua/vim-denite-ghq'
+on_source = 'denite.nvim'
+
+[[plugins]]
+repo = 'chemzqm/unite-location'
 on_source = 'denite.nvim'
 #}}}
 

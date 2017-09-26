@@ -37,7 +37,7 @@ function peco-src () {
   zle clear-screen
 }
 zle -N peco-src
-bindkey '^]' peco-src
+bindkey '^p' peco-src
 
 # ローカルの設定ファイルがあればそれを読み込み
 if [ -f "$HOME/.zshrc.local" ]; then
