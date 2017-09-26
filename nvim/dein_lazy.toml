@@ -583,7 +583,7 @@ on_ft = ['dockerfile', 'docker-compose']
 
 #{{{ nginx
 [[plugins]]
-repo = 'evanmiller/nginx-vim-syntax'
+repo = 'chr4/nginx.vim'
 on_ft= 'nginx'
 #}}}
 
