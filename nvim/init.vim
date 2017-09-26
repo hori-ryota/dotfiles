@@ -386,7 +386,12 @@ endfunction
 
 "{{{ typescript
 function! s:setup_typescript()
-    " nnoremap <buffer> <leader>dd :<C-u>YcmCompleter GoToDefinition<CR>
+    nnoremap <buffer> <C-]> :<C-u>TSDef<CR>
+    nnoremap <buffer> <Leader>dp :<C-u>TSDefPreview<CR>
+    nnoremap <buffer> <Leader>dr :<C-u>TSRefs<CR>
+    nnoremap <buffer> K :<C-u>TSDoc<CR>
+    nnoremap <buffer> <Leader>I :<C-u>TSType<CR>
+    nnoremap <buffer> <Leader>ii :<C-u>TSImport<CR>
 endfunction
 "}}}
 

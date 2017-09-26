@@ -234,10 +234,11 @@ repo = 'leafgarland/typescript-vim'
 build = 'npm install -g clausreinke/typescript-tools typescript'
 on_ft = 'typescript'
 
-# [[plugins]]
-# repo = 'mhartington/nvim-typescript'
-# on_ft = 'typescript'
-# depends = 'deoplete.nvim'
+[[plugins]]
+repo = 'mhartington/nvim-typescript'
+build = 'npm install -g typescript'
+on_ft = 'typescript'
+depends = 'deoplete.nvim'
 #}}}
 
 #{{{ go
