@@ -151,8 +151,10 @@ augroup FileTypeDetect
     autocmd BufRead,BufNewFile *.less                   setfiletype less
     autocmd BufRead,BufNewFile *.m3u8                   setfiletype m3u8
     autocmd BufRead,BufNewFile *.pp                     setfiletype puppet
+    autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml    setfiletype plantuml
     autocmd BufRead,BufNewFile *.py                     setfiletype python
     autocmd BufRead,BufNewFile *.scss                   setfiletype scss
+    autocmd BufRead,BufNewFile *.snippets,*.snip        setfiletype snippets
     autocmd BufRead,BufNewFile *.styl,*.stylus          setfiletype stylus
     autocmd BufRead,BufNewFile *.tex                    setfiletype tex
     autocmd BufRead,BufNewFile *.tfstate                setfiletype tfstate
@@ -161,10 +163,9 @@ augroup FileTypeDetect
     autocmd BufRead,BufNewFile *.vim                    setfiletype vim
     autocmd BufRead,BufNewFile *.yml,*.yaml,*.lock      setfiletype yaml
     autocmd BufRead,BufNewFile *.{md,mdwn,mkd,mkdn,mark*,txt,text} setfiletype markdown
+    autocmd BufRead,BufNewFile *_spec.rb                setfiletype ruby.rspec
     autocmd BufRead,BufNewFile .tmux.conf,tmux.conf     setfiletype tmux
     autocmd BufRead,BufNewFile Capfile,Gemfile,Rakefile setfiletype ruby
-    autocmd BufRead,BufNewFile *_spec.rb                setfiletype ruby.rspec
-    autocmd BufRead,BufNewFile *.pu,*.uml,*.plantuml    setfiletype plantuml
 augroup END
 "}}}
 

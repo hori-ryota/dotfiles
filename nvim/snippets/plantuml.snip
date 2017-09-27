@@ -1,0 +1,104 @@
+snippet     seq
+abbr        "startuml - @enduml"
+options     head
+  @startuml
+    ${0:TARGET}
+  @enduml
+
+snippet     l
+abbr        "${1} -> ${2} : ${0}"
+options     head
+  ${1} -> ${2} : ${0:TARGET}
+
+snippet     ll
+abbr        "${1} --> ${2} : ${0}"
+options     head
+  ${1} --> ${2} : ${0:TARGET}
+
+snippet     h
+abbr        "${1} <- ${2} : ${0}"
+options     head
+  ${1} <- ${2} : ${0:TARGET}
+
+snippet     hh
+abbr        "${1} <-- ${2} : ${0}"
+options     head
+  ${1} <-- ${2} : ${0:TARGET}
+
+snippet     s
+abbr        "${1} -> ${1} : ${0}"
+options     head
+  ${1} -> $1 : ${0:TARGET}
+
+snippet     loop
+abbr        loop
+options     head
+  loop ${1:#:start}, ${2:#:end}
+    ${0:TARGET}
+  end loop
+
+snippet     alt
+abbr        alt
+options     head
+  alt ${1}
+    ${0:TARGET}
+  else
+  end
+
+snippet     opt
+abbr        opt
+options     head
+  opt ${1}
+    ${0:TARGET}
+  end
+
+snippet     group
+abbr        group
+options     head
+  group ${1}
+    ${0:TARGET}
+  end
+
+snippet     break
+abbr        break
+options     head
+  break ${1}
+    ${0:TARGET}
+  end
+
+snippet     critical
+alias       crit
+abbr        critical
+options     head
+  critical
+    ${0:TARGET}
+  end
+
+snippet     par
+abbr        par
+options     head
+  par ${1}
+    ${0:TARGET}
+  else
+  end
+
+snippet     note
+abbr        note - over - multiline
+options     head
+  note over ${1}
+    ${0:TARGET}
+  end note
+
+snippet     notel
+abbr        note - left - multiline
+options     head
+  note left
+    ${0:TARGET}
+  end note
+
+snippet     noter
+abbr        note - right - multiline
+options     head
+  note right
+    ${0:TARGET}
+  end note
