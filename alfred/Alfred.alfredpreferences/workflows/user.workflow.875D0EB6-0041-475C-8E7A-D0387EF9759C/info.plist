@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.kyokomi.alfred-esa-workflow</string>
+	<key>connections</key>
+	<dict>
+		<key>426F2346-AE7A-4D4A-8BF3-F749CB28831C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9634284F-AE1E-48AA-AD8D-EB5F21428FA6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>949B7B32-A337-4E92-83A3-25E05146A988</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FB891E60-1C9B-4CCD-8467-2B43D1C68E07</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>9634284F-AE1E-48AA-AD8D-EB5F21428FA6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3C464A16-2864-4FF1-8659-089FC71999A6</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>AC5D6BAB-E95D-4464-B570-723EE2089459</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>F8648C81-A535-4528-9160-299196CB8729</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>6BD75015-B81D-42B6-AC42-096CF12D1394</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>FB891E60-1C9B-4CCD-8467-2B43D1C68E07</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>07DECCC0-7992-4588-B3C4-0DFEF70BB54F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>kyokomi</string>
+	<key>description</key>
+	<string>workflow of esa</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>esa</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>./alfred-esa-workflow setup "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>FB891E60-1C9B-4CCD-8467-2B43D1C68E07</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>esa setup</string>
+				<key>subtext</key>
+				<string>esa setup &lt;personal accessToken&gt; &lt;teamName&gt;</string>
+				<key>text</key>
+				<string>esa setup</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>949B7B32-A337-4E92-83A3-25E05146A988</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>esa setup</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>07DECCC0-7992-4588-B3C4-0DFEF70BB54F</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>esa today copied</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>3C464A16-2864-4FF1-8659-089FC71999A6</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>esa search</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching for "{query}" ...</string>
+				<key>script</key>
+				<string>./alfred-esa-workflow search "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search Posts for "{query}"</string>
+				<key>title</key>
+				<string>esa Search Posts</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>F8648C81-A535-4528-9160-299196CB8729</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>{query}</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>6BD75015-B81D-42B6-AC42-096CF12D1394</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>0</integer>
+				<key>script</key>
+				<string>./alfred-esa-workflow today "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>9634284F-AE1E-48AA-AD8D-EB5F21428FA6</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>esa today</string>
+				<key>subtext</key>
+				<string>esa today &lt;username&gt; (&lt;yyyy-MM-dd | number of hours ago&gt;)</string>
+				<key>text</key>
+				<string>esa today</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>426F2346-AE7A-4D4A-8BF3-F749CB28831C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>transient</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>AC5D6BAB-E95D-4464-B570-723EE2089459</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string># v0.0.4
+
+## todayコマンドに以下の引数を対応
+- `today &lt;username&gt; &lt;number of hours ago&gt;`:
+    - 指定した時間前の日付を基準に取得（例: `esa today kyokomi 48` ）
+- `today &lt;username&gt; &lt;yyyy-MM-dd&gt;`:
+    - 指定した日付を基準に取得（例: `esa today kyokomi 2017-02-01` ）
+
+## デフォルトを24時間前ではなく、0時基準で今日の日付に変更
+
+## 現在時刻が 2017/02/08 09:32:00 だった場合 =&gt; 2017/02/08 00:00:00 を基準日とする
+
+# v0.0.3
+
+## esa todayコマンドを実装
+
+# v0.0.2
+
+## bugfixなど
+
+# v0.0.1
+
+## esa setupコマンドを実装
+Get Personal Token which have a scope for read and put it on:
+
+`https://&lt;your team name&gt;.esa.io/user/applications`
+
+- `esa setup &lt;accessToken&gt; &lt;teamName&gt;`:
+
+## esa searchコマンドを実装
+- `esa search &lt;query&gt;`:
+    - 指定した条件で記事を検索します（例: `esa search 日報 -ポエム`）
+    - 検索条件はこちらを参照ください https://docs.esa.io/posts/104
+</string>
+	<key>uidata</key>
+	<dict>
+		<key>07DECCC0-7992-4588-B3C4-0DFEF70BB54F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>510</integer>
+			<key>ypos</key>
+			<integer>60</integer>
+		</dict>
+		<key>3C464A16-2864-4FF1-8659-089FC71999A6</key>
+		<dict>
+			<key>xpos</key>
+			<integer>520</integer>
+			<key>ypos</key>
+			<integer>190</integer>
+		</dict>
+		<key>426F2346-AE7A-4D4A-8BF3-F749CB28831C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>50</integer>
+			<key>ypos</key>
+			<integer>320</integer>
+		</dict>
+		<key>6BD75015-B81D-42B6-AC42-096CF12D1394</key>
+		<dict>
+			<key>xpos</key>
+			<integer>290</integer>
+			<key>ypos</key>
+			<integer>190</integer>
+		</dict>
+		<key>949B7B32-A337-4E92-83A3-25E05146A988</key>
+		<dict>
+			<key>xpos</key>
+			<integer>50</integer>
+			<key>ypos</key>
+			<integer>60</integer>
+		</dict>
+		<key>9634284F-AE1E-48AA-AD8D-EB5F21428FA6</key>
+		<dict>
+			<key>xpos</key>
+			<integer>290</integer>
+			<key>ypos</key>
+			<integer>320</integer>
+		</dict>
+		<key>AC5D6BAB-E95D-4464-B570-723EE2089459</key>
+		<dict>
+			<key>xpos</key>
+			<integer>520</integer>
+			<key>ypos</key>
+			<integer>320</integer>
+		</dict>
+		<key>F8648C81-A535-4528-9160-299196CB8729</key>
+		<dict>
+			<key>xpos</key>
+			<integer>50</integer>
+			<key>ypos</key>
+			<integer>190</integer>
+		</dict>
+		<key>FB891E60-1C9B-4CCD-8467-2B43D1C68E07</key>
+		<dict>
+			<key>xpos</key>
+			<integer>290</integer>
+			<key>ypos</key>
+			<integer>60</integer>
+		</dict>
+	</dict>
+	<key>version</key>
+	<string>0.0.4</string>
+	<key>webaddress</key>
+	<string>https://github.com/kyokomi/alfred-esa-workflow</string>
+</dict>
+</plist>
