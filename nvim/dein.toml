@@ -48,6 +48,7 @@ hook_add = '''
                 \   'right': [ [ 'ale', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
                 \ },
                 \ 'component_function': {
+                \   'readonly': 'LightlineReadonly',
                 \   'fugitive': 'LightLineFugitive',
                 \   'filename': 'LightLineFilename',
                 \   'fileformat': 'LightLineFileformat',
@@ -61,7 +62,8 @@ hook_add = '''
                 \ 'component_type': {
                 \   'ale': 'error',
                 \ },
-                \ 'subseparator': { 'left': '|', 'right': '|' }
+                \ 'separator': { 'left': "\uE0B0", 'right': "\uE0B2" },
+                \ 'subseparator': { 'left': "\uE0B1", 'right': "\uE0B3" }
                 \ }
 
     function! LightLineModified()
@@ -69,7 +71,7 @@ hook_add = '''
     endfunction
 
     function! LightLineReadonly()
-        return &ft !~? 'help' && &readonly ? 'RO' : ''
+        return &ft !~? 'help' && &readonly ? "\uE0A2" : ''
     endfunction
 
     function! LightLineFilename()
@@ -395,4 +397,10 @@ hook_add = '''
     let g:calendar_first_day = 'monday'
 '''
 
+[[plugins]]
+repo = 'mattn/webapi-vim'
+
+[[plugins]] # esa
+repo = 'upamune/esa.vim'
+depends = 'webapi-vim'
 #}}}

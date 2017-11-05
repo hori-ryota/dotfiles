@@ -53,7 +53,6 @@ set wrapmargin=0
 set virtualedit=block
 set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«,nbsp:%
 set nolist
-set ambiwidth=double
 
 set textwidth=0
 if v:version >= 703
