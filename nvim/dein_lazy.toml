@@ -302,8 +302,7 @@ hook_source = '''
                 " \ 'vetshadow',
                 \ ]
 
-    " metalinterにオプションを付ける方法が用意されていなかったのでとりあえず無理やり混ぜ込む
-    let g:go_metalinter_deadline = '30s --tests'
+    let g:go_metalinter_deadline = '30s'
     let g:go_metalinter_excludes = ['.*\.pb\.go', '.*_mock\.go']
 
     let g:go_term_enabled = 1
