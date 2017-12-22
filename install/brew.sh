@@ -27,6 +27,8 @@ brew install hub
 ## golang
 brew install go
 brew install hg
+## Java
+brew install gradle
 ## nodejs
 brew install nodebrew
 brew install phantomjs
@@ -137,9 +139,6 @@ brew cask install karabiner #--force
 # Window manager
 brew cask install xquartz #--force
 brew cask install shiftit #--force
-
-# Document manager
-brew cask install dash #--force
 
 # Chat
 brew cask install slack #--force

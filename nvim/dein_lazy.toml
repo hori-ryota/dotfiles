@@ -302,7 +302,7 @@ hook_source = '''
                 " \ 'vetshadow',
                 \ ]
 
-    let g:go_metalinter_deadline = '30s'
+    let g:go_metalinter_deadline = '1m'
     let g:go_metalinter_excludes = ['.*\.pb\.go', '.*_mock\.go']
 
     let g:go_term_enabled = 1
