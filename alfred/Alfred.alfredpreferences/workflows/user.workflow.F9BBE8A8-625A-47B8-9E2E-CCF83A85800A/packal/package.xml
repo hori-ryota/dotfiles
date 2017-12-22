@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<workflow>
-  <name>Package Managers</name>
-  <version>3.07</version>
-  <bundle>com.farrell.pkgman.alfredworkflow</bundle>
-  <updated>1446573193</updated>
-  <file>package_managers.alfredworkflow</file>
-</workflow>
