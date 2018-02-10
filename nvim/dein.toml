@@ -234,18 +234,12 @@ repo = 'w0rp/ale'
 hook_add = '''
     let g:ale_lint_on_enter = 0
     let g:ale_lint_on_save = 1
-    let g:ale_lint_on_text_changed = 0
+    let g:ale_lint_on_text_changed = 'never'
     let g:ale_echo_msg_format = '[%linter%] %s (%severity%)'
     let g:ale_statusline_format = ['E%d', 'W%d', '']
 
     let g:ale_linters = {
-                \ 'go': [
-                    \ 'go build',
-                    \ 'gofmt',
-                    \ 'gosimple',
-                    \ 'go vet',
-                    \ 'staticcheck'
-                    \ ],
+                \ 'go': [],
                 \ 'html': [
                     \ 'htmlhint'
                     \ ],

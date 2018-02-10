@@ -298,6 +298,8 @@ function! s:setup_golang()
     nmap <buffer> <Leader>de <Plug>(go-describe)
     nmap <buffer> <Leader>dc <Plug>(go-callers)
     nmap <buffer> <Leader>dr <Plug>(go-referrers)
+    nmap <buffer> <Space>d :<C-u>Denite decls:%<CR>
+    nmap <buffer> <Space>D :<C-u>Denite decls<CR>
 
     nmap <buffer> <Leader>s <Plug>(go-implements)
 

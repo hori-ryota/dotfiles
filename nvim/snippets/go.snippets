@@ -1,0 +1,20 @@
+snippet main
+abbr    "init main and Main"
+options head
+  package main
+
+  import (
+    "log"
+    "os"
+  )
+
+  func main() {
+    if err := Main(os.Args); err != nil {
+      log.Fatal(err)
+    }
+  }
+
+  func Main(args []string) error {
+    ${0:TARGET}
+    return nil
+  }

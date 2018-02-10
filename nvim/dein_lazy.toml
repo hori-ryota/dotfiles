@@ -246,6 +246,7 @@ depends = 'deoplete.nvim'
 repo = 'fatih/vim-go'
 on_ft = 'go'
 hook_source = '''
+    let g:go_fmt_autosave = 1
     let g:go_test_timeout= '1m'
     let g:go_info_mode = 'guru'
     let g:go_jump_to_error = 0
@@ -254,15 +255,90 @@ hook_source = '''
                 \ 'goimports': '',
                 \ }
     let g:go_def_mapping_enabled = 0
-    let g:go_snippet_engine = "neosnippet.vim"
-    let g:go_snippet_case_type = "camelcase"
+    let g:go_snippet_engine = "neosnippet"
+    let g:go_metalinter_autosave = 1
+    let g:go_metalinter_autosave_enabled = [
+                " \ 'deadcode',
+                " \ 'dupl',
+                " \ 'errcheck',
+                \ 'gas',
+                " \ 'goconst',
+                " \ 'gocyclo',
+                " \ 'gofmt',
+                " \ 'goimports',
+                " \ 'golint',
+                " \ 'gosimple',
+                \ 'gotype',
+                \ 'gotypex',
+                \ 'ineffassign',
+                " \ 'interfacer',
+                " \ 'lll',
+                " \ 'maligned',
+                " \ 'megacheck',
+                \ 'misspell',
+                " \ 'nakedret',
+                " \ 'safesql',
+                " \ 'staticcheck',
+                " \ 'structcheck',
+                " \ 'test',
+                " \ 'testify',
+                " \ 'unconvert',
+                " \ 'unparam',
+                " \ 'unused',
+                " \ 'varcheck',
+                \ 'vet',
+                " \ 'vetshadow',
+                \ ]
+
+    let g:go_metalinter_enabled = [
+                \ 'deadcode',
+                \ 'dupl',
+                \ 'errcheck',
+                \ 'gas',
+                " \ 'goconst',
+                " \ 'gocyclo',
+                " \ 'gofmt',
+                " \ 'goimports',
+                " \ 'golint',
+                " \ 'gosimple',
+                \ 'gotype',
+                \ 'gotypex',
+                \ 'ineffassign',
+                \ 'interfacer',
+                " \ 'lll',
+                \ 'maligned',
+                \ 'megacheck',
+                \ 'misspell',
+                \ 'nakedret',
+                " \ 'safesql',
+                " \ 'staticcheck',
+                \ 'structcheck',
+                " \ 'test',
+                " \ 'testify',
+                \ 'unconvert',
+                " \ 'unparam',
+                " \ 'unused',
+                \ 'varcheck',
+                \ 'vet',
+                " \ 'vetshadow',
+                \ ]
+
+    let g:go_metalinter_excludes = ['.*\.pb\.go', '.*_mock\.go']
+    let g:go_metalinter_deadline = '1m'
+
+    let g:go_term_enabled = 1
+
+    let g:go_gocode_autobuild = 0
+    let g:go_gocode_unimported_packages = 1
 
     let g:go_highlight_array_whitespace_error = 1
     let g:go_highlight_chan_whitespace_error = 1
     let g:go_highlight_extra_types = 1
     let g:go_highlight_space_tab_error = 1
     let g:go_highlight_trailing_whitespace_error = 1
+    let g:go_highlight_operators = 1
     let g:go_highlight_functions = 1
+    let g:go_highlight_function_arguments = 1
     let g:go_highlight_methods = 1
     let g:go_highlight_types = 1
     let g:go_highlight_fields = 1
@@ -270,73 +346,8 @@ hook_source = '''
     let g:go_highlight_generate_tags = 1
     let g:go_highlight_string_spellcheck = 1
     let g:go_highlight_format_strings = 1
-
-    let g:go_metalinter_enabled = [
-                " \ 'aligncheck',
-                \ 'deadcode',
-                " \ 'dupl',
-                \ 'errcheck',
-                \ 'gas',
-                " \ 'goconst',
-                " \ 'gocyclo',
-                \ 'gofmt',
-                \ 'goimports',
-                " \ 'golint',
-                " \ 'gosimple', use megacheck
-                " \ 'gotype',
-                \ 'ineffassign',
-                \ 'interfacer',
-                " \ 'lll',
-                \ 'megacheck',
-                \ 'misspell',
-                \ 'safesql',
-                " \ 'staticcheck', use megacheck
-                \ 'structcheck',
-                " \ 'test',
-                " \ 'testify',
-                \ 'unconvert',
-                \ 'unparam',
-                " \ 'unused', use megacheck
-                \ 'varcheck',
-                \ 'vet',
-                " \ 'vetshadow',
-                \ ]
-
-    let g:go_metalinter_deadline = '1m'
-    let g:go_metalinter_excludes = ['.*\.pb\.go', '.*_mock\.go']
-
-    let g:go_term_enabled = 1
-
-    " let g:go_gocode_autobuild = 0
-    let g:go_gocode_unimported_packages = 1
-
-    let g:tagbar_type_go = {
-                \ 'ctagstype' : 'go',
-                \ 'kinds'     : [
-                \ 'p:package',
-                \ 'i:imports:1',
-                \ 'c:constants',
-                \ 'v:variables',
-                \ 't:types',
-                \ 'n:interfaces',
-                \ 'w:fields',
-                \ 'e:embedded',
-                \ 'm:methods',
-                \ 'r:constructor',
-                \ 'f:functions'
-                \ ],
-                \ 'sro' : '.',
-                \ 'kind2scope' : {
-                \ 't' : 'ctype',
-                \ 'n' : 'ntype'
-                \ },
-                \ 'scope2kind' : {
-                \ 'ctype' : 't',
-                \ 'ntype' : 'n'
-                \ },
-                \ 'ctagsbin'  : 'gotags',
-                \ 'ctagsargs' : '-sort -silent'
-                \ }
+    let g:go_highlight_variable_declarations = 1
+    let g:go_highlight_variable_assignments = 1
 '''
 
 [[plugins]]
@@ -364,6 +375,10 @@ on_ft = 'go'
 
 [[plugins]]
 repo = 'jodosha/vim-godebug'
+on_ft = 'go'
+
+[[plugins]]
+repo = 'garyburd/go-explorer'
 on_ft = 'go'
 #}}}
 
