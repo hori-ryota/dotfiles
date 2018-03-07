@@ -278,6 +278,12 @@ repo = 'cohama/agit.vim'
 repo = 'idanarye/vim-merginal'
 #}}}
 
+#{{{ Kubernetes
+repo = 'c9s/helper.vim'
+repo = 'c9s/treemenu.vim'
+repo = 'c9s/vikube.vim'
+#}}}
+
 #}}}
 
 #{{{ Misc
