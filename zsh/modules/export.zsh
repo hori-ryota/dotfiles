@@ -35,3 +35,6 @@ export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$CUDA_HOME/lib
 export PATH=$CUDA_HOME/bin:$PATH
 
 export DYLD_LIBRARY_PATH=/usr/local/cuda/lib
+
+# direnv
+eval "$(direnv hook zsh)"

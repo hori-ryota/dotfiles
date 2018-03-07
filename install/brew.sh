@@ -103,6 +103,9 @@ brew install reattach-to-user-namespace
 # formatter
 brew install astyle
 
+# env
+brew install direnv
+
 
 ##########
 #  Cask  #
