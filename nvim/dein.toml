@@ -247,12 +247,16 @@ hook_add = '''
     let g:ale_statusline_format = ['E%d', 'W%d', '']
 
     let g:ale_linters = {
-                \ 'go': [],
+                \ 'go': [
+                    \ 'gometalinter'
+                    \ ],
                 \ 'html': [
                     \ 'htmlhint'
                     \ ],
                 \ 'java': []
                 \ }
+
+    let g:ale_go_gometalinter_options = '--fast --exclude ".*\.pb\.go" --exclude ".*_mock\.go" --enable-gc --disable golint'
 '''
 
 [[plugins]]

@@ -8,6 +8,7 @@ on_cmd = 'Denite'
 hook_add = '''
     nmap <silent> <Space>ft       :<C-u>Denite filetype<CR>
     nmap <silent> <Space><Space>  :<C-u>Denite file_rec<CR>
+    nmap <silent> <Space>P        :<C-u>DeniteProjectDir file_rec<CR>
     nmap <silent> <Space>i<Space> :<C-u>Denite file_rec:
     nmap <silent> <Space>/        :<C-u>Denite line<CR>
     nmap <silent> <Space>r        :<C-u>Denite grep<CR>
@@ -256,7 +257,7 @@ hook_source = '''
                 \ }
     let g:go_def_mapping_enabled = 0
     let g:go_snippet_engine = "neosnippet"
-    let g:go_metalinter_autosave = 1
+    let g:go_metalinter_autosave = 0
     let g:go_metalinter_autosave_enabled = [
                 " \ 'deadcode',
                 " \ 'dupl',
