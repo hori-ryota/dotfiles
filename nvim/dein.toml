@@ -132,8 +132,16 @@ hook_add = '''
     endfunction
 
     function! ALEStatus()
-        return '%{ale#statusline#Status()}'
+      let l:count = ale#statusline#Count(bufnr(''))
+      let l:errors = l:count.error + l:count.style_error
+      let l:warnings = l:count.warning + l:count.style_warning
+      return l:count.total == 0 ? 'OK' : 'E' . l:errors . ' W' . l:warnings
     endfunction
+
+    augroup LightLineOnALE
+    autocmd!
+    autocmd User ALELint call lightline#update()
+    augroup END
 
     let g:unite_force_overwrite_statusline = 0
     let g:vimfiler_force_overwrite_statusline = 0
