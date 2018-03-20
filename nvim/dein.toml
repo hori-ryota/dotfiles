@@ -204,6 +204,9 @@ repo = 'Shougo/unite.vim'
 [[plugins]] # edit surround easy
 repo = 'tpope/vim-surround'
 
+[[plugins]]
+repo = 'tpope/vim-repeat'
+
 [[plugins]] # Aligning Text
 repo = 'junegunn/vim-easy-align'
 hook_add = '''
