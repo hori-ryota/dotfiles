@@ -24,7 +24,7 @@ hook_add = '''
 '''
 hook_source = '''
     call denite#custom#var('file_rec', 'command',
-          \ ['ag', '--follow', '--nocolor', '--nogroup', '--hidden',
+          \ ['ag', '--follow', '--vimgrep', '--hidden',
           \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences',
           \ '-g', ''])
 
@@ -35,7 +35,7 @@ hook_source = '''
     call denite#custom#var('grep', 'final_opts', [])
 
     call denite#custom#var('grep', 'default_opts',
-          \ ['--nocolor', '--nogroup', '--follow', '--hidden', '--column',
+          \ ['--vimgrep', '--follow', '--hidden',
           \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences'
           \ ])
 
