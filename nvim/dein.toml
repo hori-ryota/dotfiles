@@ -227,6 +227,9 @@ repo = 'tpope/vim-commentary'
 
 [[plugins]] # easily search for, substitute, and abbreviate multiple variants of a word
 repo = 'tpope/vim-abolish'
+
+[[plugins]] # for binary
+repo = 'Shougo/vinarise.vim'
 #}}}
 
 #{{{ Motion
