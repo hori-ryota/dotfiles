@@ -194,13 +194,6 @@ hook_source = '''
 '''
 #}}}
 
-#{{{ Filer
-# for NERDTree
-[[plugins]]
-repo = 'Xuyuanp/nerdtree-git-plugin'
-on_cmd = 'NERDTreeToggle'
-#}}}
-
 #{{{ Git/Gist
 [[plugins]] # Gist
 repo = 'lambdalisue/vim-gista'
