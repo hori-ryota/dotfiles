@@ -338,6 +338,9 @@ hook_add = '''
     nmap <space>t :<C-u>TagbarToggle<CR>
 '''
 
+[[plugins]] # increment date
+repo = 'tpope/vim-speeddating'
+
 # memo
 [[plugins]]
 repo = 'fuenor/qfixgrep'
