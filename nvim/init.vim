@@ -58,7 +58,9 @@ set textwidth=0
 if v:version >= 703
     set colorcolumn=80
 endif
-set foldmethod=marker
+set foldmethod=indent
+set foldnestmax=1
+
 set completeopt=menuone
 "}}}
 
@@ -401,6 +403,7 @@ endfunction
 function! s:setup_vimscript()
     setlocal tabstop=4
     setlocal shiftwidth=4
+    setlocal foldmethod=marker
 endfunction
 "}}}
 
