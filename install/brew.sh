@@ -133,8 +133,6 @@ brew cask install shiftit #--force
 # Chat
 brew cask install slack #--force
 
-# Virtual environment
-brew cask install virtualbox #--force
 ## Docker
 brew cask install docker
 
@@ -147,8 +145,6 @@ brew cask install qlmarkdown #--force
 brew cask install quicklook-json #--force
 ## For csv
 brew cask install quicklook-csv #--force
-## For zip
-brew cask install betterzipql #--force
 ## For .pkg
 brew cask install suspicious-package #--force
 ## For code highlight
