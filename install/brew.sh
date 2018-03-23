@@ -172,7 +172,7 @@ brew cask install minikube
 brew tap caskroom/fonts
 
 # install
-brew cask install cica #--force
+brew cask install font-cica #--force
 
 ###########################
 #  Install from AppStore  #

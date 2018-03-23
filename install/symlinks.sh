@@ -12,6 +12,8 @@ ln -snf "$ZDOTDIR"/runcoms/zshrc "$HOME"/.zshrc
 # zsh
 ln -snf "$ZDOTDIR" "$HOME"/.zsh
 
+mkdir -p "$XDG_CONFIG_HOME"
+
 # nvim
 ln -snf "$BASEDIR"/nvim "$XDG_CONFIG_HOME"/nvim
 ln -snf "$BASEDIR"/nvim/cache/dein "$XDG_CACHE_HOME"/dein
