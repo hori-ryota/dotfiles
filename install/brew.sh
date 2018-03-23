@@ -26,12 +26,10 @@ brew install hub
 # For development
 ## golang
 brew install go
-brew install hg
 ## Java
 brew install gradle
 ## nodejs
 brew install nodebrew
-brew install phantomjs
 ## ruby
 brew install rbenv
 brew install ruby-build
@@ -41,7 +39,6 @@ brew install pyenv-virtualenv
 brew install boost
 # Orchestration tools
 brew install terraform
-brew install ansible
 # mysql
 brew install mycli
 # ffmpeg
@@ -98,7 +95,6 @@ brew install neovim/neovim/neovim
 
 # tmux
 brew install tmux --with-utf8proc
-brew install reattach-to-user-namespace
 
 # formatter
 brew install astyle
@@ -110,15 +106,6 @@ brew install direnv
 ##########
 #  Cask  #
 ##########
-
-# Install cask
-brew tap caskroom/cask
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-brew tap caskroom/versions
-
-# clean
-#brew cask cleanup
 
 # General
 brew cask install iterm2-beta #--force
@@ -137,7 +124,7 @@ brew cask install google-chrome #--force
 brew cask install google-japanese-ime #--force
 
 # Fast Keywords Concatenator
-brew cask install karabiner #--force
+brew cask install karabiner-elements #--force
 
 # Window manager
 brew cask install xquartz #--force
@@ -175,6 +162,11 @@ brew cask install appcleaner #--force
 brew cask install dropbox #--force
 brew cask install insomniax #--force
 brew cask install skitch #--force
+brew cask install licecap #--force
+brew cask install teamviewer
+
+## k8s
+brew cask install minikube
 
 #########
 # Fonts #
@@ -184,7 +176,7 @@ brew cask install skitch #--force
 brew tap caskroom/fonts
 
 # install
-brew cask install font-source-code-pro-for-powerline #--force
+brew cask install cica #--force
 
 ###########################
 #  Install from AppStore  #
@@ -194,7 +186,6 @@ brew cask install font-source-code-pro-for-powerline #--force
 # Line
 # Pocket
 # PopClip
-# Reeder 2
 # Xcode
 # todoist
 
