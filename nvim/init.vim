@@ -58,10 +58,14 @@ set textwidth=0
 if v:version >= 703
     set colorcolumn=80
 endif
-set foldmethod=indent
-set foldnestmax=1
 
 set completeopt=menuone
+"}}}
+
+"{{{ Fold Config
+set foldmethod=marker
+nnoremap zI :<C-u>set foldmethod=marker<CR>:<C-u>set foldnestmax=20<CR>
+nnoremap z<C-i> :<C-u>set foldmethod=indent<CR>:<C-u>set foldnestmax=1<CR>
 "}}}
 
 "{{{ Undo/Swap Config
@@ -403,7 +407,6 @@ endfunction
 function! s:setup_vimscript()
     setlocal tabstop=4
     setlocal shiftwidth=4
-    setlocal foldmethod=marker
 endfunction
 "}}}
 
