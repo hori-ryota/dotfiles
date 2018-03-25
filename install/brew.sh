@@ -126,10 +126,6 @@ brew cask install google-japanese-ime #--force
 # Fast Keywords Concatenator
 brew cask install karabiner-elements #--force
 
-# Window manager
-brew cask install xquartz #--force
-brew cask install shiftit #--force
-
 # Chat
 brew cask install slack #--force
 
@@ -184,6 +180,7 @@ brew cask install font-cica #--force
 # PopClip
 # Xcode
 # todoist
+# moom
 
 ############
 #  Others  #
