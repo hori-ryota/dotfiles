@@ -19,10 +19,9 @@ export EDITOR='nvim'
 # go
 export GOPATH=$HOME/dev
 export PATH=$PATH:$GOPATH/bin
-export GO15VENDOREXPERIMENT=1
 
 # Java
-export JAVA_HOME=`/usr/libexec/java_home -v 10`
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 # lang
 export LC_ALL=en_US.UTF-8
