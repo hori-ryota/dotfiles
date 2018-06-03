@@ -399,6 +399,11 @@ on_ft = 'go'
 [[plugins]]
 repo = 'uarun/vim-protobuf'
 on_ft = 'proto'
+
+[[plugins]]
+repo = 'uber/prototool'
+rtp = 'vim/prototool'
+on_ft = 'proto'
 #}}}
 
 #{{{ Python

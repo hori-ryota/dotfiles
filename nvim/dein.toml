@@ -293,7 +293,9 @@ hook_add = '''
                 \ 'html': [
                     \ 'htmlhint'
                     \ ],
-                \ 'java': []
+                \ 'proto': [
+                    \ 'prototool'
+                    \ ],
                 \ }
 
     let g:ale_go_gometalinter_options = '--fast --exclude ".*\.pb\.go" --exclude ".*_mock\.go" --enable-gc --disable golint'
