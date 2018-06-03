@@ -298,7 +298,7 @@ hook_add = '''
                     \ ],
                 \ }
 
-    let g:ale_go_gometalinter_options = '--fast --exclude ".*\.pb\.go" --exclude ".*_mock\.go" --enable-gc --disable golint'
+    let g:ale_go_gometalinter_options = '--fast --exclude ".*\.pb\.go" --exclude ".*_mock\.go" --enable-gc --disable golint --disable maligned --disable vetshadow'
 '''
 
 [[plugins]]
@@ -341,6 +341,9 @@ repo = 'c9s/vikube.vim'
 #}}}
 
 #{{{ Misc
+[[plugins]] # Argumentative aids with manipulating and moving between function arguments.
+repo = 'PeterRincker/vim-argumentative'
+
 [[plugins]] # the_silver_searcher
 repo = 'rking/ag.vim'
 
