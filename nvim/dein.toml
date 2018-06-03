@@ -333,6 +333,8 @@ repo = 'idanarye/vim-merginal'
 #}}}
 
 #{{{ Kubernetes
+repo = 'andrewstuart/vim-kubernetes'
+
 repo = 'c9s/helper.vim'
 repo = 'c9s/treemenu.vim'
 repo = 'c9s/vikube.vim'
