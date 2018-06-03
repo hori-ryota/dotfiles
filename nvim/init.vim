@@ -177,7 +177,6 @@ augroup END
 "{{{ dein.vim Config
 
 let g:dein#install_progress_type = 'title'
-let g:dein#enable_notification = 1
 let g:dein#install_log_filename = '~/dein.log'
 
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
