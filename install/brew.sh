@@ -103,6 +103,13 @@ brew install astyle
 # env
 brew install direnv
 
+# image
+brew install jpgoptim
+brew install pngquant
+
+# blog
+brew install hugo
+
 
 ##########
 #  Cask  #
@@ -114,6 +121,7 @@ brew cask install 1password #--force
 
 # Java
 brew cask install java
+brew cask install java8
 
 # Launcher
 brew cask install alfred #--force
@@ -169,7 +177,10 @@ brew cask install minikube
 brew tap caskroom/fonts
 
 # install
-brew cask install font-cica #--force
+brew cask install font-cica
+brew cask install font-consolas-for-powerline
+brew cask install font-lato
+brew cask install font-noto-sans-cjk-jp
 
 ###########################
 #  Install from AppStore  #
