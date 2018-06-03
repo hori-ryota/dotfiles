@@ -22,6 +22,7 @@ brew install jq
 # Version control system
 brew install git
 brew install hub
+brew install git-secrets
 
 # For development
 ## golang
