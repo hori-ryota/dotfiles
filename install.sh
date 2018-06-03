@@ -16,3 +16,5 @@ IDOTDIR=$BASEDIR/install
 . $IDOTDIR/alfred.sh
 . $IDOTDIR/quickLook.sh
 . $IDOTDIR/go.sh
+
+. $IDOTDIR/eclipse_jdt_ls.sh

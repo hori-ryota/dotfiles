@@ -330,6 +330,15 @@ function! s:setup_golang()
 
 endfunction
 "}}}
+"
+"{{{ java
+function! s:setup_java()
+    let g:LanguageClient_diagnosticsEnable = 0
+    nnoremap <buffer> K :<C-u>call LanguageClient_textDocument_hover()<CR>
+    nnoremap <buffer> <C-]> :<C-u>call LanguageClient_textDocument_definition()<CR>
+    nnoremap <buffer> <Leader>R :<C-u>call LanguageClient_textDocument_rename()<CR>
+endfunction
+"}}}
 
 "{{{ javascript
 
@@ -460,6 +469,7 @@ augroup my_setup_filetype_configuration
     autocmd FileType dot        call s:setup_dot()
     autocmd FileType go         call s:setup_golang()
     autocmd FileType html       call s:setup_html()
+    autocmd FileType java       call s:setup_java()
     autocmd FileType javascript call s:setup_javascript()
     autocmd FileType m3u8       call s:setup_m3u8()
     autocmd FileType make       call s:setup_make()
