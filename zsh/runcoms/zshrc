@@ -39,6 +39,12 @@ function peco-src () {
 zle -N peco-src
 bindkey '^p' peco-src
 
+# ssh ec2 with instance name
+function sshec2() {
+  local name=$1
+  aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --filter "Name=tag:Name,Values=$name" | jq '.Reservations[].Instances[].PrivateDnsName' | xargs -I{} tmux split-window "tmux select-layout tiled > /dev/null && exec ssh {}"
+}
+
 # ローカルの設定ファイルがあればそれを読み込み
 if [ -f "$HOME/.zshrc.local" ]; then
   source "$HOME/.zshrc.local"
