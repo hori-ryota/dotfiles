@@ -139,7 +139,7 @@ brew cask install karabiner-elements #--force
 brew cask install slack #--force
 
 ## Docker
-brew cask install docker
+brew cask install docker-edge
 
 # For QuickLook
 ## For no filename extension
@@ -165,9 +165,6 @@ brew cask install insomniax #--force
 brew cask install skitch #--force
 brew cask install licecap #--force
 brew cask install teamviewer
-
-## k8s
-brew cask install minikube
 
 #########
 # Fonts #
