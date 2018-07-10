@@ -63,3 +63,19 @@ if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/google-cloud
 
 # The next line enables shell command completion for gcloud.
 if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
+
+
+# emacs keybind
+bindkey "^A" beginning-of-line
+bindkey "^B" backward-char
+bindkey "^D" delete-char-or-list
+bindkey "^E" end-of-line
+bindkey "^F" forward-char
+bindkey "^G" send-break
+bindkey "^K" kill-line
+bindkey "^L" clear-screen
+bindkey "^N" history-substring-search-down
+bindkey "^O" accept-line-and-down-history
+bindkey "^P" history-substring-search-up
+bindkey "^S" history-incremental-pattern-search-forward
+bindkey "^T" transpose-chars
