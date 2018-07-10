@@ -46,5 +46,9 @@ ln -snf "$BASEDIR"/astylerc "$HOME"/.astylerc
 # gtags
 ln -snf "$BASEDIR"/globalrc "$HOME"/.globalrc
 
+# peco
+mkdir -p "$XDG_CONFIG_HOME"/peco
+ln -snf "$BASEDIR"/peco.json "$XDG_CONFIG_HOME"/peco/config.json
+
 # python
 ln -snf "$BASEDIR"/flake8 "$XDG_CONFIG_HOME"/flake8
