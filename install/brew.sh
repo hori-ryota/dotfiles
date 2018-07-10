@@ -54,9 +54,9 @@ brew install ffmpeg \
   --with-libbluray \
   --with-libbs2b \
   --with-libcaca \
-  --with-libebur128 \
   --with-libgsm \
   --with-libmodplug \
+  --with-librsvg \
   --with-libsoxr \
   --with-libssh \
   --with-libvidstab \
@@ -68,11 +68,10 @@ brew install ffmpeg \
   --with-openssl \
   --with-opus \
   --with-rtmpdump \
-  --with-rubberband \
-  --with-schroedinger \
   --with-sdl2 \
   --with-snappy \
   --with-speex \
+  --with-srt \
   --with-tesseract \
   --with-theora \
   --with-tools \
@@ -83,6 +82,7 @@ brew install ffmpeg \
   --with-xz \
   --with-zeromq \
   --with-zimg
+  # --with-rubberband \
 
 # Graphviz
 brew install graphviz
