@@ -36,7 +36,6 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'syntax-highlighting' \
   'utility' \
-  'autosuggestions' \
   'prompt' # need to be placed last
 
 #

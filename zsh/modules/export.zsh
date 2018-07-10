@@ -38,3 +38,6 @@ export DYLD_LIBRARY_PATH=/usr/local/cuda/lib
 
 # direnv
 eval "$(direnv hook zsh)"
+
+# mysql
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
