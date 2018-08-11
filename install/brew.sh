@@ -110,6 +110,10 @@ brew install pngquant
 # blog
 brew install hugo
 
+# todoist cli
+brew tap sachaos/todoist
+brew install todoist
+
 
 ##########
 #  Cask  #
