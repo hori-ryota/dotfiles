@@ -259,7 +259,7 @@ on_ft = 'typescript'
 
 [[plugins]]
 repo = 'mhartington/nvim-typescript'
-build = 'npm install -g typescript'
+build = 'npm install -g typescript && ./install.sh'
 on_ft = 'typescript'
 depends = 'deoplete.nvim'
 #}}}
@@ -274,57 +274,28 @@ hook_source = '''
     let g:go_test_timeout= '1m'
     let g:go_info_mode = 'guru'
     let g:go_jump_to_error = 0
+    let g:go_fmt_command = 'goimports' " overwritten goimports binary by goreturns
     let g:go_fmt_options = {
                 \ 'gofmt': '-s',
-                \ 'goimports': '',
+                \ 'goimports': '-b -e',
                 \ }
     let g:go_def_mapping_enabled = 0
     let g:go_snippet_engine = "neosnippet"
     let g:go_metalinter_autosave = 0
-    let g:go_metalinter_autosave_enabled = [
-                " \ 'deadcode',
-                " \ 'dupl',
-                " \ 'errcheck',
-                \ 'gas',
-                " \ 'goconst',
-                " \ 'gocyclo',
-                " \ 'gofmt',
-                " \ 'goimports',
-                " \ 'golint',
-                " \ 'gosimple',
-                \ 'gotype',
-                \ 'gotypex',
-                " \ 'ineffassign',
-                " \ 'interfacer',
-                " \ 'lll',
-                " \ 'maligned',
-                " \ 'megacheck',
-                \ 'misspell',
-                " \ 'nakedret',
-                " \ 'safesql',
-                " \ 'staticcheck',
-                " \ 'structcheck',
-                " \ 'test',
-                " \ 'testify',
-                " \ 'unconvert',
-                " \ 'unparam',
-                " \ 'unused',
-                " \ 'varcheck',
-                \ 'vet',
-                " \ 'vetshadow',
-                \ ]
 
     let g:go_metalinter_enabled = [
                 \ 'deadcode',
                 " \ 'dupl',
                 \ 'errcheck',
-                \ 'gas',
+                " \ 'gochecknoglobals',
+                \ 'gochecknoinits',
                 " \ 'goconst',
                 " \ 'gocyclo',
-                " \ 'gofmt',
-                " \ 'goimports',
+                \ 'gofmt',
+                \ 'goimports',
                 " \ 'golint',
-                " \ 'gosimple',
+                \ 'gosec',
+                " \ 'gosimple', " use megacheck
                 \ 'gotype',
                 \ 'gotypex',
                 \ 'ineffassign',
@@ -334,14 +305,14 @@ hook_source = '''
                 \ 'megacheck',
                 \ 'misspell',
                 \ 'nakedret',
-                " \ 'safesql',
-                " \ 'staticcheck',
+                \ 'safesql',
+                " \ 'staticcheck', " use megacheck
                 \ 'structcheck',
                 " \ 'test',
                 " \ 'testify',
                 \ 'unconvert',
-                " \ 'unparam',
-                " \ 'unused',
+                \ 'unparam',
+                " \ 'unused', " use megacheck
                 \ 'varcheck',
                 \ 'vet',
                 " \ 'vetshadow',
@@ -363,7 +334,7 @@ hook_source = '''
     let g:go_highlight_operators = 1
     let g:go_highlight_functions = 1
     let g:go_highlight_function_arguments = 1
-    let g:go_highlight_methods = 1
+    let g:go_highlight_function_calls = 1
     let g:go_highlight_types = 1
     let g:go_highlight_fields = 1
     let g:go_highlight_build_constraints = 1
@@ -381,16 +352,20 @@ build = 'make'
 on_i = 1
 on_ft = 'go'
 hook_source = '''
-    let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
-
     let g:deoplete#sources#go#gocode_binary = $GOPATH.'/bin/gocode'
-    let g:deoplete#sources#go#pointer = 1
-    let g:deoplete#sources#go#use_cache = 1
-    let g:deoplete#sources#go#json_directory = s:cache_home . '/deoplete/go/$GOOS_$GOARCH'
-    let g:deoplete#sources#go#cgo = 0
     let g:deoplete#sources#go#package_dot = 1
-    " let g:deoplete#sources#go#auto_goos = 1
+    let g:deoplete#sources#go#sort_class = ['package', 'func', 'type', 'var', 'const']
+    let g:deoplete#sources#go#pointer = 1
+    let g:deoplete#sources#go#cgo = 0
+    let g:deoplete#sources#go#auto_goos = 1
+    let g:deoplete#sources#go#source_importer = 1
 '''
+
+[[plugins]]
+repo = 'mdempsky/gocode'
+rtp = 'nvim'
+on_i = 1
+on_ft = 'go'
 
 [[plugins]]
 repo = 'buoto/gotests-vim'
