@@ -1,16 +1,9 @@
 [include]
 	path = ~/.gitconfig.local
 [alias]
-	st = status -sb
-	co = checkout
-	ci = commit
-	tags = tag -l
-	remotes = remote -v
-	delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
-  n = now --all --stat
-  pbcopy = !printf "$1" | pbcopy
-  pull-master = !git checkout master && git fetch --prune && git merge origin/master && git delete-merged-branches
-  pulll = !git checkout $1 && git fetch --prune && git merge origin/$1 && git delete-merged-branches
+	delete-merged-branches = !git branch --merged | grep -vE '^\\*|^ *master$|^ *develop$' | xargs git branch -d
+	pulll = !sh -c 'git checkout $1 && git fetch --prune && git merge origin/$1 && git delete-merged-branches' -
+	pull-master = pulll master
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore_global
@@ -24,7 +17,7 @@
 [merge]
 	tool = vimdiff
 [mergetool "vimdiff"]
-  cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [url "git@github.com:"]
 	pushinsteadof = "https://github.com/"
 	pushinsteadof = "git://github.com/"
