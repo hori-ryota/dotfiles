@@ -6,5 +6,7 @@
 	<true/>
 	<key>mapURL</key>
 	<string>http://maps.google.com/maps?q={query}</string>
+	<key>openInAlfred</key>
+	<false/>
 </dict>
 </plist>
