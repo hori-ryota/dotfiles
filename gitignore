@@ -1,5 +1,6 @@
 ,*
 .idea/
+*.log
 
 
 # gibo dump Dropbox Eclipse JetBrains Linux macOS MATLAB MicrosoftOffice Ninja Tags Vim Xcode
