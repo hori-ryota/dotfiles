@@ -4,15 +4,6 @@ let g:vim_dir = $XDG_CONFIG_HOME . '/nvim'
 filetype off
 filetype plugin indent off
 
-"{{{ for debug
-command! -bar TimerStart let start_time = reltime()
-command! -bar TimerEnd   echom reltimestr(reltime(start_time)) | unlet start_time
-" VimShowHlGroup: Show highlight group name under a cursor
-command! VimShowHlGroup echo synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
-" VimShowHlItem: Show highlight item name under a cursor
-command! VimShowHlItem echo synIDattr(synID(line("."), col("."), 1), "name")
-"}}}
-
 "{{{ General Config
 " set clipboard+=unnamed " Yanks go on clipboard instead
 let g:mapleader = ','
@@ -98,6 +89,17 @@ set visualbell t_vb=            " No beep sound
 if has('mouse') " Enable the use of the mouse in all modes
     set mouse=a
 endif
+"}}}
+
+"{{{ Commandline Config
+" emacs keybind
+cnoremap <C-a> <Home>
+cnoremap <C-b> <Left>
+cnoremap <C-d> <Del>
+cnoremap <C-e> <End>
+cnoremap <C-f> <Right>
+cnoremap <C-n> <Down>
+cnoremap <C-p> <Up>
 "}}}
 
 "{{{ Highlight Config
@@ -193,9 +195,7 @@ if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir, expand('<sfile>'))
 
     let s:toml_file      = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
-    let s:lazy_toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein_lazy.toml'
-    call dein#load_toml(s:toml_file,      {'lazy': 0})
-    call dein#load_toml(s:lazy_toml_file, {'lazy': 1})
+    call dein#load_toml(s:toml_file, {})
 
     call dein#end()
     call dein#save_state()
@@ -211,280 +211,10 @@ endif
 
 "}}}
 
-"{{{ Comment Config
-" Commenting blocks of code.
-augroup CommentSettings
-    autocmd!
-    autocmd FileType c,cpp,java,scala,go  setlocal commentstring=//\ %s
-    autocmd FileType conf,fstab           setlocal commentstring=#\ %s
-    autocmd FileType dot                  setlocal commentstring=//\ %s
-    autocmd FileType javascript           setlocal commentstring=//\ %s
-    autocmd FileType mail                 setlocal commentstring=>\ %s
-    autocmd FileType sh,ruby,python       setlocal commentstring=#\ %s
-    autocmd FileType sql                  setlocal commentstring=--\ %s
-    autocmd FileType tex                  setlocal commentstring=%\ %s
-    autocmd FileType tmux                 setlocal commentstring=#\ %s
-    autocmd FileType vim                  setlocal commentstring=\"\ %s
-augroup END
-"}}}
-
 "{{{ Terminal Config
 tnoremap <Esc> <C-\><C-n>
 "}}}
 
-"{{{ File Type Config
-
-"{{{ html
-function! s:setup_html()
-endfunction
-"}}}
-
-"{{{ css
-function! s:setup_css()
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-endfunction
-"}}}
-
-"{{{ git
-" TODO: fold level
-let g:gitgutter_enabled = 0
-let g:gitgutter_eager = 0
-let g:fugitive_github_domains = ['[^/]*']
-
-nnoremap <silent> <space>g :<C-u>Git<space>
-nnoremap <silent> <space>ga :<C-u>Gwrite<CR>
-nnoremap <silent> <space>gc :<C-u>Gcommit<CR>
-nnoremap <silent> <space>gs :<C-u>Gstatus<CR>
-nnoremap <silent> <space>gg :<C-u>GitGutterToggle<CR>
-nnoremap <silent> <space>gh :<C-u>GitGutterLineHighlightsToggle<CR>
-nnoremap <silent> <space>gr :<C-u>Gbrowse<CR>
-nnoremap <silent> <space>gd :<C-u>Gdiff<CR>
-nnoremap <silent> <space>gbl :<C-u>Gblame<CR>
-
-nnoremap <silent> <space>gl :<C-u>Agit<CR>
-nnoremap <silent> <space>gL :<C-u>AgitFile<CR>
-
-function! s:setup_agit()
-    nmap <buffer> ch <Plug>(agit-git-cherry-pick)
-    nmap <buffer> Rv <Plug>(agit-git-revert)
-endfunction
-
-nnoremap <silent> <space>gm :<C-u>MerginalToggle<CR>
-"}}}
-
-"{{{ go
-
-function! s:setup_golang()
-
-    nmap <buffer> <leader>r <Plug>(go-run)
-    " nmap <buffer> <leader>b <Plug>(go-build)
-    nmap <buffer> <leader>b :<C-u>make<CR>
-    nmap <buffer> <leader>t <Plug>(go-test)
-    nmap <buffer> <leader>c <Plug>(go-coverage-toggle)
-    nmap <buffer> <leader>T <Plug>(go-test-func)
-
-    nmap <buffer> <Leader>gd <Plug>(go-doc)
-    nmap <buffer> <Leader>gs <Plug>(go-doc-split)
-    nmap <buffer> <Leader>gv <Plug>(go-doc-vertical)
-    nmap <buffer> <Leader>gb <Plug>(go-doc-browser)
-    nmap <buffer> <Leader>gt <Plug>(go-doc-tab)
-
-    nmap <buffer> <Leader>dd <Plug>(go-def)
-    nmap <buffer> <C-]> <Plug>(go-def)
-    nmap <buffer> <Leader>ds <Plug>(go-def-split)
-    nmap <buffer> <Leader>dv <Plug>(go-def-vertical)
-    nmap <buffer> <Leader>dt <Plug>(go-def-tab)
-
-    nmap <buffer> <Leader>ad <Plug>(go-alternate-edit)
-    nmap <buffer> <Leader>as <Plug>(go-alternate-split)
-    nmap <buffer> <Leader>av <Plug>(go-alternate-vertical)
-
-    nmap <buffer> <Leader>de <Plug>(go-describe)
-    nmap <buffer> <Leader>dc <Plug>(go-callers)
-    nmap <buffer> <Leader>dr <Plug>(go-referrers)
-    nmap <buffer> <Space>d :<C-u>Denite decls:%<CR>
-    nmap <buffer> <Space>D :<C-u>Denite decls<CR>
-
-    nmap <buffer> <Leader>s <Plug>(go-implements)
-
-    nmap <buffer> <Leader>I <Plug>(go-info)
-
-    nmap <buffer> <Leader>R <Plug>(go-rename)
-
-    nmap <buffer> <Leader>v <Plug>(go-vet)
-    nmap <buffer> <Leader>m <Plug>(go-metalinter)
-    nnoremap <buffer> <Leader>M :<C-u>GoMetaLinter ./...<CR>
-
-    nmap <buffer> <Leader>i <Plug>(go-import)
-    nnoremap <buffer> <Leader>D :<C-u>GoDrop<space>
-    nmap <buffer> <Leader>ii <Plug>(go-imports)
-    nnoremap <buffer> <Leader>e :<C-u>GoErrCheck<CR>
-    nnoremap <buffer> <Leader>E :<C-u>GoErrCheck ./...<CR>
-
-    nmap <buffer> <Leader>G <Plug>(go-generate)
-
-    nnoremap <buffer> <Leader>p :<C-u>GoPlay<CR>
-    vnoremap <buffer> <Leader>p :GoPlay<CR>
-
-endfunction
-"}}}
-"
-"{{{ java
-function! s:setup_java()
-    let g:LanguageClient_diagnosticsEnable = 0
-    nnoremap <buffer> K :<C-u>call LanguageClient_textDocument_hover()<CR>
-    nnoremap <buffer> <C-]> :<C-u>call LanguageClient_textDocument_definition()<CR>
-    nnoremap <buffer> <Leader>R :<C-u>call LanguageClient_textDocument_rename()<CR>
-endfunction
-"}}}
-
-"{{{ javascript
-
-let g:vim_json_syntax_conceal = 0
-
-function! s:setup_javascript()
-    nnoremap <buffer> <Leader>gd :<C-u>TernDoc<CR>
-    nnoremap <buffer> <Leader>gb :<C-u>TernDocBrowse<CR>
-    nnoremap <buffer> <Leader>I :<C-u>TernType<CR>
-    nnoremap <buffer> <Leader>dd :<C-u>TernDef<CR>
-    nnoremap <buffer> <C-]> :<C-u>TernDef<CR>
-    nnoremap <buffer> <Leader>dp :<C-u>TernDefPreview<CR>
-    nnoremap <buffer> <Leader>ds :<C-u>TernDefSplit<CR>
-    nnoremap <buffer> <Leader>dt :<C-u>TernDefTab<CR>
-    nnoremap <buffer> <Leader>de :<C-u>TernRefs<CR>
-    nnoremap <buffer> <Leader>R :<C-u>TernRename<CR>
-endfunction
-"}}}
-
-"{{{ make
-function! s:setup_make()
-    setlocal noexpandtab
-    setlocal tabstop=8
-    setlocal shiftwidth=8
-endfunction
-"}}}
-
-"{{{ markdown
-function! s:setup_markdown()
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-endfunction
-"}}}
-
-"{{{ proto
-function! s:setup_proto()
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-endfunction
-"}}}
-"
-"{{{ python
-function! s:setup_python()
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-endfunction
-"}}}
-
-"{{{ scss
-function! s:setup_scss()
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-endfunction
-"}}}
-
-"{{{ stylus
-function! s:setup_stylus()
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-endfunction
-"}}}
-
-"{{{ typescript
-function! s:setup_typescript()
-    nnoremap <buffer> <C-]> :<C-u>TSDef<CR>
-    nnoremap <buffer> <Leader>dp :<C-u>TSDefPreview<CR>
-    nnoremap <buffer> <Leader>dr :<C-u>TSRefs<CR>
-    nnoremap <buffer> K :<C-u>TSDoc<CR>
-    nnoremap <buffer> <Leader>I :<C-u>TSType<CR>
-    nnoremap <buffer> <Leader>ii :<C-u>TSImport<CR>
-endfunction
-"}}}
-
-"{{{ vim
-function! s:setup_vimscript()
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-endfunction
-"}}}
-
-"{{{ snippets
-function! s:setup_snippets()
-    setlocal noexpandtab
-endfunction
-"}}}
-
-"{{{ revealjs
-function! s:setup_revealjs()
-    nnoremap <buffer> <Leader>b :<C-u>!npm run build<CR>
-    nnoremap <buffer> <Leader>r :<C-u>!npm run start<CR>
-    nnoremap <buffer> <Leader>t :<C-u>!npm run test<CR>
-endfunction
-"}}}
-
-"{{{ talkiejs
-function! s:setup_talkiejs()
-    nnoremap <buffer> <Leader>b :<C-u>!npm run build<CR>
-    nnoremap <buffer> <Leader>r :<C-u>!npm run start<CR>
-    nnoremap <buffer> <Leader>w :<C-u>!npm run d<CR>
-    nnoremap <buffer> <Leader>t :<C-u>!npm run test<CR>
-endfunction
-"}}}
-
-"{{{ m3u8
-function! s:setup_m3u8()
-endfunction
-"}}}
-
-"{{{ dot
-function! s:setup_dot()
-    nnoremap <silent> <buffer> <LocalLeader>lp :GraphvizCompilePDF<CR>
-endfunction
-"}}}
-
-"{{{ plantuml
-function! s:setup_plantuml()
-    command! OpenUml :!start chrome %
-    nnoremap <silent> <buffer> <LocalLeader>b :make<CR>
-    nnoremap <silent> <buffer> <LocalLeader>r :OpenUml<CR>
-endfunction
-"}}}
-
-"{{{ filetype configuration
-augroup my_setup_filetype_configuration
-    autocmd!
-    autocmd FileType agit       call s:setup_agit()
-    autocmd FileType css        call s:setup_css()
-    autocmd FileType dot        call s:setup_dot()
-    autocmd FileType go         call s:setup_golang()
-    autocmd FileType html       call s:setup_html()
-    autocmd FileType java       call s:setup_java()
-    autocmd FileType javascript call s:setup_javascript()
-    autocmd FileType m3u8       call s:setup_m3u8()
-    autocmd FileType make       call s:setup_make()
-    autocmd FileType markdown   call s:setup_markdown()
-    autocmd FileType plantuml   call s:setup_plantuml()
-    autocmd FileType proto      call s:setup_proto()
-    autocmd FileType python     call s:setup_python()
-    autocmd FileType revealjs   call s:setup_revealjs()
-    autocmd FileType scss       call s:setup_scss()
-    autocmd FileType snippets   call s:setup_snippets()
-    autocmd FileType stylus     call s:setup_stylus()
-    autocmd FileType talkiejs   call s:setup_talkiejs()
-    autocmd FileType typescript call s:setup_typescript()
-    autocmd FileType vim        call s:setup_vimscript()
-augroup END
-"}}}
 
 "}}}
 

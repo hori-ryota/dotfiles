@@ -17,42 +17,254 @@ repo = 'autozimu/LanguageClient-neovim'
 rev = 'next'
 build = './install.sh'
 hook_add = '''
+    let g:LanguageClient_diagnosticsEnable = 0
+    let g:LanguageClient_diagnosticsList = 'Location'
     let g:LanguageClient_serverCommands = {
-        \ 'kotlin': [
-            \ 'java',
-            \ '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044',
-            \ '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-            \ '-Dosgi.bundles.defaultStartLevel=4',
-            \ '-Declipse.product=org.eclipse.jdt.ls.core.product',
-            \ '-Dlog.protocol=true',
-            \ '-Dlog.level=ALL',
-            \ '-noverify',
-            \ '-Xmx1G',
-            \ '-jar',
-            \ $HOME . '/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_1.5.0.v20180207-1446.jar',
-            \ '-configuration',
-            \ $HOME . '/eclipse.jdt.ls/config_mac',
-            \ '-data',
-            \ $HOME . '/eclipse.jdt.ls/'
+        \ 'go': [
+            " https://github.com/saibing/bingo
+            " go get -u github.com/saibing/bingo
+            \ 'bingo', '--mode', 'stdio', '--logfile', '/tmp/lspserver.log'
         \ ],
         \ 'java': [
-            \ 'java',
-            \ '-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=1044',
-            \ '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-            \ '-Dosgi.bundles.defaultStartLevel=4',
-            \ '-Declipse.product=org.eclipse.jdt.ls.core.product',
-            \ '-Dlog.protocol=true',
-            \ '-Dlog.level=ALL',
-            \ '-noverify',
-            \ '-Xmx1G',
-            \ '-jar',
-            \ $HOME . '/eclipse.jdt.ls/plugins/org.eclipse.equinox.launcher_1.5.0.v20180207-1446.jar',
-            \ '-configuration',
-            \ $HOME . '/eclipse.jdt.ls/config_mac',
-            \ '-data',
-            \ $HOME . '/eclipse.jdt.ls/'
+            " https://github.com/Ruin0x11/intellij-lsp-server
+            \ 'tcp://localhost:7777'
+        \ ],
+        \ 'kotlin': [
+            " https://github.com/Ruin0x11/intellij-lsp-server
+            \ 'tcp://localhost:7777'
+        \ ],
+        \ 'javascript': [
+            " https://www.npmjs.com/package/javascript-typescript-langserver
+            " npm install -g javascript-typescript-langserver
+            \ 'javascript-typescript-stdio'
+        \ ],
+        \ 'javascript.jsx': [
+            " https://www.npmjs.com/package/javascript-typescript-langserver
+            " npm install -g javascript-typescript-langserver
+            \ 'javascript-typescript-stdio'
+        \ ],
+        \ 'typescript': [
+            " https://www.npmjs.com/package/javascript-typescript-langserver
+            " npm install -g javascript-typescript-langserver
+            \ 'javascript-typescript-stdio'
+        \ ],
+        \ 'c': [
+            " https://github.com/apple/sourcekit-lsp
+            \ 'sourcekit-lsp'
+        \ ],
+        \ 'c++': [
+            " https://github.com/apple/sourcekit-lsp
+            \ 'sourcekit-lsp'
+        \ ],
+        \ 'objc': [
+            " https://github.com/apple/sourcekit-lsp
+            \ 'sourcekit-lsp'
+        \ ],
+        \ 'objc++': [
+            " https://github.com/apple/sourcekit-lsp
+            \ 'sourcekit-lsp'
+        \ ],
+        \ 'swift': [
+            " https://github.com/apple/sourcekit-lsp
+            \ 'sourcekit-lsp'
         \ ]
         \ }
+
+    function! LC_maps()
+      if has_key(g:LanguageClient_serverCommands, &filetype)
+        nnoremap <buffer><silent> <Leader><Leader> :<C-u>Denite contextMenu<CR>
+        nnoremap <buffer><silent> K                :<C-u>call LanguageClient_textDocument_hover()<CR>
+        nnoremap <buffer><silent> <C-]>            :<C-u>call LanguageClient_textDocument_definition()<CR>
+        nnoremap <buffer><silent> <Leader>i        :<C-u>call LanguageClient_textDocument_implementation()<CR>
+        nnoremap <buffer><silent> <Leader>R        :<C-u>call LanguageClient_textDocument_rename()<CR>
+        nnoremap <buffer><silent> <Leader>s        :<C-u>Denite documentSymbol<CR>
+        nnoremap <buffer><silent> <Leader>dr       :<C-u>Denite references<CR>
+        nnoremap <buffer><silent> <Leader>a        :<C-u>call LanguageClient_textDocument_codeAction()<CR>
+        nnoremap <buffer><silent> gq               :<C-u>call LanguageClient_textDocument_formatting()<CR>
+        vnoremap <buffer><silent> gq               :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
+        nnoremap <buffer><silent> <Leader>h        :<C-u>call LanguageClient_textDocument_documentHighlight()<CR>
+        nnoremap <buffer><silent> <Leader>H        :<C-u>call LanguageClient_clearDocumentHighlight()<CR>
+        nnoremap <buffer><silent> <Leader>S        :<C-u>Denite workspaceSymbol<CR>
+      endif
+    endfunction
+
+    autocmd FileType * call LC_maps()
+'''
+#}}}
+
+#{{{ denite.nvim
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+depends = 'cpsm'
+on_cmd = 'Denite'
+hook_add = '''
+    nmap <silent> <Space>ft       :<C-u>Denite filetype<CR>
+    nmap <silent> <Space><Space>  :<C-u>Denite file_rec<CR>
+    nmap <silent> <Space>P        :<C-u>DeniteProjectDir file_rec<CR>
+    nmap <silent> <Space>b        :<C-u>DeniteBufferDir file_rec<CR>
+    nmap <silent> <Space>i<Space> :<C-u>Denite file_rec:
+    nmap <silent> <Space>/        :<C-u>Denite line<CR>
+    nmap <silent> <Space>r        :<C-u>Denite grep<CR>
+    nmap <silent> <Space>ir       :<C-u>Denite grep:
+    nmap <silent> <Space>:        :<C-u>Denite command<CR>
+    nmap <silent> <Space>;        :<C-u>Denite command_history<CR>
+    nmap <silent> <Space>o        :<C-u>Denite file_mru<CR>
+    nmap <silent> <Space>y        :<C-u>Denite neoyank<CR>
+    nmap <silent> <Space>p        :<C-u>Denite ghq<CR>
+    nmap <silent> <Space>n        :<C-u>Denite neosnippet<CR>
+    nmap <silent> <Space>ml       :<C-u>Denite -auto-preview -sorters=sorter_word,sorter_reverse file_rec:`expand(g:memolist_path)`<CR>
+    nmap <silent> <Space>mg       :<C-u>Denite grep:`expand(g:memolist_path)`<CR>
+    nmap <silent> <space>c        :<C-u>Denite -mode=normal -auto-resize quickfix<CR>
+    nmap <silent> <space>l        :<C-u>Denite -mode=normal -auto-resize location_list<CR>
+    nmap <silent> ]d              :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
+    nmap <silent> [d              :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
+    nmap <silent> <space>.        :<C-u>Denite -resume -cursor-pos=+0<CR>
+'''
+hook_source = '''
+    call denite#custom#var('file_rec', 'command',
+          \ ['ag', '--follow', '--vimgrep', '--hidden',
+          \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences',
+          \ '-g', ''])
+
+    call denite#custom#var('grep', 'command', ['ag'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', [])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'final_opts', [])
+
+    call denite#custom#var('grep', 'default_opts',
+          \ ['--vimgrep', '--follow', '--hidden',
+          \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences'
+          \ ])
+
+    call denite#custom#source(
+          \ 'file_mru', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
+    call denite#custom#source('file_rec', 'matchers', ['matcher_cpsm'])
+    call denite#custom#source('file_mru', 'converters',
+          \ ['converter_relative_word'])
+
+    " Change mappings.
+    call denite#custom#map(
+          \ 'insert',
+          \ '<C-j>',
+          \ '<denite:move_to_next_line>',
+          \ 'noremap'
+          \)
+    call denite#custom#map(
+          \ 'insert',
+          \ '<C-k>',
+          \ '<denite:move_to_previous_line>',
+          \ 'noremap'
+          \)
+    call denite#custom#map(
+          \ 'insert',
+          \ '<C-Space>',
+          \ '<denite:move_up_path>',
+          \ 'noremap'
+          \)
+    call denite#custom#map(
+          \ 'insert',
+          \ '<C-v>',
+          \ '<denite:do_action:vsplit>',
+          \ 'noremap'
+          \)
+    call denite#custom#map(
+          \ 'insert',
+          \ '<C-s>',
+          \ '<denite:do_action:split>',
+          \ 'noremap'
+          \)
+    call denite#custom#map(
+          \ 'insert',
+          \ '<C-y>',
+          \ '<denite:do_action:preview>',
+          \ 'noremap'
+          \)
+'''
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_source = ['unite.vim', 'denite.nvim']
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+on_event = 'TextYankPost'
+on_source = ['unite.vim', 'denite.nvim']
+
+[[plugins]]
+repo = 'nixprime/cpsm'
+on_source = ['denite.nvim', 'deoplete.nvim']
+build = 'env PY3=ON ./install.sh'
+
+[[plugins]]
+repo = 'Jagua/vim-denite-ghq'
+on_source = 'denite.nvim'
+
+[[plugins]]
+repo = 'chemzqm/unite-location'
+on_source = 'denite.nvim'
+#}}}
+
+#{{{ Filer
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+if = "has('nvim')"
+hook_add = '''
+    nnoremap <silent> <space>e :<C-u>Defx<CR>
+    nnoremap <silent> <space>E :<C-u>Defx `expand('%:p:h')` -search=`expand('%:p')`<CR>
+
+    autocmd FileType defx call s:defx_my_settings()
+    function! s:defx_my_settings() abort
+        " Define mappings
+        nnoremap <silent><buffer><expr> <CR>
+                    \ defx#do_action('open')
+        nnoremap <silent><buffer><expr> c
+                    \ defx#do_action('copy')
+        nnoremap <silent><buffer><expr> m
+                    \ defx#do_action('move')
+        nnoremap <silent><buffer><expr> p
+                    \ defx#do_action('paste')
+        nnoremap <silent><buffer><expr> l
+                    \ defx#do_action('open')
+        nnoremap <silent><buffer><expr> E
+                    \ defx#do_action('open', 'vsplit')
+        nnoremap <silent><buffer><expr> P
+                    \ defx#do_action('open', 'pedit')
+        nnoremap <silent><buffer><expr> K
+                    \ defx#do_action('new_directory')
+        nnoremap <silent><buffer><expr> N
+                    \ defx#do_action('new_file')
+        nnoremap <silent><buffer><expr> d
+                    \ defx#do_action('remove')
+        nnoremap <silent><buffer><expr> r
+                    \ defx#do_action('rename')
+        nnoremap <silent><buffer><expr> x
+                    \ defx#do_action('execute_system')
+        nnoremap <silent><buffer><expr> yy
+                    \ defx#do_action('yank_path')
+        nnoremap <silent><buffer><expr> .
+                    \ defx#do_action('toggle_ignored_files')
+        nnoremap <silent><buffer><expr> h
+                    \ defx#do_action('cd', ['..'])
+        nnoremap <silent><buffer><expr> ~
+                    \ defx#do_action('cd')
+        nnoremap <silent><buffer><expr> q
+                    \ defx#do_action('quit')
+        nnoremap <silent><buffer><expr> <Space>
+                    \ defx#do_action('toggle_select') . 'j'
+        nnoremap <silent><buffer><expr> *
+                    \ defx#do_action('toggle_select_all')
+        nnoremap <silent><buffer><expr> j
+                    \ line('.') == line('$') ? 'gg' : 'j'
+        nnoremap <silent><buffer><expr> k
+                    \ line('.') == 1 ? 'G' : 'k'
+        nnoremap <silent><buffer><expr> <C-l>
+                    \ defx#do_action('redraw')
+        nnoremap <silent><buffer><expr> <C-g>
+                    \ defx#do_action('print')
+        nnoremap <silent><buffer><expr> cd
+                    \ defx#do_action('change_vim_cwd')
+    endfunction
 '''
 #}}}
 
@@ -60,10 +272,6 @@ hook_add = '''
 [[plugins]]
 repo = 'sbdchd/neoformat'
 hook_add = '''
-augroup my_neoformat
-    autocmd!
-    autocmd BufWritePre *.java undojoin | Neoformat
-augroup END
 let g:neoformat_run_all_formatters = 1
 '''
 build = '''
@@ -89,12 +297,12 @@ hook_add = '''
                 \ 'colorscheme': 'hybrid',
                 \ 'mode_map': { 'c': 'NORMAL' },
                 \ 'active': {
-                \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
+                \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename' ] ],
                 \   'right': [ [ 'ale', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
                 \ },
                 \ 'component_function': {
                 \   'readonly': 'LightlineReadonly',
-                \   'fugitive': 'LightLineFugitive',
+                \   'gitbranch': 'LightLineGitBranch',
                 \   'filename': 'LightLineFilename',
                 \   'fileformat': 'LightLineFileformat',
                 \   'filetype': 'LightLineFiletype',
@@ -132,11 +340,11 @@ hook_add = '''
                     \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
     endfunction
 
-    function! LightLineFugitive()
+    function! LightLineGitBranch()
         try
-            if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+            if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'defx'
                 let mark = ''  " edit here for cool mark
-                let _ = fugitive#head()
+                let _ = gina#component#repo#branch()
                 return strlen(_) ? mark._ : ''
             endif
         catch
@@ -203,16 +411,6 @@ hook_add = '''
 '''
 #}}}
 
-#{{{ content
-[[plugins]]
-repo = 'vim-scripts/diffchar.vim'
-hook_add = '''
-    let g:DiffUnit = "Word1"
-'''
-#}}}
-
-#}}}
-
 #{{{ Color Scheme
 [[plugins]]
 repo = 'w0ng/vim-hybrid'
@@ -227,31 +425,112 @@ hook_add = '''
 '''
 #}}}
 
-#{{{ Programming
-
-#{{{ Filer
-[[plugins]]
-repo = 'Shougo/vimfiler.vim'
-hook_add = '''
-    nnoremap <silent> <space>e :<C-u>VimFiler<CR>
-    nnoremap <silent> <space>E :<C-u>VimFilerBufferDir<CR>
-    let g:vimfiler_as_default_explorer = 1
-    let g:vimfiler_tree_leaf_icon = ' '
-    let g:vimfiler_tree_opened_icon = '▾'
-    let g:vimfiler_tree_closed_icon = '▸'
-    let g:vimfiler_file_icon = '-'
-    let g:vimfiler_marked_file_icon = '*'
-'''
-depends = 'unite.vim'
-[[plugins]] # for vimfiler
-repo = 'Shougo/unite.vim'
 #}}}
 
-#{{{ Editor
+#{{{ Programming
+
+#{{{ deoplete
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+depends = 'context_filetype.vim'
+if = "has('nvim')"
+on_event = 'InsertEnter'
+hook_source = '''
+    let g:deoplete#enable_at_startup = 1
+
+    call deoplete#custom#option('camel_case', v:true)
+    call deoplete#custom#option('max_list', 1000)
+
+    call deoplete#custom#source('_', 'max_abbr_width', 0)
+    call deoplete#custom#source('_', 'max_menu_width', 0)
+
+    call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
+    call deoplete#custom#source('_', 'sorters', [])
+
+    " <TAB>: completion.
+    inoremap <silent><expr> <TAB>
+                \ pumvisible() ? "\<C-n>" :
+                \ <SID>check_back_space() ? "\<TAB>" :
+                \ deoplete#manual_complete()
+    function! s:check_back_space() abort "{{{
+        let col = col('.') - 1
+        return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction "}}}
+
+    " <S-TAB>: completion back.
+    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+    inoremap <expr><C-g>         deoplete#refresh()
+    inoremap <expr><C-e>         deoplete#cancel_popup()
+    inoremap <silent><expr><C-l> deoplete#complete_common_string()
+
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function() abort
+      return deoplete#close_popup() . "\<CR>"
+    endfunction
+
+    call deoplete#enable()
+'''
+
+[[plugins]]
+repo = 'Shougo/echodoc.vim'
+on_event = 'InsertEnter'
+hook_source = '''
+    let g:echodoc_enable_at_startup = 1
+'''
+
+[[plugins]]
+repo = 'Shougo/neoinclude.vim'
+on_event = 'InsertEnter'
+
+[[plugins]]
+repo = 'tbodt/deoplete-tabnine'
+on_event = 'InsertEnter'
+build = './install.sh'
+#}}}
+
+#{{{ Snippet
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+on_event = 'InsertEnter'
+on_ft = 'snippet'
+
+[[plugins]]
+repo = 'honza/vim-snippets'
+on_event = 'InsertEnter'
+on_ft = 'snippet'
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_event = 'InsertEnter'
+on_ft = 'snippet'
+hook_source = '''
+    imap <silent><c-k> <Plug>(neosnippet_jump_or_expand)
+    smap <silent><c-k> <Plug>(neosnippet_jump_or_expand)
+    xmap <silent><c-k> <Plug>(neosnippet_expand_target)
+    imap <silent><c-j> <Plug>(neosnippet_expand_or_jump)
+    smap <silent><c-j> <Plug>(neosnippet_expand_or_jump)
+    xmap <silent><c-j> <Plug>(neosnippet_register_oneshot_snippet)
+
+    let g:neosnippet#enable_snipmate_compatibility = 1
+    let g:neosnippet#enable_complete_done = 1
+    let g:neosnippet#expand_word_boundary = 1
+
+    let g:neosnippet#snippets_directory = g:vim_dir . '/snippets'
+'''
+#}}}
+
+#{{{ Editor Action
 [[plugins]] # edit surround easy
 repo = 'tpope/vim-surround'
 
-[[plugins]]
+[[plugins]] # for vim-surround
 repo = 'tpope/vim-repeat'
 
 [[plugins]] # Aligning Text
@@ -265,7 +544,10 @@ hook_add = '''
 '''
 
 [[plugins]] # comment stuff out
-repo = 'tpope/vim-commentary'
+repo = 'tyru/caw.vim'
+
+[[plugins]] # for caw.vim
+repo = 'kana/vim-repeat'
 
 [[plugins]] # easily search for, substitute, and abbreviate multiple variants of a word
 repo = 'tpope/vim-abolish'
@@ -289,7 +571,7 @@ repo = 'tpope/vim-unimpaired'
 [[plugins]] # syntax check
 repo = 'w0rp/ale'
 hook_add = '''
-    let g:ale_lint_on_enter = 0
+    let g:ale_lint_on_enter = 1
     let g:ale_lint_on_save = 1
     let g:ale_lint_on_text_changed = 'never'
     let g:ale_echo_msg_format = '[%linter%] %s (%severity%)'
@@ -297,7 +579,7 @@ hook_add = '''
 
     let g:ale_linters = {
                 \ 'go': [
-                    \ 'gometalinter'
+                    \ 'golangci-lint'
                     \ ],
                 \ 'html': [
                     \ 'htmlhint'
@@ -306,8 +588,7 @@ hook_add = '''
                     \ 'prototool'
                     \ ],
                 \ }
-
-    let g:ale_go_gometalinter_options = '--fast --exclude ".*\.pb\.go" --exclude ".*_mock\.go" --enable-gc --disable golint --disable maligned --disable vetshadow'
+    " let g:ale_go_gometalinter_options = '--fast --exclude ".*\.pb\.go" --exclude ".*_mock\.go" --enable-gc --disable golint --disable maligned --disable vetshadow'
 '''
 
 [[plugins]]
@@ -326,27 +607,470 @@ repo = 'dannyob/quickfixstatus'
 
 #{{{ Git/Gist
 [[plugins]]
-repo = 'tpope/vim-fugitive'
+repo = 'lambdalisue/gina.vim'
+hook_add = '''
+    call gina#custom#mapping#nmap(
+                \ 'status', '<space>gs',
+                \ ':<C-u>Gina status<CR>',
+                \ {'noremap': 1, 'silent': 1},
+                \)
 
+    call gina#custom#execute(
+                \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
+                \ 'setlocal winfixheight',
+                \)
+'''
+
+# TODO: gina移行
 [[plugins]]
-repo = 'tpope/vim-rhubarb'
+repo = 'tpope/vim-fugitive'
+hook_add = '''
+    let g:fugitive_github_domains = ['[^/]*']
+    nnoremap <silent> <space>g :<C-u>Git<space>
+    nnoremap <silent> <space>ga :<C-u>Gwrite<CR>
+    nnoremap <silent> <space>gc :<C-u>Gcommit<CR>
+    nnoremap <silent> <space>gs :<C-u>Gstatus<CR>
+    nnoremap <silent> <space>gr :<C-u>Gbrowse<CR>
+    nnoremap <silent> <space>gd :<C-u>Gdiff<CR>
+    nnoremap <silent> <space>gbl :<C-u>Gblame<CR>
+'''
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
+hook_add = '''
+    let g:gitgutter_enabled = 0
+    let g:gitgutter_eager = 0
+    nnoremap <silent> <space>gg :<C-u>GitGutterToggle<CR>
+    nnoremap <silent> <space>gh :<C-u>GitGutterLineHighlightsToggle<CR>
+'''
 
 [[plugins]]
 repo = 'cohama/agit.vim'
+hook_add = '''
+    nnoremap <silent> <space>gl :<C-u>Agit<CR>
+    nnoremap <silent> <space>gL :<C-u>AgitFile<CR>
+'''
+[plugins.ftplugin]
+agit = '''
+    nmap <buffer> ch <Plug>(agit-git-cherry-pick)
+    nmap <buffer> Rv <Plug>(agit-git-revert)
+'''
+
+[[plugins]] # Gist
+repo = 'lambdalisue/vim-gista'
+on_cmd = 'Gista'
+on_map = '<Plug>(gista-'
+#}}}
+#{{{ ft
+
+[ftplugin] #{{{
+#{{{ python
+python = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+#}}}
+#{{{ css
+css = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+#}}}
+#{{{ make
+make = '''
+    setlocal noexpandtab
+    setlocal tabstop=8
+    setlocal shiftwidth=8
+'''
+#}}}
+#{{{ Markdown
+markdown = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+#}}}
+#}}}
+#{{{ vim
+vim = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+#}}}
+#{{{ snippets
+snippets = '''
+    setlocal noexpandtab
+'''
+#}}}
+#{{{ revealjs
+revealjs = '''
+    nnoremap <buffer> <Leader>b :<C-u>!npm run build<CR>
+    nnoremap <buffer> <Leader>r :<C-u>!npm run start<CR>
+    nnoremap <buffer> <Leader>t :<C-u>!npm run test<CR>
+'''
+#}}}
+#{{{ talkiejs
+talkiejs = '''
+    nnoremap <buffer> <Leader>b :<C-u>!npm run build<CR>
+    nnoremap <buffer> <Leader>r :<C-u>!npm run start<CR>
+    nnoremap <buffer> <Leader>w :<C-u>!npm run d<CR>
+    nnoremap <buffer> <Leader>t :<C-u>!npm run test<CR>
+'''
+#}}}
+#}}}
+
+#{{{ TypeScript
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+build = 'npm install -g clausreinke/typescript-tools typescript'
+on_ft = 'typescript'
+#}}}
+
+#{{{ go
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = 'go'
+hook_source = '''
+    let g:go_fmt_autosave = 1
+    let g:go_fmt_experimental = 1
+    let g:go_test_timeout = '1m'
+    " let g:go_info_mode = 'guru'
+    let g:go_jump_to_error = 0
+    let g:go_fmt_command = 'goimports' " overwritten goimports binary by goreturns
+    let g:go_fmt_options = {
+                \ 'gofmt': '-s',
+                \ 'goimports': '-b -e',
+                \ }
+    let g:go_mod_fmt_autosave = 1
+    let g:go_def_mapping_enabled = 0
+    let g:go_snippet_engine = "neosnippet"
+    let g:go_metalinter_autosave = 0
+
+    " let g:go_metalinter_enabled = [
+    "            \ 'deadcode',
+    "             " \ 'dupl',
+    "            \ 'errcheck',
+    "             " \ 'gochecknoglobals',
+    "            \ 'gochecknoinits',
+    "             " \ 'goconst',
+    "             " \ 'gocyclo',
+    "            \ 'gofmt',
+    "            \ 'goimports',
+    "             " \ 'golint',
+    "            \ 'gosec',
+    "             " \ 'gosimple', " use megacheck
+    "            \ 'gotype',
+    "            \ 'gotypex',
+    "            \ 'ineffassign',
+    "            \ 'interfacer',
+    "             " \ 'lll',
+    "            \ 'maligned',
+    "            \ 'megacheck',
+    "            \ 'misspell',
+    "            \ 'nakedret',
+    "            \ 'safesql',
+    "             " \ 'staticcheck', " use megacheck
+    "            \ 'structcheck',
+    "             " \ 'test',
+    "             " \ 'testify',
+    "            \ 'unconvert',
+    "            \ 'unparam',
+    "             " \ 'unused', " use megacheck
+    "            \ 'varcheck',
+    "            \ 'vet',
+    "             " \ 'vetshadow',
+    "            \ ]
+    "
+    " let g:go_metalinter_deadline = '2m'
+
+    let g:go_term_enabled = 1
+
+    let g:go_highlight_array_whitespace_error = 1
+    let g:go_highlight_chan_whitespace_error = 1
+    let g:go_highlight_extra_types = 1
+    let g:go_highlight_space_tab_error = 1
+    let g:go_highlight_trailing_whitespace_error = 1
+    let g:go_highlight_operators = 1
+    let g:go_highlight_functions = 1
+    let g:go_highlight_function_arguments = 1
+    let g:go_highlight_function_calls = 1
+    let g:go_highlight_types = 1
+    let g:go_highlight_fields = 1
+    let g:go_highlight_build_constraints = 1
+    let g:go_highlight_generate_tags = 1
+    let g:go_highlight_string_spellcheck = 1
+    let g:go_highlight_format_strings = 1
+    let g:go_highlight_variable_declarations = 1
+    let g:go_highlight_variable_assignments = 1
+'''
+[plugins.ftplugin]
+go = '''
+    " nmap     <buffer><silent> K          <Plug>(go-doc)
+    " nmap     <buffer><silent> <C-]>      <Plug>(go-def)
+    " nmap     <buffer><silent> <Leader>i  <Plug>(go-implements)
+    " nmap     <buffer><silent> <Leader>R  <Plug>(go-rename)
+    " nnoremap <buffer><silent> <Leader>s  :<C-u>Denite decls:%<CR>
+    " nmap     <buffer><silent> <Leader>dr <Plug>(go-referrers)
+    " nmap     <buffer><silent> gq         <Plug>(go-imports)
+    " nnoremap <buffer><silent> <Leader>h  :<C-u>GoSameIds<CR>
+    " nnoremap <buffer><silent> <Leader>H  :<C-u>GoSameIdsClear<CR>
+    " nnoremap <buffer><silent> <Leader>S  :<C-u>Denite decls<CR>
+
+    nmap <buffer> <leader>r <Plug>(go-run)
+    nmap <buffer> <leader>b :<C-u>make<CR>
+    nmap <buffer> <leader>t <Plug>(go-test)
+    nmap <buffer> <leader>c <Plug>(go-coverage-toggle)
+    nmap <buffer> <leader>T <Plug>(go-test-func)
+
+    nmap <buffer> <Leader>da <Plug>(go-alternate-edit)
+    nmap <buffer> <Leader>de <Plug>(go-describe)
+    nmap <buffer> <Leader>dc <Plug>(go-callers)
+
+    " nmap <buffer> <Leader>I <Plug>(go-info)
+
+    " nmap <buffer> <Leader>m <Plug>(go-metalinter)
+    " nnoremap <buffer> <Leader>M :<C-u>GoMetaLinter ./...<CR>
+
+    nnoremap <buffer> <Leader>e :<C-u>GoErrCheck<CR>
+    nnoremap <buffer> <Leader>E :<C-u>GoErrCheck ./...<CR>
+
+    nmap <buffer> <Leader>G <Plug>(go-generate)
+
+    function! GolangciLint(...)
+        set errorformat=%f:%l:%c:\ %m,%f:%l:\ %m
+        let results = system('golangci-lint run --enable-all --out-format line-number ' . join(a:000))
+        cexpr split(results, '\n')
+    endfunction
+
+    nnoremap <buffer><silent> <leader>m :<C-u>call GolangciLint(expand('%:.:h'))<CR>
+    nnoremap <buffer><silent> <leader>M :<C-u>call GolangciLint('./...')<CR>
+'''
 
 [[plugins]]
-repo = 'idanarye/vim-merginal'
+repo = 'buoto/gotests-vim'
+build = 'go get -u github.com/cweill/gotests/...'
+on_ft = 'go'
+#}}}
+
+#{{{ Protocol Buffers
+[[plugins]]
+repo = 'uarun/vim-protobuf'
+on_ft = 'proto'
+[plugins.ftplugin]
+proto = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+
+[[plugins]]
+repo = 'uber/prototool'
+rtp = 'vim/prototool'
+on_ft = 'proto'
+#}}}
+
+#{{{ Python
+[[plugins]]
+repo = 'zchee/deoplete-jedi'
+on_ft = 'python'
+
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = 'python'
+hook_source = '''
+    let g:jedi#auto_vim_configuration = 0
+    let g:jedi#goto_command = '<C-]>'
+    let g:jedi#use_tabs_not_buffers = 0  " current default is 1.
+    let g:jedi#rename_command = '<Leader>R'
+    let g:jedi#usages_command = '<Leader>I'
+    let g:jedi#completions_enabled = 0
+    let g:jedi#smart_auto_mappings = 1
+
+    " Unite/ref and pydoc are more useful.
+    let g:jedi#documentation_command = '<Leader>gd'
+    let g:jedi#auto_close_doc = 1
+'''
+
+[[plugins]]
+repo = 'Vimjas/vim-python-pep8-indent'
+on_ft = 'python'
+#}}}
+
+#{{{ Gradle
+[[plugins]]
+repo = 'tfnico/vim-gradle'
+on_ft = 'groovy'
+#}}}
+
+#{{{ Kotlin
+[[plugins]]
+repo = 'udalov/kotlin-vim'
+on_ft = 'kotlin'
+#}}}
+
+#{{{ Swift
+[[plugins]]
+repo = 'apple/swift'
+rtp = 'utils/vim'
+on_ft = ['swift', 'sil', 'swiftgyb']
+#}}}
+
+#{{{ html
+# emmet
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = ['html', 'ejs', 'erb', 'jst', 'jade']
+hook_source = '''
+    let g:user_emmet_leader_key=','
+
+    let g:user_emmet_settings = {
+                \   'variables': {
+                \     'lang': 'ja'
+                \   },
+                \   'indentation': '  '
+                \ }
+'''
+
+[[plugins]]
+repo = 'othree/html5.vim'
+on_ft = ['html', 'ejs', 'erb', 'jst', 'jade']
+#}}}
+
+#{{{ css
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+on_ft = ['html', 'ejs', 'erb', 'jst', 'jade', 'css']
+#}}}
+
+#{{{ Markdown
+[[plugins]]
+repo = 'godlygeek/tabular'
+on_ft = 'markdown'
+
+[[plugins]]
+repo = 'gabrielelana/vim-markdown'
+on_ft = 'markdown'
+hook_source = '''
+    let g:markdown_enable_spell_checking = 0
+    let g:markdown_mapping_switch_status = '<Learder>x'
+'''
+
+#{{{ Preview
+# TODO: 'iamcco/markdown-preview.nvim'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_ft = ['markdown', 'html']
+
+[[plugins]]
+repo = 'kannokanno/previm'
+on_ft = 'markdown'
+depends = 'open-browser.vim'
+hook_source = '''
+    " realtime preview
+    let g:previm_enable_realtime = 1
+'''
+#}}}
+
+#{{{ Hugo
+[[plugins]]
+repo = 'robertbasic/vim-hugo-helper'
+on_ft = 'markdown'
+#}}}
+
+#}}}
+
+#{{{ JSON
+[[plugins]] # Preview
+repo = 'elzr/vim-json'
+on_ft = 'javascript'
+hook_add = '''
+    let g:vim_json_syntax_conceal = 0
+'''
+#}}}
+
+#{{{ TOML
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+#}}}
+
+#{{{ Dockerfile
+[[plugins]]
+repo = 'ekalinin/Dockerfile.vim'
+on_ft = ['dockerfile', 'docker-compose']
+#}}}
+
+#{{{ nginx
+[[plugins]]
+repo = 'chr4/nginx.vim'
+on_ft= 'nginx'
+#}}}
+
+#{{{ Ansible
+[[plugins]]
+repo = 'chase/vim-ansible-yaml'
+on_ft = 'ansible'
+#}}}
+
+#{{{ Terraform
+[[plugins]]
+repo = 'hashivim/vim-terraform'
+on_ft = ['terraform', 'javascript']
+#}}}
+
+#{{{ Hashicorp Configuration Language
+[[plugins]]
+repo = 'fatih/vim-hclfmt'
+on_ft = ['terraform', 'javascript']
+hook_source = '''
+    let g:hcl_fmt_autosave = 0
+    let g:tf_fmt_autosave = 0
+    let g:nomad_fmt_autosave = 0
+'''
+#}}}
+
+#{{{ PlantUML
+[[plugins]]
+repo = 'aklt/plantuml-syntax'
+on_ft = ['pu', 'uml', 'plantuml']
+[plugins.ftplugin]
+pu_uml_plamtuml = '''
+    command! OpenUml :!start chrome %
+    nnoremap <silent> <buffer> <LocalLeader>b :make<CR>
+    nnoremap <silent> <buffer> <LocalLeader>r :OpenUml<CR>
+'''
+#}}}
+
+#{{{ Graphviz
+[[plugins]]
+repo = 'wannesm/wmgraphviz.vim'
+on_ft = 'dot'
+hook_source = '''
+    let g:WMGraphviz_output='png'
+'''
+[plugins.ftplugin]
+dot = '''
+    nnoremap <silent> <buffer> <LocalLeader>lp :GraphvizCompilePDF<CR>
+'''
+#}}}
+
+#{{{ SQL
+[[plugins]]
+repo = 'vim-scripts/SQLUtilities'
+on_ft = 'sql'
+
+[[plugins]]
+repo = 'vim-scripts/Align'
+on_ft = 'sql'
 #}}}
 
 #{{{ Kubernetes
-repo = 'andrewstuart/vim-kubernetes'
+# repo = 'andrewstuart/vim-kubernetes'
+#
+# repo = 'c9s/helper.vim'
+# repo = 'c9s/treemenu.vim'
+# repo = 'c9s/vikube.vim'
+#}}}
 
-repo = 'c9s/helper.vim'
-repo = 'c9s/treemenu.vim'
-repo = 'c9s/vikube.vim'
 #}}}
 
 #}}}
@@ -374,9 +1098,6 @@ hook_add = '''
                 \ }
 '''
 
-[[plugins]] # qargs
-repo = 'henrik/vim-qargs'
-
 [[plugins]] # list tags
 repo = 'majutsushi/tagbar'
 build = 'brew install ctags'
@@ -389,14 +1110,7 @@ repo = 'tpope/vim-speeddating'
 
 # memo
 [[plugins]]
-repo = 'fuenor/qfixgrep'
-hook_add = '''
-    let QFixWin_EnableMode = 0
-'''
-
-[[plugins]]
 repo = 'glidenote/memolist.vim'
-depends = 'qfixgrep'
 hook_add = '''
     let g:memolist_path = "~/Dropbox/memo"
     " suffix type (default markdown)
@@ -414,13 +1128,13 @@ hook_add = '''
     let g:memolist_prompt_categories = 1
 
     " use qfixgrep (default 0)
-    let g:memolist_qfixgrep = 1
+    " let g:memolist_qfixgrep = 1
 
     " use vimfler (default 0)
-    let g:memolist_vimfiler = 1
+    " let g:memolist_vimfiler = 1
 
     " use arbitrary vimfler option (default -split -winwidth=50)
-    let g:memolist_vimfiler_option = "-split -winwidth=80 -simple"
+    " let g:memolist_vimfiler_option = "-split -winwidth=80 -simple"
 
     " use unite (default 0)
     "" let g:memolist_unite = 1
@@ -438,8 +1152,6 @@ hook_add = '''
     "" let g:memolist_filename_prefix_none = 1
 
     nnoremap <Leader>mn :<C-u>MemoNew<CR>
-    nnoremap <Leader>ml :<C-u>MemoList<CR>
-    nnoremap <Leader>mg :<C-u>MemoGrep<CR>
 '''
 
 [[plugins]] # use histogram algorithm for vimdiff
@@ -450,6 +1162,13 @@ hook_add = '''
 
 [[plugins]]
 repo = 'AndrewRadev/linediff.vim'
+
+[[plugins]]
+repo = 'will133/vim-dirdiff'
+hook_add = '''
+    nmap <silent> [<C-d> :<C-u>DirDiffPrev<CR>
+    nmap <silent> ]<C-d> :<C-u>DirDiffNext<CR>
+'''
 
 [[plugins]] # switch between a single-line statement and a multi-line one
 repo = 'AndrewRadev/splitjoin.vim'
@@ -469,4 +1188,8 @@ repo = 'mattn/webapi-vim'
 [[plugins]] # esa
 repo = 'upamune/esa.vim'
 depends = 'webapi-vim'
+
+[[plugins]]
+repo = 'shinespark/vim-list2tree'
+on_cmd = 'List2Tree'
 #}}}

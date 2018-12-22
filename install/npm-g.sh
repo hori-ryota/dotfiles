@@ -10,3 +10,6 @@ npm install -g typescript-tools
 # formatter
 npm install -g js-beautify
 npm install -g typescript-formatter
+
+# lsp
+npm install -g javascript-typescript-langserver
