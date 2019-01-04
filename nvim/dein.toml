@@ -588,6 +588,8 @@ hook_add = '''
                     \ 'prototool'
                     \ ],
                 \ }
+    let g:ale_go_golangci_lint_options = '--fast --disable gochecknoinits --disable gochecknoglobals'
+    let g:ale_go_golangci_lint_package = 1
     " let g:ale_go_gometalinter_options = '--fast --exclude ".*\.pb\.go" --exclude ".*_mock\.go" --enable-gc --disable golint --disable maligned --disable vetshadow'
 '''
 
