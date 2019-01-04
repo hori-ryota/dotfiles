@@ -98,27 +98,27 @@ repo = 'Shougo/denite.nvim'
 depends = 'cpsm'
 on_cmd = 'Denite'
 hook_add = '''
-    nmap <silent> <Space>ft       :<C-u>Denite filetype<CR>
-    nmap <silent> <Space><Space>  :<C-u>Denite file_rec<CR>
-    nmap <silent> <Space>P        :<C-u>DeniteProjectDir file_rec<CR>
-    nmap <silent> <Space>b        :<C-u>DeniteBufferDir file_rec<CR>
-    nmap <silent> <Space>i<Space> :<C-u>Denite file_rec:
-    nmap <silent> <Space>/        :<C-u>Denite line<CR>
-    nmap <silent> <Space>r        :<C-u>Denite grep<CR>
-    nmap <silent> <Space>ir       :<C-u>Denite grep:
-    nmap <silent> <Space>:        :<C-u>Denite command<CR>
-    nmap <silent> <Space>;        :<C-u>Denite command_history<CR>
-    nmap <silent> <Space>o        :<C-u>Denite file_mru<CR>
-    nmap <silent> <Space>y        :<C-u>Denite neoyank<CR>
-    nmap <silent> <Space>p        :<C-u>Denite ghq<CR>
-    nmap <silent> <Space>n        :<C-u>Denite neosnippet<CR>
-    nmap <silent> <Space>ml       :<C-u>Denite -auto-preview -sorters=sorter_word,sorter_reverse file_rec:`expand(g:memolist_path)`<CR>
-    nmap <silent> <Space>mg       :<C-u>Denite grep:`expand(g:memolist_path)`<CR>
-    nmap <silent> <space>c        :<C-u>Denite -mode=normal -auto-resize quickfix<CR>
-    nmap <silent> <space>l        :<C-u>Denite -mode=normal -auto-resize location_list<CR>
-    nmap <silent> ]d              :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
-    nmap <silent> [d              :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
-    nmap <silent> <space>.        :<C-u>Denite -resume -cursor-pos=+0<CR>
+    nnoremap <silent> <Space>ft       :<C-u>Denite filetype<CR>
+    nnoremap <silent> <Space><Space>  :<C-u>Denite file_rec<CR>
+    nnoremap <silent> <Space>P        :<C-u>DeniteProjectDir file_rec<CR>
+    nnoremap <silent> <Space>b        :<C-u>DeniteBufferDir file_rec<CR>
+    nnoremap <silent> <Space>i<Space> :<C-u>Denite file_rec:
+    nnoremap <silent> <Space>/        :<C-u>Denite line<CR>
+    nnoremap <silent> <Space>r        :<C-u>Denite grep<CR>
+    nnoremap <silent> <Space>ir       :<C-u>Denite grep:
+    nnoremap <silent> <Space>:        :<C-u>Denite command<CR>
+    nnoremap <silent> <Space>;        :<C-u>Denite command_history<CR>
+    nnoremap <silent> <Space>o        :<C-u>Denite file_mru<CR>
+    nnoremap <silent> <Space>y        :<C-u>Denite neoyank<CR>
+    nnoremap <silent> <Space>p        :<C-u>Denite ghq<CR>
+    nnoremap <silent> <Space>n        :<C-u>Denite neosnippet<CR>
+    nnoremap <silent> <Space>ml       :<C-u>Denite -auto-preview -sorters=sorter_word,sorter_reverse file_rec:`expand(g:memolist_path)`<CR>
+    nnoremap <silent> <Space>mg       :<C-u>Denite grep:`expand(g:memolist_path)`<CR>
+    nnoremap <silent> <space>c        :<C-u>Denite -mode=normal -auto-resize quickfix<CR>
+    nnoremap <silent> <space>l        :<C-u>Denite -mode=normal -auto-resize location_list<CR>
+    nnoremap <silent> ]d              :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
+    nnoremap <silent> [d              :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
+    nnoremap <silent> <space>.        :<C-u>Denite -resume -cursor-pos=+0<CR>
 '''
 hook_source = '''
     call denite#custom#var('file_rec', 'command',
