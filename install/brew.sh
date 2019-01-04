@@ -35,8 +35,6 @@ brew install nodebrew
 brew install rbenv
 brew install ruby-build
 ## Python
-brew install pyenv
-brew install pyenv-virtualenv
 brew install boost
 # Orchestration tools
 brew install terraform

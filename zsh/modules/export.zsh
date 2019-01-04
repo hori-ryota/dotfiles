@@ -32,7 +32,6 @@ export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 export CUDA_HOME=/usr/local/cuda
 export DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH:$CUDA_HOME/lib
 export PATH=$CUDA_HOME/bin:$PATH
-export PYENV_ROOT=$HOME/.pyenv
 
 export DYLD_LIBRARY_PATH=/usr/local/cuda/lib
 

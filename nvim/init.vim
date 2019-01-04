@@ -18,9 +18,6 @@ nnoremap <space>d :<C-u>tabnew $HOME/.dotfiles/README.md<CR>:<C-u>CD<CR>
 scriptencoding utf-8
 " Automatic end-of-file format detection
 set fileformats=unix,mac,dos
-" Use pyenv
-let g:python_host_prog = expand('$HOME') . '/.pyenv/shims/python'
-let g:python3_host_prog = expand('$HOME') . '/.pyenv/shims/python3'
 
 set timeout
 set ttimeout
