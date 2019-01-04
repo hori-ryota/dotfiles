@@ -167,3 +167,10 @@ function peco-todoist-open() {
 }
 zle -N peco-todoist-open
 bindkey "^xto" peco-todoist-open
+
+# todoist add task
+function todoist-add-task() {
+  curl https://todoist.com/api/v7/quick/add \
+    -d token=$TODOIST_TOKEN \
+    -d text="$1"
+}
