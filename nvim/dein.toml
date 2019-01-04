@@ -1195,3 +1195,7 @@ depends = 'webapi-vim'
 repo = 'shinespark/vim-list2tree'
 on_cmd = 'List2Tree'
 #}}}
+
+# csv
+[[plugins]]
+repo = 'mechatroner/rainbow_csv'
