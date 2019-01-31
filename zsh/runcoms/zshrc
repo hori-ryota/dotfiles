@@ -45,11 +45,6 @@ function sshec2() {
   aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --filter "Name=tag:Name,Values=$name" | jq '.Reservations[].Instances[].PrivateDnsName' | xargs -I{} tmux split-window "tmux select-layout tiled > /dev/null && exec ssh {}"
 }
 
-# ローカルの設定ファイルがあればそれを読み込み
-if [ -f "$HOME/.zshrc.local" ]; then
-  source "$HOME/.zshrc.local"
-fi
-
 # rbenv
 if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
@@ -174,3 +169,12 @@ function todoist-add-task() {
     -d token=$TODOIST_TOKEN \
     -d text="$1"
 }
+
+# ローカルの設定ファイルがあればそれを読み込み
+if [ -f "$HOME/.zshrc.local" ]; then
+  source "$HOME/.zshrc.local"
+fi
+
+if [ -d "$HOME/.zsh/completion" ]; then
+  fpath=($HOME/.zsh/completion $fpath)
+fi

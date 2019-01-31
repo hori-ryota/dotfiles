@@ -114,7 +114,30 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'paradox'
+zstyle ':prezto:module:prompt' theme 'powerlevel9k'
+POWERLEVEL9K_MODE=awesome-fontconfig
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX=""
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX=""
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir dir_writable vcs background_jobs status time command_execution_time)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(aws)
+
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=0
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=black
+POWERLEVEL9K_COMMAND_EXECUTION_TIME_BACKGROUND=grey30
+
+POWERLEVEL9K_TIME_FOREGROUND=black
+POWERLEVEL9K_TIME_BACKGROUND=grey30
+
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
+
+POWERLEVEL9K_STATUS_OK=false
+
+# POWERLEVEL9K_KUBECONTEXT_FOREGROUND=black
+# POWERLEVEL9K_KUBECONTEXT_BACKGROUND=grey30
 
 # Set the working directory prompt display length.
 # By default, it is set to 'short'. Set it to 'long' (without '~' expansion)
@@ -126,13 +149,6 @@ zstyle ':prezto:module:prompt' theme 'paradox'
 # zstyle ':prezto:module:prompt' show-return-val 'yes'
 
 #
-# Ruby
-#
-
-# Auto switch the Ruby version on directory change.
-# zstyle ':prezto:module:ruby:chruby' auto-switch 'yes'
-
-#
 # Python
 #
 
@@ -141,6 +157,13 @@ zstyle ':prezto:module:prompt' theme 'paradox'
 
 # Automatically initialize virtualenvwrapper if pre-requisites are met.
 # zstyle ':prezto:module:python:virtualenv' initialize 'yes'
+
+#
+# Ruby
+#
+
+# Auto switch the Ruby version on directory change.
+# zstyle ':prezto:module:ruby:chruby' auto-switch 'yes'
 
 #
 # Screen
@@ -169,6 +192,7 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
   'main' \
   'brackets' \
   'pattern' \
+  'line' \
   'cursor' \
   'root'
 #
