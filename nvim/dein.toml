@@ -590,7 +590,7 @@ hook_add = '''
                     \ 'prototool'
                     \ ],
                 \ }
-    let g:ale_go_golangci_lint_options = '--fast --disable gochecknoinits --disable gochecknoglobals'
+    let g:ale_go_golangci_lint_options = '--fast --max-same-issues 0 --disable gochecknoinits --disable gochecknoglobals --disable lll --disable maligned --disable dupl'
     let g:ale_go_golangci_lint_package = 1
     " let g:ale_go_gometalinter_options = '--fast --exclude ".*\.pb\.go" --exclude ".*_mock\.go" --enable-gc --disable golint --disable maligned --disable vetshadow'
 '''
@@ -786,7 +786,8 @@ hook_source = '''
     "
     " let g:go_metalinter_deadline = '2m'
 
-    let g:go_term_enabled = 1
+    let g:go_term_enabled = 0
+    let g:go_jump_to_error = 1
 
     let g:go_highlight_array_whitespace_error = 1
     let g:go_highlight_chan_whitespace_error = 1
@@ -795,7 +796,7 @@ hook_source = '''
     let g:go_highlight_trailing_whitespace_error = 1
     let g:go_highlight_operators = 1
     let g:go_highlight_functions = 1
-    let g:go_highlight_function_arguments = 1
+    let g:go_highlight_function_parameters = 1
     let g:go_highlight_function_calls = 1
     let g:go_highlight_types = 1
     let g:go_highlight_fields = 1
@@ -841,7 +842,7 @@ go = '''
 
     function! GolangciLint(...)
         set errorformat=%f:%l:%c:\ %m,%f:%l:\ %m
-        let results = system('golangci-lint run --enable-all --out-format line-number ' . join(a:000))
+        let results = system('golangci-lint run --enable-all --max-same-issues 0 --disable gochecknoinits --disable gochecknoglobals --disable lll --disable maligned --disable dupl --out-format line-number ' . join(a:000))
         cexpr split(results, '\n')
     endfunction
 
@@ -1194,7 +1195,6 @@ depends = 'webapi-vim'
 [[plugins]]
 repo = 'shinespark/vim-list2tree'
 on_cmd = 'List2Tree'
-#}}}
 
 # csv
 [[plugins]]
