@@ -240,6 +240,8 @@ hook_add = '''
         nnoremap <silent><buffer><expr> C
                     \ defx#do_action('toggle_columns',
                     \                'mark:filename:type:size:time')
+        nnoremap <silent><buffer><expr> S
+                    \ defx#do_action('toggle_sort', 'time')
         nnoremap <silent><buffer><expr> d
                     \ defx#do_action('remove')
         nnoremap <silent><buffer><expr> r
@@ -258,8 +260,6 @@ hook_add = '''
                     \ defx#do_action('cd', ['..'])
         nnoremap <silent><buffer><expr> ~
                     \ defx#do_action('cd')
-        nnoremap <silent><buffer><expr> S
-                    \ defx#do_action('toggle_sort', 'Time')
         nnoremap <silent><buffer><expr> q
                     \ defx#do_action('quit')
         nnoremap <silent><buffer><expr> <Space>
