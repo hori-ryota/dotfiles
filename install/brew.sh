@@ -25,6 +25,8 @@ brew install hub
 brew install git-secrets
 
 # For development
+## docker
+brew install hadolint
 ## golang
 brew install go
 ## Java

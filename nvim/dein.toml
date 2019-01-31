@@ -590,6 +590,10 @@ hook_add = '''
     let g:ale_statusline_format = ['E%d', 'W%d', '']
 
     let g:ale_linters = {
+                \ 'dockerfile': [
+                    \ 'dockerfile_lint',
+                    \ 'hadolint',
+                    \ ],
                 \ 'go': [
                     \ 'golangci-lint'
                     \ ],
