@@ -1199,3 +1199,7 @@ on_cmd = 'List2Tree'
 # csv
 [[plugins]]
 repo = 'mechatroner/rainbow_csv'
+
+# docs
+repo = 'rizzatti/dash.vim'
+#}}}
