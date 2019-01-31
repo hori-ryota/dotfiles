@@ -529,10 +529,7 @@ hook_add = '''
 
 #{{{ Editor Action
 [[plugins]] # edit surround easy
-repo = 'tpope/vim-surround'
-
-[[plugins]] # for vim-surround
-repo = 'tpope/vim-repeat'
+repo = 'machakann/vim-sandwich'
 
 [[plugins]] # Aligning Text
 repo = 'junegunn/vim-easy-align'
