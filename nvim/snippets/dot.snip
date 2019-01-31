@@ -1,0 +1,18 @@
+snippet     node
+abbr        "${1} [ label = "${2}" ];"
+alias       n
+options     head
+  ${1} [ label = "${2}" ];
+  ${0}
+
+snippet     l
+abbr        "${1} -> "${2}";"
+options     head
+  ${1} -> ${2};
+  ${0}
+
+snippet     r
+abbr        "${1} <- "${2}";"
+options     head
+  ${1} <- ${2};
+  ${0}

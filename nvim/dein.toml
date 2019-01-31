@@ -508,21 +508,8 @@ build = './install.sh'
 
 #{{{ Snippet
 [[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-on_event = 'InsertEnter'
-on_ft = 'snippet'
-
-[[plugins]]
-repo = 'honza/vim-snippets'
-on_event = 'InsertEnter'
-on_ft = 'snippet'
-
-[[plugins]]
 repo = 'Shougo/neosnippet.vim'
-depends = ['neosnippet-snippets', 'context_filetype.vim']
-on_event = 'InsertEnter'
-on_ft = 'snippet'
-hook_source = '''
+hook_add = '''
     imap <silent><c-k> <Plug>(neosnippet_jump_or_expand)
     smap <silent><c-k> <Plug>(neosnippet_jump_or_expand)
     xmap <silent><c-k> <Plug>(neosnippet_expand_target)
@@ -530,11 +517,13 @@ hook_source = '''
     smap <silent><c-j> <Plug>(neosnippet_expand_or_jump)
     xmap <silent><c-j> <Plug>(neosnippet_register_oneshot_snippet)
 
-    let g:neosnippet#enable_snipmate_compatibility = 1
-    let g:neosnippet#enable_complete_done = 1
     let g:neosnippet#expand_word_boundary = 1
 
     let g:neosnippet#snippets_directory = g:vim_dir . '/snippets'
+
+    let g:neosnippet#disable_runtime_snippets = {
+                \   '_' : 1,
+                \ }
 '''
 #}}}
 
@@ -760,7 +749,7 @@ hook_source = '''
                 \ }
     let g:go_mod_fmt_autosave = 1
     let g:go_def_mapping_enabled = 0
-    let g:go_snippet_engine = "neosnippet"
+    let g:go_snippet_engine = "disable"
     let g:go_metalinter_autosave = 0
 
     " let g:go_metalinter_enabled = [
@@ -1087,8 +1076,6 @@ on_ft = 'sql'
 # repo = 'c9s/helper.vim'
 # repo = 'c9s/treemenu.vim'
 # repo = 'c9s/vikube.vim'
-#}}}
-
 #}}}
 
 #}}}

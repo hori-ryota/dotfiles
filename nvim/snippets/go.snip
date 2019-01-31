@@ -1,0 +1,171 @@
+snippet main
+abbr    "init main and Main"
+options head
+  package main 
+  import (
+    "log"
+    "os"
+  )
+
+  func main() {
+    if err := Main(os.Args); err != nil {
+      log.Fatal(err)
+    }
+  }
+
+  func Main(args []string) error {
+    ${0:TARGET}
+    return nil
+  }
+
+snippet ctx
+abbr    "arg context"
+options word
+  ctx context.Context,
+
+snippet ctxb
+abbr    "context.Background()"
+options word
+  context.Background(),
+
+snippet ctxt
+abbr    "context.TODO()"
+options word
+  context.TODO(),
+
+snippet ew
+abbr    "errors.Wrap"
+options word
+  errors.Wrap(err, ${0:TARGET})
+
+snippet ewf
+abbr    "errors.Wrapf"
+options word
+  errors.Wrapf(err, ${1:TARGET}, ${0})
+
+snippet ife
+abbr    "if err != nil {}"
+options head
+  if err != nil {
+    ${0:TARGET}
+  }
+
+snippet ifer
+abbr    "if err != nil {}"
+options head
+  if err != nil {
+    return ${1:#:, }err
+  }
+  ${0:TARGET}
+
+snippet ifee
+abbr    "if err := ${1:TARGET}; err != nil {}"
+options head
+  if err := ${1:TARGET}; err != nil {
+    ${0}
+  }
+
+snippet ife_
+abbr    "if _, err := ${1:TARGET}; err != nil {}"
+options head
+  if _, err := ${1:TARGET}; err != nil {
+    ${0}
+  }
+
+snippet r
+abbr "return"
+options word
+  return ${0:TARGET}
+
+snippet test
+abbr "test"
+options head
+alias t
+  func Test${1}(t *testing.T) {
+    ${0}
+  }
+
+snippet tt
+abbr "subtest"
+options head
+  t.Run("${1}", func(t *testing.T) {
+    ${0:TARGET}
+  })
+
+snippet ttr
+abbr "range subtest"
+options head
+  for _, tt := range []struct{
+    name string
+    ${1:want} ${2:string}
+  }{
+    {
+      name: "${3}",
+      $1: ${4},
+    },
+  }{
+    tt := tt
+    t.Run(tt.name, func(t *testing.T) {
+      ${0:TARGET}
+    })
+  }
+
+snippet mc
+abbr "initialize gomock controller"
+options head
+  ctrl := gomock.NewController(t)
+  defer ctrl.Finish()
+
+snippet mockgen
+abbr "common mockgen command"
+options head
+  //go:generate mockgen -source $GOFILE -destination mock_$GOPACKAGE/${GOFILE}_mock.go
+
+snippet lf
+abbr "logFilelds"
+options head
+  logFields := make([]zap.Field, 0, 10)
+  ${0}
+
+snippet la
+abbr "apped logFilelds"
+options head
+  logFields = append(logFields, zap.${1}("${2}", ${3}))
+  ${0}
+
+snippet ze
+abbr "zaperr.WithFields wrap"
+options word
+  zaperr.WithFields(
+    errors.Wrap(err, "${1}"),
+    logFields...,
+  )
+  ${0}
+
+snippet zen
+abbr "zaperr.WithFields new"
+options word
+  zaperr.WithFields(
+    errors.New("${1}"),
+    logFields...,
+  )
+  ${0}
+
+snippet pn
+abbr "panic by not implemented"
+options head
+  panic("not implemented")
+
+snippet h
+abbr "handler with register"
+options head
+  func (${1:y} `getreg('h')`) ${2}(${3}) (${4}) {
+    ${0:TARGET:panic("not implemented")}
+  }
+
+snippet hp
+abbr "handler with register (pointer handler)"
+options head
+  func (${1:y} *`getreg('h')`) ${2}(${3}) (${4}) {
+    ${0:TARGET:panic("not implemented")}
+  }
