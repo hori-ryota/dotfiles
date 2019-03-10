@@ -959,8 +959,14 @@ hook_source = '''
     let g:markdown_mapping_switch_status = '<Learder>x'
 '''
 
-#{{{ Preview
-# TODO: 'iamcco/markdown-preview.nvim'
+# Preview
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = ['markdown', 'pu', 'uml', 'plantuml']
+build = 'cp app & npm install'
+hook_source = '''
+    let g:mkdp_command_for_global = 1
+'''
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
@@ -980,8 +986,6 @@ hook_source = '''
 [[plugins]]
 repo = 'robertbasic/vim-hugo-helper'
 on_ft = 'markdown'
-#}}}
-
 #}}}
 
 #{{{ JSON
