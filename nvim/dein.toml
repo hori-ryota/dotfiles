@@ -1115,6 +1115,15 @@ hook_add = '''
 
 [[plugins]] # increment date
 repo = 'tpope/vim-speeddating'
+hook_add = '''
+    let g:speeddating_no_mappings = 1
+    nmap  <C-A>     <Plug>SpeedDatingUp
+    nmap  <C-X>     <Plug>SpeedDatingDown
+    xmap  <C-A>     <Plug>SpeedDatingUp
+    xmap  <C-X>     <Plug>SpeedDatingDown
+    " nmap d<C-A>     <Plug>SpeedDatingNowUTC
+    " nmap d<C-X>     <Plug>SpeedDatingNowLocal
+'''
 
 # memo
 [[plugins]]
