@@ -2,6 +2,7 @@ snippet main
 abbr    "init main and Main"
 options head
   package main 
+
   import (
     "log"
     "os"
@@ -21,17 +22,17 @@ options head
 snippet ctx
 abbr    "arg context"
 options word
-  ctx context.Context,
+  ctx context.Context
 
 snippet ctxb
 abbr    "context.Background()"
 options word
-  context.Background(),
+  context.Background()
 
 snippet ctxt
 abbr    "context.TODO()"
 options word
-  context.TODO(),
+  context.TODO()
 
 snippet ew
 abbr    "errors.Wrap"
@@ -115,6 +116,7 @@ abbr "initialize gomock controller"
 options head
   ctrl := gomock.NewController(t)
   defer ctrl.Finish()
+  ${0}
 
 snippet mockgen
 abbr "common mockgen command"
@@ -134,21 +136,15 @@ options head
   ${0}
 
 snippet ze
-abbr "zaperr.WithFields wrap"
+abbr "zaperr.Wrap"
 options word
-  zaperr.WithFields(
-    errors.Wrap(err, "${1}"),
-    logFields...,
-  )
+  zaperr.Wrap(err, "${1}", logFields...)
   ${0}
 
 snippet zen
-abbr "zaperr.WithFields new"
+abbr "zaperr.New"
 options word
-  zaperr.WithFields(
-    errors.New("${1}"),
-    logFields...,
-  )
+  zaperr.New("${1}", logFields...)
   ${0}
 
 snippet pn
@@ -169,3 +165,38 @@ options head
   func (${1:y} *`getreg('h')`) ${2}(${3}) (${4}) {
     ${0:TARGET:panic("not implemented")}
   }
+
+snippet rt
+abbr "required tag"
+options word
+  required:""
+
+snippet gt
+abbr "getter tag"
+options word
+  getter:""
+
+snippet st
+abbr "setter tag"
+options word
+  setter:""
+
+snippet gst
+abbr "getter setter tag"
+options word
+  getter:"" setter:""
+
+snippet rgst
+abbr "required getter setter tag"
+options word
+  required:"" getter:"" setter:""
+
+snippet rgt
+abbr "required getter tag"
+options word
+  required:"" getter:""
+
+snippet gcm
+abbr "gencontructor mark"
+options word
+  //genconstructor
