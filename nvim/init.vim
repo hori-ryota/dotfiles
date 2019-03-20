@@ -189,9 +189,9 @@ if &runtimepath !~# '/dein.vim'
     execute 'set runtimepath+=' . s:dein_repo_dir
 endif
 if dein#load_state(s:dein_dir)
-    call dein#begin(s:dein_dir, expand('<sfile>'))
+    call dein#begin(s:dein_dir)
 
-    let s:toml_file      = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
+    let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
     call dein#load_toml(s:toml_file, {})
 
     call dein#end()
