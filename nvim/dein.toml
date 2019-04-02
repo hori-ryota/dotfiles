@@ -21,9 +21,9 @@ hook_add = '''
     let g:LanguageClient_diagnosticsList = 'Location'
     let g:LanguageClient_serverCommands = {
         \ 'go': [
-            " https://github.com/saibing/bingo
-            " go get -u github.com/saibing/bingo
-            \ 'bingo', '--mode', 'stdio', '--logfile', '/tmp/lspserver.log'
+            " https://github.com/golang/go/wiki/gopls
+            " go get -u golang.org/x/tools/cmd/gopls
+            \ 'gopls'
         \ ],
         \ 'java': [
             " https://github.com/Ruin0x11/intellij-lsp-server
