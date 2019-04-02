@@ -19,6 +19,7 @@ build = './install.sh'
 hook_add = '''
     let g:LanguageClient_diagnosticsEnable = 0
     let g:LanguageClient_diagnosticsList = 'Location'
+    let g:LanguageClient_useFloatingHover = 1
     let g:LanguageClient_serverCommands = {
         \ 'go': [
             " https://github.com/golang/go/wiki/gopls
@@ -180,6 +181,17 @@ hook_source = '''
           \ '<denite:do_action:preview>',
           \ 'noremap'
           \)
+
+    " Change denite default options
+    let s:denite_win_width_percent = 0.8
+    let s:denite_win_height_percent = 0.6
+    call denite#custom#option('default', {
+                \ 'split': 'floating',
+                \ 'winwidth': &columns * s:denite_win_width_percent,
+                \ 'wincol': (&columns - (&columns * s:denite_win_width_percent)) / 2,
+                \ 'winheight': &lines * s:denite_win_height_percent,
+                \ 'winrow': (&lines - (&lines * s:denite_win_height_percent)) / 2,
+                \ })
 '''
 
 [[plugins]]

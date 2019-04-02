@@ -71,7 +71,8 @@ endif
 "{{{ UI Config
 set number                      " 行番号の表示
 set nolazyredraw                " don't redraw while executing macros
-set wildmode=list:longest,full
+set wildmode=longest:full,full
+set wildoptions=pum
 set cmdheight=2                 " コマンドライン行を2行に（1行が理想だが、'Shougo/echodoc用に2行にしている）
 " カーソルを左右させるキーのうち、ここで指定したものでは、
 " カーソルが行頭／末にあるときに前／次行に移動できるようになる。
