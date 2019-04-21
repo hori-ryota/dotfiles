@@ -19,7 +19,7 @@ build = './install.sh'
 hook_add = '''
     let g:LanguageClient_diagnosticsEnable = 0
     let g:LanguageClient_diagnosticsList = 'Location'
-    let g:LanguageClient_useFloatingHover = 1
+
     let g:LanguageClient_serverCommands = {
         \ 'go': [
             " https://github.com/golang/go/wiki/gopls
@@ -222,15 +222,26 @@ on_source = 'denite.nvim'
 repo = 'Shougo/defx.nvim'
 if = "has('nvim')"
 hook_add = '''
-    nnoremap <silent> <space>e :<C-u>Defx<CR>
+    nnoremap <silent> <space>e :<C-u>Defx -listed -resume -buffer-name=tab`tabpagenr()`<CR>
     nnoremap <silent> <space>E :<C-u>Defx `expand('%:p:h')` -search=`expand('%:p')`<CR>
     nnoremap <silent> <Space>h :<C-u>Denite defx/history<CR>
+'''
+hook_source = '''
+  call defx#custom#column('mark', {
+                \ 'readonly_icon': '✗',
+                \ 'selected_icon': '✓',
+                \ })
+  call defx#custom#column('icon', {
+                \ 'directory_icon': '▸',
+                \ 'opened_icon': '▾',
+                \ 'root_icon': ' ',
+                \ })
 '''
 [plugins.ftplugin]
 defx = '''
     " Define mappings
     nnoremap <silent><buffer><expr> <CR>
-                \ defx#do_action('open')
+                \ defx#async_action('drop')
     nnoremap <silent><buffer><expr> c
                 \ defx#do_action('copy')
     nnoremap <silent><buffer><expr> m
@@ -238,13 +249,15 @@ defx = '''
     nnoremap <silent><buffer><expr> p
                 \ defx#do_action('paste')
     nnoremap <silent><buffer><expr> l
-                \ defx#do_action('open')
+                \ defx#async_action('open')
     nnoremap <silent><buffer><expr> E
                 \ defx#do_action('open', 'vsplit')
     nnoremap <silent><buffer><expr> P
                 \ defx#do_action('open', 'pedit')
     nnoremap <silent><buffer><expr> o
-                \ defx#do_action('open_or_close_tree')
+                \ defx#async_action('open_or_close_tree')
+    nnoremap <silent><buffer><expr> O
+                \ defx#async_action('open_tree_recursive')
     nnoremap <silent><buffer><expr> K
                 \ defx#do_action('new_directory')
     nnoremap <silent><buffer><expr> N
@@ -257,7 +270,7 @@ defx = '''
     nnoremap <silent><buffer><expr> S
                 \ defx#do_action('toggle_sort', 'time')
     nnoremap <silent><buffer><expr> d
-                \ defx#do_action('remove')
+                \ defx#do_action('remove_trash')
     nnoremap <silent><buffer><expr> r
                 \ defx#do_action('rename')
     nnoremap <silent><buffer><expr> !
@@ -266,14 +279,14 @@ defx = '''
                 \ defx#do_action('execute_system')
     nnoremap <silent><buffer><expr> yy
                 \ defx#do_action('yank_path')
-    nnoremap <silent><buffer><expr> .
+    nnoremap <silent><buffer><expr> >
                 \ defx#do_action('toggle_ignored_files')
-    nnoremap <silent><buffer><expr> ;
+    nnoremap <silent><buffer><expr> .
                 \ defx#do_action('repeat')
     nnoremap <silent><buffer><expr> h
-                \ defx#do_action('cd', ['..'])
+                \ defx#async_action('cd', ['..'])
     nnoremap <silent><buffer><expr> ~
-                \ defx#do_action('cd')
+                \ defx#async_action('cd')
     nnoremap <silent><buffer><expr> q
                 \ defx#do_action('quit')
     nnoremap <silent><buffer><expr> *
@@ -288,8 +301,17 @@ defx = '''
                 \ defx#do_action('redraw')
     nnoremap <silent><buffer><expr> <C-g>
                 \ defx#do_action('print')
-    nnoremap <silent><buffer><expr> cd
-                \ defx#do_action('change_vim_cwd')
+    nnoremap <silent><buffer><expr> \
+                \ defx#do_action('cd', getcwd())
+    xnoremap <silent><buffer><expr> <CR>
+                \ defx#do_action('toggle_select_visual')
+    nnoremap <silent><buffer><expr> <Tab> winnr('$') != 1 ?
+                \ ':<C-u>wincmd w<CR>' :
+                \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
+    nnoremap <silent><buffer><expr> se
+                \ defx#do_action('save_session')
+    nnoremap <silent><buffer><expr> sl
+                \ defx#do_action('load_session')
 '''
 #}}}
 
@@ -302,11 +324,6 @@ let g:neoformat_run_all_formatters = 1
 build = '''
 brew install astyle
 '''
-#}}}
-
-#{{{ temporary filetype
-[[plugins]]
-repo = 'osyo-manga/vim-precious'
 #}}}
 
 #{{{ Status bar
@@ -748,19 +765,21 @@ on_ft = 'typescript'
 repo = 'fatih/vim-go'
 on_ft = 'go'
 hook_source = '''
+    let g:go_test_show_name = 1
+    let g:go_test_timeout = '1m'
+
     let g:go_fmt_autosave = 1
     let g:go_fmt_experimental = 1
-    let g:go_test_timeout = '1m'
     " let g:go_info_mode = 'guru'
     let g:go_jump_to_error = 0
     let g:go_fmt_command = 'goimports' " overwritten goimports binary by goreturns
     let g:go_fmt_options = {
                 \ 'gofmt': '-s',
-                \ 'goimports': '-b -e',
+                \ 'goimports': '-e',
                 \ }
     let g:go_mod_fmt_autosave = 1
     let g:go_def_mapping_enabled = 0
-    let g:go_snippet_engine = "disable"
+    let g:go_snippet_engine = 'disable'
     let g:go_metalinter_autosave = 0
 
     " let g:go_metalinter_enabled = [
@@ -979,6 +998,7 @@ on_ft = ['markdown', 'pu', 'uml', 'plantuml']
 build = 'cp app & npm install'
 hook_source = '''
     let g:mkdp_command_for_global = 1
+    let g:mkdp_auto_close = 0
 '''
 
 [[plugins]]
@@ -1056,10 +1076,8 @@ hook_source = '''
 repo = 'aklt/plantuml-syntax'
 on_ft = ['pu', 'uml', 'plantuml']
 [plugins.ftplugin]
-pu_uml_plamtuml = '''
-    command! OpenUml :!start chrome %
+pu_uml_plantuml = '''
     nnoremap <silent> <buffer> <LocalLeader>b :make<CR>
-    nnoremap <silent> <buffer> <LocalLeader>r :OpenUml<CR>
 '''
 #}}}
 
