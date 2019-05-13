@@ -1,6 +1,7 @@
 ,*
 .idea/
 *.log
+.envrc
 
 
 # gibo dump Dropbox Eclipse JetBrains Linux macOS MATLAB MicrosoftOffice Ninja Tags Vim Xcode
