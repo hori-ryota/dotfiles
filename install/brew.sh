@@ -96,6 +96,8 @@ brew install neovim/neovim/neovim
 
 # tmux
 brew install tmux --with-utf8proc
+brew install fpp
+brew install urlview
 
 # formatter
 brew install astyle
