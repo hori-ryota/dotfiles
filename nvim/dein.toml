@@ -327,16 +327,11 @@ brew install astyle
 #}}}
 
 #{{{ Status bar
-# color scheme for lightline
-[[plugins]]
-repo = 'cocopon/lightline-hybrid.vim'
-depends = 'vim-hybrid'
-
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 hook_add = '''
     let g:lightline = {
-                \ 'colorscheme': 'hybrid',
+                \ 'colorscheme': 'iceberg',
                 \ 'mode_map': { 'c': 'NORMAL' },
                 \ 'active': {
                 \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename' ] ],
@@ -455,16 +450,17 @@ hook_add = '''
 
 #{{{ Color Scheme
 [[plugins]]
-repo = 'w0ng/vim-hybrid'
+repo = 'cocopon/iceberg.vim'
 hook_add = '''
-    let g:hybrid_custom_term_colors = 1
-    " let g:hybrid_reduced_contrast = 1
-    set background=dark
-    augroup colorscheme_hybrid
+    set termguicolors
+    augroup colorscheme_iceberg
       autocmd!
-      autocmd VimEnter * nested colorscheme hybrid
+      autocmd VimEnter * nested colorscheme iceberg
     augroup END
 '''
+
+[[plugins]]
+repo = 'cocopon/colorswatch.vim'
 #}}}
 
 #}}}
