@@ -19,6 +19,7 @@ build = './install.sh'
 hook_add = '''
     let g:LanguageClient_diagnosticsEnable = 0
     let g:LanguageClient_diagnosticsList = 'Location'
+    let g:LanguageClient_completionPreferTextEdit = 1
 
     let g:LanguageClient_serverCommands = {
         \ 'go': [
@@ -270,7 +271,7 @@ defx = '''
     nnoremap <silent><buffer><expr> S
                 \ defx#do_action('toggle_sort', 'time')
     nnoremap <silent><buffer><expr> d
-                \ defx#do_action('remove_trash')
+                \ defx#do_action('remove')
     nnoremap <silent><buffer><expr> r
                 \ defx#do_action('rename')
     nnoremap <silent><buffer><expr> !
@@ -335,7 +336,7 @@ hook_add = '''
                 \ 'mode_map': { 'c': 'NORMAL' },
                 \ 'active': {
                 \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename' ] ],
-                \   'right': [ [ 'ale', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+                \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
                 \ },
                 \ 'component_function': {
                 \   'readonly': 'LightlineReadonly',
@@ -347,10 +348,16 @@ hook_add = '''
                 \   'mode': 'LightLineMode',
                 \ },
                 \ 'component_expand': {
-                \   'ale': 'ALEStatus',
+                \    'linter_checking': 'lightline#ale#checking',
+                \    'linter_warnings': 'lightline#ale#warnings',
+                \    'linter_errors': 'lightline#ale#errors',
+                \    'linter_ok': 'lightline#ale#ok',
                 \ },
                 \ 'component_type': {
-                \   'ale': 'error',
+                \     'linter_checking': 'left',
+                \     'linter_warnings': 'warning',
+                \     'linter_errors': 'error',
+                \     'linter_ok': 'left',
                 \ },
                 \ 'separator': { 'left': "\uE0B0", 'right': "\uE0B2" },
                 \ 'subseparator': { 'left': "\uE0B1", 'right': "\uE0B3" }
@@ -421,22 +428,13 @@ hook_add = '''
         return lightline#statusline(0)
     endfunction
 
-    function! ALEStatus()
-      let l:count = ale#statusline#Count(bufnr(''))
-      let l:errors = l:count.error + l:count.style_error
-      let l:warnings = l:count.warning + l:count.style_warning
-      return l:count.total == 0 ? 'OK' : 'E' . l:errors . ' W' . l:warnings
-    endfunction
-
-    augroup LightLineOnALE
-    autocmd!
-    autocmd User ALELint call lightline#update()
-    augroup END
-
     let g:unite_force_overwrite_statusline = 0
     let g:vimfiler_force_overwrite_statusline = 0
     let g:vimshell_force_overwrite_statusline = 0
 '''
+
+[[plugins]]
+repo = 'maximbaz/lightline-ale'
 #}}}
 
 #{{{ history
@@ -475,6 +473,8 @@ if = "has('nvim')"
 on_event = 'InsertEnter'
 hook_source = '''
     let g:deoplete#enable_at_startup = 1
+
+    call deoplete#custom#option('ignore_sources', {'_': ['around', 'buffer', 'member']}) " use tabnine
 
     call deoplete#custom#option('camel_case', v:true)
     call deoplete#custom#option('max_list', 1000)
@@ -768,67 +768,43 @@ hook_source = '''
     let g:go_fmt_experimental = 1
     " let g:go_info_mode = 'guru'
     let g:go_jump_to_error = 0
-    let g:go_fmt_command = 'goimports' " overwritten goimports binary by goreturns
+    let g:go_fmt_command = 'goimports'
     let g:go_fmt_options = {
                 \ 'gofmt': '-s',
                 \ 'goimports': '-e',
                 \ }
     let g:go_mod_fmt_autosave = 1
     let g:go_def_mapping_enabled = 0
+    let g:go_doc_keywordprg_enabled = 0
     let g:go_snippet_engine = 'disable'
     let g:go_metalinter_autosave = 0
 
-    " let g:go_metalinter_enabled = [
-    "            \ 'deadcode',
-    "             " \ 'dupl',
-    "            \ 'errcheck',
-    "             " \ 'gochecknoglobals',
-    "            \ 'gochecknoinits',
-    "             " \ 'goconst',
-    "             " \ 'gocyclo',
-    "            \ 'gofmt',
-    "            \ 'goimports',
-    "             " \ 'golint',
-    "            \ 'gosec',
-    "             " \ 'gosimple', " use megacheck
-    "            \ 'gotype',
-    "            \ 'gotypex',
-    "            \ 'ineffassign',
-    "            \ 'interfacer',
-    "             " \ 'lll',
-    "            \ 'maligned',
-    "            \ 'megacheck',
-    "            \ 'misspell',
-    "            \ 'nakedret',
-    "            \ 'safesql',
-    "             " \ 'staticcheck', " use megacheck
-    "            \ 'structcheck',
-    "             " \ 'test',
-    "             " \ 'testify',
-    "            \ 'unconvert',
-    "            \ 'unparam',
-    "             " \ 'unused', " use megacheck
-    "            \ 'varcheck',
-    "            \ 'vet',
-    "             " \ 'vetshadow',
-    "            \ ]
+    " let g:go_metalinter_command = 'golangci-lint'
+    " let g:go_metalinter_enabled = []
+    " let g:go_metalinter_disabled = [
+    "           \ 'gochecknoinits',
+    "           \ 'gochecknoglobals',
+    "           \ 'lll',
+    "           \ 'maligned',
+    "           \ 'dupl',
+    "           \ ]
+    "
     "
     " let g:go_metalinter_deadline = '2m'
 
     let g:go_term_enabled = 0
-    let g:go_jump_to_error = 1
 
     let g:go_highlight_array_whitespace_error = 1
     let g:go_highlight_chan_whitespace_error = 1
     let g:go_highlight_extra_types = 1
     let g:go_highlight_space_tab_error = 1
     let g:go_highlight_trailing_whitespace_error = 1
-    let g:go_highlight_operators = 1
-    let g:go_highlight_functions = 1
-    let g:go_highlight_function_parameters = 1
+    let g:go_highlight_operators = 0
+    let g:go_highlight_functions = 0
+    let g:go_highlight_function_parameters = 0
     let g:go_highlight_function_calls = 1
-    let g:go_highlight_types = 1
-    let g:go_highlight_fields = 1
+    let g:go_highlight_types = 0
+    let g:go_highlight_fields = 0
     let g:go_highlight_build_constraints = 1
     let g:go_highlight_generate_tags = 1
     let g:go_highlight_string_spellcheck = 1
@@ -985,6 +961,7 @@ on_ft = 'markdown'
 hook_source = '''
     let g:markdown_enable_spell_checking = 0
     let g:markdown_mapping_switch_status = '<Learder>x'
+    hi! link markdownXmlComment Comment
 '''
 
 # Preview
