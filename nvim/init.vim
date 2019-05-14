@@ -48,6 +48,14 @@ if v:version >= 703
 endif
 
 set completeopt=menuone
+
+" move quickfix window to bottom
+function! MoveQuickfixWindowToBottom()
+    if !getwininfo(win_getid())[0].loclist
+        wincmd J
+    endif
+endfunction
+autocmd FileType qf call MoveQuickfixWindowToBottom()
 "}}}
 
 "{{{ Fold Config
