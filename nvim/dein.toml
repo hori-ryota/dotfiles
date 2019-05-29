@@ -19,7 +19,6 @@ build = './install.sh'
 hook_add = '''
     let g:LanguageClient_diagnosticsEnable = 0
     let g:LanguageClient_diagnosticsList = 'Location'
-    let g:LanguageClient_completionPreferTextEdit = 1
 
     let g:LanguageClient_serverCommands = {
         \ 'go': [
@@ -964,6 +963,7 @@ hook_source = '''
     let g:markdown_enable_spell_checking = 0
     let g:markdown_mapping_switch_status = '<Learder>x'
     hi! link markdownXmlComment Comment
+    hi! link markdownXmlElement Comment
 '''
 
 # Preview
@@ -1221,5 +1221,9 @@ on_cmd = 'List2Tree'
 repo = 'mechatroner/rainbow_csv'
 
 # docs
+[[plugins]]
 repo = 'rizzatti/dash.vim'
+
+[[plugins]]
+repo = 'akiomik/itermcolors-vim'
 #}}}

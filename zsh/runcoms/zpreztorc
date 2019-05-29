@@ -35,7 +35,6 @@ zstyle ':prezto:load' pmodule \
   'history-substring-search' \
   'spectrum' \
   'syntax-highlighting' \
-  'utility' \
   'prompt' # need to be placed last
 
 #

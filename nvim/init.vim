@@ -108,31 +108,6 @@ cnoremap <C-n> <Down>
 cnoremap <C-p> <Up>
 "}}}
 
-"{{{ Highlight Config
-" 行末にスペースをハイライト
-function! WhiteSpaceEOL()
-    highlight WhiteSpaceEOL ctermbg=red guibg=red
-endfunction
-
-" 全角文字をハイライト
-function! ZenkakuSpace()
-    highlight ZenkakuSpace ctermbg=green guibg=green
-endfunction
-
-augroup WhiteSpaceEOL
-    autocmd!
-    autocmd ColorScheme       * call WhiteSpaceEOL()
-    autocmd VimEnter,WinEnter * match WhiteSpaceEOL /\s\+$/
-augroup END
-call WhiteSpaceEOL()
-augroup ZenkakuSpace
-    autocmd!
-    autocmd ColorScheme       * call ZenkakuSpace()
-    autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
-augroup END
-call ZenkakuSpace()
-"}}}
-
 "{{{ Search Config
 "" Search
 set ignorecase
