@@ -113,85 +113,58 @@ hook_add = '''
     nnoremap <silent> <Space>y        :<C-u>Denite neoyank<CR>
     nnoremap <silent> <Space>p        :<C-u>Denite ghq<CR>
     nnoremap <silent> <Space>n        :<C-u>Denite neosnippet<CR>
-    nnoremap <silent> <Space>ml       :<C-u>Denite -auto-preview -sorters=sorter_word,sorter_reverse file/rec:`expand(g:memolist_path)`<CR>
-    nnoremap <silent> <Space>mg       :<C-u>Denite grep:`expand(g:memolist_path)`<CR>
-    nnoremap <silent> <space>c        :<C-u>Denite -mode=normal -auto-resize quickfix<CR>
-    nnoremap <silent> <space>l        :<C-u>Denite -mode=normal -auto-resize location_list<CR>
+    " memolist
+    nnoremap <silent> <Space>ml       :<C-u>Denite -auto-action=preview -sorters=sorter_word,sorter_reverse file/rec:`expand(g:memolist_path)`<CR>
+    " grep memolist
+    nnoremap <silent> <Space>mg       :<C-u>Denite -auto-action=preview grep:`expand(g:memolist_path)`<CR>
+    nnoremap <silent> <space>c        :<C-u>Denite -auto-resize quickfix<CR>
+    nnoremap <silent> <space>l        :<C-u>Denite -auto-resize location_list<CR>
     nnoremap <silent> ]d              :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
     nnoremap <silent> [d              :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
     nnoremap <silent> <space>.        :<C-u>Denite -resume -cursor-pos=+0<CR>
+    " Open dotfiles
+    nnoremap <space>d                 :<C-u>Denite file/rec:$HOME/.dotfiles<CR>
 '''
 hook_source = '''
-    call denite#custom#var('file/rec', 'command',
-          \ ['ag', '--follow', '--vimgrep', '--hidden',
-          \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences',
-          \ '-g', ''])
+    " Define mappings
+    autocmd FileType denite call s:denite_my_settings()
+    function! s:denite_my_settings() abort
+        nnoremap <silent><buffer><expr> <CR>
+                    \ denite#do_map('do_action')
+        nnoremap <silent><buffer><expr> d
+                    \ denite#do_map('do_action', 'delete')
+        nnoremap <silent><buffer><expr> p
+                    \ denite#do_map('do_action', 'preview')
+        nnoremap <silent><buffer><expr> q
+                    \ denite#do_map('quit')
+        nnoremap <silent><buffer><expr> i
+                    \ denite#do_map('open_filter_buffer')
+        nnoremap <silent><buffer><expr> <Space>
+                    \ denite#do_map('toggle_select').'j'
+    endfunction
 
+    " Change file/rec command.
+    call denite#custom#var('file/rec', 'command',
+                \ ['ag', '--follow', '--vimgrep', '--hidden',
+                \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences',
+                \ '-g', ''])
+
+    " Change matchers.
+    call denite#custom#source(
+                \ 'file_mru', 'matchers', ['matcher/fuzzy', 'matcher/project_files'])
+    call denite#custom#source(
+                \ 'file/rec', 'matchers', ['matcher/cpsm'])
+
+    " Ag command on grep source
     call denite#custom#var('grep', 'command', ['ag'])
+    call denite#custom#var('grep', 'default_opts',
+                \ ['--vimgrep', '--follow', '--hidden',
+                \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences'
+                \ ])
     call denite#custom#var('grep', 'recursive_opts', [])
     call denite#custom#var('grep', 'pattern_opt', [])
     call denite#custom#var('grep', 'separator', ['--'])
     call denite#custom#var('grep', 'final_opts', [])
-
-    call denite#custom#var('grep', 'default_opts',
-          \ ['--vimgrep', '--follow', '--hidden',
-          \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences'
-          \ ])
-
-    call denite#custom#source(
-          \ 'file_mru', 'matchers', ['matcher_fuzzy', 'matcher_project_files'])
-    call denite#custom#source('file/rec', 'matchers', ['matcher_cpsm'])
-    call denite#custom#source('file_mru', 'converters',
-          \ ['converter_relative_word'])
-
-    " Change mappings.
-    call denite#custom#map(
-          \ 'insert',
-          \ '<C-j>',
-          \ '<denite:move_to_next_line>',
-          \ 'noremap'
-          \)
-    call denite#custom#map(
-          \ 'insert',
-          \ '<C-k>',
-          \ '<denite:move_to_previous_line>',
-          \ 'noremap'
-          \)
-    call denite#custom#map(
-          \ 'insert',
-          \ '<C-Space>',
-          \ '<denite:move_up_path>',
-          \ 'noremap'
-          \)
-    call denite#custom#map(
-          \ 'insert',
-          \ '<C-v>',
-          \ '<denite:do_action:vsplit>',
-          \ 'noremap'
-          \)
-    call denite#custom#map(
-          \ 'insert',
-          \ '<C-s>',
-          \ '<denite:do_action:split>',
-          \ 'noremap'
-          \)
-    call denite#custom#map(
-          \ 'insert',
-          \ '<C-y>',
-          \ '<denite:do_action:preview>',
-          \ 'noremap'
-          \)
-
-    " Change denite default options
-    let s:denite_win_width_percent = 0.8
-    let s:denite_win_height_percent = 0.6
-    call denite#custom#option('default', {
-                \ 'split': 'floating',
-                \ 'winwidth': &columns * s:denite_win_width_percent,
-                \ 'wincol': (&columns - (&columns * s:denite_win_width_percent)) / 2,
-                \ 'winheight': &lines * s:denite_win_height_percent,
-                \ 'winrow': (&lines - (&lines * s:denite_win_height_percent)) / 2,
-                \ })
 '''
 
 [[plugins]]

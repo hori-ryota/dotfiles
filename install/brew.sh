@@ -10,7 +10,7 @@ brew upgrade
 brew install zsh
 
 brew install ack
-brew install curl --with-openssl --with-rtmpdump --with-nghttp2
+brew install curl
 brew install tree
 brew install wget
 
@@ -42,47 +42,8 @@ brew install boost
 brew install terraform
 # mysql
 brew install mycli
-# ffmpeg
-brew install ffmpeg \
-  --with-chromaprint \
-  --with-fdk-aac \
-  --with-fontconfig \
-  --with-freetype \
-  --with-frei0r \
-  --with-game-music-emu \
-  --with-libass \
-  --with-libbluray \
-  --with-libbs2b \
-  --with-libcaca \
-  --with-libgsm \
-  --with-libmodplug \
-  --with-librsvg \
-  --with-libsoxr \
-  --with-libssh \
-  --with-libvidstab \
-  --with-libvorbis \
-  --with-libvpx \
-  --with-opencore-amr \
-  --with-openh264 \
-  --with-openjpeg \
-  --with-openssl \
-  --with-opus \
-  --with-rtmpdump \
-  --with-sdl2 \
-  --with-snappy \
-  --with-speex \
-  --with-srt \
-  --with-tesseract \
-  --with-theora \
-  --with-tools \
-  --with-two-lame \
-  --with-wavpack \
-  --with-webp \
-  --with-x265 \
-  --with-xz \
-  --with-zeromq \
-  --with-zimg
-  # --with-rubberband \
+## ffmpeg
+brew install ffmpeg
 
 # Graphviz
 brew install graphviz
@@ -91,11 +52,11 @@ brew install graphviz
 brew install plantuml
 
 # Vim
-brew install vim --with-lua --with-luajit --with-python3 --with-override-system-vi
+brew install vim
 brew install neovim/neovim/neovim
 
 # tmux
-brew install tmux --with-utf8proc
+brew install tmux
 brew install fpp
 brew install urlview
 
@@ -106,15 +67,11 @@ brew install astyle
 brew install direnv
 
 # image
-brew install jpgoptim
+# brew install jpgoptim # deprecated
 brew install pngquant
 
 # blog
 brew install hugo
-
-# todoist cli
-brew tap sachaos/todoist
-brew install todoist
 
 
 ##########
@@ -127,7 +84,6 @@ brew cask install 1password #--force
 
 # Java
 brew cask install java
-brew cask install java8
 
 # Launcher
 brew cask install alfred #--force
@@ -145,7 +101,7 @@ brew cask install karabiner-elements #--force
 brew cask install slack #--force
 
 ## Docker
-brew cask install docker-edge
+brew cask install docker
 
 # For QuickLook
 ## For no filename extension
@@ -167,10 +123,11 @@ brew cask install kindle #--force
 # Others
 brew cask install appcleaner #--force
 brew cask install dropbox #--force
-brew cask install insomniax #--force
 brew cask install skitch #--force
 brew cask install licecap #--force
 brew cask install teamviewer
+brew cask install pomodone
+brew cask install flux
 
 #########
 # Fonts #

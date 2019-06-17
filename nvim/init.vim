@@ -12,8 +12,6 @@ let g:maplocalleader = ','
 nnoremap <space>v :<C-u>tabnew <C-r>=$MYVIMRC<CR><CR>:<C-u>CD<CR>
 " Reflect vimrc
 nnoremap <space>s :<C-u>source <C-r>=$MYVIMRC<CR><CR>
-" Open dotfiles
-nnoremap <space>d :<C-u>tabnew $HOME/.dotfiles/README.md<CR>:<C-u>CD<CR>
 " Character encoding
 scriptencoding utf-8
 " Automatic end-of-file format detection
