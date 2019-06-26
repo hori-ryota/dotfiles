@@ -114,7 +114,7 @@ options head
 snippet mc
 abbr "initialize gomock controller"
 options head
-  ctrl := gomock.NewController(t)
+  ctrl, ctx := gomock.WithContext(context.Background(), t)
   defer ctrl.Finish()
   ${0}
 
