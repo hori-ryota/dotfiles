@@ -49,6 +49,11 @@ hook_add = '''
             " npm install -g javascript-typescript-langserver
             \ 'javascript-typescript-stdio'
         \ ],
+        \ 'ruby': [
+            " https://github.com/castwide/solargraph
+            " gem install solargraph
+            \ 'solargraph', 'stdio'
+        \ ],
         \ 'c': [
             " https://github.com/apple/sourcekit-lsp
             \ 'sourcekit-lsp'
@@ -73,19 +78,19 @@ hook_add = '''
 
     function! LC_maps()
       if has_key(g:LanguageClient_serverCommands, &filetype)
-        nnoremap <buffer><silent> <Leader><Leader> :<C-u>Denite contextMenu<CR>
+        nnoremap <buffer><silent> <Leader><Leader> :<C-u>Denite -start-filter contextMenu<CR>
         nnoremap <buffer><silent> K                :<C-u>call LanguageClient_textDocument_hover()<CR>
         nnoremap <buffer><silent> <C-]>            :<C-u>call LanguageClient_textDocument_definition()<CR>
         nnoremap <buffer><silent> <Leader>i        :<C-u>call LanguageClient_textDocument_implementation()<CR>
         nnoremap <buffer><silent> <Leader>R        :<C-u>call LanguageClient_textDocument_rename()<CR>
-        nnoremap <buffer><silent> <Leader>s        :<C-u>Denite documentSymbol<CR>
-        nnoremap <buffer><silent> <Leader>dr       :<C-u>Denite references<CR>
+        nnoremap <buffer><silent> <Leader>s        :<C-u>Denite -start-filter documentSymbol<CR>
+        nnoremap <buffer><silent> <Leader>dr       :<C-u>Denite -start-filter references<CR>
         nnoremap <buffer><silent> <Leader>a        :<C-u>call LanguageClient_textDocument_codeAction()<CR>
         nnoremap <buffer><silent> gq               :<C-u>call LanguageClient_textDocument_formatting()<CR>
         vnoremap <buffer><silent> gq               :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
         nnoremap <buffer><silent> <Leader>h        :<C-u>call LanguageClient_textDocument_documentHighlight()<CR>
         nnoremap <buffer><silent> <Leader>H        :<C-u>call LanguageClient_clearDocumentHighlight()<CR>
-        nnoremap <buffer><silent> <Leader>S        :<C-u>Denite workspaceSymbol<CR>
+        nnoremap <buffer><silent> <Leader>S        :<C-u>Denite -start-filter workspaceSymbol<CR>
       endif
     endfunction
 
@@ -99,19 +104,19 @@ repo = 'Shougo/denite.nvim'
 depends = 'cpsm'
 on_cmd = 'Denite'
 hook_add = '''
-    nnoremap <silent> <Space>ft       :<C-u>Denite filetype<CR>
-    nnoremap <silent> <Space><Space>  :<C-u>Denite file/rec<CR>
-    nnoremap <silent> <Space>P        :<C-u>DeniteProjectDir file/rec<CR>
-    nnoremap <silent> <Space>b        :<C-u>DeniteBufferDir file/rec<CR>
-    nnoremap <silent> <Space>i<Space> :<C-u>Denite file/rec:
-    nnoremap <silent> <Space>/        :<C-u>Denite line<CR>
+    nnoremap <silent> <Space>ft       :<C-u>Denite -start-filter filetype<CR>
+    nnoremap <silent> <Space><Space>  :<C-u>Denite -start-filter file/rec<CR>
+    nnoremap <silent> <Space>P        :<C-u>DeniteProjectDir -start-filter file/rec<CR>
+    nnoremap <silent> <Space>b        :<C-u>DeniteBufferDir -start-filter file/rec<CR>
+    nnoremap <silent> <Space>i<Space> :<C-u>Denite -start-filter file/rec:
+    nnoremap <silent> <Space>/        :<C-u>Denite -start-filter line<CR>
     nnoremap <silent> <Space>r        :<C-u>Denite grep<CR>
     nnoremap <silent> <Space>ir       :<C-u>Denite grep:
     nnoremap <silent> <Space>:        :<C-u>Denite command<CR>
     nnoremap <silent> <Space>;        :<C-u>Denite command_history<CR>
     nnoremap <silent> <Space>o        :<C-u>Denite file_mru<CR>
     nnoremap <silent> <Space>y        :<C-u>Denite neoyank<CR>
-    nnoremap <silent> <Space>p        :<C-u>Denite ghq<CR>
+    nnoremap <silent> <Space>p        :<C-u>Denite -start-filter ghq<CR>
     nnoremap <silent> <Space>n        :<C-u>Denite neosnippet<CR>
     " memolist
     nnoremap <silent> <Space>ml       :<C-u>Denite -auto-action=preview -sorters=sorter_word,sorter_reverse file/rec:`expand(g:memolist_path)`<CR>
