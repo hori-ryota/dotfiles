@@ -31,8 +31,9 @@ hook_add = '''
             \ 'tcp://localhost:7777'
         \ ],
         \ 'kotlin': [
-            " https://github.com/Ruin0x11/intellij-lsp-server
-            \ 'tcp://localhost:7777'
+            " https://github.com/fwcd/KotlinLanguageServer
+            " ghq get fwcd/KotlinLanguageServer && cd $(ghq root)/github.com/fwcd/KotlinLanguageServer && ./gradlew server:build
+            \ '~/dev/src/github.com/fwcd/KotlinLanguageServer/server/build/install/server/bin/server'
         \ ],
         \ 'javascript': [
             " https://www.npmjs.com/package/javascript-typescript-langserver
@@ -682,6 +683,12 @@ python = '''
 #}}}
 #{{{ css
 css = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+#}}}
+#{{{ kotlin
+kotlin = '''
     setlocal tabstop=4
     setlocal shiftwidth=4
 '''
