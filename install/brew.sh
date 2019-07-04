@@ -29,10 +29,13 @@ brew install git-secrets
 brew install hadolint
 ## golang
 brew install go
-## Java
+## JVM
 brew install gradle
+brew install kotlin
 ## nodejs
 brew install nodebrew
+/usr/local/opt/nodebrew/bin/nodebrew setup_dirs
+
 ## ruby
 brew install rbenv
 brew install ruby-build
@@ -54,7 +57,7 @@ brew install plantuml
 
 # Vim
 brew install vim
-brew install neovim/neovim/neovim
+brew install neovim --HEAD
 
 # tmux
 brew install tmux
@@ -79,12 +82,16 @@ brew install hugo
 #  Cask  #
 ##########
 
+brew tap homebrew/cask-versions
+
 # General
 brew cask install iterm2 #--force
 brew cask install 1password #--force
 
 # Java
 brew cask install java
+brew cask install adoptopenjdk8
+brew cask install kotlin-native
 
 # Launcher
 brew cask install alfred #--force
@@ -150,8 +157,6 @@ brew cask install font-noto-sans-cjk-jp
 # Growl
 # Line
 # Pocket
-# PopClip
-# Xcode
 # todoist
 # moom
 
