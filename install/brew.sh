@@ -32,6 +32,7 @@ brew install go
 ## JVM
 brew install gradle
 brew install kotlin
+brew install ktlint
 ## nodejs
 brew install nodebrew
 /usr/local/opt/nodebrew/bin/nodebrew setup_dirs

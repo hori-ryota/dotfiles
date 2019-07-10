@@ -152,6 +152,7 @@ augroup FileTypeDetect
     autocmd BufRead,BufNewFile *_spec.rb                setfiletype ruby.rspec
     autocmd BufRead,BufNewFile .tmux.conf,tmux.conf     setfiletype tmux
     autocmd BufRead,BufNewFile Capfile,Gemfile,Rakefile setfiletype ruby
+    autocmd BufRead,BufNewFile .envrc                   setfiletype zsh
 augroup END
 "}}}
 

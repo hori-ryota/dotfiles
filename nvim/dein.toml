@@ -599,6 +599,10 @@ hook_add = '''
                 \ 'html': [
                     \ 'htmlhint'
                     \ ],
+                \ 'kotlin': [
+                    \ 'kotlinc',
+                    \ 'ktlint',
+                    \ ],
                 \ 'proto': [
                     \ 'prototool'
                     \ ],
