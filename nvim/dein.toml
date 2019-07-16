@@ -117,7 +117,7 @@ hook_add = '''
     nnoremap <silent> <Space>;        :<C-u>Denite command_history<CR>
     nnoremap <silent> <Space>o        :<C-u>Denite file_mru<CR>
     nnoremap <silent> <Space>y        :<C-u>Denite neoyank<CR>
-    nnoremap <silent> <Space>p        :<C-u>Denite -start-filter ghq<CR>
+    nnoremap <silent> <Space>p        :<C-u>Denite -start-filter ghq -default-action=cd<CR>
     nnoremap <silent> <Space>n        :<C-u>Denite neosnippet<CR>
     " memolist
     nnoremap <silent> <Space>ml       :<C-u>Denite -auto-action=preview -sorters=sorter_word,sorter_reverse file/rec:`expand(g:memolist_path)`<CR>
@@ -137,12 +137,16 @@ hook_source = '''
     function! s:denite_my_settings() abort
         nnoremap <silent><buffer><expr> <CR>
                     \ denite#do_map('do_action')
+        nnoremap <silent><buffer><expr> <Tab>
+                    \ denite#do_map('choose_action')
         nnoremap <silent><buffer><expr> d
                     \ denite#do_map('do_action', 'delete')
         nnoremap <silent><buffer><expr> p
                     \ denite#do_map('do_action', 'preview')
         nnoremap <silent><buffer><expr> q
                     \ denite#do_map('quit')
+        nnoremap <silent><buffer><expr> '
+                    \ denite#do_map('quick_move')
         nnoremap <silent><buffer><expr> i
                     \ denite#do_map('open_filter_buffer')
         nnoremap <silent><buffer><expr> <Space>
@@ -203,14 +207,13 @@ if = "has('nvim')"
 hook_add = '''
     nnoremap <silent> <space>e :<C-u>Defx -listed -resume -buffer-name=tab`tabpagenr()`<CR>
     nnoremap <silent> <space>E :<C-u>Defx `expand('%:p:h')` -search=`expand('%:p')`<CR>
-    nnoremap <silent> <Space>h :<C-u>Denite defx/history<CR>
 '''
 hook_source = '''
-  call defx#custom#column('mark', {
+    call defx#custom#column('mark', {
                 \ 'readonly_icon': '✗',
                 \ 'selected_icon': '✓',
                 \ })
-  call defx#custom#column('icon', {
+    call defx#custom#column('icon', {
                 \ 'directory_icon': '▸',
                 \ 'opened_icon': '▾',
                 \ 'root_icon': ' ',
@@ -218,9 +221,11 @@ hook_source = '''
 '''
 [plugins.ftplugin]
 defx = '''
+    nnoremap <silent><buffer><expr> <Space>h :<C-u>Denite defx/history<CR>
+
     " Define mappings
     nnoremap <silent><buffer><expr> <CR>
-                \ defx#async_action('drop')
+                \ defx#async_action('open')
     nnoremap <silent><buffer><expr> c
                 \ defx#do_action('copy')
     nnoremap <silent><buffer><expr> m
@@ -234,7 +239,9 @@ defx = '''
     nnoremap <silent><buffer><expr> P
                 \ defx#do_action('open', 'pedit')
     nnoremap <silent><buffer><expr> o
-                \ defx#async_action('open_or_close_tree')
+                \ defx#is_directory() ?
+                \ defx#async_action('open_or_close_tree') :
+                \ defx#async_action('open')
     nnoremap <silent><buffer><expr> O
                 \ defx#async_action('open_tree_recursive')
     nnoremap <silent><buffer><expr> K
@@ -245,7 +252,7 @@ defx = '''
                 \ defx#do_action('new_multiple_files')
     nnoremap <silent><buffer><expr> C
                 \ defx#do_action('toggle_columns',
-                \                'mark:filename:type:size:time')
+                \                'mark:indent:filename:type:size:time')
     nnoremap <silent><buffer><expr> S
                 \ defx#do_action('toggle_sort', 'time')
     nnoremap <silent><buffer><expr> d
@@ -278,19 +285,16 @@ defx = '''
                 \ line('.') == 1 ? 'G' : 'k'
     nnoremap <silent><buffer><expr> <C-l>
                 \ defx#do_action('redraw')
+    xnoremap <silent><buffer><expr> <CR>
+                \ defx#do_action('toggle_select_visual')
     nnoremap <silent><buffer><expr> <C-g>
                 \ defx#do_action('print')
     nnoremap <silent><buffer><expr> \
-                \ defx#do_action('cd', getcwd())
-    xnoremap <silent><buffer><expr> <CR>
-                \ defx#do_action('toggle_select_visual')
+                \ defx#do_action('change_vim_cwd')
     nnoremap <silent><buffer><expr> <Tab> winnr('$') != 1 ?
                 \ ':<C-u>wincmd w<CR>' :
                 \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
-    nnoremap <silent><buffer><expr> se
-                \ defx#do_action('save_session')
-    nnoremap <silent><buffer><expr> sl
-                \ defx#do_action('load_session')
+
 '''
 #}}}
 

@@ -92,7 +92,6 @@ brew cask install 1password #--force
 # Java
 brew cask install java
 brew cask install adoptopenjdk8
-brew cask install kotlin-native
 
 # Launcher
 brew cask install alfred #--force
@@ -141,9 +140,6 @@ brew cask install flux
 #########
 # Fonts #
 #########
-
-# Add repository
-brew tap caskroom/fonts
 
 # install
 brew cask install font-cica
