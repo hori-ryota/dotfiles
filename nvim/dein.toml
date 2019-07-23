@@ -441,6 +441,10 @@ hook_add = '''
 
 [[plugins]]
 repo = 'cocopon/colorswatch.vim'
+[[plugins]]
+repo = 'cocopon/inspecthi.vim'
+[[plugins]]
+repo = 'cocopon/pgmnt.vim'
 #}}}
 
 #}}}
@@ -512,6 +516,13 @@ on_event = 'InsertEnter'
 repo = 'tbodt/deoplete-tabnine'
 on_event = 'InsertEnter'
 build = './install.sh'
+
+# for synchronizng editing with Intellij IDEA
+[[plugins]]
+repo = 'beeender/Comrade'
+hook_add = '''
+    let g:comrade_key_fix = '<Leader>q'
+'''
 #}}}
 
 #{{{ Snippet
@@ -792,6 +803,8 @@ hook_source = '''
     "
     " let g:go_metalinter_deadline = '2m'
 
+    let g:go_list_type = "quickfix"
+
     let g:go_term_enabled = 0
 
     let g:go_highlight_array_whitespace_error = 1
@@ -948,6 +961,12 @@ on_ft = ['html', 'ejs', 'erb', 'jst', 'jade']
 [[plugins]]
 repo = 'hail2u/vim-css3-syntax'
 on_ft = ['html', 'ejs', 'erb', 'jst', 'jade', 'css']
+#}}}
+
+#{{{ slim
+[[plugins]]
+repo = 'slim-template/vim-slim'
+on_ft = 'slim'
 #}}}
 
 #{{{ Markdown

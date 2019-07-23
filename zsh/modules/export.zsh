@@ -44,3 +44,5 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # android-platform-tools
 export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
+# android-sdk
+export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
