@@ -436,6 +436,7 @@ hook_add = '''
     augroup colorscheme_iceberg
       autocmd!
       autocmd VimEnter * nested colorscheme iceberg
+      autocmd VimEnter * hi! SpecialKey ctermfg=150 guifg=#b4be82
     augroup END
 '''
 
