@@ -79,19 +79,19 @@ hook_add = '''
 
     function! LC_maps()
       if has_key(g:LanguageClient_serverCommands, &filetype)
-        nnoremap <buffer><silent> <Leader><Leader> :<C-u>Denite -start-filter contextMenu<CR>
-        nnoremap <buffer><silent> K                :<C-u>call LanguageClient_textDocument_hover()<CR>
-        nnoremap <buffer><silent> <C-]>            :<C-u>call LanguageClient_textDocument_definition()<CR>
-        nnoremap <buffer><silent> <Leader>i        :<C-u>call LanguageClient_textDocument_implementation()<CR>
-        nnoremap <buffer><silent> <Leader>R        :<C-u>call LanguageClient_textDocument_rename()<CR>
-        nnoremap <buffer><silent> <Leader>s        :<C-u>Denite -start-filter documentSymbol<CR>
-        nnoremap <buffer><silent> <Leader>dr       :<C-u>Denite -start-filter references<CR>
-        nnoremap <buffer><silent> <Leader>a        :<C-u>call LanguageClient_textDocument_codeAction()<CR>
-        nnoremap <buffer><silent> gq               :<C-u>call LanguageClient_textDocument_formatting()<CR>
-        vnoremap <buffer><silent> gq               :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
-        nnoremap <buffer><silent> <Leader>h        :<C-u>call LanguageClient_textDocument_documentHighlight()<CR>
-        nnoremap <buffer><silent> <Leader>H        :<C-u>call LanguageClient_clearDocumentHighlight()<CR>
-        nnoremap <buffer><silent> <Leader>S        :<C-u>Denite -start-filter workspaceSymbol<CR>
+        nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>
+        nnoremap <buffer><silent> K         :<C-u>call LanguageClient_textDocument_hover()<CR>
+        nnoremap <buffer><silent> <C-]>     :<C-u>call LanguageClient_textDocument_definition()<CR>
+        nnoremap <buffer><silent> <Leader>i :<C-u>call LanguageClient_textDocument_implementation()<CR>
+        nnoremap <buffer><silent> <Leader>R :<C-u>call LanguageClient_textDocument_rename()<CR>
+        nnoremap <buffer><silent> <Leader>s :<C-u>Denite -start-filter documentSymbol<CR>
+        nnoremap <buffer><silent> <Leader>dr:<C-u>Denite -start-filter references<CR>
+        nnoremap <buffer><silent> <Leader>a :<C-u>call LanguageClient_textDocument_codeAction()<CR>
+        nnoremap <buffer><silent> gq        :<C-u>call LanguageClient_textDocument_formatting()<CR>
+        vnoremap <buffer><silent> gq        :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
+        nnoremap <buffer><silent> <Leader>h :<C-u>call LanguageClient_textDocument_documentHighlight()<CR>
+        nnoremap <buffer><silent> <Leader>H :<C-u>call LanguageClient_clearDocumentHighlight()<CR>
+        nnoremap <buffer><silent> <Leader>S :<C-u>Denite -start-filter workspaceSymbol<CR>
       endif
     endfunction
 
@@ -549,6 +549,27 @@ hook_add = '''
 #{{{ Editor Action
 [[plugins]] # edit surround easy
 repo = 'machakann/vim-sandwich'
+hook_add = '''
+    let g:sandwich_no_default_key_mappings = 1
+
+    silent! nmap <unique><silent> \d <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+    silent! nmap <unique><silent> \r <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+    silent! nmap <unique><silent> \db <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+    silent! nmap <unique><silent> \rb <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+
+    let g:operator_sandwich_no_default_key_mappings = 1
+
+    " add
+    silent! nmap <unique> \a <Plug>(operator-sandwich-add)
+    silent! xmap <unique> \a <Plug>(operator-sandwich-add)
+    silent! omap <unique> \a <Plug>(operator-sandwich-g@)
+
+    " delete
+    silent! xmap <unique> \d <Plug>(operator-sandwich-delete)
+
+    " replace
+    silent! xmap <unique> \r <Plug>(operator-sandwich-replace)
+'''
 
 [[plugins]] # Aligning Text
 repo = 'junegunn/vim-easy-align'
@@ -580,12 +601,6 @@ repo = 'Shougo/vinarise.vim'
 #}}}
 
 #{{{ Motion
-[[plugins]] # highlight substitute target
-repo = 'osyo-manga/vim-over'
-hook_add = '''
-    nnoremap <silent> <Leader>s :<C-u>OverCommandLine<CR>
-'''
-
 [[plugins]] # pairs of handy bracket mappings
 repo = 'tpope/vim-unimpaired'
 #}}}

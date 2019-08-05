@@ -6,8 +6,8 @@ filetype plugin indent off
 
 "{{{ General Config
 " set clipboard+=unnamed " Yanks go on clipboard instead
-let g:mapleader = ','
-let g:maplocalleader = ','
+let g:mapleader = 's'
+let g:maplocalleader = 's'
 " Open vimrc
 nnoremap <space>v :<C-u>tabnew <C-r>=$MYVIMRC<CR><CR>:<C-u>CD<CR>
 " Reflect vimrc
