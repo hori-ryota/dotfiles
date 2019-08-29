@@ -87,8 +87,8 @@ hook_add = '''
         nnoremap <buffer><silent> <Leader>s :<C-u>Denite -start-filter documentSymbol<CR>
         nnoremap <buffer><silent> <Leader>dr:<C-u>Denite -start-filter references<CR>
         nnoremap <buffer><silent> <Leader>a :<C-u>call LanguageClient_textDocument_codeAction()<CR>
-        nnoremap <buffer><silent> gq        :<C-u>call LanguageClient_textDocument_formatting()<CR>
-        vnoremap <buffer><silent> gq        :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
+        " nnoremap <buffer><silent> gq        :<C-u>call LanguageClient_textDocument_formatting()<CR>
+        " vnoremap <buffer><silent> gq        :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
         nnoremap <buffer><silent> <Leader>h :<C-u>call LanguageClient_textDocument_documentHighlight()<CR>
         nnoremap <buffer><silent> <Leader>H :<C-u>call LanguageClient_clearDocumentHighlight()<CR>
         nnoremap <buffer><silent> <Leader>S :<C-u>Denite -start-filter workspaceSymbol<CR>
@@ -105,53 +105,58 @@ repo = 'Shougo/denite.nvim'
 depends = 'cpsm'
 on_cmd = 'Denite'
 hook_add = '''
-    nnoremap <silent> <Space>ft       :<C-u>Denite -start-filter filetype<CR>
-    nnoremap <silent> <Space><Space>  :<C-u>Denite -start-filter file/rec<CR>
-    nnoremap <silent> <Space>P        :<C-u>DeniteProjectDir -start-filter file/rec<CR>
-    nnoremap <silent> <Space>b        :<C-u>DeniteBufferDir -start-filter file/rec<CR>
-    nnoremap <silent> <Space>i<Space> :<C-u>Denite -start-filter file/rec:
-    nnoremap <silent> <Space>/        :<C-u>Denite -start-filter line<CR>
-    nnoremap <silent> <Space>r        :<C-u>Denite grep<CR>
-    nnoremap <silent> <Space>ir       :<C-u>Denite grep:
-    nnoremap <silent> <Space>:        :<C-u>Denite command<CR>
-    nnoremap <silent> <Space>;        :<C-u>Denite command_history<CR>
-    nnoremap <silent> <Space>o        :<C-u>Denite file_mru<CR>
-    nnoremap <silent> <Space>y        :<C-u>Denite neoyank<CR>
-    nnoremap <silent> <Space>p        :<C-u>Denite -start-filter ghq -default-action=cd<CR>
-    nnoremap <silent> <Space>n        :<C-u>Denite neosnippet<CR>
+    nnoremap <silent> <Space><Space>  :<C-u>Denite           -start-filter file/rec<CR>
+    nnoremap <silent> <Space>i<Space> :<C-u>Denite           -start-filter file/rec:
+    nnoremap <silent> <Space>P        :<C-u>DeniteBufferDir  -start-filter file/rec<CR>
+    nnoremap <silent> <Space>gp       :<C-u>DeniteProjectDir -start-filter file/rec<CR>
+
+    nnoremap <silent> <Space>ls :<C-u>Denite file_mru<CR>
+
+    nnoremap <silent> <Space>ft :<C-u>Denite -start-filter filetype<CR>
+
+    nnoremap <silent> <Space>o  :<C-u>Denite jump<CR>
+    nnoremap <silent> <Space>g; :<C-u>Denite change<CR>
+    nnoremap <silent> <Space>`  :<C-u>Denite mark<CR>
+
+    nnoremap <silent> <Space>/  :<C-u>Denite -start-filter line<CR>
+    nnoremap <silent> <Space>r  :<C-u>Denite grep<CR>
+    nnoremap <silent> <Space>ir :<C-u>Denite grep:
+
+    nnoremap <silent> <Space>: :<C-u>Denite command<CR>
+    nnoremap <silent> <Space>; :<C-u>Denite command_history<CR>
+
+    nnoremap <silent> <Space>y   :<C-u>Denite neoyank<CR>
+    nnoremap <silent> <Space>k   :<C-u>Denite neosnippet<CR>
+    nnoremap <silent> <Space>ghq :<C-u>Denite -start-filter ghq -default-action=cd<CR>
+
     " memolist
-    nnoremap <silent> <Space>ml       :<C-u>Denite -auto-action=preview -sorters=sorter_word,sorter_reverse file/rec:`expand(g:memolist_path)`<CR>
+    nnoremap <silent> <Space>ml :<C-u>Denite -auto-action=preview -sorters=sorter_word,sorter_reverse file/rec:`expand(g:memolist_path)`<CR>
     " grep memolist
-    nnoremap <silent> <Space>mg       :<C-u>Denite -auto-action=preview grep:`expand(g:memolist_path)`<CR>
-    nnoremap <silent> <space>c        :<C-u>Denite -auto-resize quickfix<CR>
-    nnoremap <silent> <space>l        :<C-u>Denite -auto-resize location_list<CR>
-    nnoremap <silent> ]d              :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
-    nnoremap <silent> [d              :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
-    nnoremap <silent> <space>.        :<C-u>Denite -resume -cursor-pos=+0<CR>
+    nnoremap <silent> <Space>mg :<C-u>Denite -auto-action=preview grep:`expand(g:memolist_path)`<CR>
+
+    nnoremap <silent> <space>co :<C-u>Denite quickfix<CR>
+    nnoremap <silent> <space>lo :<C-u>Denite location_list<CR>
+
+    nnoremap <silent> ]d       :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
+    nnoremap <silent> [d       :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
+    nnoremap <silent> <space>. :<C-u>Denite -resume -cursor-pos=+0<CR>
     " Open dotfiles
-    nnoremap <space>d                 :<C-u>Denite file/rec:$HOME/.dotfiles<CR>
+    nnoremap <space>d :<C-u>Denite file/rec:$HOME/.dotfiles<CR>
 '''
 hook_source = '''
-    " Define mappings
-    autocmd FileType denite call s:denite_my_settings()
-    function! s:denite_my_settings() abort
-        nnoremap <silent><buffer><expr> <CR>
-                    \ denite#do_map('do_action')
-        nnoremap <silent><buffer><expr> <Tab>
-                    \ denite#do_map('choose_action')
-        nnoremap <silent><buffer><expr> d
-                    \ denite#do_map('do_action', 'delete')
-        nnoremap <silent><buffer><expr> p
-                    \ denite#do_map('do_action', 'preview')
-        nnoremap <silent><buffer><expr> q
-                    \ denite#do_map('quit')
-        nnoremap <silent><buffer><expr> '
-                    \ denite#do_map('quick_move')
-        nnoremap <silent><buffer><expr> i
-                    \ denite#do_map('open_filter_buffer')
-        nnoremap <silent><buffer><expr> <Space>
-                    \ denite#do_map('toggle_select').'j'
-    endfunction
+    let s:denite_win_width_percent = 0.7
+    let s:denite_win_height_percent = 0.7
+    call denite#custom#option('_', {
+                \ 'auto_resize': 1,
+                \ 'split': 'floating',
+                \ 'smartcase': 1,
+                \ 'prompt': '> ',
+                \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+                \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+                \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+                \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+                \ 'auto_action': 'preview',
+                \ })
 
     " Change file/rec command.
     call denite#custom#var('file/rec', 'command',
@@ -175,6 +180,48 @@ hook_source = '''
     call denite#custom#var('grep', 'pattern_opt', [])
     call denite#custom#var('grep', 'separator', ['--'])
     call denite#custom#var('grep', 'final_opts', [])
+'''
+[plugins.ftplugin]
+denite = '''
+    " select
+    nnoremap <silent><buffer><expr> x
+                \ denite#do_map('toggle_select').'j'
+    nnoremap <silent><buffer><expr> X
+                \ denite#do_map('toggle_select_all')
+
+    " action
+    nnoremap <silent><buffer><expr> <CR>
+                \ denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> .
+                \ denite#do_map('do_previous_action')
+    nnoremap <silent><buffer><expr> d
+                \ denite#do_map('do_action', 'delete')
+    nnoremap <silent><buffer><expr> P
+                \ denite#do_map('do_action', 'preview')
+    nnoremap <silent><buffer><expr> e
+                \ denite#do_map('do_action', 'edit')
+    nnoremap <silent><buffer><expr> v
+                \ denite#do_map('do_action', 'vsplit')
+    nnoremap <silent><buffer><expr> s
+                \ denite#do_map('do_action', 'split')
+    nnoremap <silent><buffer><expr> gcd
+                \ denite#do_map('do_action', 'cd')
+    nnoremap <silent><buffer><expr> <Tab>
+                \ denite#do_map('choose_action')
+
+    " operation
+    nnoremap <silent><buffer><expr> H
+                \ denite#do_map('move_up_path')
+    nnoremap <silent><buffer><expr> i
+                \ denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> <C-l>
+                \ denite#do_map('redraw')
+    nnoremap <silent><buffer><expr> [d
+                \ denite#do_map('restore_sources')
+'''
+denite-filter = '''
+    imap     <silent><buffer> <ESC>  <Plug>(denite_filter_quit)
+    inoremap <silent><buffer> g<ESC> <ESC>
 '''
 
 [[plugins]]
@@ -218,83 +265,120 @@ hook_source = '''
                 \ 'opened_icon': '▾',
                 \ 'root_icon': ' ',
                 \ })
+
+    let s:denite_win_width_percent = 0.7
+    let s:denite_win_height_percent = 0.7
+    call defx#custom#option('_', {
+                \ 'columns': 'mark:indent:icon:filename:type',
+                \ 'toggle': 1,
+                \ 'show_ignored_files': 1,
+                \ 'split': 'floating',
+                \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+                \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+                \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+                \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+                \ 'session_file': '`$XDG_DATA_HOME`/nvim/defx/session',
+                \ })
 '''
 [plugins.ftplugin]
 defx = '''
-    nnoremap <silent><buffer><expr> <Space>h :<C-u>Denite defx/history<CR>
+    nnoremap <silent><buffer> <Space>s :<C-u>Denite defx/session<CR>
+    nnoremap <silent><buffer> <Space>h :<C-u>Denite defx/history<CR>
 
-    " Define mappings
-    nnoremap <silent><buffer><expr> <CR>
-                \ defx#async_action('open')
-    nnoremap <silent><buffer><expr> c
-                \ defx#do_action('copy')
-    nnoremap <silent><buffer><expr> m
-                \ defx#do_action('move')
-    nnoremap <silent><buffer><expr> p
-                \ defx#do_action('paste')
-    nnoremap <silent><buffer><expr> l
-                \ defx#async_action('open')
-    nnoremap <silent><buffer><expr> E
-                \ defx#do_action('open', 'vsplit')
-    nnoremap <silent><buffer><expr> P
-                \ defx#do_action('open', 'pedit')
+    " session
+    nnoremap <silent><buffer><expr> sa
+                \ defx#async_action('add_session')
+    nnoremap <silent><buffer><expr> sd
+                \ defx#async_action('delete_session')
+
+    " select
+    nnoremap <silent><buffer><expr> x
+                \ defx#do_action('toggle_select') . 'j'
+    nnoremap <silent><buffer><expr> X
+                \ defx#do_action('toggle_select_all')
+    xnoremap <silent><buffer><expr> x
+                \ defx#do_action('toggle_select_visual')
+    xnoremap <silent><buffer><expr> <CR>
+                \ defx#do_action('toggle_select_visual')
+
+    " tree
     nnoremap <silent><buffer><expr> o
                 \ defx#is_directory() ?
-                \ defx#async_action('open_or_close_tree') :
-                \ defx#async_action('open')
+                \ defx#do_action('open_or_close_tree') :
+                \ defx#do_action('multi', ['drop', 'quit'])
     nnoremap <silent><buffer><expr> O
-                \ defx#async_action('open_tree_recursive')
-    nnoremap <silent><buffer><expr> K
+                \ defx#is_directory() ?
+                \ defx#is_opened_tree() ?
+                \ defx#do_action('close_tree') :
+                \ defx#do_action('open_tree_recursive') :
+                \ defx#do_action('close_tree')
+    nnoremap <silent><buffer><expr> l
+                \ defx#is_directory() ?
+                \ defx#do_action('open') :
+                \ defx#do_action('multi', ['drop', 'quit'])
+    nnoremap <silent><buffer><expr> h
+                \ defx#do_action('cd', ['..'])
+
+    " new resource
+    nnoremap <silent><buffer><expr> A
                 \ defx#do_action('new_directory')
-    nnoremap <silent><buffer><expr> N
+    nnoremap <silent><buffer><expr> a
                 \ defx#do_action('new_file')
-    nnoremap <silent><buffer><expr> M
+    nnoremap <silent><buffer><expr> ga
                 \ defx#do_action('new_multiple_files')
-    nnoremap <silent><buffer><expr> C
-                \ defx#do_action('toggle_columns',
-                \                'mark:indent:filename:type:size:time')
-    nnoremap <silent><buffer><expr> S
-                \ defx#do_action('toggle_sort', 'time')
-    nnoremap <silent><buffer><expr> d
-                \ defx#do_action('remove')
+
+    " file action
+    nnoremap <silent><buffer><expr> m
+                \ defx#do_action('move')
+    nnoremap <silent><buffer><expr> c
+                \ defx#do_action('copy')
+    nnoremap <silent><buffer><expr> p
+                \ defx#do_action('paste')
     nnoremap <silent><buffer><expr> r
                 \ defx#do_action('rename')
-    nnoremap <silent><buffer><expr> !
+    nnoremap <silent><buffer><expr> d
+                \ defx#do_action('remove')
+    nnoremap <silent><buffer><expr> ;
                 \ defx#do_action('execute_command')
-    nnoremap <silent><buffer><expr> x
+    nnoremap <silent><buffer><expr> !
                 \ defx#do_action('execute_system')
-    nnoremap <silent><buffer><expr> yy
-                \ defx#do_action('yank_path')
-    nnoremap <silent><buffer><expr> >
-                \ defx#do_action('toggle_ignored_files')
+
+    nnoremap <silent><buffer><expr> <CR>
+                \ defx#is_directory() ?
+                \ defx#do_action('open') :
+                \ defx#do_action('multi', ['drop', 'quit'])
     nnoremap <silent><buffer><expr> .
                 \ defx#do_action('repeat')
-    nnoremap <silent><buffer><expr> h
-                \ defx#async_action('cd', ['..'])
-    nnoremap <silent><buffer><expr> ~
-                \ defx#async_action('cd')
-    nnoremap <silent><buffer><expr> q
-                \ defx#do_action('quit')
-    nnoremap <silent><buffer><expr> *
-                \ defx#do_action('toggle_select') . 'j'
-    nnoremap <silent><buffer><expr> g*
-                \ defx#do_action('toggle_select_all')
+    nnoremap <silent><buffer><expr> v
+                \ defx#do_action('multi', [['drop', 'vsplit'], 'quit'])
+    nnoremap <silent><buffer><expr> P
+                \ defx#do_action('open', 'pedit')
+
+    " others
+    nnoremap <silent><buffer><expr> gcd
+                \ defx#async_action('change_vim_cwd')
+    nnoremap <silent><buffer><expr> <C-g>
+                \ defx#do_action('print')
+    " nnoremap <silent><buffer><expr> q
+    "            \ defx#do_action('quit')
+    nnoremap <silent><buffer><expr> <C-l>
+                \ defx#do_action('redraw')
+    nnoremap <silent><buffer><expr> I
+                \ defx#do_action('toggle_columns',
+                \                'mark:indent:filename:type:size:time')
+    nnoremap <silent><buffer><expr> y
+                \ defx#do_action('yank_path')
+
+    nnoremap <silent><buffer><expr> S
+                \ defx#do_action('toggle_sort', 'time')
+    nnoremap <silent><buffer><expr> >
+                \ defx#do_action('toggle_ignored_files')
+
+    " base
     nnoremap <silent><buffer><expr> j
                 \ line('.') == line('$') ? 'gg' : 'j'
     nnoremap <silent><buffer><expr> k
                 \ line('.') == 1 ? 'G' : 'k'
-    nnoremap <silent><buffer><expr> <C-l>
-                \ defx#do_action('redraw')
-    xnoremap <silent><buffer><expr> <CR>
-                \ defx#do_action('toggle_select_visual')
-    nnoremap <silent><buffer><expr> <C-g>
-                \ defx#do_action('print')
-    nnoremap <silent><buffer><expr> \
-                \ defx#do_action('change_vim_cwd')
-    nnoremap <silent><buffer><expr> <Tab> winnr('$') != 1 ?
-                \ ':<C-u>wincmd w<CR>' :
-                \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
-
 '''
 #}}}
 
@@ -302,10 +386,20 @@ defx = '''
 [[plugins]]
 repo = 'sbdchd/neoformat'
 hook_add = '''
-let g:neoformat_run_all_formatters = 1
+    nnoremap gq :<C-u>Neoformat<CR>
+
+    " let g:neoformat_proto_prototool = {
+    "  \ 'exe': 'prototool',
+    "  \ 'args': ['format', '--fix', '-w', '%'],
+    "  \ 'replace': 1,
+    "  \ 'no_append': 1,
+    "  \ }
+    " let g:neoformat_enabled_proto = ['prototool']
+
+    let g:neoformat_run_all_formatters = 1
 '''
 build = '''
-brew install astyle
+    brew install astyle
 '''
 #}}}
 
@@ -518,6 +612,13 @@ repo = 'tbodt/deoplete-tabnine'
 on_event = 'InsertEnter'
 build = './install.sh'
 
+[[plugins]]
+repo = 'ncm2/float-preview.nvim'
+on_event = 'InsertEnter'
+hook_source = '''
+    let g:float_preview#docked = 1
+'''
+
 # for synchronizng editing with Intellij IDEA
 [[plugins]]
 repo = 'beeender/Comrade'
@@ -636,6 +737,10 @@ hook_add = '''
                     \ ],
                 \ 'proto': [
                     \ 'prototool'
+                    \ ],
+                \ 'terraform': [
+                    \ 'terraform',
+                    \ 'tflint',
                     \ ],
                 \ }
     let g:ale_go_golangci_lint_options = '--fast --max-same-issues 0 --disable gochecknoinits --disable gochecknoglobals --disable lll --disable maligned --disable dupl'
@@ -898,6 +1003,7 @@ on_ft = 'proto'
 proto = '''
     setlocal tabstop=4
     setlocal shiftwidth=4
+    nnoremap <buffer> gq :<C-u>call PrototoolFormatFix()<CR>
 '''
 
 [[plugins]]
@@ -1066,6 +1172,10 @@ on_ft = 'ansible'
 #{{{ Terraform
 [[plugins]]
 repo = 'hashivim/vim-terraform'
+on_ft = ['terraform', 'javascript']
+
+[[plugins]]
+repo = 'juliosueiras/vim-terraform-completion'
 on_ft = ['terraform', 'javascript']
 #}}}
 

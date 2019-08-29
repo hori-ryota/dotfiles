@@ -9,9 +9,9 @@ filetype plugin indent off
 let g:mapleader = 's'
 let g:maplocalleader = 's'
 " Open vimrc
-nnoremap <space>v :<C-u>tabnew <C-r>=$MYVIMRC<CR><CR>:<C-u>CD<CR>
+nnoremap <space>V :<C-u>tabnew <C-r>=$MYVIMRC<CR><CR>:<C-u>CD<CR>
 " Reflect vimrc
-nnoremap <space>s :<C-u>source <C-r>=$MYVIMRC<CR><CR>
+nnoremap <space>S :<C-u>source <C-r>=$MYVIMRC<CR><CR>
 " Character encoding
 scriptencoding utf-8
 " Automatic end-of-file format detection
@@ -54,6 +54,11 @@ function! MoveQuickfixWindowToBottom()
     endif
 endfunction
 autocmd FileType qf call MoveQuickfixWindowToBottom()
+
+" Cleanup by Esc x 2
+" turn off highlight
+" close preview window
+nnoremap <silent> <ESC><ESC> :<C-u>nohlsearch<CR>:pclose<CR>
 "}}}
 
 "{{{ Fold Config
@@ -110,8 +115,6 @@ cnoremap <C-p> <Up>
 "" Search
 set ignorecase
 set smartcase
-" turn off highlight by Esc x 2
-nmap <ESC><ESC> :<C-u>nohlsearch<CR><ESC>
 augroup Search
     autocmd!
     autocmd QuickFixCmdPost *grep cwindow
