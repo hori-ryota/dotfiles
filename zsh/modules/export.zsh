@@ -22,7 +22,7 @@ export GOPATH=$HOME/dev
 export PATH=$PATH:$GOPATH/bin
 
 # Java
-export JAVA_HOME=`/usr/libexec/java_home -v 12`
+export JAVA_HOME=`/usr/libexec/java_home -v 13`
 
 # lang
 export LC_ALL=en_US.UTF-8
@@ -46,3 +46,7 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
 # android-sdk
 export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
+
+# tensorflow
+export LIBRARY_PATH=${GOPATH}/src/github.com/tensorflow/tensorflow/bazel-bin/tensorflow
+export DYLD_LIBRARY_PATH=${GOPATH}/src/github.com/tensorflow/tensorflow/bazel-bin/tensorflow

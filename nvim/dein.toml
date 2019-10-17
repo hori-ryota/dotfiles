@@ -911,18 +911,46 @@ hook_source = '''
     let g:go_snippet_engine = 'disable'
     let g:go_metalinter_autosave = 0
 
-    " let g:go_metalinter_command = 'golangci-lint'
-    " let g:go_metalinter_enabled = []
-    " let g:go_metalinter_disabled = [
-    "           \ 'gochecknoinits',
-    "           \ 'gochecknoglobals',
-    "           \ 'lll',
-    "           \ 'maligned',
-    "           \ 'dupl',
-    "           \ ]
-    "
-    "
-    " let g:go_metalinter_deadline = '2m'
+    let g:go_metalinter_enabled = [
+                \ 'deadcode',
+                \ 'errcheck',
+                \ 'gosimple',
+                \ 'govet',
+                \ 'ineffassign',
+                \ 'staticcheck',
+                \ 'structcheck',
+                \ 'typecheck',
+                \ 'unused',
+                \ 'varcheck',
+                \ 'bodyclose',
+                \ 'depguard',
+                \ 'dogsled',
+                "\ 'dupl',
+                "\ 'funlen',
+                "\ 'gochecknoglobals',
+                "\ 'gochecknoinits',
+                \ 'gocognit',
+                \ 'goconst',
+                \ 'gocritic',
+                \ 'gocyclo',
+                \ 'godox',
+                \ 'gofmt',
+                \ 'goimports',
+                "\ 'golint',
+                \ 'gosec',
+                \ 'interfacer',
+                "\ 'lll',
+                "\ 'maligned',
+                \ 'misspell',
+                \ 'nakedret',
+                \ 'prealloc',
+                \ 'scopelint',
+                "\ 'stylecheck',
+                \ 'unconvert',
+                \ 'unparam',
+                \ 'whitespace',
+                "\ 'wsl',
+                \ ]
 
     let g:go_list_type = "quickfix"
 
@@ -971,28 +999,14 @@ go = '''
 
     " nmap <buffer> <Leader>I <Plug>(go-info)
 
-    " nmap <buffer> <Leader>m <Plug>(go-metalinter)
-    " nnoremap <buffer> <Leader>M :<C-u>GoMetaLinter ./...<CR>
+    nmap <buffer> <Leader>m <Plug>(go-metalinter)
+    nnoremap <buffer> <Leader>M :<C-u>GoMetaLinter ./...<CR>
 
     nnoremap <buffer> <Leader>e :<C-u>GoErrCheck<CR>
     nnoremap <buffer> <Leader>E :<C-u>GoErrCheck ./...<CR>
 
     nmap <buffer> <Leader>G <Plug>(go-generate)
-
-    function! GolangciLint(...)
-        set errorformat=%f:%l:%c:\ %m,%f:%l:\ %m
-        let results = system('golangci-lint run --enable-all --max-same-issues 0 --disable gochecknoinits --disable gochecknoglobals --disable lll --disable maligned --disable dupl --out-format line-number ' . join(a:000))
-        cexpr split(results, '\n')
-    endfunction
-
-    nnoremap <buffer><silent> <leader>m :<C-u>call GolangciLint(expand('%:.:h'))<CR>
-    nnoremap <buffer><silent> <leader>M :<C-u>call GolangciLint('./...')<CR>
 '''
-
-[[plugins]]
-repo = 'buoto/gotests-vim'
-build = 'go get -u github.com/cweill/gotests/...'
-on_ft = 'go'
 #}}}
 
 #{{{ Protocol Buffers
@@ -1003,13 +1017,16 @@ on_ft = 'proto'
 proto = '''
     setlocal tabstop=4
     setlocal shiftwidth=4
-    nnoremap <buffer> gq :<C-u>call PrototoolFormatFix()<CR>
 '''
 
 [[plugins]]
 repo = 'uber/prototool'
 rtp = 'vim/prototool'
 on_ft = 'proto'
+[plugins.ftplugin]
+proto = '''
+    nnoremap <buffer> gq :<C-u>call PrototoolFormatFix()<CR>
+'''
 #}}}
 
 #{{{ Python
@@ -1114,6 +1131,7 @@ build = 'cp app & npm install'
 hook_source = '''
     let g:mkdp_command_for_global = 1
     let g:mkdp_auto_close = 0
+    let g:mkdp_markdown_css = g:vim_dir . '/markdown_preview-markdown.css'
 '''
 
 [[plugins]]

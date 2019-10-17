@@ -58,7 +58,7 @@ brew install plantuml
 
 # Vim
 brew install vim
-brew install neovim --HEAD
+brew install neovim
 
 # tmux
 brew install tmux
@@ -143,9 +143,6 @@ brew cask install flux
 
 # install
 brew cask install font-cica
-brew cask install font-consolas-for-powerline
-brew cask install font-lato
-brew cask install font-noto-sans-cjk-jp
 
 ###########################
 #  Install from AppStore  #
