@@ -250,3 +250,117 @@ snippet gga
 abbr "//go:generate go-genaccessor"
 options head
   //go:generate go-codegen go_accessor
+
+snippet uio
+abbr "Usecase"
+options head
+  //genconstructor
+  type ${1}Usecase struct {
+    authorizer $1UsecaseAuthorizer \`required:""\`
+  }
+
+  //genconstructor
+  type $1UsecaseInput struct {
+    ${3}
+  }
+
+  //genconstructor
+  type $1UsecaseOutput struct {
+    ${4}
+  }
+
+  func (u $1Usecase) ${2}(
+    ctx context.Context,
+    input $1UsecaseInput,
+    actor Actor,
+  ) ($1UsecaseOutput, domain.Error) {
+    if err := u.authorizer.AuthorizeActorTo$2(ctx, input, actor); err != nil {
+      return $1UsecaseOutput{}, err
+    }
+    ${0}
+    return $1UsecaseOutput{}, nil
+  }
+
+  type $1UsecaseAuthorizer interface {
+    AuthorizeActorTo$2(context.Context, $1UsecaseInput, Actor) domain.Error
+  }
+
+snippet ui
+abbr "Usecase only input"
+options head
+  //genconstructor
+  type ${1}Usecase struct {
+    authorizer $1UsecaseAuthorizer \`required:""\`
+  }
+
+  //genconstructor
+  type $1UsecaseInput struct {
+    ${3}
+  }
+
+  func (u $1Usecase) ${2}(
+    ctx context.Context,
+    input $1UsecaseInput,
+    actor Actor,
+  ) domain.Error {
+    if err := u.authorizer.AuthorizeActorTo$2(ctx, input, actor); err != nil {
+      return err
+    }
+    ${0}
+    return nil
+  }
+
+  type $1UsecaseAuthorizer interface {
+    AuthorizeActorTo$2(context.Context, $1UsecaseInput, Actor) domain.Error
+  }
+
+snippet uo
+abbr "Usecase only output"
+options head
+  //genconstructor
+  type ${1}Usecase struct {
+    authorizer $1UsecaseAuthorizer \`required:""\`
+  }
+
+  //genconstructor
+  type $1UsecaseOutput struct {
+    ${3}
+  }
+
+  func (u $1Usecase) ${2}(
+    ctx context.Context,
+    actor Actor,
+  ) ($1UsecaseOutput, domain.Error) {
+    if err := u.authorizer.AuthorizeActorTo$2(ctx, actor); err != nil {
+      return $1UsecaseOutput{}, err
+    }
+    ${0}
+    return $1UsecaseOutput{}, nil
+  }
+
+  type $1UsecaseAuthorizer interface {
+    AuthorizeActorTo$2(context.Context, Actor) domain.Error
+  }
+
+snippet u
+abbr "Usecase without input and output"
+options head
+  //genconstructor
+  type ${1}Usecase struct {
+    authorizer $1UsecaseAuthorizer \`required:""\`
+  }
+
+  func (u $1Usecase) ${2}(
+    ctx context.Context,
+    actor Actor,
+  ) domain.Error {
+    if err := u.authorizer.AuthorizeActorTo$2(ctx, actor); err != nil {
+      return err
+    }
+    ${0}
+    return nil
+  }
+
+  type $1UsecaseAuthorizer interface {
+    AuthorizeActorTo$2(context.Context, Actor) domain.Error
+  }

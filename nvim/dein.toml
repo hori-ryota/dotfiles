@@ -33,7 +33,7 @@ hook_add = '''
         \ 'kotlin': [
             " https://github.com/fwcd/KotlinLanguageServer
             " ghq get fwcd/KotlinLanguageServer && cd $(ghq root)/github.com/fwcd/KotlinLanguageServer && ./gradlew server:build
-            \ '~/dev/src/github.com/fwcd/KotlinLanguageServer/server/build/install/server/bin/server'
+            \ '~/dev/src/github.com/fwcd/KotlinLanguageServer/server/build/install/server/bin/kotlin-language-server'
         \ ],
         \ 'javascript': [
             " https://www.npmjs.com/package/javascript-typescript-langserver
