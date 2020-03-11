@@ -28,6 +28,7 @@ export JAVA_HOME=`/usr/libexec/java_home -v 13`
 export LC_ALL=en_US.UTF-8
 
 # python
+export PATH=/usr/local/opt/python/libexec/bin:$PATH
 export PYTHON_CONFIGURE_OPTS="--enable-framework --enable-unicode=ucs2"
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
 export CUDA_HOME=/usr/local/cuda

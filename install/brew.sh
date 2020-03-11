@@ -40,7 +40,6 @@ brew install nodebrew
 ## ruby
 brew install rbenv
 brew install ruby-build
-brew install rbenv-communal-gems
 ## Python
 brew install boost
 # Orchestration tools

@@ -793,6 +793,9 @@ hook_add = '''
 '''
 
 [[plugins]]
+repo = 'tpope/vim-rhubarb'
+
+[[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
     let g:gitgutter_enabled = 0

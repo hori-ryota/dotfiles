@@ -1,7 +1,7 @@
 snippet main
 abbr    "init main and Main"
 options head
-  package main 
+  package main
 
   import (
     "log"
@@ -55,9 +55,8 @@ snippet ifer
 abbr    "if err != nil {}"
 options head
   if err != nil {
-    return ${1:#:, }err
+    return ${0}
   }
-  ${0:TARGET}
 
 snippet ifee
 abbr    "if err := ${1:TARGET}; err != nil {}"
@@ -123,29 +122,20 @@ abbr "common mockgen command"
 options head
   //go:generate mockgen -source $GOFILE -destination mock_$GOPACKAGE/${GOFILE}_mock.go
 
-snippet lf
-abbr "logFilelds"
+snippet eww
+abbr "zaperr.WrapperWith"
 options head
-  logFields := make([]zap.Field, 0, 10)
-  ${0}
+  zaperr ${1}= zaperr.WrapperWith(zap.${0})
 
-snippet la
-abbr "apped logFilelds"
-options head
-  logFields = append(logFields, zap.${1}("${2}", ${3}))
-  ${0}
-
-snippet ze
+snippet ew
 abbr "zaperr.Wrap"
 options word
-  zaperr.Wrap(err, "${1}", logFields...)
-  ${0}
+  zaperr.Wrap(err, "${0}")
 
-snippet zen
+snippet en
 abbr "zaperr.New"
 options word
-  zaperr.New("${1}", logFields...)
-  ${0}
+  zaperr.New("${0}")
 
 snippet pn
 abbr "panic by not implemented"
