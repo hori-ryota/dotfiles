@@ -52,3 +52,6 @@ ln -snf "$BASEDIR"/peco.json "$XDG_CONFIG_HOME"/peco/config.json
 
 # python
 ln -snf "$BASEDIR"/flake8 "$XDG_CONFIG_HOME"/flake8
+
+# efm-langserver
+ln -snf "$BASEDIR"/efm-langserver "$XDG_CONFIG_HOME"/efm-langserver

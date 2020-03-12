@@ -13,89 +13,134 @@ repo = 'editorconfig/editorconfig-vim'
 
 #{{{ LSP
 [[plugins]]
-repo = 'autozimu/LanguageClient-neovim'
-rev = 'next'
-build = './install.sh'
+repo = 'neovim/nvim-lsp'
 hook_add = '''
-    let g:LanguageClient_diagnosticsEnable = 0
-    let g:LanguageClient_diagnosticsList = 'Location'
+    lua << EOF
+        local nvim_lsp = require'nvim_lsp'
+        local configs = require'nvim_lsp/configs'
 
-    let g:LanguageClient_serverCommands = {
-        \ 'go': [
-            " https://github.com/golang/go/wiki/gopls
-            " go get -u golang.org/x/tools/cmd/gopls
-            \ 'gopls'
-        \ ],
-        \ 'java': [
-            " https://github.com/Ruin0x11/intellij-lsp-server
-            \ 'tcp://localhost:7777'
-        \ ],
-        \ 'kotlin': [
-            " https://github.com/fwcd/KotlinLanguageServer
-            " ghq get fwcd/KotlinLanguageServer && cd $(ghq root)/github.com/fwcd/KotlinLanguageServer && ./gradlew server:build
-            \ '~/dev/src/github.com/fwcd/KotlinLanguageServer/server/build/install/server/bin/kotlin-language-server'
-        \ ],
-        \ 'javascript': [
-            " https://www.npmjs.com/package/javascript-typescript-langserver
-            " npm install -g javascript-typescript-langserver
-            \ 'javascript-typescript-stdio'
-        \ ],
-        \ 'javascript.jsx': [
-            " https://www.npmjs.com/package/javascript-typescript-langserver
-            " npm install -g javascript-typescript-langserver
-            \ 'javascript-typescript-stdio'
-        \ ],
-        \ 'typescript': [
-            " https://www.npmjs.com/package/javascript-typescript-langserver
-            " npm install -g javascript-typescript-langserver
-            \ 'javascript-typescript-stdio'
-        \ ],
-        \ 'ruby': [
-            " https://github.com/castwide/solargraph
-            " gem install solargraph
-            \ 'solargraph', 'stdio'
-        \ ],
-        \ 'c': [
-            " https://github.com/apple/sourcekit-lsp
-            \ 'sourcekit-lsp'
-        \ ],
-        \ 'c++': [
-            " https://github.com/apple/sourcekit-lsp
-            \ 'sourcekit-lsp'
-        \ ],
-        \ 'objc': [
-            " https://github.com/apple/sourcekit-lsp
-            \ 'sourcekit-lsp'
-        \ ],
-        \ 'objc++': [
-            " https://github.com/apple/sourcekit-lsp
-            \ 'sourcekit-lsp'
-        \ ],
-        \ 'swift': [
-            " https://github.com/apple/sourcekit-lsp
-            \ 'sourcekit-lsp'
-        \ ]
-        \ }
+        -- General purpose
+        nvim_lsp.efm.setup{}
+
+        -- Bash
+        nvim_lsp.bashls.setup{}
+
+        -- CSS
+        nvim_lsp.cssls.setup{}
+
+        -- Dart
+        -- TODO:
+        -- nvim_lsp.dartls.setup{}
+
+        -- Dockerfile
+        nvim_lsp.dockerls.setup{}
+
+        -- Go
+        -- nvim_lsp.gopls.setup{}
+
+        -- TODO:
+        -- configs.golangci = {
+        --     default_config = {
+        --         cmd = {'golangci-lint-langserver'};
+        --         filetypes = {'go'};
+        --         root_dir = nvim_lsp.util.root_pattern("go.mod", ".git");
+        --         init_options = {
+        --             command = {"golangci-lint", "run", "--fast", "--max-same-issues", "0", "--disable", "gochecknoinits", "--disable", "gochecknoglobals", "--disable", "lll", "--disable", "maligned", "--disable", "dupl", "--out-format", "json"};
+        --         };
+        --     };
+        --     docs = {
+        --         description = [[https://github.com/nametake/golangci-lint-langserver]];
+        --     };
+        -- }
+        -- nvim_lsp.golangci.setup{}
+
+        -- HTML
+        nvim_lsp.html.setup{}
+
+        -- JSON
+        nvim_lsp.jsonls.setup{}
+
+        -- Python
+        nvim_lsp.pyls.setup{}
+
+        -- Rust
+        nvim_lsp.rls.setup{}
+        nvim_lsp.rust_analyzer.setup{}
+
+        -- Ruby
+        nvim_lsp.solargraph.setup{}
+
+        -- Lua
+        nvim_lsp.sumneko_lua.setup{}
+
+        -- Terraform
+        nvim_lsp.terraformls.setup{}
+
+        -- Typescript and Javascript
+        nvim_lsp.tsserver.setup{}
+        nvim_lsp.vuels.setup{}
+
+        -- Vim
+        nvim_lsp.vimls.setup{}
+
+        -- YAML
+        nvim_lsp.yamlls.setup{}
+
+        -- C and Swift
+        configs.sourcekit = {
+            default_config = {
+                cmd = {'sourcekit-lsp'};
+                filetypes = {'c', 'c++', 'objc', 'objc++', 'swift'};
+                root_dir = nvim_lsp.util.root_pattern('.git', 'Package.swift');
+            };
+            docs = {
+                description = [[https://github.com/apple/sourcekit-lsp]];
+            };
+        }
+        nvim_lsp.sourcekit.setup{}
+
+        -- Kotlin
+        configs.kotlinls = {
+            default_config = {
+                cmd = {os.getenv("HOME")..'/dev/src/github.com/fwcd/KotlinLanguageServer/server/build/install/server/bin/kotlin-language-server'};
+                filetypes = {'kotlin'};
+                root_dir = nvim_lsp.util.root_pattern('.git', 'build.gradle', 'build.gradle.kts');
+            };
+            docs = {
+                description = [[https://github.com/fwcd/KotlinLanguageServer]];
+            };
+        }
+        nvim_lsp.kotlinls.setup{}
+
+EOF
 
     function! LC_maps()
-      if has_key(g:LanguageClient_serverCommands, &filetype)
-        nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>
-        nnoremap <buffer><silent> K         :<C-u>call LanguageClient_textDocument_hover()<CR>
-        nnoremap <buffer><silent> <C-]>     :<C-u>call LanguageClient_textDocument_definition()<CR>
-        nnoremap <buffer><silent> <Leader>i :<C-u>call LanguageClient_textDocument_implementation()<CR>
-        nnoremap <buffer><silent> <Leader>R :<C-u>call LanguageClient_textDocument_rename()<CR>
-        nnoremap <buffer><silent> <Leader>s :<C-u>Denite -start-filter documentSymbol<CR>
-        nnoremap <buffer><silent> <Leader>dr:<C-u>Denite -start-filter references<CR>
-        nnoremap <buffer><silent> <Leader>a :<C-u>call LanguageClient_textDocument_codeAction()<CR>
-        " nnoremap <buffer><silent> gq        :<C-u>call LanguageClient_textDocument_formatting()<CR>
-        " vnoremap <buffer><silent> gq        :<C-u>call LanguageClient_textDocument_rangeFormatting()<CR>
-        nnoremap <buffer><silent> <Leader>h :<C-u>call LanguageClient_textDocument_documentHighlight()<CR>
-        nnoremap <buffer><silent> <Leader>H :<C-u>call LanguageClient_clearDocumentHighlight()<CR>
-        nnoremap <buffer><silent> <Leader>S :<C-u>Denite -start-filter workspaceSymbol<CR>
-      endif
+      " nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>
+      nnoremap <buffer><silent> K           :<C-u>lua vim.lsp.buf.hover()<CR>
+      nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.signature_help()<CR>
+      nnoremap <buffer><silent> <C-]>       :<C-u>lua vim.lsp.buf.definition()<CR>
+      nnoremap <buffer><silent> <Leader>i   :<C-u>lua vim.lsp.buf.implementation()<CR>
+      nnoremap <buffer><silent> <Leader>R   :<C-u>lua vim.lsp.buf.rename()<CR>
+      nnoremap <buffer><silent> <Leader>s   :<C-u>lua vim.lsp.buf.document_symbol()<CR>
+      nnoremap <buffer><silent> <Leader>dr  :<C-u>lua vim.lsp.buf.references()<CR>
+      " nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>
+      nnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.formatting()<CR>
+      vnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.range_formatting()<CR>
+      nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.document_highlight()<CR>
+      " nnoremap <buffer><silent> <Leader>H :<C-u>call LanguageClient_clearDocumentHighlight()<CR>
+      " nnoremap <buffer><silent> <Leader>S :<C-u>Denite -start-filter workspaceSymbol<CR>
     endfunction
 
     autocmd FileType * call LC_maps()
+
+    " LSP HIGHLIGHT (iceberg)
+    hi! link LspDiagnosticsError      ALEVirtualTextError
+    hi! link LspDiagnosticsWarning    ALEVirtualTextWarning
+    hi! link LspDiagnosticInformation Identifier
+    hi! link LspDiagnosticHint        ALEVirtualTextWarning
+    hi! link LspReferenceText         Normal
+    hi! link LspReferenceRead         Identifier
+    hi! link LspReferenceWrite        MoreMsg
 '''
 #}}}
 
@@ -382,27 +427,6 @@ defx = '''
 '''
 #}}}
 
-#{{{ fmt
-[[plugins]]
-repo = 'sbdchd/neoformat'
-hook_add = '''
-    nnoremap gq :<C-u>Neoformat<CR>
-
-    " let g:neoformat_proto_prototool = {
-    "  \ 'exe': 'prototool',
-    "  \ 'args': ['format', '--fix', '-w', '%'],
-    "  \ 'replace': 1,
-    "  \ 'no_append': 1,
-    "  \ }
-    " let g:neoformat_enabled_proto = ['prototool']
-
-    let g:neoformat_run_all_formatters = 1
-'''
-build = '''
-    brew install astyle
-'''
-#}}}
-
 #{{{ Status bar
 [[plugins]]
 repo = 'itchyny/lightline.vim'
@@ -422,18 +446,6 @@ hook_add = '''
                 \   'filetype': 'LightLineFiletype',
                 \   'fileencoding': 'LightLineFileencoding',
                 \   'mode': 'LightLineMode',
-                \ },
-                \ 'component_expand': {
-                \    'linter_checking': 'lightline#ale#checking',
-                \    'linter_warnings': 'lightline#ale#warnings',
-                \    'linter_errors': 'lightline#ale#errors',
-                \    'linter_ok': 'lightline#ale#ok',
-                \ },
-                \ 'component_type': {
-                \     'linter_checking': 'left',
-                \     'linter_warnings': 'warning',
-                \     'linter_errors': 'error',
-                \     'linter_ok': 'left',
                 \ },
                 \ 'separator': { 'left': "\uE0B0", 'right': "\uE0B2" },
                 \ 'subseparator': { 'left': "\uE0B1", 'right': "\uE0B3" }
@@ -508,9 +520,6 @@ hook_add = '''
     let g:vimfiler_force_overwrite_statusline = 0
     let g:vimshell_force_overwrite_statusline = 0
 '''
-
-[[plugins]]
-repo = 'maximbaz/lightline-ale'
 #}}}
 
 #{{{ history
@@ -527,10 +536,10 @@ hook_add = '''
 repo = 'cocopon/iceberg.vim'
 hook_add = '''
     set termguicolors
+    hi! link SpecialKey Special
     augroup colorscheme_iceberg
       autocmd!
       autocmd VimEnter * nested colorscheme iceberg
-      autocmd VimEnter * hi! SpecialKey ctermfg=150 guifg=#b4be82
     augroup END
 '''
 
@@ -605,6 +614,10 @@ hook_source = '''
 
 [[plugins]]
 repo = 'Shougo/neoinclude.vim'
+on_event = 'InsertEnter'
+
+[[plugins]]
+repo = 'Shougo/deoplete-lsp'
 on_event = 'InsertEnter'
 
 [[plugins]]
@@ -705,61 +718,6 @@ repo = 'Shougo/vinarise.vim'
 #{{{ Motion
 [[plugins]] # pairs of handy bracket mappings
 repo = 'tpope/vim-unimpaired'
-#}}}
-
-#{{{ syntax check
-[[plugins]] # syntax check
-repo = 'w0rp/ale'
-hook_add = '''
-    let g:ale_lint_on_enter = 1
-    let g:ale_lint_on_save = 1
-    let g:ale_lint_on_text_changed = 'never'
-    let g:ale_echo_msg_format = '[%linter%] %s (%severity%)'
-    let g:ale_statusline_format = ['E%d', 'W%d', '']
-    let g:ale_virtualtext_cursor = 1
-    let g:ale_set_loclist = 1
-    " let g:ale_open_list = 'on_save'
-
-    let g:ale_linters = {
-                \ 'dockerfile': [
-                    \ 'dockerfile_lint',
-                    \ 'hadolint',
-                    \ ],
-                \ 'go': [
-                    \ 'golangci-lint'
-                    \ ],
-                \ 'html': [
-                    \ 'htmlhint'
-                    \ ],
-                \ 'kotlin': [
-                    \ 'kotlinc',
-                    \ 'ktlint',
-                    \ ],
-                \ 'proto': [
-                    \ 'prototool'
-                    \ ],
-                \ 'terraform': [
-                    \ 'terraform',
-                    \ 'tflint',
-                    \ ],
-                \ }
-    let g:ale_go_golangci_lint_options = '--fast --max-same-issues 0 --disable gochecknoinits --disable gochecknoglobals --disable lll --disable maligned --disable dupl'
-    let g:ale_go_golangci_lint_package = 1
-    " let g:ale_go_gometalinter_options = '--fast --exclude ".*\.pb\.go" --exclude ".*_mock\.go" --enable-gc --disable golint --disable maligned --disable vetshadow'
-'''
-
-[[plugins]]
-repo = 'osyo-manga/shabadou.vim'
-
-[[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
-
-[[plugins]]
-repo = 'cohama/vim-hier'
-
-[[plugins]]
-repo = 'dannyob/quickfixstatus'
 #}}}
 
 #{{{ Git/Gist
@@ -1021,15 +979,6 @@ proto = '''
     setlocal tabstop=4
     setlocal shiftwidth=4
 '''
-
-[[plugins]]
-repo = 'uber/prototool'
-rtp = 'vim/prototool'
-on_ft = 'proto'
-[plugins.ftplugin]
-proto = '''
-    nnoremap <buffer> gq :<C-u>call PrototoolFormatFix()<CR>
-'''
 #}}}
 
 #{{{ Python
@@ -1194,21 +1143,6 @@ on_ft = 'ansible'
 [[plugins]]
 repo = 'hashivim/vim-terraform'
 on_ft = ['terraform', 'javascript']
-
-[[plugins]]
-repo = 'juliosueiras/vim-terraform-completion'
-on_ft = ['terraform', 'javascript']
-#}}}
-
-#{{{ Hashicorp Configuration Language
-[[plugins]]
-repo = 'fatih/vim-hclfmt'
-on_ft = ['terraform', 'javascript']
-hook_source = '''
-    let g:hcl_fmt_autosave = 0
-    let g:tf_fmt_autosave = 0
-    let g:nomad_fmt_autosave = 0
-'''
 #}}}
 
 #{{{ PlantUML

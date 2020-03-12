@@ -42,12 +42,28 @@ brew install rbenv
 brew install ruby-build
 ## Python
 brew install boost
-# Orchestration tools
+## Orchestration tools
 brew install terraform
-# mysql
+## mysql
 brew install mycli
+## Javascript
+brew install eslint
+## Protobuf
+brew install protobuf
+brew install prototool
+brew tap bufbuild/buf
+brew install buf
+## yaml
+brew install yamllint
+# sh
+brew install shellcheck
+brew install shfmt
+
 ## ffmpeg
 brew install ffmpeg
+
+# Pandoc
+brew install pandoc
 
 # Graphviz
 brew install graphviz
@@ -66,6 +82,7 @@ brew install urlview
 
 # formatter
 brew install astyle
+brew install prettier
 
 # env
 brew install direnv
