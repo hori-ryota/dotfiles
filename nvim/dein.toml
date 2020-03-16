@@ -36,7 +36,7 @@ hook_add = '''
         nvim_lsp.dockerls.setup{}
 
         -- Go
-        -- nvim_lsp.gopls.setup{}
+        nvim_lsp.gopls.setup{}
 
         -- TODO:
         -- configs.golangci = {
@@ -536,10 +536,10 @@ hook_add = '''
 repo = 'cocopon/iceberg.vim'
 hook_add = '''
     set termguicolors
-    hi! link SpecialKey Special
     augroup colorscheme_iceberg
       autocmd!
       autocmd VimEnter * nested colorscheme iceberg
+      autocmd VimEnter * hi! link SpecialKey Special
     augroup END
 '''
 
