@@ -42,6 +42,8 @@ ln -snf "$BASEDIR"/ideavimrc "$HOME"/.ideavimrc
 
 # astyle
 ln -snf "$BASEDIR"/astylerc "$HOME"/.astylerc
+# golangci-lint
+ln -snf "$BASEDIR"/golangci.toml "$HOME"/.golangci.toml
 
 # gtags
 ln -snf "$BASEDIR"/globalrc "$HOME"/.globalrc
