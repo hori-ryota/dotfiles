@@ -1159,6 +1159,10 @@ repo = 'rking/ag.vim'
 [[plugins]] # replacement in quickfix
 repo = 'thinca/vim-qfreplace'
 
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
 [[plugins]] # quickrun
 repo = 'thinca/vim-quickrun'
 hook_add = '''

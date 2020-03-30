@@ -9,7 +9,8 @@ tools:
       - '%f:%l:%c: %m'
 
   make-checkmake: &make-checkmake
-    lint-command: 'checkmake' lint-stdin: true
+    lint-command: 'checkmake'
+    lint-stdin: true
 
   markdown-pandoc: &markdown-pandoc
     format-command: 'pandoc -f markdown -t gfm -sp --tab-stop=2'
