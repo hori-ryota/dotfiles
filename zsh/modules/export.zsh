@@ -22,7 +22,7 @@ export GOPATH=$HOME/dev
 export PATH=$PATH:$GOPATH/bin
 
 # Java
-export JAVA_HOME=`/usr/libexec/java_home -v 13`
+export JAVA_HOME=`/usr/libexec/java_home -v 14`
 
 # lang
 export LC_ALL=en_US.UTF-8
