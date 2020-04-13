@@ -73,7 +73,8 @@ tools:
     format-command: 'prototool format -f -w'
 
   terraform-fmt: &terraform-fmt
-    format-command: 'terraform fmt'
+    format-command: 'terraform fmt -'
+    format-stdin: true
 
 languages:
   vim:
