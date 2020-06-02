@@ -1,5 +1,7 @@
+---
 version: 2
-log: '~/efm-langserver.log'
+# logfile: 'efm-langserver.log'
+loglevel: 0
 
 tools:
   vim-vint: &vim-vint
@@ -18,6 +20,12 @@ tools:
   yaml-yamllint: &yaml-yamllint
     lint-command: 'yamllint -f parsable -'
     lint-stdin: true
+
+  cloudformation-cfn-python-lint: &cloudformation-cfn-python-lint
+    lint-command: 'cfn-lint'
+    lint-formats:
+      - '%A%t%n %m'
+      - '%Z%f:%l:%c'
 
   python-flake8: &python-flake8
     lint-command: 'flake8 --stdin-display-name ${INPUT} -'
@@ -72,10 +80,6 @@ tools:
     lint-command: 'prototool lint'
     format-command: 'prototool format -f -w'
 
-  terraform-fmt: &terraform-fmt
-    format-command: 'terraform fmt -'
-    format-stdin: true
-
 languages:
   vim:
     - <<: *vim-vint
@@ -87,13 +91,17 @@ languages:
     - <<: *markdown-pandoc
 
   yaml:
-    - <<: *yaml-yamllint
+    # - <<: *yaml-yamllint
 
-  python:
-    - <<: *python-flake8
-    - <<: *python-mypy
+  yaml.cloudformation:
+    # - <<: *yaml-yamllint
+    - <<: *cloudformation-cfn-python-lint
 
-  dockerfile:
+  # python:
+  #   - <<: *python-flake8
+  #   - <<: *python-mypy
+
+  Dockerfile:
     - <<: *dockerfile-hadolint
 
   sh:
@@ -118,6 +126,3 @@ languages:
   proto:
     - <<: *proto-buf
     - <<: *proto-prototool
-
-  terraform:
-    - <<: *terraform-fmt

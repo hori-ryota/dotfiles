@@ -150,6 +150,7 @@ augroup FileTypeDetect
     autocmd BufRead,BufNewFile *.toml                   setfiletype toml
     autocmd BufRead,BufNewFile *.ts                     setfiletype typescript
     autocmd BufRead,BufNewFile *.vim                    setfiletype vim
+    autocmd BufRead,BufNewFile *.cfn.yml,*.cfn.yaml     setfiletype yaml.cloudformation
     autocmd BufRead,BufNewFile *.yml,*.yaml,*.lock      setfiletype yaml
     autocmd BufRead,BufNewFile *.{md,mdwn,mkd,mkdn,mark*,txt,text} setfiletype markdown
     autocmd BufRead,BufNewFile *_spec.rb                setfiletype ruby.rspec

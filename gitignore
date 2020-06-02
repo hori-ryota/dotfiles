@@ -1,6 +1,7 @@
 ,*
 *.log
 .envrc
+pyvenv.cfg
 
 
 # gibo dump Dropbox Eclipse JetBrains Linux macOS MicrosoftOffice Vagrant Ninja Tags Vim VisualStudioCode Xcode

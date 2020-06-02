@@ -76,6 +76,18 @@ hook_add = '''
         -- Terraform
         nvim_lsp.terraformls.setup{}
 
+        configs.terraformls_new = {
+          default_config = {
+            cmd = {'terraform-ls', 'serve'};
+            filetypes = {'terraform'};
+            root_dir = nvim_lsp.util.root_pattern('.terraform');
+          };
+          docs = {
+            description = [[https://github.com/hashicorp/terraform-ls]];
+          };
+        }
+        nvim_lsp.terraformls_new.setup{}
+
         -- Typescript and Javascript
         nvim_lsp.tsserver.setup{}
         nvim_lsp.vuels.setup{}
@@ -84,7 +96,46 @@ hook_add = '''
         nvim_lsp.vimls.setup{}
 
         -- YAML
-        nvim_lsp.yamlls.setup{}
+        nvim_lsp.yamlls.setup = {
+          filetypes = {"yaml", "cloudformation.yaml"};
+          settings = {
+            yaml = {
+              format = {
+                singleQuote = true;
+              };
+              schemas = {
+                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json" = {}
+                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*.cfn.yaml'
+                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*.cfn.yml'
+                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*/cfn/*.yaml';
+                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*/cfn/*.yml';
+                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*/cloudformation/*.yaml';
+                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*/cloudformation/*.yml';
+              };
+              customTags = [[
+                "!Ref",
+                "!Sub scalar",
+                "!Sub sequence",
+                "!Join sequence",
+                "!FindInMap sequence",
+                "!GetAtt scalar",
+                "!GetAtt sequence",
+                "!Base64 mapping",
+                "!GetAZs",
+                "!Select scalar",
+                "!Select sequence",
+                "!Split sequence",
+                "!ImportValue",
+                "!Condition",
+                "!Equals sequence",
+                "!And",
+                "!If",
+                "!Not",
+                "!Or"
+              ]];
+            };
+          };
+        }
 
         -- C and Swift
         configs.sourcekit = {
@@ -327,14 +378,7 @@ hook_post_source = '''
 '''
 [plugins.ftplugin]
 defx = '''
-    nnoremap <silent><buffer> <Space>s :<C-u>Denite defx/session<CR>
     nnoremap <silent><buffer> <Space>h :<C-u>Denite defx/history<CR>
-
-    " session
-    nnoremap <silent><buffer><expr> sa
-                \ defx#async_action('add_session')
-    nnoremap <silent><buffer><expr> sd
-                \ defx#async_action('delete_session')
 
     " select
     nnoremap <silent><buffer><expr> x
@@ -394,6 +438,8 @@ defx = '''
                 \ defx#do_action('multi', ['drop', 'quit'])
     nnoremap <silent><buffer><expr> .
                 \ defx#do_action('repeat')
+    nnoremap <silent><buffer><expr> s
+                \ defx#do_action('multi', [['drop', 'split'], 'quit'])
     nnoremap <silent><buffer><expr> v
                 \ defx#do_action('multi', [['drop', 'vsplit'], 'quit'])
     nnoremap <silent><buffer><expr> P
@@ -942,33 +988,6 @@ proto = '''
 '''
 #}}}
 
-#{{{ Python
-[[plugins]]
-repo = 'zchee/deoplete-jedi'
-on_ft = 'python'
-
-[[plugins]]
-repo = 'davidhalter/jedi-vim'
-on_ft = 'python'
-hook_source = '''
-    let g:jedi#auto_vim_configuration = 0
-    let g:jedi#goto_command = '<C-]>'
-    let g:jedi#use_tabs_not_buffers = 0  " current default is 1.
-    let g:jedi#rename_command = '<Leader>R'
-    let g:jedi#usages_command = '<Leader>I'
-    let g:jedi#completions_enabled = 0
-    let g:jedi#smart_auto_mappings = 1
-
-    " Unite/ref and pydoc are more useful.
-    let g:jedi#documentation_command = '<Leader>gd'
-    let g:jedi#auto_close_doc = 1
-'''
-
-[[plugins]]
-repo = 'Vimjas/vim-python-pep8-indent'
-on_ft = 'python'
-#}}}
-
 #{{{ Gradle
 [[plugins]]
 repo = 'tfnico/vim-gradle'
@@ -1104,6 +1123,9 @@ on_ft = 'ansible'
 [[plugins]]
 repo = 'hashivim/vim-terraform'
 on_ft = ['terraform', 'javascript']
+hook_source = '''
+    let g:terraform_fmt_on_save = 1
+'''
 #}}}
 
 #{{{ PlantUML

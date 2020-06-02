@@ -4,8 +4,8 @@ echo 'Install github.com/mattn/files'
 go get -u -v github.com/mattn/files
 echo 'Install github.com/rakyll/hey'
 go get -u -v github.com/rakyll/hey
-echo 'Install golang.org/x/tools/cmd/gopls'
-go get -u -v golang.org/x/tools/cmd/gopls
+echo 'Install golang.org/x/tools/gopls'
+go get -u -v golang.org/x/tools/gopls
 echo 'Install github.com/golangci/golangci-lint'
 go get -u -v github.com/golangci/golangci-lint/cmd/golangci-lint
 echo 'Install github.com/mattn/efm-langserver'
@@ -18,6 +18,8 @@ echo 'Install github.com/Clever/csvlint/cmd/csvlint'
 go get -u -v github.com/Clever/csvlint/cmd/csvlint
 echo 'Install github.com/juliosueiras/terraform-lsp'
 go get -v github.com/juliosueiras/terraform-lsp
+echo 'Install github.com/hashicorp/terraform-ls'
+go get -v github.com/hashicorp/terraform-ls
 
 echo 'Install github.com/hori-ryota/go-codegen'
 go get -u -v github.com/hori-ryota/go-codegen

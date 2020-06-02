@@ -49,8 +49,8 @@ export PATH=$HOME/Library/Android/sdk/platform-tools:$PATH
 export ANDROID_SDK_ROOT=/usr/local/share/android-sdk
 
 # tensorflow
-export LIBRARY_PATH=${GOPATH}/src/github.com/tensorflow/tensorflow/bazel-bin/tensorflow
-export DYLD_LIBRARY_PATH=${GOPATH}/src/github.com/tensorflow/tensorflow/bazel-bin/tensorflow
+# export LIBRARY_PATH=${GOPATH}/src/github.com/tensorflow/tensorflow/bazel-bin/tensorflow
+# export DYLD_LIBRARY_PATH=${GOPATH}/src/github.com/tensorflow/tensorflow/bazel-bin/tensorflow
 
 # gpg
 export GPG_TTY=$(tty)

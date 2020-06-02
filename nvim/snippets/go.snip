@@ -29,6 +29,11 @@ abbr    "context.Background()"
 options word
   context.Background()
 
+snippet ctxbb
+abbr    "ctx := context.Background()"
+options head
+  ctx := context.Background()
+
 snippet ctxt
 abbr    "context.TODO()"
 options word
@@ -105,7 +110,6 @@ abbr "initialize gomock controller"
 options head
   ctrl, ctx := gomock.WithContext(context.Background(), t)
   defer ctrl.Finish()
-  ${0}
 
 snippet mockgen
 abbr "common mockgen command"
