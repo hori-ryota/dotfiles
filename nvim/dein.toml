@@ -332,7 +332,7 @@ on_source = ['unite.vim', 'denite.nvim']
 [[plugins]]
 repo = 'nixprime/cpsm'
 on_source = ['denite.nvim', 'deoplete.nvim']
-build = 'env PY3=ON ./install.sh'
+build = 'env PY3=ON ./install.sh && cp autoload/* bin/'
 
 [[plugins]]
 repo = 'Jagua/vim-denite-ghq'
@@ -888,11 +888,30 @@ talkiejs = '''
 #}}}
 #}}}
 
+#{{{ Javascript
+[[plugins]]
+repo = 'yuezk/vim-js'
+on_ft = ['javascript']
+
+[[plugins]]
+repo = 'maxmellon/vim-jsx-pretty'
+on_ft = ['javascript', 'jsx']
+
+[[plugins]]
+repo = 'pangloss/vim-javascript'
+on_ft = ['javascript', 'javascript.jsx']
+#}}}
+
 #{{{ TypeScript
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
-build = 'npm install -g clausreinke/typescript-tools typescript'
+build = 'npm install -g typescript-tools typescript'
 on_ft = 'typescript'
+
+[[plugins]]
+repo = 'peitalin/vim-jsx-typescript'
+on_ft = 'tsx'
+depends = 'typescript-vim'
 #}}}
 
 #{{{ go
@@ -1011,15 +1030,39 @@ on_ft = ['swift', 'sil', 'swiftgyb']
 # emmet
 [[plugins]]
 repo = 'mattn/emmet-vim'
-on_ft = ['html', 'ejs', 'erb', 'jst', 'jade']
+on_ft = ['html', 'javascript', 'typescript', 'ejs', 'erb', 'jst', 'jade']
 hook_source = '''
-    let g:user_emmet_leader_key=','
+    let g:user_emmet_leader_key = '<C-e>'
+    let g:user_emmet_expandabbr_key = '<C-e><C-e>'
+    let g:user_emmet_expandword_key = '<C-e>w'
+    let g:user_emmet_update_tag = '<C-e>u'
+    let g:user_emmet_balancetaginward_key = '<C-e>d'
+    let g:user_emmet_balancetagoutward_key = '<C-e>D'
+    let g:user_emmet_next_key = '<C-e>n'
+    let g:user_emmet_prev_key = '<C-e>p'
+    let g:user_emmet_imagesize_key = '<C-e>I'
+    let g:user_emmet_togglecomment_key = '<C-e>/'
+    let g:user_emmet_splitjointag_key = '<C-e>j'
+    let g:user_emmet_removetag_key = '<C-e>\d'
+    let g:user_emmet_anchorizeurl_key = '<C-e>x'
+    let g:user_emmet_anchorizesummary_key = '<C-e>X'
+    let g:user_emmet_mergelines_key = '<C-e>\m'
+    let g:user_emmet_codepretty_key = '<C-e>\s'
 
     let g:user_emmet_settings = {
                 \   'variables': {
                 \     'lang': 'ja'
                 \   },
-                \   'indentation': '  '
+                \   'indentation': '  ',
+                \   'includeLanguages': {
+                \     'typescript': 'typescriptreact'
+                \   },
+                \   'html': {
+                \     'empty_element_suffix': '/>'
+                \   },
+                \   'javascript': {
+                \     'extends': 'jsx'
+                \   }
                 \ }
 '''
 
@@ -1089,7 +1132,7 @@ on_ft = 'markdown'
 #{{{ JSON
 [[plugins]] # Preview
 repo = 'elzr/vim-json'
-on_ft = 'javascript'
+on_ft = 'json'
 hook_add = '''
     let g:vim_json_syntax_conceal = 0
 '''

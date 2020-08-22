@@ -135,7 +135,7 @@ augroup FileTypeDetect
     autocmd BufRead,BufNewFile *.html                   setfiletype html
     autocmd BufRead,BufNewFile *.jade                   setfiletype jade
     autocmd BufRead,BufNewFile *.java                   setfiletype java
-    autocmd BufRead,BufNewFile *.json,*.gyp,*.js        setfiletype javascript
+    autocmd BufRead,BufNewFile *.gyp,*.js               setfiletype javascript
     autocmd BufRead,BufNewFile *.kt                     setfiletype kotlin
     autocmd BufRead,BufNewFile *.less                   setfiletype less
     autocmd BufRead,BufNewFile *.m3u8                   setfiletype m3u8
@@ -148,7 +148,7 @@ augroup FileTypeDetect
     autocmd BufRead,BufNewFile *.tex                    setfiletype tex
     autocmd BufRead,BufNewFile *.tfstate                setfiletype tfstate
     autocmd BufRead,BufNewFile *.toml                   setfiletype toml
-    autocmd BufRead,BufNewFile *.ts                     setfiletype typescript
+    autocmd BufRead,BufNewFile *.ts,*tsx                setfiletype typescript
     autocmd BufRead,BufNewFile *.vim                    setfiletype vim
     autocmd BufRead,BufNewFile *.cfn.yml,*.cfn.yaml     setfiletype yaml.cloudformation
     autocmd BufRead,BufNewFile *.yml,*.yaml,*.lock      setfiletype yaml

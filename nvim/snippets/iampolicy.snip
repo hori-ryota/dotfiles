@@ -1,0 +1,12 @@
+snippet     a
+abbr        "Allow"
+options     head
+  {
+    "Effect": "Allow",
+    "Action": [
+      "${1:#:*}"
+    ],
+    "Resource": [
+      "${2:#:*}"
+    ]
+  }${0}
