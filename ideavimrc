@@ -1,2 +1,0 @@
-nnoremap <space>e :action ActivateProjectToolWindow<CR>
-nnoremap ,c :action CallHierarchy<CR>
