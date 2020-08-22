@@ -1,9 +1,5 @@
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zprofile" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zprofile"
+if [[ -s "$HOME/.zprezto/runcoms/zprofile" ]]; then
+  source "$HOME/.zprezto/runcoms/zprofile"
 fi
 
-export DOTFILES=$HOME/.dotfiles
-export LOCAL_ZSH_ROOT_PATH=$DOTFILES/zsh
-export LOCAL_ZSH_MODULE_PATH=${LOCAL_ZSH_ROOT_PATH}/modules
-
-source "${LOCAL_ZSH_MODULE_PATH}/export.zsh"
+source "$(dirname "${BASH_SOURCE:-$0}")/modules/export.sh"

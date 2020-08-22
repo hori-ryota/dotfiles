@@ -1,14 +1,10 @@
-# replace git to hub
-eval "$(hub alias -s)"
-
 # origin
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshrc" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshrc"
+if [[ -s "$HOME/.zprezto/runcoms/zshrc" ]]; then
+  source "$HOME/.zprezto/runcoms/zshrc"
 fi
 
-# aliases
-# ローカルのnode_modulesからの利用
-alias npm-exec='PATH=$(npm bin):$PATH'
+# replace git to hub
+eval "$(hub alias -s)"
 
 # search history with peco
 function peco-select-history() {
@@ -39,23 +35,7 @@ function peco-ghq () {
 zle -N peco-ghq
 bindkey '^ ' peco-ghq
 
-# ssh ec2 with instance name
-function sshec2() {
-  local name=$1
-  aws ec2 describe-instances --filter "Name=instance-state-name,Values=running" --filter "Name=tag:Name,Values=$name" | jq '.Reservations[].Instances[].PrivateDnsName' | xargs -I{} tmux split-window "tmux select-layout tiled > /dev/null && exec ssh {}"
-}
-
-# rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f "$HOME/google-cloud-sdk/path.zsh.inc" ]; then source "$HOME/google-cloud-sdk/path.zsh.inc"; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f "$HOME/google-cloud-sdk/completion.zsh.inc" ]; then source "$HOME/google-cloud-sdk/completion.zsh.inc"; fi
-
-
-# emacs keybind
+# emacs like keybind
 bindkey "^A" beginning-of-line
 bindkey "^B" backward-char
 bindkey "^D" delete-char-or-list
@@ -70,106 +50,6 @@ bindkey "^P" history-substring-search-up
 bindkey "^S" history-incremental-pattern-search-forward
 bindkey "^T" transpose-chars
 
-# todoist cli
-## https://github.com/sachaos/todoist/blob/master/todoist_functions.sh
-
-todoist_select_items_command="todoist --namespace --project-namespace list | peco | cut -d ' ' -f 1 | tr '\n' ' '"
-
-function insert-in-buffer () {
-    if [ -n "$1" ]; then
-        local new_left=""
-        if [ -n "$LBUFFER" ]; then
-            new_left="${new_left}${LBUFFER} "
-        fi
-        if [ -n "$2" ]; then
-            new_left="${new_left}${2} "
-        fi
-        new_left="${new_left}$1"
-        BUFFER=${new_left}${RBUFFER}
-        CURSOR=${#new_left}
-    fi
-}
-
-# todoist find item
-function peco-todoist-item () {
-    local SELECTED_ITEMS="$(eval ${todoist_select_items_command})"
-    insert-in-buffer $SELECTED_ITEMS
-}
-zle -N peco-todoist-item
-bindkey "^xtt" peco-todoist-item
-
-# todoist find project
-function peco-todoist-project () {
-    local SELECTED_PROJECT="$(todoist --project-namespace projects | peco | head -n1 | cut -d ' ' -f 1)"
-    insert-in-buffer "${SELECTED_PROJECT}" "-P"
-}
-zle -N peco-todoist-project
-bindkey "^xtp" peco-todoist-project
-
-# todoist find labels
-function peco-todoist-labels () {
-    local SELECTED_LABELS="$(todoist labels | peco | cut -d ' ' -f 1 | tr '\n' ',' | sed -e 's/,$//')"
-    insert-in-buffer "${SELECTED_LABELS}" "-L"
-}
-zle -N peco-todoist-labels
-bindkey "^xtl" peco-todoist-labels
-
-# todoist select date
-function peco-todoist-date () {
-    date -v 1d &>/dev/null
-    if [ $? -eq 0 ]; then
-        # BSD date option
-        OPTION="-v+#d"
-    else
-        # GNU date option
-        OPTION="-d # day"
-    fi
-
-    local SELECTED_DATE="$(seq 0 30 | xargs -I# date $OPTION '+%d/%m/%Y %a' | peco | cut -d ' ' -f 1)"
-    insert-in-buffer "'${SELECTED_DATE}'" "-d"
-}
-zle -N peco-todoist-date
-bindkey "^xtd" peco-todoist-date
-
-function todoist-exec-with-select-task () {
-    if [ -n "$2" ]; then
-        BUFFER="todoist $1 $(echo "$2" | tr '\n' ' ')"
-        CURSOR=$#BUFFER
-        zle accept-line
-    fi
-}
-
-# todoist close
-function peco-todoist-close() {
-    local SELECTED_ITEMS="$(eval ${todoist_select_items_command})"
-    todoist-exec-with-select-task close $SELECTED_ITEMS
-}
-zle -N peco-todoist-close
-bindkey "^xtc" peco-todoist-close
-
-# todoist delete
-function peco-todoist-delete() {
-    local SELECTED_ITEMS="$(eval ${todoist_select_items_command})"
-    todoist-exec-with-select-task delete $SELECTED_ITEMS
-}
-zle -N peco-todoist-delete
-bindkey "^xtk" peco-todoist-delete
-
-# todoist open
-function peco-todoist-open() {
-    local SELECTED_ITEMS="$(eval ${todoist_select_items_command})"
-    todoist-exec-with-select-task "show --browse" $SELECTED_ITEMS
-}
-zle -N peco-todoist-open
-bindkey "^xto" peco-todoist-open
-
-# todoist add task
-function todoist-add-task() {
-  curl https://todoist.com/api/v7/quick/add \
-    -d token=$TODOIST_TOKEN \
-    -d text="$1"
-}
-
 # ローカルの設定ファイルがあればそれを読み込み
 if [ -f "$HOME/.zshrc.local" ]; then
   source "$HOME/.zshrc.local"
@@ -180,7 +60,7 @@ if [ -d "$HOME/.zsh/completion" ]; then
 fi
 
 # ls
-
+## from `:prezto:module:utility`
 if is-callable 'dircolors'; then
   # GNU Core Utilities
 
@@ -221,13 +101,5 @@ else
   fi
 fi
 
-alias l='ls -1A'         # Lists in one column, hidden files.
 alias ll='ls -lh'        # Lists human readable sizes.
-alias lr='ll -R'         # Lists human readable sizes, recursively.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
-alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
-alias lx='ll -XB'        # Lists sorted by extension (GNU only).
-alias lk='ll -Sr'        # Lists sorted by size, largest last.
-alias lt='ll -tr'        # Lists sorted by date, most recent last.
-alias lc='lt -c'         # Lists sorted by date, most recent last, shows change time.
-alias lu='lt -u'         # Lists sorted by date, most recent last, shows access time.
