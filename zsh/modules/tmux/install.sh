@@ -5,7 +5,7 @@ brew install urlview
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
 
 # symlinks for tmux
-ln -snf "$(dirname "${BASH_SOURCE:-$0}")/tmux.conf" "$HOME/.tmux.conf"
+ln -snf "$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)/tmux.conf" "$HOME/.tmux.conf"
 
 TMUX_DIR="$HOME/.tmux/plugins/tpm"
 if [ ! -d "$TMUX_DIR" ]; then

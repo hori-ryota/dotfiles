@@ -1,1 +1,4 @@
-source "$(dirname "${BASH_SOURCE:-$0}")/*/export.zsh"
+for f in "$(dirname "${BASH_SOURCE:-$0}")/"*"/export.zsh"
+do
+  source "$f"
+done
