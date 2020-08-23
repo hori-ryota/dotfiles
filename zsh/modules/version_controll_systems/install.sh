@@ -1,6 +1,7 @@
 brew install git
-brew install hub
 brew install git-secrets
+brew install hub
+brew install ghq
 
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
 
