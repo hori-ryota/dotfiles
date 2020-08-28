@@ -1,0 +1,251 @@
+#{{{ dein self
+[[plugins]]
+repo = 'Shougo/dein.vim'
+#}}}
+
+#{{{ denite
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+on_cmd = 'Denite'
+depends = [
+  'vim-clap',
+  'neomru.vim',
+  'neoyank.vim',
+  'vim-denite-ghq',
+]
+hook_post_source = '''
+  let s:denite_win_width_percent = 0.7
+  let s:denite_win_height_percent = 0.7
+  let s:denite_win_height_offset = 0.1
+  call denite#custom#option('_', {
+      \ 'split': 'floating',
+      \ 'smartcase': 1,
+      \ 'prompt': '> ',
+      \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+      \ 'wincol': float2nr((&columns * (1 - s:denite_win_width_percent)) / 2),
+      \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+      \ 'winrow': float2nr((&lines * (1 - s:denite_win_height_percent + 2 * s:denite_win_height_offset)) / 2),
+      \ 'auto_action': 'preview',
+      \ })
+
+  " Change matchers.
+  call denite#custom#source(
+      \ '_', 'matchers', ['matcher/clap'])
+
+  " Change file/rec command.
+  call denite#custom#var('file/rec', 'command',
+      \ ['rg', '--files', '--color', 'never',
+      \ '--no-ignore',
+      \ '--follow', '--hidden', '--smart-case',
+      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/',
+      \ ])
+
+  " Ripgrep command on grep source
+  call denite#custom#var('grep', {
+      \ 'command': ['rg'],
+      \ 'default_opts': [
+      \ '--vimgrep', '--no-heading', '--color', 'never',
+      \ '--no-ignore',
+      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/',
+      \ '--follow', '--hidden', '--smart-case',
+      \ ],
+      \ 'recursive_opts': [],
+      \ 'pattern_opt': ['--regexp'],
+      \ 'separator': ['--'],
+      \ 'final_opts': [],
+      \ })
+
+  "{{{ cd session
+  let s:data_home = empty($XDG_DATA_HOME) ? expand('~/.local/share') : $XDG_DATA_HOME
+  let s:session_dir = get(g:, 'denite_session_dir', s:data_home . '/nvim/denite_session')
+  if !isdirectory(s:session_dir)
+    call mkdir(s:session_dir, 'p')
+  endif
+
+  function! s:session_file_name(target_dir)
+    return s:session_dir . '/' . trim(substitute(a:target_dir, '/', '-', 'g'), '-') . '.vim'
+  endfunction
+
+  function! s:save_session(target_dir)
+    execute 'mksession! ' . s:session_file_name(a:target_dir)
+  endfunction
+
+  function! s:load_or_create_session(target_dir)
+    let s:file_name = s:session_file_name(a:target_dir)
+    if filereadable(s:file_name)
+      execute 'source ' . s:file_name
+      return
+    endif
+    call s:save_session(a:target_dir)
+  endfunction
+
+  function! s:cdsession_action(context)
+    call s:save_session(getcwd())
+
+    let s:target = a:context['targets'][0]
+    let s:path = s:target['action__path']
+    execute 'cd ' . s:path
+    call s:load_or_create_session(s:path)
+  endfunction
+
+  call denite#custom#action('directory', 'cdsession', function('s:cdsession_action'))
+
+  "{{{ clean session
+  function! s:clean_session(target_dir)
+    let s:file_name = s:session_file_name(a:target_dir)
+    if filewritable(s:file_name)
+      call delete(s:file_name)
+    endif
+  endfunction
+  function! s:clean_session_action(context)
+    let s:target = a:context['targets'][0]
+    let s:path = s:target['action__path']
+    call s:clean_session(s:path)
+  endfunction
+  call denite#custom#action('directory', 'clean_session', function('s:clean_session_action'), {'is_quit': 0})
+
+  function! s:clean_sessions()
+    call system('rm ' . s:session_file_name('*'))
+  endfunction
+  function! s:clean_sessions_action(context)
+    call s:clean_sessions()
+  endfunction
+  call denite#custom#action('directory', 'clean_allsession', function('s:clean_sessions_action'), {'is_quit': 0})
+  "}}}
+
+  "}}}
+'''
+hook_add = '''
+  nnoremap <silent> <Space><Space>  :<C-u>Denite           -start-filter file/rec<CR>
+  nnoremap <silent> <Space>i<Space> :<C-u>Denite           -start-filter file/rec:
+  nnoremap <silent> <Space>P        :<C-u>DeniteBufferDir  -start-filter file/rec<CR>
+  nnoremap <silent> <Space>gp       :<C-u>DeniteProjectDir -start-filter file/rec<CR>
+
+  nnoremap <silent> <Space>ls :<C-u>Denite file_mru<CR>
+  nnoremap <silent> <Space>ft :<C-u>Denite -start-filter filetype<CR>
+
+  nnoremap <silent> <Space>/  :<C-u>Denite -start-filter line<CR>
+  nnoremap <silent> <Space>r  :<C-u>Denite grep<CR>
+  nnoremap <silent> <Space>ir :<C-u>Denite grep:
+
+  nnoremap <silent> <Space>: :<C-u>Denite command<CR>
+  nnoremap <silent> <Space>; :<C-u>Denite command_history<CR>
+
+  nnoremap <silent> <Space>p     :<C-u>Denite neoyank<CR>
+  nnoremap <silent> <Space><C-k> :<C-u>Denite neosnippet<CR>
+  nnoremap <silent> <C-Space>    :<C-u>Denite -start-filter ghq -default-action=cdsession<CR>
+
+  " memolist
+  nnoremap <silent> <Space>ml :<C-u>Denite -auto-action=preview -sorters=sorter_word,sorter_reverse file/rec:`expand(g:memolist_path)`<CR>
+  " grep memolist
+  nnoremap <silent> <Space>mr :<C-u>Denite -auto-action=preview grep:`expand(g:memolist_path)`<CR>
+
+  nnoremap <silent> ]d       :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
+  nnoremap <silent> [d       :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
+  nnoremap <silent> <space>. :<C-u>Denite -resume -cursor-pos=+0<CR>
+  " Open dotfiles
+  nnoremap <space>d :<C-u>Denite file/rec:$HOME/.dotfiles<CR>
+'''
+[plugins.ftplugin]
+denite = '''
+  " select
+  nnoremap <silent><buffer><expr> x
+              \ denite#do_map('toggle_select').'j'
+  nnoremap <silent><buffer><expr> X
+              \ denite#do_map('toggle_select_all')
+
+  " action
+  nnoremap <silent><buffer><expr> <CR>
+              \ denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> .
+              \ denite#do_map('do_previous_action')
+  nnoremap <silent><buffer><expr> d
+              \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><expr> P
+              \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> e
+              \ denite#do_map('do_action', 'edit')
+  nnoremap <silent><buffer><expr> v
+              \ denite#do_map('do_action', 'vsplit')
+  nnoremap <silent><buffer><expr> s
+              \ denite#do_map('do_action', 'split')
+  nnoremap <silent><buffer><expr> cd
+              \ denite#do_map('do_action', 'cd')
+  nnoremap <silent><buffer><expr> <Tab>
+              \ denite#do_map('choose_action')
+  nnoremap <silent><buffer><expr> <ESC>
+              \ denite#do_map('quit')
+
+  " operation
+  nnoremap <silent><buffer><expr> H
+              \ denite#do_map('move_up_path')
+  nnoremap <silent><buffer><expr> i
+              \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> I
+              \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> o
+              \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> <C-l>
+              \ denite#do_map('redraw')
+  nnoremap <silent><buffer><expr> [d
+              \ denite#do_map('restore_sources')
+'''
+denite-filter = '''
+  imap     <silent><buffer> <ESC>  <Plug>(denite_filter_quit)
+  inoremap <silent><buffer> g<ESC> <ESC>
+'''
+
+#{{{ matchers
+[[plugins]]
+repo = 'liuchengxu/vim-clap'
+hook_post_update = '''
+  execute ':Clap install-binary'
+'''
+lazy = 1
+#}}}
+
+#{{{ sources
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+lazy = 1
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+on_event = 'TextYankPost'
+[[plugins]]
+repo = 'Jagua/vim-denite-ghq'
+lazy = 1
+#}}}
+#}}}
+
+#{{{ Filer
+[[plugins]]
+repo = 'Shougo/defx.nvim'
+on_cmd = 'Defx'
+#}}}
+
+#{{{ Formatting
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'
+#}}}
+
+#{{{ Filetype
+
+#{{{ TOML
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+#}}}
+
+#}}}
+
+#{{{ Color Scheme
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+hook_add = '''
+    set termguicolors
+'''
+hook_post_source = '''
+    colorscheme iceberg
+    hi! link SpecialKey Special
+'''
+#}}}
