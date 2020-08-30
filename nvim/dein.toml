@@ -144,7 +144,7 @@ hook_add = '''
   nnoremap <silent> [d       :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
   nnoremap <silent> <space>. :<C-u>Denite -resume -cursor-pos=+0<CR>
   " Open dotfiles
-  nnoremap <space>d :<C-u>Denite file/rec:$HOME/.dotfiles<CR>
+  nnoremap <silent> <space>d :<C-u>Denite file/rec:$HOME/.dotfiles<CR>
 '''
 [plugins.ftplugin]
 denite = '''
@@ -221,6 +221,256 @@ lazy = 1
 [[plugins]]
 repo = 'Shougo/defx.nvim'
 on_cmd = 'Defx'
+hook_post_source = '''
+  call defx#custom#column('icon', {
+        \ 'directory_icon': '▸',
+        \ 'opened_icon': '▾',
+        \ 'root_icon': ' ',
+        \ })
+  call defx#custom#column('mark', {
+        \ 'readonly_icon': '✗',
+        \ 'selected_icon': '✓',
+        \ })
+
+  let s:defx_win_width_percent = 0.7
+  let s:defx_win_height_percent = 0.7
+  let s:defx_win_height_offset = 0.1
+  call defx#custom#option('_', {
+        \ 'show_ignored_files': 1,
+        \ 'toggle': 1,
+        \ 'columns': 'mark:indent:icon:filename:type',
+        \ 'floating_preview': 1,
+        \ 'vertical_preview': 1,
+        \ 'split': 'floating',
+        \ 'winwidth': float2nr(&columns * s:defx_win_width_percent),
+        \ 'wincol': float2nr((&columns * (1 - s:defx_win_width_percent)) / 2),
+        \ 'winheight': float2nr(&lines * s:defx_win_height_percent),
+        \ 'winrow': float2nr((&lines * (1 - s:defx_win_height_percent + 2 * s:defx_win_height_offset)) / 2),
+        \ })
+'''
+hook_add = '''
+  nnoremap <silent> <space>e :<C-u>Defx -listed -resume -buffer-name=`trim(substitute(getcwd(), '/', '-', 'g'), '-')`<CR>
+  nnoremap <silent> <space>E :<C-u>Defx `expand('%:p:h')` -search=`expand('%:p')`<CR>
+'''
+[plugins.ftplugin]
+defx = '''
+  " select
+  nnoremap <silent><buffer><nowait><expr> x
+        \ defx#do_action('toggle_select') . 'j'
+  nnoremap <silent><buffer><nowait><expr> X
+        \ defx#do_action('toggle_select_all')
+  xnoremap <silent><buffer><nowait><expr> x
+        \ defx#do_action('toggle_select_visual')
+  xnoremap <silent><buffer><nowait><expr> <CR>
+        \ defx#do_action('toggle_select_visual')
+  xnoremap <silent><buffer><nowait><expr> <ESC>
+        \ defx#do_action('clear_select_all')
+
+  " tree
+  nnoremap <silent><buffer><nowait><expr> o
+        \ defx#is_directory() ?
+        \ defx#do_action('open_or_close_tree') :
+        \ defx#do_action('multi', ['drop', 'quit'])
+  nnoremap <silent><buffer><nowait><expr> O
+        \ defx#is_directory() ?
+        \   defx#is_opened_tree() ?
+        \ defx#do_action('close_tree') :
+        \ defx#do_action('open_tree_recursive') :
+        \ defx#do_action('close_tree')
+  nnoremap <silent><buffer><nowait><expr> l
+        \ defx#is_directory() ?
+        \ defx#do_action('open') :
+        \ defx#do_action('multi', ['drop', 'quit'])
+  nnoremap <silent><buffer><nowait><expr> h
+        \ defx#do_action('cd', ['..'])
+
+  " new resource
+  nnoremap <silent><buffer><nowait><expr> A
+        \ defx#do_action('new_directory')
+  nnoremap <silent><buffer><nowait><expr> a
+        \ defx#do_action('new_file')
+  nnoremap <silent><buffer><nowait><expr> ga
+        \ defx#do_action('new_multiple_files')
+
+  " file action
+  nnoremap <silent><buffer><nowait><expr> m
+        \ defx#do_action('move')
+  nnoremap <silent><buffer><nowait><expr> c
+        \ defx#do_action('copy')
+  nnoremap <silent><buffer><nowait><expr> p
+        \ defx#do_action('paste')
+  nnoremap <silent><buffer><nowait><expr> r
+        \ defx#do_action('rename')
+  nnoremap <silent><buffer><nowait><expr> d
+        \ defx#do_action('remove')
+  nnoremap <silent><buffer><nowait><expr> ;
+        \ defx#do_action('execute_command')
+  nnoremap <silent><buffer><nowait><expr> !
+        \ defx#do_action('execute_system')
+
+  nnoremap <silent><buffer><nowait><expr> <CR>
+        \ defx#is_directory() ?
+        \ defx#do_action('open') :
+        \ defx#do_action('multi', ['drop', 'quit'])
+  nnoremap <silent><buffer><nowait><expr> .
+        \ defx#do_action('repeat')
+  nnoremap <silent><buffer><nowait><expr> s
+        \ defx#do_action('multi', [['drop', 'split'], 'quit'])
+  nnoremap <silent><buffer><nowait><expr> v
+        \ defx#do_action('multi', [['drop', 'vsplit'], 'quit'])
+  nnoremap <silent><buffer><nowait><expr> P
+        \ defx#do_action('open', 'pedit')
+
+  " others
+  nnoremap <silent><buffer><nowait><expr> gcd
+        \ defx#async_action('change_vim_cwd')
+  nnoremap <silent><buffer><nowait><expr> <C-g>
+        \ defx#do_action('print')
+  nnoremap <silent><buffer><nowait><expr> <C-l>
+        \ defx#do_action('redraw')
+  nnoremap <silent><buffer><nowait><expr> D
+        \ defx#do_action('toggle_columns',
+        \                'mark:indent:filename:type:size:time')
+  nnoremap <silent><buffer><nowait><expr> y
+        \ defx#do_action('yank_path')
+
+  nnoremap <silent><buffer><nowait><expr> T
+        \ defx#do_action('toggle_sort', 'time')
+  nnoremap <silent><buffer><nowait><expr> I
+        \ defx#do_action('toggle_ignored_files')
+
+  " base
+  nnoremap <silent><buffer><nowait><expr> j
+        \ line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><nowait><expr> k
+        \ line('.') == 1 ? 'G' : 'k'
+'''
+#}}}
+
+#{{{ VCS
+[[plugins]]
+repo = 'lambdalisue/gina.vim'
+hook_post_source = '''
+	call gina#custom#execute(
+      \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
+      \ 'setlocal winfixheight',
+      \)
+
+  function! s:mapping(schema, mode, lhs, rhs)
+    if a:rhs =~ '^<Plug>'
+      call gina#custom#mapping#nmap(a:schema, a:lhs, a:rhs, {
+        \ 'mode': a:mode,
+        \ 'nowait': 1,
+        \ })
+      return
+    endif
+    call gina#custom#mapping#nmap(a:schema, a:lhs, a:rhs, {
+      \ 'mode': a:mode,
+      \ 'nowait': 1,
+      \ 'noremap': 1,
+      \ 'silent': 1,
+      \ })
+  endfunction
+
+  "{{{ status settings
+	call gina#custom#command#option('status', '-u|--untracked-files')
+	call gina#custom#command#option('status', '-s|--short')
+	call gina#custom#command#option('status', '-b|--branch')
+  call s:mapping('status', 'n', '<Tab>', '<Plug>(gina-builtin-choice)')
+  call s:mapping('status', 'n', 'x', '<Plug>(gina-builtin-mark)j')
+  call s:mapping('status', 'n', 'yy', '<Plug>(gina-yank-path)')
+  call s:mapping('status', 'n', 'Y', '<Plug>(gina-yank-rev)')
+
+  call s:mapping('status', 'n', 'C', ':<C-u>Gina commit<CR>')
+  call s:mapping('status', 'n', '<', '<Plug>(gina-index-stage)')
+  call s:mapping('status', 'n', '>', '<Plug>(gina-index-unstage)')
+
+  call s:mapping('status', 'n', '<CR>', '<Plug>(gina-edit)')
+  call s:mapping('status', 'n', 's', '<Plug>(gina-edit-split)')
+  call s:mapping('status', 'n', 'v', '<Plug>(gina-edit-vsplit)')
+  call s:mapping('status', 'n', 'P', '<Plug>(gina-show-preview)')
+  call s:mapping('status', 'n', 'g<CR>', '<Plug>(gina-show)')
+  call s:mapping('status', 'n', 'gs', '<Plug>(gina-show-split)')
+  call s:mapping('status', 'n', 'gv', '<Plug>(gina-show-vsplit)')
+
+  call s:mapping('status', 'n', 'di', '<Plug>(gina-diff)')
+  call s:mapping('status', 'n', 'gp', '<Plug>(gina-patch)')
+  call s:mapping('status', 'n', 'gc', '<Plug>(gina-chaperon)')
+
+  call s:mapping('status', 'n', 'gx', '<Plug>(gina-browse)')
+  "}}}
+
+  "{{{ commit settings
+	call gina#custom#command#option('commit', '-u|--untracked-files')
+	call gina#custom#command#option('commit', '-v|--verbose')
+  call s:mapping('commit', 'n', 's!', '<Plug>(gina-commit-ammend)')
+  "}}}
+'''
+hook_add = '''
+  " let g:gina#command#commit#use_default_mappings = 0
+  " let g:gina#command#diff#use_default_mappings = 0
+  " let g:gina#command#status#use_default_mappings = 0
+  nnoremap <space>vs :<C-u>Gina status<CR>
+
+  "{{{ unuse default mappings
+  " let g:gina#command#blame#use_default_mappings = 0
+  " let g:gina#command#branch#use_default_mappings = 0
+  " let g:gina#command#changes#use_default_mappings = 0
+  " let g:gina#command#chaperon#use_default_mappings = 0
+  let g:gina#command#commit#use_default_mappings = 0
+  " let g:gina#command#diff#use_default_mappings = 0
+  " let g:gina#command#grep#use_default_mappings = 0
+  " let g:gina#command#log#use_default_mappings = 0
+  " let g:gina#command#ls#use_default_mappings = 0
+  " let g:gina#command#patch#use_default_mappings = 0
+  " let g:gina#command#qrep#use_default_mappings = 0
+  " let g:gina#command#reflog#use_default_mappings = 0
+  " let g:gina#command#show#use_default_mappings = 0
+  " let g:gina#command#stash#show#use_default_mappings = 0
+  " let g:gina#command#stash#use_default_mappings = 0
+  let g:gina#command#status#use_default_mappings = 0
+  " let g:gina#command#tag#use_default_mappings = 0
+  "}}}
+'''
+
+[[plugins]]
+repo = 'cohama/agit.vim'
+hook_add = '''
+  let g:agit_no_default_mappings = 1
+  nnoremap <silent> <space>vl :<C-u>Agit<CR>
+  nnoremap <silent> <space>vL :<C-u>AgitFile<CR>
+'''
+[plugins.ftplugin]
+agit = '''
+  nmap <buffer><nowait> <C-j> <Plug>(agit-scrolldown-stat)
+  nmap <buffer><nowait> <C-k> <Plug>(agit-scrollup-stat)
+  nmap <buffer><nowait> <C-n> <Plug>(agit-scrolldown-diff)
+  nmap <buffer><nowait> <C-p> <Plug>(agit-scrollup-diff)
+  nmap <buffer><nowait> <C-l> <Plug>(agit-reload)
+  nmap <buffer><nowait> yh    <Plug>(agit-yank-hash)
+  nmap <buffer><nowait> <C-g> <Plug>(agit-print-commitmsg)
+  nmap <buffer><nowait> <ESC> <Plug>(agit-exit)
+  nmap <buffer><nowait> co    <Plug>(agit-git-checkout)
+  nmap <buffer><nowait> bo    <Plug>(agit-git-checkout-b)
+  nmap <buffer><nowait> bd    <Plug>(agit-git-branch-b)
+  nmap <buffer><nowait> rs    <Plug>(agit-git-reset-soft)
+  nmap <buffer><nowait> rr    <Plug>(agit-git-reset)
+  nmap <buffer><nowait> rh    <Plug>(agit-git-reset-hard)
+  nmap <buffer><nowait> rbb   <Plug>(agit-git-rebase)
+  nmap <buffer><nowait> rbi   <Plug>(agit-git-rebase-i)
+  nmap <buffer><nowait> cp    <Plug>(agit-git-cherry-pick)
+  nmap <buffer><nowait> rv    <Plug>(agit-git-revert)
+  nmap <buffer><nowait> di    <Plug>(agit-git-diff)
+  nmap <buffer><nowait> dI    <Plug>(agit-git-diff-with-local)
+'''
+#}}}
+
+#{{{ History
+[[plugins]]
+repo = 'simnalamburt/vim-mundo'
+hook_add = '''
+  nnoremap <space>u :<C-u>MundoToggle<CR>
+'''
 #}}}
 
 #{{{ Formatting
@@ -228,7 +478,320 @@ on_cmd = 'Defx'
 repo = 'editorconfig/editorconfig-vim'
 #}}}
 
+#{{{ LSP
+[[plugins]]
+repo = 'neovim/nvim-lsp'
+hook_add = '''
+  function! LC_maps()
+    " nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>
+    nnoremap <buffer><silent> K           :<C-u>lua vim.lsp.buf.hover()<CR>
+    nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.signature_help()<CR>
+    nnoremap <buffer><silent> <C-]>       :<C-u>lua vim.lsp.buf.definition()<CR>
+    nnoremap <buffer><silent> <Leader>i   :<C-u>lua vim.lsp.buf.implementation()<CR>
+    nnoremap <buffer><silent> <Leader>R   :<C-u>lua vim.lsp.buf.rename()<CR>
+    nnoremap <buffer><silent> <Leader>s   :<C-u>lua vim.lsp.buf.document_symbol()<CR>
+    nnoremap <buffer><silent> <Leader>dr  :<C-u>lua vim.lsp.buf.references()<CR>
+    " nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>
+    nnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.formatting()<CR>
+    vnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.range_formatting()<CR>
+    nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.document_highlight()<CR>
+    " nnoremap <buffer><silent> <Leader>H :<C-u>call LanguageClient_clearDocumentHighlight()<CR>
+    " nnoremap <buffer><silent> <Leader>S :<C-u>Denite -start-filter workspaceSymbol<CR>
+  endfunction
+
+  lua << EOF
+      function bind_key_map()
+        -- vim.cmd "nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>"
+        vim.cmd "nnoremap <buffer><silent> K           :<C-u>lua vim.lsp.buf.hover()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.signature_help()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <C-]>       :<C-u>lua vim.lsp.buf.definition()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>i   :<C-u>lua vim.lsp.buf.implementation()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>R   :<C-u>lua vim.lsp.buf.rename()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>s   :<C-u>lua vim.lsp.buf.document_symbol()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>dr  :<C-u>lua vim.lsp.buf.references()<CR>"
+        -- vim.cmd "nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>"
+        vim.cmd "nnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.formatting()<CR>"
+        vim.cmd "vnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.range_formatting()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.document_highlight()<CR>"
+        -- vim.cmd "nnoremap <buffer><silent> <Leader>H :<C-u>call LanguageClient_clearDocumentHighlight()<CR>"
+        -- vim.cmd "nnoremap <buffer><silent> <Leader>S :<C-u>Denite -start-filter workspaceSymbol<CR>"
+      end
+
+      local nvim_lsp = require'nvim_lsp'
+      nvim_lsp.vimls.setup{
+        on_attach = bind_key_map
+      }
+      nvim_lsp.gopls.setup{
+        on_attach = bind_key_map
+      }
+EOF
+
+  hi! link LspDiagnosticsError       ALEVirtualTextError
+  hi! link LspDiagnosticsErrorSign   ALEErrorSign
+  hi! link LspDiagnosticsWarning     ALEVirtualTextWarning
+  hi! link LspDiagnosticsWarningSign ALEWarningSign
+  hi! link LspDiagnosticsInformation Identifier
+  hi! link LspDiagnosticsHint        ALEVirtualTextWarning
+  hi! link LspReferenceText          Normal
+  hi! link LspReferenceRead          Identifier
+  hi! link LspReferenceWrite         MoreMsg
+'''
+#}}}
+
+#{{{ Complement
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+on_event = 'InsertEnter'
+depends = 'cpsm'
+hook_source = '''
+  " <TAB>: completion.
+  inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ deoplete#manual_complete()
+  function! s:check_back_space() abort "{{{
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction"}}}
+
+  " <S-TAB>: completion back.
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  " <C-h>, <BS>: close popup and delete backword char.
+  inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+  " <CR>: close popup and save indent.
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function() abort
+    return deoplete#close_popup() . "\<CR>"
+  endfunction
+'''
+hook_post_source = '''
+  call deoplete#custom#option({
+    \ 'min_pattern_length': 1,
+    \ })
+
+  call deoplete#custom#source('_', 'max_abbr_width', 0)
+  call deoplete#custom#source('_', 'max_menu_width', 0)
+  call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
+
+  call deoplete#enable()
+'''
+
+#{{{ matchers
+[[plugins]]
+repo = 'nixprime/cpsm'
+build = 'PY3=ON ./install.sh && cp autoload/* bin/'
+lazy = 1
+#}}}
+
+#{{{ sources
+[[plugins]]
+repo = 'Shougo/deoplete-lsp'
+on_source = 'deoplete.nvim'
+#}}}
+
+#{{{ extension
+[[plugins]]
+repo = 'Shougo/echodoc.vim'
+on_event = 'CompleteDone'
+hook_source = '''
+  let g:echodoc#type = 'floating'
+  call echodoc#enable()
+'''
+#}}}
+
+#}}}
+
+#{{{ Snippet
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+hook_add = '''
+    imap <silent><c-k> <Plug>(neosnippet_jump_or_expand)
+    smap <silent><c-k> <Plug>(neosnippet_jump_or_expand)
+    xmap <silent><c-k> <Plug>(neosnippet_expand_target)
+    imap <silent><c-j> <Plug>(neosnippet_expand_or_jump)
+    smap <silent><c-j> <Plug>(neosnippet_expand_or_jump)
+    xmap <silent><c-j> <Plug>(neosnippet_register_oneshot_snippet)
+
+    let g:neosnippet#expand_word_boundary = 1
+
+    let g:neosnippet#snippets_directory = g:vim_dir . '/snippets'
+
+    let g:neosnippet#disable_runtime_snippets = {
+                \   '_' : 1,
+                \ }
+'''
+#}}}
+
+#{{{ Async Execution
+[[plugins]]
+repo = 'tpope/vim-dispatch'
+on_cmd = [
+  'Copen',
+  'Dispatch',
+  'FocusDispatch',
+  'Make',
+  'Start',
+]
+hook_add = '''
+  let g:dispatch_no_maps = 1
+'''
+#}}}
+
+#{{{ Testing
+[[plugins]]
+repo = 'vim-test/vim-test'
+on_ft =  [
+  'go',
+]
+depends = [
+  'vim-dispatch',
+]
+hook_add = '''
+  let g:test#strategy = 'dispatch'
+'''
+[plugins.ftplugin]
+go = '''
+  let g:test#go#gotest#file_pattern = '\v.*\.go$'
+  nnoremap <buffer><silent> <Leader>t :<C-u>TestFile<CR>
+  nnoremap <buffer><silent> <Leader>T :<C-u>TestNearest<CR>
+
+  function! s:debugNearest()
+    let g:test#go#runner = 'delve'
+    TestNearest
+    unlet g:test#go#runner
+  endfunction
+  command! -buffer DebugNearest call s:debugNearest()
+'''
+#}}}
+
+#{{{ Utils
+[[plugins]] # easily search for, substitute, and abbreviate multiple variants of a word
+repo = 'tpope/vim-abolish'
+
+[[plugins]] # replacement in quickfix
+repo = 'thinca/vim-qfreplace'
+
+#{{{ increment Date
+[[plugins]] 
+repo = 'tpope/vim-speeddating'
+hook_add = '''
+    let g:speeddating_no_mappings = 1
+    nmap  <C-A>     <Plug>SpeedDatingUp
+    nmap  <C-X>     <Plug>SpeedDatingDown
+    xmap  <C-A>     <Plug>SpeedDatingUp
+    xmap  <C-X>     <Plug>SpeedDatingDown
+'''
+#}}}
+
+#{{{ Editing Text Utils
+[[plugins]] # Aligning Text
+repo = 'junegunn/vim-easy-align'
+hook_add = '''
+    " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+    vmap <Enter> <Plug>(EasyAlign)
+
+    " Start interactive EasyAlign for a motion/text object (e.g. gaip)
+    nmap ga <Plug>(EasyAlign)
+'''
+
+[[plugins]] # pairs of handy bracket mappings
+repo = 'tpope/vim-unimpaired'
+
+[[plugins]] # edit surround easy
+repo = 'machakann/vim-sandwich'
+hook_add = '''
+    let g:sandwich_no_default_key_mappings = 1
+    let g:operator_sandwich_no_default_key_mappings = 1
+
+    " add
+    silent! nmap <unique> <Leader>wa <Plug>(operator-sandwich-add)
+    silent! xmap <unique> <Leader>wa <Plug>(operator-sandwich-add)
+    silent! omap <unique> <Leader>wa <Plug>(operator-sandwich-g@)
+
+    " delete
+    silent! nmap <unique><silent> <Leader>wd <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+    silent! nmap <unique><silent> <Leader>wdb <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+    silent! xmap <unique> <Leader>wd <Plug>(operator-sandwich-delete)
+
+    " replace
+    silent! nmap <unique><silent> <Leader>wr <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+    silent! nmap <unique><silent> <Leader>wrb <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+    silent! xmap <unique> <Leader>wr <Plug>(operator-sandwich-replace)
+'''
+
+[[plugins]] # comment
+repo = 'tyru/caw.vim'
+[plugins.ftplugin]
+pu_uml_plantuml = '''
+    let b:caw_oneline_comment = "'"
+    let b:caw_wrap_oneline_comment = ["/'", "'/"]
+    let b:caw_wrap_multiline_comment = {'right': "'/", 'left': "/'"}
+'''
+
+[[plugins]] # for caw.vim
+repo = 'kana/vim-repeat'
+#}}}
+
+#{{{ Memo
+[[plugins]]
+repo = 'glidenote/memolist.vim'
+hook_add = '''
+    let g:memolist_path = "~/Dropbox/memo"
+    let g:memolist_memo_suffix = "txt"
+    let g:memolist_memo_date = "%Y-%m-%d %H:%M"
+    nnoremap <Leader>mn :<C-u>MemoNew<CR>
+'''
+#}}}
+
+#{{{ Diff tools
+[[plugins]]
+repo = 'AndrewRadev/linediff.vim'
+
+[[plugins]]
+repo = 'will133/vim-dirdiff'
+hook_add = '''
+    nmap <silent> [<C-d> :<C-u>DirDiffPrev<CR>
+    nmap <silent> ]<C-d> :<C-u>DirDiffNext<CR>
+'''
+#}}}
+
+#}}}
+
 #{{{ Filetype
+
+[ftplugin] #{{{
+snippets = '''
+    setlocal noexpandtab
+'''
+vim = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+make = '''
+    setlocal noexpandtab
+    setlocal tabstop=8
+    setlocal shiftwidth=8
+'''
+python = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+kotlin = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+markdown = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+css = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+#}}}
 
 #{{{ TOML
 [[plugins]]
@@ -236,6 +799,129 @@ repo = 'cespare/vim-toml'
 on_ft = 'toml'
 #}}}
 
+#{{{ CSV
+[[plugins]]
+repo = 'mechatroner/rainbow_csv'
+on_ft = ['csv']
+#}}}
+
+#{{{ Go
+[[plugins]]
+repo = 'mattn/vim-goimports'
+on_ft = 'go'
+#}}}
+
+#{{{ Markdown
+# Preview
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = ['markdown', 'plantuml']
+build = 'cp app & npm install'
+hook_source = '''
+    let g:mkdp_command_for_global = 1
+    let g:mkdp_auto_close = 0
+    let g:mkdp_markdown_css = g:vim_dir . '/markdown_preview-markdown.css'
+'''
+#}}}
+
+#{{{ PlantUML
+[[plugins]]
+repo = 'aklt/plantuml-syntax'
+on_ft = 'plantuml'
+#}}}
+
+#}}}
+
+#{{{ Status bar
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  let g:lightline = {
+              \ 'colorscheme': 'iceberg',
+              \ 'mode_map': { 'c': 'NORMAL' },
+              \ 'active': {
+              \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename' ] ],
+              \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+              \ },
+              \ 'component_function': {
+              \   'readonly': 'LightlineReadonly',
+              \   'gitbranch': 'LightLineGitBranch',
+              \   'filename': 'LightLineFilename',
+              \   'fileformat': 'LightLineFileformat',
+              \   'filetype': 'LightLineFiletype',
+              \   'fileencoding': 'LightLineFileencoding',
+              \   'mode': 'LightLineMode',
+              \ },
+              \ 'separator': { 'left': "\uE0B0", 'right': "\uE0B2" },
+              \ 'subseparator': { 'left': "\uE0B1", 'right': "\uE0B3" }
+              \ }
+
+  function! LightLineModified()
+      return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  endfunction
+
+  function! LightLineReadonly()
+      return &ft !~? 'help' && &readonly ? "\uE0A2" : ''
+  endfunction
+
+  function! LightLineFilename()
+      let fname = expand('%:t')
+      return fname == '__Tagbar__' ? g:lightline.fname :
+                  \ fname =~ '__Mundo\|NERD_tree' ? '' :
+                  \ &ft == 'denite' ? denite#get_status() :
+                  \ &ft == 'denite-filter' ? denite#get_status() :
+                  \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+                  \ ('' != fname ? fname : '[No Name]') .
+                  \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+  endfunction
+
+  function! LightLineGitBranch()
+      try
+          if expand('%:t') !~? 'Tagbar\|Mundo' && &ft !~? 'denite\|defx'
+              let mark = ''  " edit here for cool mark
+              let _ = gina#component#repo#branch()
+              return strlen(_) ? mark._ : ''
+          endif
+      catch
+      endtry
+      return ''
+  endfunction
+
+  function! LightLineFileformat()
+      return winwidth(0) > 70 ? &fileformat : ''
+  endfunction
+
+  function! LightLineFiletype()
+      return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+  endfunction
+
+  function! LightLineFileencoding()
+      return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+  endfunction
+
+  function! LightLineMode()
+      let fname = expand('%:t')
+      return fname == '__Tagbar__' ? 'Tagbar' :
+                  \ fname == '__Mundo__' ? 'Mundo' :
+                  \ fname == '__Mundo_Preview__' ? 'Mundo Preview' :
+                  \ &ft == 'defx' ? 'Defx' :
+                  \ &ft == 'denite' ? 'Denite' :
+                  \ &ft == 'denite-filter' ? 'Denite Filter' :
+                  \ &ft == 'vimshell' ? 'VimShell' :
+                  \ winwidth(0) > 60 ? lightline#mode() : ''
+  endfunction
+
+  let g:tagbar_status_func = 'TagbarStatusFunc'
+
+  function! TagbarStatusFunc(current, sort, fname, ...) abort
+      let g:lightline.fname = a:fname
+      return lightline#statusline(0)
+  endfunction
+
+  let g:unite_force_overwrite_statusline = 0
+  let g:vimfiler_force_overwrite_statusline = 0
+  let g:vimshell_force_overwrite_statusline = 0
+'''
 #}}}
 
 #{{{ Color Scheme

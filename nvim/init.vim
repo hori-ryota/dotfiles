@@ -1,3 +1,5 @@
+let g:vim_dir = $XDG_CONFIG_HOME . '/nvim'
+
 "{{{ Options
 " see `:options`
 
@@ -91,13 +93,29 @@ set sessionoptions+=winpos
 "}}}
 "}}}
 
+let g:mapleader = 's'
+let g:maplocalleader = 's'
+
+nnoremap <Leader>S :<C-u>source $MYVIMRC<CR>
+
 " turn off highlight
 " close preview window
 nnoremap <silent> <ESC> :<C-u>nohlsearch<CR>:pclose<CR>
 
+" modify grep command to ripgrep
+if executable('rg')
+    let &grepprg = 'rg --vimgrep --no-ignore --glob !.git/ --glob !.DS_Store --glob !node_modules/ --follow --hidden --smart-case'
+    set grepformat=%f:%l:%c:%m
+endif
+
 "{{{ filetype detect
 augroup FileTypeDetect
-  autocmd!
+  autocmd! 
+  autocmd BufRead,BufNewFile *.{txt,text}             setfiletype markdown
+  autocmd BufRead,BufNewFile *.{snippets,snip}        setfiletype snippets
+  autocmd BufRead,BufNewFile .envrc                   setfiletype zsh
+  autocmd BufRead,BufNewFile zlogin,zlogout,zpreztorc setfiletype zsh
+  autocmd BufRead,BufNewFile zprofile,zshenv,zshrc    setfiletype zsh
 augroup END
 "}}}
 
