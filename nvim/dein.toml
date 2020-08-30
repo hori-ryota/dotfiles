@@ -582,7 +582,7 @@ hook_post_source = '''
 #{{{ matchers
 [[plugins]]
 repo = 'nixprime/cpsm'
-build = 'PY3=ON ./install.sh && cp autoload/* bin/'
+build = 'brew install boost && PY3=ON ./install.sh && cp autoload/* bin/'
 lazy = 1
 #}}}
 
