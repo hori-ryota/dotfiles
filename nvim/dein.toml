@@ -403,6 +403,7 @@ hook_post_source = '''
   "{{{ commit settings
 	call gina#custom#command#option('commit', '-u|--untracked-files')
 	call gina#custom#command#option('commit', '-v|--verbose')
+	call gina#custom#command#option('commit', '-S|--gpg-sign')
   call s:mapping('commit', 'n', 's!', '<Plug>(gina-commit-ammend)')
   "}}}
 '''
