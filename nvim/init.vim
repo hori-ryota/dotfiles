@@ -125,7 +125,6 @@ let s:dein_dir = s:cache_home . '/dein'
 
 let g:dein#install_progress_type = 'title'
 let g:dein#install_log_filename = s:dein_dir . '/dein.log'
-let g:dein#auto_recache = 1
 
 "{{{ prepare dein.vim
 if &runtimepath !~# '/dein.vim'
@@ -136,13 +135,20 @@ if &runtimepath !~# '/dein.vim'
     endif
     "}}}
 
-    execute 'set runtimepath+=' . s:dein_repo_dir
+    execute 'set runtimepath^=' . s:dein_repo_dir
 endif
 "}}}
 
+let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
+let s:config_files = [
+        \ expand('<sfile>'),
+        \ s:toml_file,
+        \ ]
 if dein#load_state(s:dein_dir)
-  let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/dein.toml'
-  call dein#begin(s:dein_dir, [expand('<sfile>'), s:toml_file])
+  for plugin_name in keys(g:dein#_plugins)
+    let g:dein#_plugins[plugin_name].sourced = 0
+  endfor
+  call dein#begin(s:dein_dir, s:config_files)
   call dein#load_toml(s:toml_file)
   call dein#end()
   call dein#save_state()
@@ -151,6 +157,13 @@ call dein#call_hook('source')
 augroup DeinHooks
   autocmd!
   autocmd VimEnter * ++nested call dein#call_hook('post_source')
+augroup END
+
+augroup AutoRefreshSettings
+  autocmd!
+  execute printf('autocmd BufWritePost %s call localfunc#refresh#refresh_vimrc()', join(s:config_files, ','))
+  " Reload autoload
+  autocmd BufWritePost */autoload/*.vim source %
 augroup END
 "}}}
 
