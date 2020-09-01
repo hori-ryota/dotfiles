@@ -639,6 +639,13 @@ on_cmd = [
 hook_add = '''
   let g:dispatch_no_maps = 1
 '''
+[plugins.ftplugin]
+sh = '''
+  nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch sh %<CR>
+'''
+go = '''
+  nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch go run %:h<CR>
+'''
 #}}}
 
 #{{{ Testing
@@ -768,8 +775,8 @@ snippets = '''
     setlocal noexpandtab
 '''
 vim = '''
-    setlocal tabstop=4
-    setlocal shiftwidth=4
+    setlocal tabstop=2
+    setlocal shiftwidth=2
 '''
 make = '''
     setlocal noexpandtab
