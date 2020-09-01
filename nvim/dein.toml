@@ -149,50 +149,50 @@ hook_add = '''
 [plugins.ftplugin]
 denite = '''
   " select
-  nnoremap <silent><buffer><expr> x
+  nnoremap <silent><buffer><nowait><expr> x
               \ denite#do_map('toggle_select').'j'
-  nnoremap <silent><buffer><expr> X
+  nnoremap <silent><buffer><nowait><expr> X
               \ denite#do_map('toggle_select_all')
 
   " action
-  nnoremap <silent><buffer><expr> <CR>
+  nnoremap <silent><buffer><nowait><expr> <CR>
               \ denite#do_map('do_action')
-  nnoremap <silent><buffer><expr> .
+  nnoremap <silent><buffer><nowait><expr> .
               \ denite#do_map('do_previous_action')
-  nnoremap <silent><buffer><expr> d
+  nnoremap <silent><buffer><nowait><expr> d
               \ denite#do_map('do_action', 'delete')
-  nnoremap <silent><buffer><expr> P
+  nnoremap <silent><buffer><nowait><expr> P
               \ denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> e
+  nnoremap <silent><buffer><nowait><expr> e
               \ denite#do_map('do_action', 'edit')
-  nnoremap <silent><buffer><expr> v
+  nnoremap <silent><buffer><nowait><expr> v
               \ denite#do_map('do_action', 'vsplit')
-  nnoremap <silent><buffer><expr> s
+  nnoremap <silent><buffer><nowait><expr> s
               \ denite#do_map('do_action', 'split')
-  nnoremap <silent><buffer><expr> cd
+  nnoremap <silent><buffer><nowait><expr> cd
               \ denite#do_map('do_action', 'cd')
-  nnoremap <silent><buffer><expr> <Tab>
+  nnoremap <silent><buffer><nowait><expr> <Tab>
               \ denite#do_map('choose_action')
-  nnoremap <silent><buffer><expr> <ESC>
+  nnoremap <silent><buffer><nowait><expr> <ESC>
               \ denite#do_map('quit')
 
   " operation
-  nnoremap <silent><buffer><expr> H
+  nnoremap <silent><buffer><nowait><expr> H
               \ denite#do_map('move_up_path')
-  nnoremap <silent><buffer><expr> i
+  nnoremap <silent><buffer><nowait><expr> i
               \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> I
+  nnoremap <silent><buffer><nowait><expr> I
               \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> o
+  nnoremap <silent><buffer><nowait><expr> o
               \ denite#do_map('open_filter_buffer')
-  nnoremap <silent><buffer><expr> <C-l>
+  nnoremap <silent><buffer><nowait><expr> <C-l>
               \ denite#do_map('redraw')
-  nnoremap <silent><buffer><expr> [d
+  nnoremap <silent><buffer><nowait><expr> [d
               \ denite#do_map('restore_sources')
 '''
 denite-filter = '''
-  imap     <silent><buffer> <ESC>  <Plug>(denite_filter_quit)
-  inoremap <silent><buffer> g<ESC> <ESC>
+  imap     <silent><buffer><nowait> <ESC>  <Plug>(denite_filter_quit)
+  inoremap <silent><buffer><nowait> g<ESC> <ESC>
 '''
 
 #{{{ matchers
