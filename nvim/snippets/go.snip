@@ -1,24 +1,3 @@
-snippet main
-abbr    "init main and Main"
-options head
-  package main
-
-  import (
-    "log"
-    "os"
-  )
-
-  func main() {
-    if err := Main(os.Args); err != nil {
-      log.Fatal(err)
-    }
-  }
-
-  func Main(args []string) error {
-    ${0:TARGET}
-    return nil
-  }
-
 snippet ctx
 abbr    "arg context"
 options word
@@ -39,116 +18,10 @@ abbr    "context.TODO()"
 options word
   context.TODO()
 
-snippet ife
-abbr    "if err != nil {}"
-options head
-  if err != nil {
-    ${0:TARGET}
-  }
-
-snippet ifer
-abbr    "if err != nil {}"
-options head
-  if err != nil {
-    return ${0}
-  }
-
-snippet ifee
-abbr    "if err := ${1:TARGET}; err != nil {}"
-options head
-  if err := ${1:TARGET}; err != nil {
-    ${0}
-  }
-
-snippet ife_
-abbr    "if _, err := ${1:TARGET}; err != nil {}"
-options head
-  if _, err := ${1:TARGET}; err != nil {
-    ${0}
-  }
-
-snippet r
-abbr "return"
+snippet ctxtt
+abbr    "ctx := context.TODO()"
 options word
-  return ${0:TARGET}
-
-snippet test
-abbr "test"
-options head
-alias t
-  func Test${1}(t *testing.T) {
-    ${0}
-  }
-
-snippet tt
-abbr "subtest"
-options head
-  t.Run("${1}", func(t *testing.T) {
-    ${0:TARGET}
-  })
-
-snippet ttr
-abbr "range subtest"
-options head
-  for _, tt := range []struct{
-    name string
-    ${1:want} ${2:string}
-  }{
-    {
-      name: "${3}",
-      $1: ${4},
-    },
-  }{
-    tt := tt
-    t.Run(tt.name, func(t *testing.T) {
-      ${0:TARGET}
-    })
-  }
-
-snippet mc
-abbr "initialize gomock controller"
-options head
-  ctrl, ctx := gomock.WithContext(context.Background(), t)
-  defer ctrl.Finish()
-
-snippet mockgen
-abbr "common mockgen command"
-options head
-  //go:generate mockgen -source $GOFILE -destination mock_$GOPACKAGE/${GOFILE}_mock.go
-
-snippet eww
-abbr "zaperr.WrapperWith"
-options head
-  zaperr ${1}= zaperr.WrapperWith(zap.${0})
-
-snippet ew
-abbr "zaperr.Wrap"
-options word
-  zaperr.Wrap(err, "${0}")
-
-snippet en
-abbr "zaperr.New"
-options word
-  zaperr.New("${0}")
-
-snippet pn
-abbr "panic by not implemented"
-options head
-  panic("not implemented")
-
-snippet h
-abbr "handler with register"
-options head
-  func (${1:y} `getreg('h')`) ${2}(${3}) (${4}) {
-    ${0:TARGET:panic("not implemented")}
-  }
-
-snippet hp
-abbr "handler with register (pointer handler)"
-options head
-  func (${1:y} *`getreg('h')`) ${2}(${3}) (${4}) {
-    ${0:TARGET:panic("not implemented")}
-  }
+  context.TODO()
 
 snippet rt
 abbr "required tag"
@@ -235,116 +108,45 @@ abbr "//go:generate go-genaccessor"
 options head
   //go:generate go-codegen go_accessor
 
-snippet uio
-abbr "Usecase"
+snippet test
+abbr "test"
 options head
-  //genconstructor
-  type ${1}Usecase struct {
-    authorizer $1UsecaseAuthorizer \`required:""\`
-  }
-
-  //genconstructor
-  type $1UsecaseInput struct {
-    ${3}
-  }
-
-  //genconstructor
-  type $1UsecaseOutput struct {
-    ${4}
-  }
-
-  func (u $1Usecase) ${2}(
-    ctx context.Context,
-    input $1UsecaseInput,
-    actor Actor,
-  ) ($1UsecaseOutput, domain.Error) {
-    if err := u.authorizer.AuthorizeActorTo$2(ctx, input, actor); err != nil {
-      return $1UsecaseOutput{}, err
-    }
+alias t
+  func Test${1}(t *testing.T) {
     ${0}
-    return $1UsecaseOutput{}, nil
   }
 
-  type $1UsecaseAuthorizer interface {
-    AuthorizeActorTo$2(context.Context, $1UsecaseInput, Actor) domain.Error
-  }
-
-snippet ui
-abbr "Usecase only input"
+snippet tt
+abbr "subtest"
 options head
-  //genconstructor
-  type ${1}Usecase struct {
-    authorizer $1UsecaseAuthorizer \`required:""\`
-  }
+  t.Run("${1}", func(t *testing.T) {
+    ${0:TARGET}
+  })
 
-  //genconstructor
-  type $1UsecaseInput struct {
-    ${3}
-  }
-
-  func (u $1Usecase) ${2}(
-    ctx context.Context,
-    input $1UsecaseInput,
-    actor Actor,
-  ) domain.Error {
-    if err := u.authorizer.AuthorizeActorTo$2(ctx, input, actor); err != nil {
-      return err
-    }
-    ${0}
-    return nil
-  }
-
-  type $1UsecaseAuthorizer interface {
-    AuthorizeActorTo$2(context.Context, $1UsecaseInput, Actor) domain.Error
-  }
-
-snippet uo
-abbr "Usecase only output"
+snippet ttr
+abbr "range subtest"
 options head
-  //genconstructor
-  type ${1}Usecase struct {
-    authorizer $1UsecaseAuthorizer \`required:""\`
+  for _, tt := range []struct{
+    name string
+  }{
+    {
+      name: "",
+    },
+  }{
+    tt := tt
+    t.Run(tt.name, func(t *testing.T) {
+      ${0:TARGET}
+    })
   }
 
-  //genconstructor
-  type $1UsecaseOutput struct {
-    ${3}
-  }
-
-  func (u $1Usecase) ${2}(
-    ctx context.Context,
-    actor Actor,
-  ) ($1UsecaseOutput, domain.Error) {
-    if err := u.authorizer.AuthorizeActorTo$2(ctx, actor); err != nil {
-      return $1UsecaseOutput{}, err
-    }
-    ${0}
-    return $1UsecaseOutput{}, nil
-  }
-
-  type $1UsecaseAuthorizer interface {
-    AuthorizeActorTo$2(context.Context, Actor) domain.Error
-  }
-
-snippet u
-abbr "Usecase without input and output"
+snippet mc
+abbr "initialize gomock controller"
 options head
-  //genconstructor
-  type ${1}Usecase struct {
-    authorizer $1UsecaseAuthorizer \`required:""\`
-  }
+  ctrl, ctx := gomock.WithContext(context.Background(), t)
+  defer ctrl.Finish()
 
-  func (u $1Usecase) ${2}(
-    ctx context.Context,
-    actor Actor,
-  ) domain.Error {
-    if err := u.authorizer.AuthorizeActorTo$2(ctx, actor); err != nil {
-      return err
-    }
-    ${0}
-    return nil
-  }
+snippet mockgen
+abbr "common mockgen command"
+options head
+  //go:generate mockgen -source $GOFILE -destination mock_$GOPACKAGE/${GOFILE}_mock.go
 
-  type $1UsecaseAuthorizer interface {
-    AuthorizeActorTo$2(context.Context, Actor) domain.Error
-  }

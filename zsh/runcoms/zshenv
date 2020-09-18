@@ -1,3 +1,3 @@
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshenv" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/runcoms/zshenv"
+if [[ -s "$HOME/.zprezto/runcoms/zshenv" ]]; then
+  source "$HOME/.zprezto/runcoms/zshenv"
 fi

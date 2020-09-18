@@ -1,689 +1,642 @@
-#{{{ General
-
+#{{{ dein self
 [[plugins]]
 repo = 'Shougo/dein.vim'
-
-#{{{ config
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-
-[[plugins]]
-repo = 'editorconfig/editorconfig-vim'
-#}}}
-
-#{{{ LSP
-[[plugins]]
-repo = 'neovim/nvim-lsp'
 hook_add = '''
-    lua << EOF
-        local nvim_lsp = require'nvim_lsp'
-        local configs = require'nvim_lsp/configs'
-
-        -- General purpose
-        nvim_lsp.efm.setup{}
-
-        -- Bash
-        nvim_lsp.bashls.setup{}
-
-        -- CSS
-        nvim_lsp.cssls.setup{}
-
-        -- Dart
-        -- TODO:
-        -- nvim_lsp.dartls.setup{}
-
-        -- Dockerfile
-        nvim_lsp.dockerls.setup{}
-
-        -- Go
-        nvim_lsp.gopls.setup{}
-
-        -- TODO:
-        -- configs.golangci = {
-        --     default_config = {
-        --         cmd = {'golangci-lint-langserver'};
-        --         filetypes = {'go'};
-        --         root_dir = nvim_lsp.util.root_pattern("go.mod", ".git");
-        --         init_options = {
-        --             command = {"golangci-lint", "run", "--fast", "--max-same-issues", "0", "--disable", "gochecknoinits", "--disable", "gochecknoglobals", "--disable", "lll", "--disable", "maligned", "--disable", "dupl", "--out-format", "json"};
-        --         };
-        --     };
-        --     docs = {
-        --         description = [[https://github.com/nametake/golangci-lint-langserver]];
-        --     };
-        -- }
-        -- nvim_lsp.golangci.setup{}
-
-        -- HTML
-        nvim_lsp.html.setup{}
-
-        -- JSON
-        nvim_lsp.jsonls.setup{}
-
-        -- Python
-        nvim_lsp.pyls.setup{}
-
-        -- Rust
-        nvim_lsp.rls.setup{}
-        nvim_lsp.rust_analyzer.setup{}
-
-        -- Ruby
-        nvim_lsp.solargraph.setup{}
-
-        -- Lua
-        nvim_lsp.sumneko_lua.setup{}
-
-        -- Terraform
-        nvim_lsp.terraformls.setup{}
-
-        configs.terraformls_new = {
-          default_config = {
-            cmd = {'terraform-ls', 'serve'};
-            filetypes = {'terraform'};
-            root_dir = nvim_lsp.util.root_pattern('.terraform');
-          };
-          docs = {
-            description = [[https://github.com/hashicorp/terraform-ls]];
-          };
-        }
-        nvim_lsp.terraformls_new.setup{}
-
-        -- Typescript and Javascript
-        nvim_lsp.tsserver.setup{}
-        nvim_lsp.vuels.setup{}
-
-        -- Vim
-        nvim_lsp.vimls.setup{}
-
-        -- YAML
-        nvim_lsp.yamlls.setup = {
-          filetypes = {"yaml", "cloudformation.yaml"};
-          settings = {
-            yaml = {
-              format = {
-                singleQuote = true;
-              };
-              schemas = {
-                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json" = {}
-                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*.cfn.yaml'
-                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*.cfn.yml'
-                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*/cfn/*.yaml';
-                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*/cfn/*.yml';
-                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*/cloudformation/*.yaml';
-                "https://raw.githubusercontent.com/awslabs/goformation/master/schema/cloudformation.schema.json"[1] = '/*/cloudformation/*.yml';
-              };
-              customTags = [[
-                "!Ref",
-                "!Sub scalar",
-                "!Sub sequence",
-                "!Join sequence",
-                "!FindInMap sequence",
-                "!GetAtt scalar",
-                "!GetAtt sequence",
-                "!Base64 mapping",
-                "!GetAZs",
-                "!Select scalar",
-                "!Select sequence",
-                "!Split sequence",
-                "!ImportValue",
-                "!Condition",
-                "!Equals sequence",
-                "!And",
-                "!If",
-                "!Not",
-                "!Or"
-              ]];
-            };
-          };
-        }
-
-        -- C and Swift
-        configs.sourcekit = {
-            default_config = {
-                cmd = {'sourcekit-lsp'};
-                filetypes = {'c', 'c++', 'objc', 'objc++', 'swift'};
-                root_dir = nvim_lsp.util.root_pattern('.git', 'Package.swift');
-            };
-            docs = {
-                description = [[https://github.com/apple/sourcekit-lsp]];
-            };
-        }
-        nvim_lsp.sourcekit.setup{}
-
-        -- Kotlin
-        configs.kotlinls = {
-            default_config = {
-                cmd = {os.getenv("HOME")..'/dev/src/github.com/fwcd/KotlinLanguageServer/server/build/install/server/bin/kotlin-language-server'};
-                filetypes = {'kotlin'};
-                root_dir = nvim_lsp.util.root_pattern('.git', 'build.gradle', 'build.gradle.kts');
-            };
-            docs = {
-                description = [[https://github.com/fwcd/KotlinLanguageServer]];
-            };
-        }
-        nvim_lsp.kotlinls.setup{}
-
-EOF
-
-    function! LC_maps()
-      " nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>
-      nnoremap <buffer><silent> K           :<C-u>lua vim.lsp.buf.hover()<CR>
-      nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.signature_help()<CR>
-      nnoremap <buffer><silent> <C-]>       :<C-u>lua vim.lsp.buf.definition()<CR>
-      nnoremap <buffer><silent> <Leader>i   :<C-u>lua vim.lsp.buf.implementation()<CR>
-      nnoremap <buffer><silent> <Leader>R   :<C-u>lua vim.lsp.buf.rename()<CR>
-      nnoremap <buffer><silent> <Leader>s   :<C-u>lua vim.lsp.buf.document_symbol()<CR>
-      nnoremap <buffer><silent> <Leader>dr  :<C-u>lua vim.lsp.buf.references()<CR>
-      " nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>
-      nnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.formatting()<CR>
-      vnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.range_formatting()<CR>
-      nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.document_highlight()<CR>
-      " nnoremap <buffer><silent> <Leader>H :<C-u>call LanguageClient_clearDocumentHighlight()<CR>
-      " nnoremap <buffer><silent> <Leader>S :<C-u>Denite -start-filter workspaceSymbol<CR>
-    endfunction
-
-    autocmd FileType * call LC_maps()
-
-    " LSP HIGHLIGHT (iceberg)
-    hi! link LspDiagnosticsError      ALEVirtualTextError
-    hi! link LspDiagnosticsWarning    ALEVirtualTextWarning
-    hi! link LspDiagnosticInformation Identifier
-    hi! link LspDiagnosticHint        ALEVirtualTextWarning
-    hi! link LspReferenceText         Normal
-    hi! link LspReferenceRead         Identifier
-    hi! link LspReferenceWrite        MoreMsg
+  let g:dein#install_github_api_token=$DEINVIM_GITHUB_API_TOKEN
+  command! DeinInstall call dein#install()
+  command! DeinUpdate call dein#check_update(v:true)
 '''
 #}}}
 
-#{{{ denite.nvim
+#{{{ denite
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-depends = 'cpsm'
 on_cmd = 'Denite'
-hook_add = '''
-    nnoremap <silent> <Space><Space>  :<C-u>Denite           -start-filter file/rec<CR>
-    nnoremap <silent> <Space>i<Space> :<C-u>Denite           -start-filter file/rec:
-    nnoremap <silent> <Space>P        :<C-u>DeniteBufferDir  -start-filter file/rec<CR>
-    nnoremap <silent> <Space>gp       :<C-u>DeniteProjectDir -start-filter file/rec<CR>
-
-    nnoremap <silent> <Space>ls :<C-u>Denite file_mru<CR>
-
-    nnoremap <silent> <Space>ft :<C-u>Denite -start-filter filetype<CR>
-
-    nnoremap <silent> <Space>o  :<C-u>Denite jump<CR>
-    nnoremap <silent> <Space>g; :<C-u>Denite change<CR>
-    nnoremap <silent> <Space>`  :<C-u>Denite mark<CR>
-
-    nnoremap <silent> <Space>/  :<C-u>Denite -start-filter line<CR>
-    nnoremap <silent> <Space>r  :<C-u>Denite grep<CR>
-    nnoremap <silent> <Space>ir :<C-u>Denite grep:
-
-    nnoremap <silent> <Space>: :<C-u>Denite command<CR>
-    nnoremap <silent> <Space>; :<C-u>Denite command_history<CR>
-
-    nnoremap <silent> <Space>y   :<C-u>Denite neoyank<CR>
-    nnoremap <silent> <Space>k   :<C-u>Denite neosnippet<CR>
-    nnoremap <silent> <Space>ghq :<C-u>Denite -start-filter ghq -default-action=cd<CR>
-
-    " memolist
-    nnoremap <silent> <Space>ml :<C-u>Denite -auto-action=preview -sorters=sorter_word,sorter_reverse file/rec:`expand(g:memolist_path)`<CR>
-    " grep memolist
-    nnoremap <silent> <Space>mg :<C-u>Denite -auto-action=preview grep:`expand(g:memolist_path)`<CR>
-
-    nnoremap <silent> <space>co :<C-u>Denite quickfix<CR>
-    nnoremap <silent> <space>lo :<C-u>Denite location_list<CR>
-
-    nnoremap <silent> ]d       :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
-    nnoremap <silent> [d       :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
-    nnoremap <silent> <space>. :<C-u>Denite -resume -cursor-pos=+0<CR>
-    " Open dotfiles
-    nnoremap <space>d :<C-u>Denite file/rec:$HOME/.dotfiles<CR>
-'''
+depends = [
+  'vim-clap',
+  'neomru.vim',
+  'neoyank.vim',
+  'vim-denite-ghq',
+]
 hook_post_source = '''
-    let s:denite_win_width_percent = 0.7
-    let s:denite_win_height_percent = 0.7
-    call denite#custom#option('_', {
-                \ 'auto_resize': 1,
-                \ 'split': 'floating',
-                \ 'smartcase': 1,
-                \ 'prompt': '> ',
-                \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
-                \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
-                \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
-                \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
-                \ 'auto_action': 'preview',
-                \ })
+  let s:denite_win_width_percent = 0.7
+  let s:denite_win_height_percent = 0.7
+  let s:denite_win_height_offset = 0.1
+  call denite#custom#option('_', {
+      \ 'split': 'floating',
+      \ 'smartcase': 1,
+      \ 'prompt': '> ',
+      \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+      \ 'wincol': float2nr((&columns * (1 - s:denite_win_width_percent)) / 2),
+      \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+      \ 'winrow': float2nr((&lines * (1 - s:denite_win_height_percent + 2 * s:denite_win_height_offset)) / 2),
+      \ 'auto_action': 'preview',
+      \ })
 
-    " Change file/rec command.
-    call denite#custom#var('file/rec', 'command',
-                \ ['ag', '--follow', '--vimgrep', '--hidden',
-                \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences',
-                \ '-g', ''])
+  " Change matchers.
+  call denite#custom#source(
+      \ '_', 'matchers', ['matcher/clap'])
 
-    " Change matchers.
-    call denite#custom#source(
-                \ 'file_mru', 'matchers', ['matcher/fuzzy', 'matcher/project_files'])
-    call denite#custom#source(
-                \ 'file/rec', 'matchers', ['matcher/cpsm'])
+  " Change file/rec command.
+  call denite#custom#var('file/rec', 'command',
+      \ ['rg', '--files', '--color', 'never',
+      \ '--no-ignore',
+      \ '--follow', '--hidden', '--smart-case',
+      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/', '--glob', '!.docker-compose-data/',
+      \ ])
 
-    " Ag command on grep source
-    call denite#custom#var('grep', 'command', ['ag'])
-    call denite#custom#var('grep', 'default_opts',
-                \ ['--vimgrep', '--follow', '--hidden',
-                \ '--ignore-dir', '.git', '--ignore', '\.DS_Store', '--ignore-dir', 'node_modules', '--ignore-dir', 'Alfred.alfredpreferences'
-                \ ])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', [])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'final_opts', [])
+  " Ripgrep command on grep source
+  call denite#custom#var('grep', {
+      \ 'command': ['rg'],
+      \ 'default_opts': [
+      \ '--vimgrep', '--no-heading', '--color', 'never',
+      \ '--no-ignore',
+      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/', '--glob', '!.docker-compose-data/',
+      \ '--follow', '--hidden', '--smart-case',
+      \ ],
+      \ 'recursive_opts': [],
+      \ 'pattern_opt': ['--regexp'],
+      \ 'separator': ['--'],
+      \ 'final_opts': [],
+      \ })
+
+  "{{{ cd session
+  let s:data_home = empty($XDG_DATA_HOME) ? expand('~/.local/share') : $XDG_DATA_HOME
+  let s:session_dir = get(g:, 'denite_session_dir', s:data_home . '/nvim/denite_session')
+  if !isdirectory(s:session_dir)
+    call mkdir(s:session_dir, 'p')
+  endif
+
+  function! s:session_file_name(target_dir)
+    return s:session_dir . '/' . trim(substitute(resolve(a:target_dir), '/', '-', 'g'), '-') . '.vim'
+  endfunction
+
+  function! s:save_session(target_dir)
+    execute 'mksession! ' . s:session_file_name(a:target_dir)
+  endfunction
+
+  function! s:load_or_create_session(target_dir)
+    let s:file_name = s:session_file_name(a:target_dir)
+    if filereadable(s:file_name)
+      execute 'source ' . s:file_name
+      return
+    endif
+    call s:save_session(a:target_dir)
+  endfunction
+
+  function! s:cdsession_action(context)
+    call s:save_session(getcwd())
+
+    let s:target = a:context['targets'][0]
+    let s:path = s:target['action__path']
+    execute 'cd ' . s:path
+    call s:load_or_create_session(s:path)
+  endfunction
+
+  call denite#custom#action('directory', 'cdsession', function('s:cdsession_action'))
+
+  "{{{ clean session
+  function! s:clean_session(target_dir)
+    let s:file_name = s:session_file_name(a:target_dir)
+    if filewritable(s:file_name)
+      call delete(s:file_name)
+    endif
+  endfunction
+  function! s:clean_session_action(context)
+    let s:target = a:context['targets'][0]
+    let s:path = s:target['action__path']
+    call s:clean_session(s:path)
+  endfunction
+  call denite#custom#action('directory', 'clean_session', function('s:clean_session_action'), {'is_quit': 0})
+
+  function! s:clean_sessions()
+    call system('rm ' . s:session_file_name('*'))
+  endfunction
+  function! s:clean_sessions_action(context)
+    call s:clean_sessions()
+  endfunction
+  call denite#custom#action('directory', 'clean_allsession', function('s:clean_sessions_action'), {'is_quit': 0})
+  "}}}
+
+  "}}}
+'''
+hook_add = '''
+  nnoremap <silent> <Space><Space>  :<C-u>Denite           -start-filter file/rec<CR>
+  nnoremap <silent> <Space>i<Space> :<C-u>Denite           -start-filter file/rec:
+  nnoremap <silent> <Space>P        :<C-u>DeniteBufferDir  -start-filter file/rec<CR>
+  nnoremap <silent> <Space>gp       :<C-u>DeniteProjectDir -start-filter file/rec<CR>
+
+  nnoremap <silent> <Space>ls :<C-u>Denite file_mru<CR>
+  nnoremap <silent> <Space>ft :<C-u>Denite -start-filter filetype<CR>
+
+  nnoremap <silent> <Space>/  :<C-u>Denite -start-filter line<CR>
+  nnoremap <silent> <Space>r  :<C-u>Denite grep<CR>
+  nnoremap <silent> <Space>ir :<C-u>Denite grep:
+
+  nnoremap <silent> <Space>: :<C-u>Denite command<CR>
+  nnoremap <silent> <Space>; :<C-u>Denite command_history<CR>
+
+  nnoremap <silent> <Space>p     :<C-u>Denite neoyank<CR>
+  nnoremap <silent> <Space><C-k> :<C-u>Denite neosnippet<CR>
+  nnoremap <silent> <C-Space>    :<C-u>Denite -start-filter ghq -default-action=cdsession<CR>
+
+  " memolist
+  nnoremap <silent> <Space>ml :<C-u>Denite -auto-action=preview -sorters=sorter_word,sorter_reverse file/rec:`expand(g:memolist_path)`<CR>
+  " grep memolist
+  nnoremap <silent> <Space>mr :<C-u>Denite -auto-action=preview grep:`expand(g:memolist_path)`<CR>
+
+  nnoremap <silent> ]d       :<C-u>Denite -resume -cursor-pos=+1 -immediately<CR>
+  nnoremap <silent> [d       :<C-u>Denite -resume -cursor-pos=-1 -immediately<CR>
+  nnoremap <silent> <space>. :<C-u>Denite -resume -cursor-pos=+0<CR>
+  " Open dotfiles
+  nnoremap <silent> <space>d :<C-u>Denite file/rec:$HOME/.dotfiles<CR>
 '''
 [plugins.ftplugin]
 denite = '''
-    " select
-    nnoremap <silent><buffer><expr> x
-                \ denite#do_map('toggle_select').'j'
-    nnoremap <silent><buffer><expr> X
-                \ denite#do_map('toggle_select_all')
+  " select
+  nnoremap <silent><buffer><nowait><expr> x
+              \ denite#do_map('toggle_select').'j'
+  nnoremap <silent><buffer><nowait><expr> X
+              \ denite#do_map('toggle_select_all')
 
-    " action
-    nnoremap <silent><buffer><expr> <CR>
-                \ denite#do_map('do_action')
-    nnoremap <silent><buffer><expr> .
-                \ denite#do_map('do_previous_action')
-    nnoremap <silent><buffer><expr> d
-                \ denite#do_map('do_action', 'delete')
-    nnoremap <silent><buffer><expr> P
-                \ denite#do_map('do_action', 'preview')
-    nnoremap <silent><buffer><expr> e
-                \ denite#do_map('do_action', 'edit')
-    nnoremap <silent><buffer><expr> v
-                \ denite#do_map('do_action', 'vsplit')
-    nnoremap <silent><buffer><expr> s
-                \ denite#do_map('do_action', 'split')
-    nnoremap <silent><buffer><expr> gcd
-                \ denite#do_map('do_action', 'cd')
-    nnoremap <silent><buffer><expr> <Tab>
-                \ denite#do_map('choose_action')
+  " action
+  nnoremap <silent><buffer><nowait><expr> <CR>
+              \ denite#do_map('do_action')
+  nnoremap <silent><buffer><nowait><expr> .
+              \ denite#do_map('do_previous_action')
+  nnoremap <silent><buffer><nowait><expr> d
+              \ denite#do_map('do_action', 'delete')
+  nnoremap <silent><buffer><nowait><expr> P
+              \ denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><nowait><expr> e
+              \ denite#do_map('do_action', 'edit')
+  nnoremap <silent><buffer><nowait><expr> v
+              \ denite#do_map('do_action', 'vsplit')
+  nnoremap <silent><buffer><nowait><expr> s
+              \ denite#do_map('do_action', 'split')
+  nnoremap <silent><buffer><nowait><expr> cd
+              \ denite#do_map('do_action', 'cd')
+  nnoremap <silent><buffer><nowait><expr> <Tab>
+              \ denite#do_map('choose_action')
+  nnoremap <silent><buffer><nowait><expr> <ESC>
+              \ denite#do_map('quit')
 
-    " operation
-    nnoremap <silent><buffer><expr> H
-                \ denite#do_map('move_up_path')
-    nnoremap <silent><buffer><expr> i
-                \ denite#do_map('open_filter_buffer')
-    nnoremap <silent><buffer><expr> <C-l>
-                \ denite#do_map('redraw')
-    nnoremap <silent><buffer><expr> [d
-                \ denite#do_map('restore_sources')
+  " operation
+  nnoremap <silent><buffer><nowait><expr> H
+              \ denite#do_map('move_up_path')
+  nnoremap <silent><buffer><nowait><expr> i
+              \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><nowait><expr> I
+              \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><nowait><expr> o
+              \ denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><nowait><expr> <C-l>
+              \ denite#do_map('redraw')
+  nnoremap <silent><buffer><nowait><expr> [d
+              \ denite#do_map('restore_sources')
 '''
 denite-filter = '''
-    imap     <silent><buffer> <ESC>  <Plug>(denite_filter_quit)
-    inoremap <silent><buffer> g<ESC> <ESC>
+  imap     <silent><buffer><nowait> <ESC>  <Plug>(denite_filter_quit)
+  inoremap <silent><buffer><nowait> g<ESC> <ESC>
 '''
 
+#{{{ matchers
+[[plugins]]
+repo = 'liuchengxu/vim-clap'
+hook_post_update = '''
+  execute ':Clap install-binary'
+'''
+lazy = 1
+#}}}
+
+#{{{ sources
 [[plugins]]
 repo = 'Shougo/neomru.vim'
-on_source = ['unite.vim', 'denite.nvim']
-
+lazy = 1
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
 on_event = 'TextYankPost'
-on_source = ['unite.vim', 'denite.nvim']
-
-[[plugins]]
-repo = 'nixprime/cpsm'
-on_source = ['denite.nvim', 'deoplete.nvim']
-build = 'env PY3=ON ./install.sh && cp autoload/* bin/'
-
 [[plugins]]
 repo = 'Jagua/vim-denite-ghq'
-on_source = 'denite.nvim'
-
-[[plugins]]
-repo = 'chemzqm/unite-location'
-on_source = 'denite.nvim'
+lazy = 1
+#}}}
 #}}}
 
 #{{{ Filer
 [[plugins]]
 repo = 'Shougo/defx.nvim'
 on_cmd = 'Defx'
-hook_add = '''
-    nnoremap <silent> <space>e :<C-u>Defx -listed -resume -buffer-name=tab`tabpagenr()`<CR>
-    nnoremap <silent> <space>E :<C-u>Defx `expand('%:p:h')` -search=`expand('%:p')`<CR>
-'''
 hook_post_source = '''
-    call defx#custom#column('mark', {
-                \ 'readonly_icon': '✗',
-                \ 'selected_icon': '✓',
-                \ })
-    call defx#custom#column('icon', {
-                \ 'directory_icon': '▸',
-                \ 'opened_icon': '▾',
-                \ 'root_icon': ' ',
-                \ })
+  call defx#custom#column('icon', {
+        \ 'directory_icon': '▸',
+        \ 'opened_icon': '▾',
+        \ 'root_icon': ' ',
+        \ })
+  call defx#custom#column('mark', {
+        \ 'readonly_icon': '✗',
+        \ 'selected_icon': '✓',
+        \ })
 
-    let s:denite_win_width_percent = 0.7
-    let s:denite_win_height_percent = 0.7
-    call defx#custom#option('_', {
-                \ 'columns': 'mark:indent:icon:filename:type',
-                \ 'toggle': 1,
-                \ 'show_ignored_files': 1,
-                \ 'split': 'floating',
-                \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
-                \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
-                \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
-                \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
-                \ 'session_file': '`$XDG_DATA_HOME`/nvim/defx/session',
-                \ })
+  let s:defx_win_width_percent = 0.7
+  let s:defx_win_height_percent = 0.7
+  let s:defx_win_height_offset = 0.1
+  call defx#custom#option('_', {
+        \ 'show_ignored_files': 1,
+        \ 'toggle': 1,
+        \ 'columns': 'mark:indent:icon:filename:type',
+        \ 'floating_preview': 1,
+        \ 'vertical_preview': 1,
+        \ 'split': 'floating',
+        \ 'winwidth': float2nr(&columns * s:defx_win_width_percent),
+        \ 'wincol': float2nr((&columns * (1 - s:defx_win_width_percent)) / 2),
+        \ 'winheight': float2nr(&lines * s:defx_win_height_percent),
+        \ 'winrow': float2nr((&lines * (1 - s:defx_win_height_percent + 2 * s:defx_win_height_offset)) / 2),
+        \ })
+'''
+hook_add = '''
+  nnoremap <silent> <space>e :<C-u>Defx -listed -resume -buffer-name=`trim(substitute(getcwd(), '/', '-', 'g'), '-')`<CR>
+  nnoremap <silent> <space>E :<C-u>Defx `expand('%:p:h')` -search=`expand('%:p')`<CR>
 '''
 [plugins.ftplugin]
 defx = '''
-    nnoremap <silent><buffer> <Space>h :<C-u>Denite defx/history<CR>
+  " select
+  nnoremap <silent><buffer><nowait><expr> x
+        \ defx#do_action('toggle_select') . 'j'
+  nnoremap <silent><buffer><nowait><expr> X
+        \ defx#do_action('toggle_select_all')
+  xnoremap <silent><buffer><nowait><expr> x
+        \ defx#do_action('toggle_select_visual')
+  xnoremap <silent><buffer><nowait><expr> <CR>
+        \ defx#do_action('toggle_select_visual')
+  xnoremap <silent><buffer><nowait><expr> <ESC>
+        \ defx#do_action('clear_select_all')
 
-    " select
-    nnoremap <silent><buffer><expr> x
-                \ defx#do_action('toggle_select') . 'j'
-    nnoremap <silent><buffer><expr> X
-                \ defx#do_action('toggle_select_all')
-    xnoremap <silent><buffer><expr> x
-                \ defx#do_action('toggle_select_visual')
-    xnoremap <silent><buffer><expr> <CR>
-                \ defx#do_action('toggle_select_visual')
+  " tree
+  nnoremap <silent><buffer><nowait><expr> o
+        \ defx#is_directory() ?
+        \ defx#do_action('open_or_close_tree') :
+        \ defx#do_action('multi', ['drop', 'quit'])
+  nnoremap <silent><buffer><nowait><expr> O
+        \ defx#is_directory() ?
+        \   defx#is_opened_tree() ?
+        \ defx#do_action('close_tree') :
+        \ defx#do_action('open_tree_recursive') :
+        \ defx#do_action('close_tree')
+  nnoremap <silent><buffer><nowait><expr> l
+        \ defx#is_directory() ?
+        \ defx#do_action('open') :
+        \ defx#do_action('multi', ['drop', 'quit'])
+  nnoremap <silent><buffer><nowait><expr> h
+        \ defx#do_action('cd', ['..'])
 
-    " tree
-    nnoremap <silent><buffer><expr> o
-                \ defx#is_directory() ?
-                \ defx#do_action('open_or_close_tree') :
-                \ defx#do_action('multi', ['drop', 'quit'])
-    nnoremap <silent><buffer><expr> O
-                \ defx#is_directory() ?
-                \ defx#is_opened_tree() ?
-                \ defx#do_action('close_tree') :
-                \ defx#do_action('open_tree_recursive') :
-                \ defx#do_action('close_tree')
-    nnoremap <silent><buffer><expr> l
-                \ defx#is_directory() ?
-                \ defx#do_action('open') :
-                \ defx#do_action('multi', ['drop', 'quit'])
-    nnoremap <silent><buffer><expr> h
-                \ defx#do_action('cd', ['..'])
+  " new resource
+  nnoremap <silent><buffer><nowait><expr> A
+        \ defx#do_action('new_directory')
+  nnoremap <silent><buffer><nowait><expr> a
+        \ defx#do_action('new_file')
+  nnoremap <silent><buffer><nowait><expr> ga
+        \ defx#do_action('new_multiple_files')
 
-    " new resource
-    nnoremap <silent><buffer><expr> A
-                \ defx#do_action('new_directory')
-    nnoremap <silent><buffer><expr> a
-                \ defx#do_action('new_file')
-    nnoremap <silent><buffer><expr> ga
-                \ defx#do_action('new_multiple_files')
+  " file action
+  nnoremap <silent><buffer><nowait><expr> m
+        \ defx#do_action('move')
+  nnoremap <silent><buffer><nowait><expr> c
+        \ defx#do_action('copy')
+  nnoremap <silent><buffer><nowait><expr> p
+        \ defx#do_action('paste')
+  nnoremap <silent><buffer><nowait><expr> r
+        \ defx#do_action('rename')
+  nnoremap <silent><buffer><nowait><expr> d
+        \ defx#do_action('remove')
+  nnoremap <silent><buffer><nowait><expr> ;
+        \ defx#do_action('execute_command')
+  nnoremap <silent><buffer><nowait><expr> !
+        \ defx#do_action('execute_system')
 
-    " file action
-    nnoremap <silent><buffer><expr> m
-                \ defx#do_action('move')
-    nnoremap <silent><buffer><expr> c
-                \ defx#do_action('copy')
-    nnoremap <silent><buffer><expr> p
-                \ defx#do_action('paste')
-    nnoremap <silent><buffer><expr> r
-                \ defx#do_action('rename')
-    nnoremap <silent><buffer><expr> d
-                \ defx#do_action('remove')
-    nnoremap <silent><buffer><expr> ;
-                \ defx#do_action('execute_command')
-    nnoremap <silent><buffer><expr> !
-                \ defx#do_action('execute_system')
+  nnoremap <silent><buffer><nowait><expr> <CR>
+        \ defx#is_directory() ?
+        \ defx#do_action('open') :
+        \ defx#do_action('multi', ['drop', 'quit'])
+  nnoremap <silent><buffer><nowait><expr> .
+        \ defx#do_action('repeat')
+  nnoremap <silent><buffer><nowait><expr> s
+        \ defx#do_action('multi', [['drop', 'split'], 'quit'])
+  nnoremap <silent><buffer><nowait><expr> v
+        \ defx#do_action('multi', [['drop', 'vsplit'], 'quit'])
+  nnoremap <silent><buffer><nowait><expr> P
+        \ defx#do_action('open', 'pedit')
 
-    nnoremap <silent><buffer><expr> <CR>
-                \ defx#is_directory() ?
-                \ defx#do_action('open') :
-                \ defx#do_action('multi', ['drop', 'quit'])
-    nnoremap <silent><buffer><expr> .
-                \ defx#do_action('repeat')
-    nnoremap <silent><buffer><expr> s
-                \ defx#do_action('multi', [['drop', 'split'], 'quit'])
-    nnoremap <silent><buffer><expr> v
-                \ defx#do_action('multi', [['drop', 'vsplit'], 'quit'])
-    nnoremap <silent><buffer><expr> P
-                \ defx#do_action('open', 'pedit')
+  " others
+  nnoremap <silent><buffer><nowait><expr> gcd
+        \ defx#async_action('change_vim_cwd')
+  nnoremap <silent><buffer><nowait><expr> <C-g>
+        \ defx#do_action('print')
+  nnoremap <silent><buffer><nowait><expr> <C-l>
+        \ defx#do_action('redraw')
+  nnoremap <silent><buffer><nowait><expr> D
+        \ defx#do_action('toggle_columns',
+        \                'mark:indent:filename:type:size:time')
+  nnoremap <silent><buffer><nowait><expr> y
+        \ defx#do_action('yank_path')
 
-    " others
-    nnoremap <silent><buffer><expr> gcd
-                \ defx#async_action('change_vim_cwd')
-    nnoremap <silent><buffer><expr> <C-g>
-                \ defx#do_action('print')
-    " nnoremap <silent><buffer><expr> q
-    "            \ defx#do_action('quit')
-    nnoremap <silent><buffer><expr> <C-l>
-                \ defx#do_action('redraw')
-    nnoremap <silent><buffer><expr> I
-                \ defx#do_action('toggle_columns',
-                \                'mark:indent:filename:type:size:time')
-    nnoremap <silent><buffer><expr> y
-                \ defx#do_action('yank_path')
+  nnoremap <silent><buffer><nowait><expr> T
+        \ defx#do_action('toggle_sort', 'time')
+  nnoremap <silent><buffer><nowait><expr> I
+        \ defx#do_action('toggle_ignored_files')
 
-    nnoremap <silent><buffer><expr> S
-                \ defx#do_action('toggle_sort', 'time')
-    nnoremap <silent><buffer><expr> >
-                \ defx#do_action('toggle_ignored_files')
-
-    " base
-    nnoremap <silent><buffer><expr> j
-                \ line('.') == line('$') ? 'gg' : 'j'
-    nnoremap <silent><buffer><expr> k
-                \ line('.') == 1 ? 'G' : 'k'
+  " base
+  nnoremap <silent><buffer><nowait><expr> j
+        \ line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><nowait><expr> k
+        \ line('.') == 1 ? 'G' : 'k'
 '''
 #}}}
 
-#{{{ Status bar
+#{{{ VCS
 [[plugins]]
-repo = 'itchyny/lightline.vim'
+repo = 'lambdalisue/gina.vim'
+hook_post_source = '''
+	call gina#custom#execute(
+      \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
+      \ 'setlocal winfixheight',
+      \)
+
+  function! s:mapping(schema, mode, lhs, rhs)
+    if a:rhs =~ '^<Plug>'
+      call gina#custom#mapping#nmap(a:schema, a:lhs, a:rhs, {
+        \ 'mode': a:mode,
+        \ 'nowait': 1,
+        \ })
+      return
+    endif
+    call gina#custom#mapping#nmap(a:schema, a:lhs, a:rhs, {
+      \ 'mode': a:mode,
+      \ 'nowait': 1,
+      \ 'noremap': 1,
+      \ 'silent': 1,
+      \ })
+  endfunction
+
+  "{{{ status settings
+	call gina#custom#command#option('status', '-u|--untracked-files')
+	call gina#custom#command#option('status', '-s|--short')
+	call gina#custom#command#option('status', '-b|--branch')
+  call s:mapping('status', 'n', '<Tab>', '<Plug>(gina-builtin-choice)')
+  call s:mapping('status', 'n', 'x', '<Plug>(gina-builtin-mark)j')
+  call s:mapping('status', 'n', 'yy', '<Plug>(gina-yank-path)')
+  call s:mapping('status', 'n', 'Y', '<Plug>(gina-yank-rev)')
+
+  call s:mapping('status', 'n', 'C', ':<C-u>Gina commit<CR>')
+  call s:mapping('status', 'n', '<', '<Plug>(gina-index-stage)')
+  call s:mapping('status', 'n', '>', '<Plug>(gina-index-unstage)')
+
+  call s:mapping('status', 'n', '<CR>', '<Plug>(gina-edit)')
+  call s:mapping('status', 'n', 's', '<Plug>(gina-edit-split)')
+  call s:mapping('status', 'n', 'v', '<Plug>(gina-edit-vsplit)')
+  call s:mapping('status', 'n', 'P', '<Plug>(gina-show-preview)')
+  call s:mapping('status', 'n', 'g<CR>', '<Plug>(gina-show)')
+  call s:mapping('status', 'n', 'gs', '<Plug>(gina-show-split)')
+  call s:mapping('status', 'n', 'gv', '<Plug>(gina-show-vsplit)')
+
+  call s:mapping('status', 'n', 'di', '<Plug>(gina-diff)')
+  call s:mapping('status', 'n', 'gp', '<Plug>(gina-patch)')
+  call s:mapping('status', 'n', 'gc', '<Plug>(gina-chaperon)')
+
+  call s:mapping('status', 'n', 'gx', '<Plug>(gina-browse)')
+  "}}}
+
+  "{{{ commit settings
+	call gina#custom#command#option('commit', '-u|--untracked-files')
+	call gina#custom#command#option('commit', '-v|--verbose')
+	call gina#custom#command#option('commit', '-S|--gpg-sign')
+  call s:mapping('commit', 'n', 's!', '<Plug>(gina-commit-ammend)')
+  "}}}
+'''
 hook_add = '''
-    let g:lightline = {
-                \ 'colorscheme': 'iceberg',
-                \ 'mode_map': { 'c': 'NORMAL' },
-                \ 'active': {
-                \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename' ] ],
-                \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
-                \ },
-                \ 'component_function': {
-                \   'readonly': 'LightlineReadonly',
-                \   'gitbranch': 'LightLineGitBranch',
-                \   'filename': 'LightLineFilename',
-                \   'fileformat': 'LightLineFileformat',
-                \   'filetype': 'LightLineFiletype',
-                \   'fileencoding': 'LightLineFileencoding',
-                \   'mode': 'LightLineMode',
-                \ },
-                \ 'separator': { 'left': "\uE0B0", 'right': "\uE0B2" },
-                \ 'subseparator': { 'left': "\uE0B1", 'right': "\uE0B3" }
-                \ }
+  " let g:gina#command#commit#use_default_mappings = 0
+  " let g:gina#command#diff#use_default_mappings = 0
+  " let g:gina#command#status#use_default_mappings = 0
+  nnoremap <space>vs :<C-u>Gina status<CR>
 
-    function! LightLineModified()
-        return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-    endfunction
+  "{{{ unuse default mappings
+  " let g:gina#command#blame#use_default_mappings = 0
+  " let g:gina#command#branch#use_default_mappings = 0
+  " let g:gina#command#changes#use_default_mappings = 0
+  " let g:gina#command#chaperon#use_default_mappings = 0
+  let g:gina#command#commit#use_default_mappings = 0
+  " let g:gina#command#diff#use_default_mappings = 0
+  " let g:gina#command#grep#use_default_mappings = 0
+  " let g:gina#command#log#use_default_mappings = 0
+  " let g:gina#command#ls#use_default_mappings = 0
+  " let g:gina#command#patch#use_default_mappings = 0
+  " let g:gina#command#qrep#use_default_mappings = 0
+  " let g:gina#command#reflog#use_default_mappings = 0
+  " let g:gina#command#show#use_default_mappings = 0
+  " let g:gina#command#stash#show#use_default_mappings = 0
+  " let g:gina#command#stash#use_default_mappings = 0
+  let g:gina#command#status#use_default_mappings = 0
+  " let g:gina#command#tag#use_default_mappings = 0
+  "}}}
+'''
 
-    function! LightLineReadonly()
-        return &ft !~? 'help' && &readonly ? "\uE0A2" : ''
-    endfunction
-
-    function! LightLineFilename()
-        let fname = expand('%:t')
-        return fname == 'ControlP' ? g:lightline.ctrlp_item :
-                    \ fname == '__Tagbar__' ? g:lightline.fname :
-                    \ fname =~ '__Gundo\|NERD_tree' ? '' :
-                    \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-                    \ &ft == 'unite' ? unite#get_status_string() :
-                    \ &ft == 'vimshell' ? vimshell#get_status_string() :
-                    \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-                    \ ('' != fname ? fname : '[No Name]') .
-                    \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
-    endfunction
-
-    function! LightLineGitBranch()
-        try
-            if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'defx'
-                let mark = ''  " edit here for cool mark
-                let _ = gina#component#repo#branch()
-                return strlen(_) ? mark._ : ''
-            endif
-        catch
-        endtry
-        return ''
-    endfunction
-
-    function! LightLineFileformat()
-        return winwidth(0) > 70 ? &fileformat : ''
-    endfunction
-
-    function! LightLineFiletype()
-        return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
-    endfunction
-
-    function! LightLineFileencoding()
-        return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
-    endfunction
-
-    function! LightLineMode()
-        let fname = expand('%:t')
-        return fname == '__Tagbar__' ? 'Tagbar' :
-                    \ fname == 'ControlP' ? 'CtrlP' :
-                    \ fname == '__Gundo__' ? 'Gundo' :
-                    \ fname == '__Gundo_Preview__' ? 'Gundo Preview' :
-                    \ fname =~ 'NERD_tree' ? 'NERDTree' :
-                    \ &ft == 'unite' ? 'Unite' :
-                    \ &ft == 'vimfiler' ? 'VimFiler' :
-                    \ &ft == 'vimshell' ? 'VimShell' :
-                    \ winwidth(0) > 60 ? lightline#mode() : ''
-    endfunction
-
-    let g:tagbar_status_func = 'TagbarStatusFunc'
-
-    function! TagbarStatusFunc(current, sort, fname, ...) abort
-        let g:lightline.fname = a:fname
-        return lightline#statusline(0)
-    endfunction
-
-    let g:unite_force_overwrite_statusline = 0
-    let g:vimfiler_force_overwrite_statusline = 0
-    let g:vimshell_force_overwrite_statusline = 0
+[[plugins]]
+repo = 'cohama/agit.vim'
+hook_add = '''
+  let g:agit_no_default_mappings = 1
+  nnoremap <silent> <space>vl :<C-u>Agit<CR>
+  nnoremap <silent> <space>vL :<C-u>AgitFile<CR>
+'''
+[plugins.ftplugin]
+agit = '''
+  nmap <buffer><nowait> <C-j> <Plug>(agit-scrolldown-stat)
+  nmap <buffer><nowait> <C-k> <Plug>(agit-scrollup-stat)
+  nmap <buffer><nowait> <C-n> <Plug>(agit-scrolldown-diff)
+  nmap <buffer><nowait> <C-p> <Plug>(agit-scrollup-diff)
+  nmap <buffer><nowait> <C-l> <Plug>(agit-reload)
+  nmap <buffer><nowait> yh    <Plug>(agit-yank-hash)
+  nmap <buffer><nowait> <C-g> <Plug>(agit-print-commitmsg)
+  nmap <buffer><nowait> <ESC> <Plug>(agit-exit)
+  nmap <buffer><nowait> co    <Plug>(agit-git-checkout)
+  nmap <buffer><nowait> bo    <Plug>(agit-git-checkout-b)
+  nmap <buffer><nowait> bd    <Plug>(agit-git-branch-b)
+  nmap <buffer><nowait> rs    <Plug>(agit-git-reset-soft)
+  nmap <buffer><nowait> rr    <Plug>(agit-git-reset)
+  nmap <buffer><nowait> rh    <Plug>(agit-git-reset-hard)
+  nmap <buffer><nowait> rbb   <Plug>(agit-git-rebase)
+  nmap <buffer><nowait> rbi   <Plug>(agit-git-rebase-i)
+  nmap <buffer><nowait> cp    <Plug>(agit-git-cherry-pick)
+  nmap <buffer><nowait> rv    <Plug>(agit-git-revert)
+  nmap <buffer><nowait> di    <Plug>(agit-git-diff)
+  nmap <buffer><nowait> dI    <Plug>(agit-git-diff-with-local)
 '''
 #}}}
 
-#{{{ history
+#{{{ History
 [[plugins]]
 repo = 'simnalamburt/vim-mundo'
 hook_add = '''
-    let g:mundo_prefer_python3 = 1
-    nnoremap <space>u :<C-u>MundoToggle<CR>
+  nnoremap <space>u :<C-u>MundoToggle<CR>
 '''
 #}}}
 
-#{{{ Color Scheme
+#{{{ Formatting
 [[plugins]]
-repo = 'cocopon/iceberg.vim'
+repo = 'editorconfig/editorconfig-vim'
+#}}}
+
+#{{{ LSP
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
 hook_add = '''
-    set termguicolors
-    augroup colorscheme_iceberg
-      autocmd!
-      autocmd VimEnter * nested colorscheme iceberg
-      autocmd VimEnter * hi! link SpecialKey Special
-    augroup END
+  lua << EOF
+      function bind_key_map()
+        vim.cmd "nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>"
+        -- vim.cmd "nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>"
+        vim.cmd "nnoremap <buffer><silent> K           :<C-u>lua vim.lsp.buf.hover()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.signature_help()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <C-]>       :<C-u>lua vim.lsp.buf.definition()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>i   :<C-u>lua vim.lsp.buf.implementation()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>R   :<C-u>lua vim.lsp.buf.rename()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>ds  :<C-u>lua vim.lsp.buf.document_symbol()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>dr  :<C-u>lua vim.lsp.buf.references()<CR>"
+        -- vim.cmd "nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>"
+        vim.cmd "nnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.formatting()<CR>"
+        vim.cmd "vnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.range_formatting()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.document_highlight()<CR>"
+        -- vim.cmd "nnoremap <buffer><silent> <Leader>H :<C-u>call LanguageClient_clearDocumentHighlight()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>ws  :<C-u>lua vim.lsp.buf.workspace_symbol()<CR>"
+      end
+
+      local nvim_lsp = require'nvim_lsp'
+
+      nvim_lsp.vimls.setup{
+        on_attach = bind_key_map;
+      };
+
+      nvim_lsp.gopls.setup{
+        on_attach = bind_key_map;
+        settings = {
+          gopls = {
+            analyses = {
+              fillreturns = true;
+              unusedparams = true;
+            };
+          };
+        };
+      };
+      nvim_lsp.pyls.setup{
+        on_attach = bind_key_map;
+      };
+      nvim_lsp.tsserver.setup{
+        on_attach = bind_key_map;
+      };
+
+      nvim_lsp.html.setup{
+        on_attach = bind_key_map;
+      };
+      nvim_lsp.cssls.setup{
+        on_attach = bind_key_map;
+      };
+
+      nvim_lsp.jsonls.setup{
+        on_attach = bind_key_map;
+      };
+      nvim_lsp.yamlls.setup{
+        on_attach = bind_key_map;
+      };
+
+      nvim_lsp.terraformls.setup{
+        on_attach = bind_key_map;
+      };
+
+      nvim_lsp.dockerls.setup{
+        on_attach = bind_key_map;
+      };
+EOF
+
+  hi! link LspDiagnosticsError       ALEVirtualTextError
+  hi! link LspDiagnosticsErrorSign   ALEErrorSign
+  hi! link LspDiagnosticsWarning     ALEVirtualTextWarning
+  hi! link LspDiagnosticsWarningSign ALEWarningSign
+  hi! link LspDiagnosticsInformation Identifier
+  hi! link LspDiagnosticsHint        ALEVirtualTextWarning
+  hi! link LspReferenceText          Normal
+  hi! link LspReferenceRead          Identifier
+  hi! link LspReferenceWrite         MoreMsg
+
+  function! s:ReloadLSP() abort
+    lua vim.lsp.stop_client(vim.lsp.get_active_clients())
+    edit
+  endfunction
+  command! ReloadLSP call s:ReloadLSP()
+  nnoremap <Leader>L :<C-u>ReloadLSP<CR>
 '''
-
-[[plugins]]
-repo = 'cocopon/colorswatch.vim'
-[[plugins]]
-repo = 'cocopon/inspecthi.vim'
-[[plugins]]
-repo = 'cocopon/pgmnt.vim'
 #}}}
 
-#}}}
-
-#{{{ Programming
-
-#{{{ deoplete
+#{{{ Complement
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-depends = 'context_filetype.vim'
-if = "has('nvim')"
 on_event = 'InsertEnter'
+depends = 'cpsm'
 hook_source = '''
-    let g:deoplete#enable_at_startup = 1
+  " <TAB>: completion.
+  inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ deoplete#manual_complete()
+  function! s:check_back_space() abort "{{{
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction"}}}
 
-    call deoplete#custom#option('ignore_sources', {'_': ['around', 'buffer', 'member']}) " use tabnine
+  " <S-TAB>: completion back.
+  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-    call deoplete#custom#option('camel_case', v:true)
-    call deoplete#custom#option('max_list', 1000)
+  " <C-h>, <BS>: close popup and delete backword char.
+  inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 
-    call deoplete#custom#source('_', 'max_abbr_width', 0)
-    call deoplete#custom#source('_', 'max_menu_width', 0)
+  " <CR>: close popup and save indent.
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function() abort
+    return deoplete#close_popup() . "\<CR>"
+  endfunction
+'''
+hook_post_source = '''
+  call deoplete#custom#option({
+    \ 'min_pattern_length': 1,
+    \ })
 
-    call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
-    call deoplete#custom#source('_', 'sorters', [])
+  call deoplete#custom#source('_', 'max_abbr_width', 0)
+  call deoplete#custom#source('_', 'max_menu_width', 0)
+  call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
 
-    " <TAB>: completion.
-    inoremap <silent><expr> <TAB>
-                \ pumvisible() ? "\<C-n>" :
-                \ <SID>check_back_space() ? "\<TAB>" :
-                \ deoplete#manual_complete()
-    function! s:check_back_space() abort "{{{
-        let col = col('.') - 1
-        return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction "}}}
-
-    " <S-TAB>: completion back.
-    inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-
-    inoremap <expr><C-g>         deoplete#refresh()
-    inoremap <expr><C-e>         deoplete#cancel_popup()
-    inoremap <silent><expr><C-l> deoplete#complete_common_string()
-
-    " <CR>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function() abort
-      return deoplete#close_popup() . "\<CR>"
-    endfunction
-
-    call deoplete#enable()
+  call deoplete#enable()
 '''
 
+#{{{ matchers
 [[plugins]]
-repo = 'Shougo/echodoc.vim'
-on_event = 'InsertEnter'
-hook_source = '''
-    let g:echodoc_enable_at_startup = 1
-'''
+repo = 'nixprime/cpsm'
+build = 'brew install boost && PY3=ON ./install.sh && cp autoload/* bin/'
+lazy = 1
+#}}}
 
-[[plugins]]
-repo = 'Shougo/neoinclude.vim'
-on_event = 'InsertEnter'
-
+#{{{ sources
 [[plugins]]
 repo = 'Shougo/deoplete-lsp'
-on_event = 'InsertEnter'
+on_source = 'deoplete.nvim'
+#}}}
 
+#{{{ extension
 [[plugins]]
-repo = 'tbodt/deoplete-tabnine'
-on_event = 'InsertEnter'
-build = './install.sh'
-
-[[plugins]]
-repo = 'ncm2/float-preview.nvim'
-on_event = 'InsertEnter'
+repo = 'Shougo/echodoc.vim'
+on_event = 'CompleteDone'
 hook_source = '''
-    let g:float_preview#docked = 1
+  let g:echodoc#type = 'floating'
+  call echodoc#enable()
 '''
+#}}}
 
-# for synchronizng editing with Intellij IDEA
-[[plugins]]
-repo = 'beeender/Comrade'
-hook_add = '''
-    let g:comrade_key_fix = '<Leader>q'
-'''
 #}}}
 
 #{{{ Snippet
@@ -707,31 +660,76 @@ hook_add = '''
 '''
 #}}}
 
-#{{{ Editor Action
-[[plugins]] # edit surround easy
-repo = 'machakann/vim-sandwich'
+#{{{ Async Execution
+[[plugins]]
+repo = 'tpope/vim-dispatch'
+on_cmd = [
+  'Copen',
+  'Dispatch',
+  'FocusDispatch',
+  'Make',
+  'Start',
+]
 hook_add = '''
-    let g:sandwich_no_default_key_mappings = 1
-
-    silent! nmap <unique><silent> \d <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
-    silent! nmap <unique><silent> \r <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
-    silent! nmap <unique><silent> \db <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
-    silent! nmap <unique><silent> \rb <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
-
-    let g:operator_sandwich_no_default_key_mappings = 1
-
-    " add
-    silent! nmap <unique> \a <Plug>(operator-sandwich-add)
-    silent! xmap <unique> \a <Plug>(operator-sandwich-add)
-    silent! omap <unique> \a <Plug>(operator-sandwich-g@)
-
-    " delete
-    silent! xmap <unique> \d <Plug>(operator-sandwich-delete)
-
-    " replace
-    silent! xmap <unique> \r <Plug>(operator-sandwich-replace)
+  let g:dispatch_no_maps = 1
 '''
+[plugins.ftplugin]
+sh = '''
+  nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch sh %<CR>
+'''
+go = '''
+  nnoremap <buffer> <Leader>r :<C-u>Dispatch go run %:p:h<CR>
+  nnoremap <buffer> <Leader>G :<C-u>Dispatch go generate %:p:h<CR>
+'''
+#}}}
 
+#{{{ Testing
+[[plugins]]
+repo = 'vim-test/vim-test'
+on_ft =  [
+  'go',
+]
+depends = [
+  'vim-dispatch',
+]
+hook_add = '''
+  let g:test#strategy = 'dispatch'
+'''
+[plugins.ftplugin]
+go = '''
+  let g:test#go#gotest#file_pattern = '\v.*\.go$'
+  nnoremap <buffer><silent> <Leader>t :<C-u>TestFile<CR>
+  nnoremap <buffer><silent> <Leader>T :<C-u>TestNearest<CR>
+
+  function! s:debugNearest()
+    let g:test#go#runner = 'delve'
+    TestNearest
+    unlet g:test#go#runner
+  endfunction
+  command! -buffer DebugNearest call s:debugNearest()
+'''
+#}}}
+
+#{{{ Utils
+[[plugins]] # easily search for, substitute, and abbreviate multiple variants of a word
+repo = 'tpope/vim-abolish'
+
+[[plugins]] # replacement in quickfix
+repo = 'thinca/vim-qfreplace'
+
+#{{{ increment Date
+[[plugins]] 
+repo = 'tpope/vim-speeddating'
+hook_add = '''
+    let g:speeddating_no_mappings = 1
+    nmap  <C-A>     <Plug>SpeedDatingUp
+    nmap  <C-X>     <Plug>SpeedDatingDown
+    xmap  <C-A>     <Plug>SpeedDatingUp
+    xmap  <C-X>     <Plug>SpeedDatingDown
+'''
+#}}}
+
+#{{{ Editing Text Utils
 [[plugins]] # Aligning Text
 repo = 'junegunn/vim-easy-align'
 hook_add = '''
@@ -742,7 +740,32 @@ hook_add = '''
     nmap ga <Plug>(EasyAlign)
 '''
 
-[[plugins]] # comment stuff out
+[[plugins]] # pairs of handy bracket mappings
+repo = 'tpope/vim-unimpaired'
+
+[[plugins]] # edit surround easy
+repo = 'machakann/vim-sandwich'
+hook_add = '''
+    let g:sandwich_no_default_key_mappings = 1
+    let g:operator_sandwich_no_default_key_mappings = 1
+
+    " add
+    silent! nmap <unique> <Leader>wa <Plug>(operator-sandwich-add)
+    silent! xmap <unique> <Leader>wa <Plug>(operator-sandwich-add)
+    silent! omap <unique> <Leader>wa <Plug>(operator-sandwich-g@)
+
+    " delete
+    silent! nmap <unique><silent> <Leader>wd <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+    silent! nmap <unique><silent> <Leader>wdb <Plug>(operator-sandwich-delete)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+    silent! xmap <unique> <Leader>wd <Plug>(operator-sandwich-delete)
+
+    " replace
+    silent! nmap <unique><silent> <Leader>wr <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-query-a)
+    silent! nmap <unique><silent> <Leader>wrb <Plug>(operator-sandwich-replace)<Plug>(operator-sandwich-release-count)<Plug>(textobj-sandwich-auto-a)
+    silent! xmap <unique> <Leader>wr <Plug>(operator-sandwich-replace)
+'''
+
+[[plugins]] # comment
 repo = 'tyru/caw.vim'
 [plugins.ftplugin]
 pu_uml_plantuml = '''
@@ -753,565 +776,20 @@ pu_uml_plantuml = '''
 
 [[plugins]] # for caw.vim
 repo = 'kana/vim-repeat'
-
-[[plugins]] # easily search for, substitute, and abbreviate multiple variants of a word
-repo = 'tpope/vim-abolish'
-
-[[plugins]] # for binary
-repo = 'Shougo/vinarise.vim'
 #}}}
 
-#{{{ Motion
-[[plugins]] # pairs of handy bracket mappings
-repo = 'tpope/vim-unimpaired'
-#}}}
-
-#{{{ Git/Gist
-[[plugins]]
-repo = 'lambdalisue/gina.vim'
-hook_add = '''
-    call gina#custom#mapping#nmap(
-                \ 'status', '<space>gs',
-                \ ':<C-u>Gina status<CR>',
-                \ {'noremap': 1, 'silent': 1},
-                \)
-
-    call gina#custom#execute(
-                \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
-                \ 'setlocal winfixheight',
-                \)
-'''
-
-# TODO: gina移行
-[[plugins]]
-repo = 'tpope/vim-fugitive'
-hook_add = '''
-    let g:fugitive_github_domains = ['[^/]*']
-    nnoremap <silent> <space>g :<C-u>Git<space>
-    nnoremap <silent> <space>ga :<C-u>Gwrite<CR>
-    nnoremap <silent> <space>gc :<C-u>Gcommit<CR>
-    nnoremap <silent> <space>gs :<C-u>Gstatus<CR>
-    nnoremap <silent> <space>gr :<C-u>Gbrowse<CR>
-    nnoremap <silent> <space>gd :<C-u>Gdiff<CR>
-    nnoremap <silent> <space>gbl :<C-u>Gblame<CR>
-'''
-
-[[plugins]]
-repo = 'tpope/vim-rhubarb'
-
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-hook_add = '''
-    let g:gitgutter_enabled = 0
-    let g:gitgutter_eager = 0
-    nnoremap <silent> <space>gg :<C-u>GitGutterToggle<CR>
-    nnoremap <silent> <space>gh :<C-u>GitGutterLineHighlightsToggle<CR>
-'''
-
-[[plugins]]
-repo = 'cohama/agit.vim'
-hook_add = '''
-    nnoremap <silent> <space>gl :<C-u>Agit<CR>
-    nnoremap <silent> <space>gL :<C-u>AgitFile<CR>
-'''
-[plugins.ftplugin]
-agit = '''
-    nmap <buffer> ch <Plug>(agit-git-cherry-pick)
-    nmap <buffer> Rv <Plug>(agit-git-revert)
-'''
-
-[[plugins]] # Gist
-repo = 'lambdalisue/vim-gista'
-on_cmd = 'Gista'
-on_map = '<Plug>(gista-'
-#}}}
-#{{{ ft
-
-[ftplugin] #{{{
-#{{{ python
-python = '''
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-'''
-#}}}
-#{{{ css
-css = '''
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-'''
-#}}}
-#{{{ kotlin
-kotlin = '''
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-'''
-#}}}
-#{{{ make
-make = '''
-    setlocal noexpandtab
-    setlocal tabstop=8
-    setlocal shiftwidth=8
-'''
-#}}}
-#{{{ Markdown
-markdown = '''
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-'''
-#}}}
-#}}}
-#{{{ vim
-vim = '''
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-'''
-#}}}
-#{{{ snippets
-snippets = '''
-    setlocal noexpandtab
-'''
-#}}}
-#{{{ revealjs
-revealjs = '''
-    nnoremap <buffer> <Leader>b :<C-u>!npm run build<CR>
-    nnoremap <buffer> <Leader>r :<C-u>!npm run start<CR>
-    nnoremap <buffer> <Leader>t :<C-u>!npm run test<CR>
-'''
-#}}}
-#{{{ talkiejs
-talkiejs = '''
-    nnoremap <buffer> <Leader>b :<C-u>!npm run build<CR>
-    nnoremap <buffer> <Leader>r :<C-u>!npm run start<CR>
-    nnoremap <buffer> <Leader>w :<C-u>!npm run d<CR>
-    nnoremap <buffer> <Leader>t :<C-u>!npm run test<CR>
-'''
-#}}}
-#}}}
-
-#{{{ Javascript
-[[plugins]]
-repo = 'yuezk/vim-js'
-on_ft = ['javascript']
-
-[[plugins]]
-repo = 'maxmellon/vim-jsx-pretty'
-on_ft = ['javascript', 'jsx']
-
-[[plugins]]
-repo = 'pangloss/vim-javascript'
-on_ft = ['javascript', 'javascript.jsx']
-#}}}
-
-#{{{ TypeScript
-[[plugins]]
-repo = 'leafgarland/typescript-vim'
-build = 'npm install -g typescript-tools typescript'
-on_ft = 'typescript'
-
-[[plugins]]
-repo = 'peitalin/vim-jsx-typescript'
-on_ft = 'tsx'
-depends = 'typescript-vim'
-#}}}
-
-#{{{ go
-[[plugins]]
-repo = 'fatih/vim-go'
-on_ft = 'go'
-hook_source = '''
-    let g:go_test_show_name = 1
-    let g:go_test_timeout = '1m'
-
-    let g:go_fmt_autosave = 1
-    let g:go_fmt_experimental = 1
-    " let g:go_info_mode = 'guru'
-    let g:go_jump_to_error = 0
-    let g:go_fmt_command = 'goimports'
-    let g:go_fmt_options = {
-                \ 'gofmt': '-s',
-                \ 'goimports': '-e',
-                \ }
-    let g:go_mod_fmt_autosave = 1
-    let g:go_def_mapping_enabled = 0
-    let g:go_doc_keywordprg_enabled = 0
-    let g:go_snippet_engine = 'disable'
-    let g:go_metalinter_autosave = 0
-
-    let g:go_metalinter_enabled = []
-
-    let g:go_list_type = "quickfix"
-
-    let g:go_term_enabled = 0
-
-    let g:go_highlight_array_whitespace_error = 1
-    let g:go_highlight_chan_whitespace_error = 1
-    let g:go_highlight_extra_types = 1
-    let g:go_highlight_space_tab_error = 1
-    let g:go_highlight_trailing_whitespace_error = 1
-    let g:go_highlight_operators = 0
-    let g:go_highlight_functions = 0
-    let g:go_highlight_function_parameters = 0
-    let g:go_highlight_function_calls = 1
-    let g:go_highlight_types = 0
-    let g:go_highlight_fields = 0
-    let g:go_highlight_build_constraints = 1
-    let g:go_highlight_generate_tags = 1
-    let g:go_highlight_string_spellcheck = 1
-    let g:go_highlight_format_strings = 1
-    let g:go_highlight_variable_declarations = 1
-    let g:go_highlight_variable_assignments = 1
-'''
-[plugins.ftplugin]
-go = '''
-    " nmap     <buffer><silent> K          <Plug>(go-doc)
-    " nmap     <buffer><silent> <C-]>      <Plug>(go-def)
-    " nmap     <buffer><silent> <Leader>i  <Plug>(go-implements)
-    " nmap     <buffer><silent> <Leader>R  <Plug>(go-rename)
-    " nnoremap <buffer><silent> <Leader>s  :<C-u>Denite decls:%<CR>
-    " nmap     <buffer><silent> <Leader>dr <Plug>(go-referrers)
-    " nmap     <buffer><silent> gq         <Plug>(go-imports)
-    " nnoremap <buffer><silent> <Leader>h  :<C-u>GoSameIds<CR>
-    " nnoremap <buffer><silent> <Leader>H  :<C-u>GoSameIdsClear<CR>
-    " nnoremap <buffer><silent> <Leader>S  :<C-u>Denite decls<CR>
-
-    nmap <buffer> <leader>r <Plug>(go-run)
-    nmap <buffer> <leader>b :<C-u>make<CR>
-    nmap <buffer> <leader>t <Plug>(go-test)
-    nmap <buffer> <leader>c <Plug>(go-coverage-toggle)
-    nmap <buffer> <leader>T <Plug>(go-test-func)
-
-    nmap <buffer> <Leader>da <Plug>(go-alternate-edit)
-    nmap <buffer> <Leader>de <Plug>(go-describe)
-    nmap <buffer> <Leader>dc <Plug>(go-callers)
-
-    " nmap <buffer> <Leader>I <Plug>(go-info)
-
-    nmap <buffer> <Leader>m <Plug>(go-metalinter)
-    nnoremap <buffer> <Leader>M :<C-u>GoMetaLinter ./...<CR>
-
-    nnoremap <buffer> <Leader>e :<C-u>GoErrCheck<CR>
-    nnoremap <buffer> <Leader>E :<C-u>GoErrCheck ./...<CR>
-
-    nmap <buffer> <Leader>G <Plug>(go-generate)
-'''
-#}}}
-
-#{{{ Protocol Buffers
-[[plugins]]
-repo = 'uarun/vim-protobuf'
-on_ft = 'proto'
-[plugins.ftplugin]
-proto = '''
-    setlocal tabstop=4
-    setlocal shiftwidth=4
-'''
-#}}}
-
-#{{{ Gradle
-[[plugins]]
-repo = 'tfnico/vim-gradle'
-on_ft = 'groovy'
-#}}}
-
-#{{{ Kotlin
-[[plugins]]
-repo = 'udalov/kotlin-vim'
-on_ft = 'kotlin'
-#}}}
-
-#{{{ Swift
-[[plugins]]
-repo = 'apple/swift'
-rtp = 'utils/vim'
-on_ft = ['swift', 'sil', 'swiftgyb']
-#}}}
-
-#{{{ html
-# emmet
-[[plugins]]
-repo = 'mattn/emmet-vim'
-on_ft = ['html', 'javascript', 'typescript', 'ejs', 'erb', 'jst', 'jade']
-hook_source = '''
-    let g:user_emmet_leader_key = '<C-e>'
-    let g:user_emmet_expandabbr_key = '<C-e><C-e>'
-    let g:user_emmet_expandword_key = '<C-e>w'
-    let g:user_emmet_update_tag = '<C-e>u'
-    let g:user_emmet_balancetaginward_key = '<C-e>d'
-    let g:user_emmet_balancetagoutward_key = '<C-e>D'
-    let g:user_emmet_next_key = '<C-e>n'
-    let g:user_emmet_prev_key = '<C-e>p'
-    let g:user_emmet_imagesize_key = '<C-e>I'
-    let g:user_emmet_togglecomment_key = '<C-e>/'
-    let g:user_emmet_splitjointag_key = '<C-e>j'
-    let g:user_emmet_removetag_key = '<C-e>\d'
-    let g:user_emmet_anchorizeurl_key = '<C-e>x'
-    let g:user_emmet_anchorizesummary_key = '<C-e>X'
-    let g:user_emmet_mergelines_key = '<C-e>\m'
-    let g:user_emmet_codepretty_key = '<C-e>\s'
-
-    let g:user_emmet_settings = {
-                \   'variables': {
-                \     'lang': 'ja'
-                \   },
-                \   'indentation': '  ',
-                \   'includeLanguages': {
-                \     'typescript': 'typescriptreact'
-                \   },
-                \   'html': {
-                \     'empty_element_suffix': '/>'
-                \   },
-                \   'javascript': {
-                \     'extends': 'jsx'
-                \   }
-                \ }
-'''
-
-[[plugins]]
-repo = 'othree/html5.vim'
-on_ft = ['html', 'ejs', 'erb', 'jst', 'jade']
-#}}}
-
-#{{{ css
-[[plugins]]
-repo = 'hail2u/vim-css3-syntax'
-on_ft = ['html', 'ejs', 'erb', 'jst', 'jade', 'css']
-#}}}
-
-#{{{ slim
-[[plugins]]
-repo = 'slim-template/vim-slim'
-on_ft = 'slim'
-#}}}
-
-#{{{ Markdown
-[[plugins]]
-repo = 'godlygeek/tabular'
-on_ft = 'markdown'
-
-[[plugins]]
-repo = 'gabrielelana/vim-markdown'
-on_ft = 'markdown'
-hook_source = '''
-    let g:markdown_enable_spell_checking = 0
-    let g:markdown_mapping_switch_status = '<Learder>x'
-    hi! link markdownXmlComment Comment
-    hi! link markdownXmlElement Comment
-'''
-
-# Preview
-[[plugins]]
-repo = 'iamcco/markdown-preview.nvim'
-on_ft = ['markdown', 'pu', 'uml', 'plantuml']
-build = 'cp app & npm install'
-hook_source = '''
-    let g:mkdp_command_for_global = 1
-    let g:mkdp_auto_close = 0
-    let g:mkdp_markdown_css = g:vim_dir . '/markdown_preview-markdown.css'
-'''
-
-[[plugins]]
-repo = 'tyru/open-browser.vim'
-on_ft = ['markdown', 'html']
-
-[[plugins]]
-repo = 'kannokanno/previm'
-on_ft = 'markdown'
-depends = 'open-browser.vim'
-hook_source = '''
-    " realtime preview
-    let g:previm_enable_realtime = 1
-'''
-#}}}
-
-#{{{ Hugo
-[[plugins]]
-repo = 'robertbasic/vim-hugo-helper'
-on_ft = 'markdown'
-#}}}
-
-#{{{ JSON
-[[plugins]] # Preview
-repo = 'elzr/vim-json'
-on_ft = 'json'
-hook_add = '''
-    let g:vim_json_syntax_conceal = 0
-'''
-#}}}
-
-#{{{ TOML
-[[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
-#}}}
-
-#{{{ Dockerfile
-[[plugins]]
-repo = 'ekalinin/Dockerfile.vim'
-on_ft = ['dockerfile', 'docker-compose']
-#}}}
-
-#{{{ nginx
-[[plugins]]
-repo = 'chr4/nginx.vim'
-on_ft= 'nginx'
-#}}}
-
-#{{{ Ansible
-[[plugins]]
-repo = 'chase/vim-ansible-yaml'
-on_ft = 'ansible'
-#}}}
-
-#{{{ Terraform
-[[plugins]]
-repo = 'hashivim/vim-terraform'
-on_ft = ['terraform', 'javascript']
-hook_source = '''
-    let g:terraform_fmt_on_save = 1
-'''
-#}}}
-
-#{{{ PlantUML
-[[plugins]]
-repo = 'aklt/plantuml-syntax'
-on_ft = ['pu', 'uml', 'plantuml']
-[plugins.ftplugin]
-pu_uml_plantuml = '''
-    nnoremap <silent> <buffer> <LocalLeader>b :make<CR>
-'''
-#}}}
-
-#{{{ Graphviz
-[[plugins]]
-repo = 'wannesm/wmgraphviz.vim'
-on_ft = 'dot'
-hook_source = '''
-    let g:WMGraphviz_output='png'
-'''
-[plugins.ftplugin]
-dot = '''
-    nnoremap <silent> <buffer> <LocalLeader>lp :GraphvizCompilePDF<CR>
-'''
-#}}}
-
-#{{{ SQL
-[[plugins]]
-repo = 'vim-scripts/SQLUtilities'
-on_ft = 'sql'
-
-[[plugins]]
-repo = 'vim-scripts/Align'
-on_ft = 'sql'
-#}}}
-
-#{{{ Kubernetes
-# repo = 'andrewstuart/vim-kubernetes'
-#
-# repo = 'c9s/helper.vim'
-# repo = 'c9s/treemenu.vim'
-# repo = 'c9s/vikube.vim'
-#}}}
-
-#}}}
-
-#{{{ Misc
-[[plugins]] # Argumentative aids with manipulating and moving between function arguments.
-repo = 'PeterRincker/vim-argumentative'
-
-[[plugins]] # the_silver_searcher
-repo = 'rking/ag.vim'
-
-[[plugins]] # replacement in quickfix
-repo = 'thinca/vim-qfreplace'
-
-[[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
-
-[[plugins]] # quickrun
-repo = 'thinca/vim-quickrun'
-hook_add = '''
-    let g:quickrun_config = get(g:, 'quickrun_config', {})
-    let g:quickrun_config._ = {
-                \ 'runner': 'vimproc',
-                \ 'runner/vimproc/updatetime': 40,
-                \ }
-    let g:quickrun_config.html = {
-                \ 'outputter': 'browser'
-                \ }
-'''
-
-[[plugins]] # list tags
-repo = 'majutsushi/tagbar'
-build = 'brew install ctags'
-hook_add = '''
-    nmap <space>t :<C-u>TagbarToggle<CR>
-'''
-
-[[plugins]] # increment date
-repo = 'tpope/vim-speeddating'
-hook_add = '''
-    let g:speeddating_no_mappings = 1
-    nmap  <C-A>     <Plug>SpeedDatingUp
-    nmap  <C-X>     <Plug>SpeedDatingDown
-    xmap  <C-A>     <Plug>SpeedDatingUp
-    xmap  <C-X>     <Plug>SpeedDatingDown
-    " nmap d<C-A>     <Plug>SpeedDatingNowUTC
-    " nmap d<C-X>     <Plug>SpeedDatingNowLocal
-'''
-
-# memo
+#{{{ Memo
 [[plugins]]
 repo = 'glidenote/memolist.vim'
 hook_add = '''
     let g:memolist_path = "~/Dropbox/memo"
-    " suffix type (default markdown)
     let g:memolist_memo_suffix = "txt"
-
-    " date format (default %Y-%m-%d %H:%M)
     let g:memolist_memo_date = "%Y-%m-%d %H:%M"
-    "" let g:memolist_memo_date = "epoch"
-    "" let g:memolist_memo_date = "%D %T"
-
-    " tags prompt (default 0)
-    "" let g:memolist_prompt_tags = 1
-
-    " categories prompt (default 0)
-    let g:memolist_prompt_categories = 1
-
-    " use qfixgrep (default 0)
-    " let g:memolist_qfixgrep = 1
-
-    " use vimfler (default 0)
-    " let g:memolist_vimfiler = 1
-
-    " use arbitrary vimfler option (default -split -winwidth=50)
-    " let g:memolist_vimfiler_option = "-split -winwidth=80 -simple"
-
-    " use unite (default 0)
-    "" let g:memolist_unite = 1
-
-    " use arbitrary unite option (default is empty)
-    "" let g:memolist_unite_option = "-auto-preview -start-insert"
-
-    " use arbitrary unite source (default is 'file')
-    "" let g:memolist_unite_source = "file/rec"
-
-    " use template
-    let g:memolist_template_dir_path = "~/.vim/template/memolist"
-
-    " remove filename prefix (default 0)
-    "" let g:memolist_filename_prefix_none = 1
-
     nnoremap <Leader>mn :<C-u>MemoNew<CR>
 '''
+#}}}
 
-[[plugins]] # use histogram algorithm for vimdiff
-repo = 'chrisbra/vim-diff-enhanced'
-hook_add = '''
-    let &diffexpr='EnhancedDiff#Diff("git diff", "--diff-algorithm=histogram")'
-'''
-
+#{{{ Diff tools
 [[plugins]]
 repo = 'AndrewRadev/linediff.vim'
 
@@ -1321,38 +799,243 @@ hook_add = '''
     nmap <silent> [<C-d> :<C-u>DirDiffPrev<CR>
     nmap <silent> ]<C-d> :<C-u>DirDiffNext<CR>
 '''
+#}}}
 
-[[plugins]] # switch between a single-line statement and a multi-line one
-repo = 'AndrewRadev/splitjoin.vim'
+#}}}
 
-[[plugins]]
-repo = 'itchyny/calendar.vim'
-hook_add = '''
-    let g:calendar_google_calendar = 1
-    let g:calendar_google_task = 1
-    let g:calendar_frame = 'default'
-    let g:calendar_first_day = 'monday'
+#{{{ Filetype
+
+[ftplugin] #{{{
+snippets = '''
+    setlocal noexpandtab
 '''
+vim = '''
+    setlocal tabstop=2
+    setlocal shiftwidth=2
+'''
+make = '''
+    setlocal noexpandtab
+    setlocal tabstop=8
+    setlocal shiftwidth=8
+'''
+python = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+kotlin = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+markdown = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+css = '''
+    setlocal tabstop=4
+    setlocal shiftwidth=4
+'''
+#}}}
 
+#{{{ TOML
 [[plugins]]
-repo = 'mattn/webapi-vim'
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+#}}}
 
-[[plugins]] # esa
-repo = 'upamune/esa.vim'
-depends = 'webapi-vim'
-
-[[plugins]]
-repo = 'shinespark/vim-list2tree'
-on_cmd = 'List2Tree'
-
-# csv
+#{{{ CSV
 [[plugins]]
 repo = 'mechatroner/rainbow_csv'
+on_ft = ['csv']
+#}}}
 
-# docs
+#{{{ HTML, Javascript And Typescript
 [[plugins]]
-repo = 'rizzatti/dash.vim'
+repo = 'leafgarland/typescript-vim'
+on_ft = ['typescript']
 
 [[plugins]]
-repo = 'akiomik/itermcolors-vim'
+repo = 'maxmellon/vim-jsx-pretty'
+on_ft = ['javascriptreact']
+
+[[plugins]]
+repo = 'jparise/vim-graphql'
+on_ft = ['javascriptreact']
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = ['html', 'javascript', 'typescript', 'javascriptreact']
+hook_source = '''
+  let g:user_emmet_leader_key = '<C-e>'
+  let g:user_emmet_expandabbr_key = '<C-e><C-e>'
+  let g:user_emmet_expandword_key = '<C-e>w'
+  let g:user_emmet_update_tag = '<C-e>u'
+  let g:user_emmet_balancetaginward_key = '<C-e>d'
+  let g:user_emmet_balancetagoutward_key = '<C-e>D'
+  let g:user_emmet_next_key = '<C-e>n'
+  let g:user_emmet_prev_key = '<C-e>p'
+  let g:user_emmet_imagesize_key = '<C-e>I'
+  let g:user_emmet_togglecomment_key = '<C-e>/'
+  let g:user_emmet_splitjointag_key = '<C-e>j'
+  let g:user_emmet_removetag_key = '<C-e>\d'
+  let g:user_emmet_anchorizeurl_key = '<C-e>x'
+  let g:user_emmet_anchorizesummary_key = '<C-e>X'
+  let g:user_emmet_mergelines_key = '<C-e>\m'
+  let g:user_emmet_codepretty_key = '<C-e>\s'
+
+  let g:user_emmet_settings = {
+        \   'variables': {
+        \     'lang': 'ja'
+        \   },
+        \   'indentation': '  ',
+        \   'includeLanguages': {
+        \     'typescript': 'typescriptreact'
+        \   },
+        \   'html': {
+        \     'empty_element_suffix': '/>'
+        \   },
+        \   'javascript': {
+        \     'extends': 'jsx'
+        \   }
+        \ }
+'''
+#}}}
+
+#{{{ Go
+[[plugins]]
+repo = 'mattn/vim-goimports'
+on_ft = 'go'
+#}}}
+
+#{{{ Markdown
+# Preview
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = ['markdown', 'plantuml']
+build = 'cp app & npm install'
+hook_source = '''
+    let g:mkdp_command_for_global = 1
+    let g:mkdp_auto_close = 0
+    let g:mkdp_markdown_css = g:vim_dir . '/markdown_preview-markdown.css'
+'''
+#}}}
+
+#{{{ PlantUML
+[[plugins]]
+repo = 'aklt/plantuml-syntax'
+on_ft = 'plantuml'
+#}}}
+
+#{{{ Terraform
+[[plugins]]
+repo = 'hashivim/vim-terraform'
+on_ft = ['terraform', 'json']
+hook_add = '''
+  let g:terraform_fmt_on_save = 1
+'''
+#}}}
+
+#}}}
+
+#{{{ Status bar
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  let g:lightline = {
+              \ 'colorscheme': 'iceberg',
+              \ 'mode_map': { 'c': 'NORMAL' },
+              \ 'active': {
+              \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename' ] ],
+              \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+              \ },
+              \ 'component_function': {
+              \   'readonly': 'LightlineReadonly',
+              \   'gitbranch': 'LightLineGitBranch',
+              \   'filename': 'LightLineFilename',
+              \   'fileformat': 'LightLineFileformat',
+              \   'filetype': 'LightLineFiletype',
+              \   'fileencoding': 'LightLineFileencoding',
+              \   'mode': 'LightLineMode',
+              \ },
+              \ 'separator': { 'left': "\uE0B0", 'right': "\uE0B2" },
+              \ 'subseparator': { 'left': "\uE0B1", 'right': "\uE0B3" }
+              \ }
+
+  function! LightLineModified()
+      return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  endfunction
+
+  function! LightLineReadonly()
+      return &ft !~? 'help' && &readonly ? "\uE0A2" : ''
+  endfunction
+
+  function! LightLineFilename()
+      let fname = expand('%:t')
+      return fname == '__Tagbar__' ? g:lightline.fname :
+                  \ fname =~ '__Mundo\|NERD_tree' ? '' :
+                  \ &ft == 'denite' ? denite#get_status() :
+                  \ &ft == 'denite-filter' ? denite#get_status() :
+                  \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+                  \ ('' != fname ? fname : '[No Name]') .
+                  \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+  endfunction
+
+  function! LightLineGitBranch()
+      try
+          if expand('%:t') !~? 'Tagbar\|Mundo' && &ft !~? 'denite\|defx'
+              let mark = ''  " edit here for cool mark
+              let _ = gina#component#repo#branch()
+              return strlen(_) ? mark._ : ''
+          endif
+      catch
+      endtry
+      return ''
+  endfunction
+
+  function! LightLineFileformat()
+      return winwidth(0) > 70 ? &fileformat : ''
+  endfunction
+
+  function! LightLineFiletype()
+      return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+  endfunction
+
+  function! LightLineFileencoding()
+      return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+  endfunction
+
+  function! LightLineMode()
+      let fname = expand('%:t')
+      return fname == '__Tagbar__' ? 'Tagbar' :
+                  \ fname == '__Mundo__' ? 'Mundo' :
+                  \ fname == '__Mundo_Preview__' ? 'Mundo Preview' :
+                  \ &ft == 'defx' ? 'Defx' :
+                  \ &ft == 'denite' ? 'Denite' :
+                  \ &ft == 'denite-filter' ? 'Denite Filter' :
+                  \ &ft == 'vimshell' ? 'VimShell' :
+                  \ winwidth(0) > 60 ? lightline#mode() : ''
+  endfunction
+
+  let g:tagbar_status_func = 'TagbarStatusFunc'
+
+  function! TagbarStatusFunc(current, sort, fname, ...) abort
+      let g:lightline.fname = a:fname
+      return lightline#statusline(0)
+  endfunction
+
+  let g:unite_force_overwrite_statusline = 0
+  let g:vimfiler_force_overwrite_statusline = 0
+  let g:vimshell_force_overwrite_statusline = 0
+'''
+#}}}
+
+#{{{ Color Scheme
+[[plugins]]
+repo = 'cocopon/iceberg.vim'
+hook_add = '''
+    set termguicolors
+'''
+hook_post_source = '''
+    colorscheme iceberg
+    hi! link SpecialKey Special
+'''
 #}}}
