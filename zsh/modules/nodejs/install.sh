@@ -8,3 +8,4 @@ nodebrew install-binary $NODE_VERSION
 nodebrew use $NODE_VERSION
 
 npm install -g npm
+npm install -g yarn

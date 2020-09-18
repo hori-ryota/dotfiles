@@ -1,6 +1,11 @@
 #{{{ dein self
 [[plugins]]
 repo = 'Shougo/dein.vim'
+hook_add = '''
+  let g:dein#install_github_api_token=$DEINVIM_GITHUB_API_TOKEN
+  command! DeinInstall call dein#install()
+  command! DeinUpdate call dein#check_update(v:true)
+'''
 #}}}
 
 #{{{ denite
@@ -37,7 +42,7 @@ hook_post_source = '''
       \ ['rg', '--files', '--color', 'never',
       \ '--no-ignore',
       \ '--follow', '--hidden', '--smart-case',
-      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/',
+      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/', '--glob', '!.docker-compose-data/',
       \ ])
 
   " Ripgrep command on grep source
@@ -46,7 +51,7 @@ hook_post_source = '''
       \ 'default_opts': [
       \ '--vimgrep', '--no-heading', '--color', 'never',
       \ '--no-ignore',
-      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/',
+      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/', '--glob', '!.docker-compose-data/',
       \ '--follow', '--hidden', '--smart-case',
       \ ],
       \ 'recursive_opts': [],
@@ -63,7 +68,7 @@ hook_post_source = '''
   endif
 
   function! s:session_file_name(target_dir)
-    return s:session_dir . '/' . trim(substitute(a:target_dir, '/', '-', 'g'), '-') . '.vim'
+    return s:session_dir . '/' . trim(substitute(resolve(a:target_dir), '/', '-', 'g'), '-') . '.vim'
   endfunction
 
   function! s:save_session(target_dir)
@@ -481,50 +486,72 @@ repo = 'editorconfig/editorconfig-vim'
 
 #{{{ LSP
 [[plugins]]
-repo = 'neovim/nvim-lsp'
+repo = 'neovim/nvim-lspconfig'
 hook_add = '''
-  function! LC_maps()
-    " nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>
-    nnoremap <buffer><silent> K           :<C-u>lua vim.lsp.buf.hover()<CR>
-    nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.signature_help()<CR>
-    nnoremap <buffer><silent> <C-]>       :<C-u>lua vim.lsp.buf.definition()<CR>
-    nnoremap <buffer><silent> <Leader>i   :<C-u>lua vim.lsp.buf.implementation()<CR>
-    nnoremap <buffer><silent> <Leader>R   :<C-u>lua vim.lsp.buf.rename()<CR>
-    nnoremap <buffer><silent> <Leader>s   :<C-u>lua vim.lsp.buf.document_symbol()<CR>
-    nnoremap <buffer><silent> <Leader>dr  :<C-u>lua vim.lsp.buf.references()<CR>
-    " nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>
-    nnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.formatting()<CR>
-    vnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.range_formatting()<CR>
-    nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.document_highlight()<CR>
-    " nnoremap <buffer><silent> <Leader>H :<C-u>call LanguageClient_clearDocumentHighlight()<CR>
-    " nnoremap <buffer><silent> <Leader>S :<C-u>Denite -start-filter workspaceSymbol<CR>
-  endfunction
-
   lua << EOF
       function bind_key_map()
+        vim.cmd "nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>"
         -- vim.cmd "nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>"
         vim.cmd "nnoremap <buffer><silent> K           :<C-u>lua vim.lsp.buf.hover()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.signature_help()<CR>"
         vim.cmd "nnoremap <buffer><silent> <C-]>       :<C-u>lua vim.lsp.buf.definition()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>i   :<C-u>lua vim.lsp.buf.implementation()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>R   :<C-u>lua vim.lsp.buf.rename()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>s   :<C-u>lua vim.lsp.buf.document_symbol()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>ds  :<C-u>lua vim.lsp.buf.document_symbol()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>dr  :<C-u>lua vim.lsp.buf.references()<CR>"
         -- vim.cmd "nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>"
         vim.cmd "nnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.formatting()<CR>"
         vim.cmd "vnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.range_formatting()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.document_highlight()<CR>"
         -- vim.cmd "nnoremap <buffer><silent> <Leader>H :<C-u>call LanguageClient_clearDocumentHighlight()<CR>"
-        -- vim.cmd "nnoremap <buffer><silent> <Leader>S :<C-u>Denite -start-filter workspaceSymbol<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>ws  :<C-u>lua vim.lsp.buf.workspace_symbol()<CR>"
       end
 
       local nvim_lsp = require'nvim_lsp'
+
       nvim_lsp.vimls.setup{
-        on_attach = bind_key_map
-      }
+        on_attach = bind_key_map;
+      };
+
       nvim_lsp.gopls.setup{
-        on_attach = bind_key_map
-      }
+        on_attach = bind_key_map;
+        settings = {
+          gopls = {
+            analyses = {
+              fillreturns = true;
+              unusedparams = true;
+            };
+          };
+        };
+      };
+      nvim_lsp.pyls.setup{
+        on_attach = bind_key_map;
+      };
+      nvim_lsp.tsserver.setup{
+        on_attach = bind_key_map;
+      };
+
+      nvim_lsp.html.setup{
+        on_attach = bind_key_map;
+      };
+      nvim_lsp.cssls.setup{
+        on_attach = bind_key_map;
+      };
+
+      nvim_lsp.jsonls.setup{
+        on_attach = bind_key_map;
+      };
+      nvim_lsp.yamlls.setup{
+        on_attach = bind_key_map;
+      };
+
+      nvim_lsp.terraformls.setup{
+        on_attach = bind_key_map;
+      };
+
+      nvim_lsp.dockerls.setup{
+        on_attach = bind_key_map;
+      };
 EOF
 
   hi! link LspDiagnosticsError       ALEVirtualTextError
@@ -536,6 +563,13 @@ EOF
   hi! link LspReferenceText          Normal
   hi! link LspReferenceRead          Identifier
   hi! link LspReferenceWrite         MoreMsg
+
+  function! s:ReloadLSP() abort
+    lua vim.lsp.stop_client(vim.lsp.get_active_clients())
+    edit
+  endfunction
+  command! ReloadLSP call s:ReloadLSP()
+  nnoremap <Leader>L :<C-u>ReloadLSP<CR>
 '''
 #}}}
 
@@ -644,7 +678,8 @@ sh = '''
   nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch sh %<CR>
 '''
 go = '''
-  nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch go run %:h<CR>
+  nnoremap <buffer> <Leader>r :<C-u>Dispatch go run %:p:h<CR>
+  nnoremap <buffer> <Leader>G :<C-u>Dispatch go generate %:p:h<CR>
 '''
 #}}}
 
@@ -813,6 +848,58 @@ repo = 'mechatroner/rainbow_csv'
 on_ft = ['csv']
 #}}}
 
+#{{{ HTML, Javascript And Typescript
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = ['typescript']
+
+[[plugins]]
+repo = 'maxmellon/vim-jsx-pretty'
+on_ft = ['javascriptreact']
+
+[[plugins]]
+repo = 'jparise/vim-graphql'
+on_ft = ['javascriptreact']
+
+[[plugins]]
+repo = 'mattn/emmet-vim'
+on_ft = ['html', 'javascript', 'typescript', 'javascriptreact']
+hook_source = '''
+  let g:user_emmet_leader_key = '<C-e>'
+  let g:user_emmet_expandabbr_key = '<C-e><C-e>'
+  let g:user_emmet_expandword_key = '<C-e>w'
+  let g:user_emmet_update_tag = '<C-e>u'
+  let g:user_emmet_balancetaginward_key = '<C-e>d'
+  let g:user_emmet_balancetagoutward_key = '<C-e>D'
+  let g:user_emmet_next_key = '<C-e>n'
+  let g:user_emmet_prev_key = '<C-e>p'
+  let g:user_emmet_imagesize_key = '<C-e>I'
+  let g:user_emmet_togglecomment_key = '<C-e>/'
+  let g:user_emmet_splitjointag_key = '<C-e>j'
+  let g:user_emmet_removetag_key = '<C-e>\d'
+  let g:user_emmet_anchorizeurl_key = '<C-e>x'
+  let g:user_emmet_anchorizesummary_key = '<C-e>X'
+  let g:user_emmet_mergelines_key = '<C-e>\m'
+  let g:user_emmet_codepretty_key = '<C-e>\s'
+
+  let g:user_emmet_settings = {
+        \   'variables': {
+        \     'lang': 'ja'
+        \   },
+        \   'indentation': '  ',
+        \   'includeLanguages': {
+        \     'typescript': 'typescriptreact'
+        \   },
+        \   'html': {
+        \     'empty_element_suffix': '/>'
+        \   },
+        \   'javascript': {
+        \     'extends': 'jsx'
+        \   }
+        \ }
+'''
+#}}}
+
 #{{{ Go
 [[plugins]]
 repo = 'mattn/vim-goimports'
@@ -836,6 +923,15 @@ hook_source = '''
 [[plugins]]
 repo = 'aklt/plantuml-syntax'
 on_ft = 'plantuml'
+#}}}
+
+#{{{ Terraform
+[[plugins]]
+repo = 'hashivim/vim-terraform'
+on_ft = ['terraform', 'json']
+hook_add = '''
+  let g:terraform_fmt_on_save = 1
+'''
 #}}}
 
 #}}}

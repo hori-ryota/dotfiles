@@ -1,0 +1,152 @@
+snippet ctx
+abbr    "arg context"
+options word
+  ctx context.Context
+
+snippet ctxb
+abbr    "context.Background()"
+options word
+  context.Background()
+
+snippet ctxbb
+abbr    "ctx := context.Background()"
+options head
+  ctx := context.Background()
+
+snippet ctxt
+abbr    "context.TODO()"
+options word
+  context.TODO()
+
+snippet ctxtt
+abbr    "ctx := context.TODO()"
+options word
+  context.TODO()
+
+snippet rt
+abbr "required tag"
+options word
+  required:""
+
+snippet rtt
+abbr "required tag with backquote"
+options word
+  \`required:""\`
+
+snippet gt
+abbr "getter tag"
+options word
+  getter:""
+
+snippet gtt
+abbr "getter tag with backquote"
+options word
+  \`getter:""\`
+
+snippet st
+abbr "setter tag"
+options word
+  setter:""
+
+snippet stt
+abbr "setter tag with backquote"
+options word
+  \`setter:""\`
+
+snippet gst
+abbr "getter setter tag"
+options word
+  getter:"" setter:""
+
+snippet gstt
+abbr "getter setter tag with backquote"
+options word
+  \`getter:"" setter:""\`
+
+snippet rgst
+abbr "required getter setter tag"
+options word
+  required:"" getter:"" setter:""
+
+snippet rgstt
+abbr "required getter setter tag with backquote"
+options word
+  \`required:"" getter:"" setter:""\`
+
+snippet rgt
+abbr "required getter tag"
+options word
+  required:"" getter:""
+
+snippet rgtt
+abbr "required getter tag with backquote"
+options word
+  \`required:"" getter:""\`
+
+snippet rst
+abbr "required setter tag"
+options word
+  required:"" setter:""
+
+snippet rstt
+abbr "required setter tag with backquote"
+options word
+  \`required:"" setter:""\`
+
+snippet gcm
+abbr "gencontructor mark"
+options word
+  //genconstructor
+
+snippet ggc
+abbr "//go:generate go-genconstructor"
+options head
+  //go:generate go-codegen go_constructor
+
+snippet gga
+abbr "//go:generate go-genaccessor"
+options head
+  //go:generate go-codegen go_accessor
+
+snippet test
+abbr "test"
+options head
+alias t
+  func Test${1}(t *testing.T) {
+    ${0}
+  }
+
+snippet tt
+abbr "subtest"
+options head
+  t.Run("${1}", func(t *testing.T) {
+    ${0:TARGET}
+  })
+
+snippet ttr
+abbr "range subtest"
+options head
+  for _, tt := range []struct{
+    name string
+  }{
+    {
+      name: "",
+    },
+  }{
+    tt := tt
+    t.Run(tt.name, func(t *testing.T) {
+      ${0:TARGET}
+    })
+  }
+
+snippet mc
+abbr "initialize gomock controller"
+options head
+  ctrl, ctx := gomock.WithContext(context.Background(), t)
+  defer ctrl.Finish()
+
+snippet mockgen
+abbr "common mockgen command"
+options head
+  //go:generate mockgen -source $GOFILE -destination mock_$GOPACKAGE/${GOFILE}_mock.go
+

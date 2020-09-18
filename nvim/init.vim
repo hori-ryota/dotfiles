@@ -78,9 +78,10 @@ cnoremap <C-p> <Up>
 "{{{ 21 executing external commands
 "}}}
 "{{{ 22 running make and jumping to errors
+" modify grep command to ripgrep
 if executable('rg')
-  set grepprg=rg\ --vimgrep\ --no-heading
-  set grepformat=%f:%l:%c:%m,%f:%l:%m
+    let &grepprg = 'rg --vimgrep --no-ignore --glob !.git/ --glob !.DS_Store --glob !node_modules/ --glob !.docker-compose-data/ --follow --hidden --smart-case'
+    set grepformat=%f:%l:%c:%m
 endif
 "}}}
 "{{{ 23 language specific
@@ -102,11 +103,13 @@ nnoremap <Leader>S :<C-u>source $MYVIMRC<CR>
 " close preview window
 nnoremap <silent> <ESC> :<C-u>nohlsearch<CR>:pclose<CR>
 
-" modify grep command to ripgrep
-if executable('rg')
-    let &grepprg = 'rg --vimgrep --no-ignore --glob !.git/ --glob !.DS_Store --glob !node_modules/ --follow --hidden --smart-case'
-    set grepformat=%f:%l:%c:%m
-endif
+" move quickfix window to bottom
+function! MoveQuickfixWindowToBottom()
+    if !getwininfo(win_getid())[0].loclist
+        wincmd J
+    endif
+endfunction
+autocmd FileType qf call MoveQuickfixWindowToBottom()
 
 "{{{ filetype detect
 augroup FileTypeDetect
@@ -145,9 +148,6 @@ let s:config_files = [
         \ s:toml_file,
         \ ]
 if dein#load_state(s:dein_dir)
-  for plugin_name in keys(g:dein#_plugins)
-    let g:dein#_plugins[plugin_name].sourced = 0
-  endfor
   call dein#begin(s:dein_dir, s:config_files)
   call dein#load_toml(s:toml_file)
   call dein#end()
