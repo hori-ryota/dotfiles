@@ -30,6 +30,8 @@ set laststatus=2
 "{{{ 7 multiple tab pages
 "}}}
 "{{{ 8 terminal
+set sh=zsh
+tnoremap <silent> <ESC> <C-\><C-n>
 "}}}
 "{{{ 9 using the mouse
 "}}}

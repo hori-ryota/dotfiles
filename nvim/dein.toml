@@ -681,6 +681,13 @@ go = '''
   nnoremap <buffer> <Leader>r :<C-u>Dispatch go run %:p:h<CR>
   nnoremap <buffer> <Leader>G :<C-u>Dispatch go generate %:p:h<CR>
 '''
+
+[[plugins]]
+repo = 'radenling/vim-dispatch-neovim'
+on_source = 'vim-dispatch'
+hook_source = '''
+  let g:dispatch_handlers = ['neovim']
+'''
 #}}}
 
 #{{{ Testing
