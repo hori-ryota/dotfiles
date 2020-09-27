@@ -448,10 +448,10 @@ hook_add = '''
 '''
 [plugins.ftplugin]
 agit = '''
-  nmap <buffer><nowait> <C-j> <Plug>(agit-scrolldown-stat)
-  nmap <buffer><nowait> <C-k> <Plug>(agit-scrollup-stat)
-  nmap <buffer><nowait> <C-n> <Plug>(agit-scrolldown-diff)
-  nmap <buffer><nowait> <C-p> <Plug>(agit-scrollup-diff)
+  nmap <buffer><nowait> <C-n> <Plug>(agit-scrolldown-stat)
+  nmap <buffer><nowait> <C-p> <Plug>(agit-scrollup-stat)
+  nmap <buffer><nowait> <C-j> <Plug>(agit-scrolldown-diff)
+  nmap <buffer><nowait> <C-k> <Plug>(agit-scrollup-diff)
   nmap <buffer><nowait> <C-l> <Plug>(agit-reload)
   nmap <buffer><nowait> yh    <Plug>(agit-yank-hash)
   nmap <buffer><nowait> <C-g> <Plug>(agit-print-commitmsg)
