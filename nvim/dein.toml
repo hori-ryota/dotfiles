@@ -672,14 +672,29 @@ on_cmd = [
 ]
 hook_add = '''
   let g:dispatch_no_maps = 1
+  let g:dispatch_compilers = {}
 '''
 [plugins.ftplugin]
 sh = '''
   nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch sh %<CR>
 '''
 go = '''
+  nnoremap <buffer> <Leader>t :<C-u>Dispatch go test %:p:h<CR>
+  nnoremap <buffer> <Leader>gt :<C-u>Dispatch go test %:p:h/...<CR>
+  nnoremap <buffer> <Leader>pt :<C-u>Dispatch go test ./...<CR>
+
   nnoremap <buffer> <Leader>r :<C-u>Dispatch go run %:p:h<CR>
   nnoremap <buffer> <Leader>G :<C-u>Dispatch go generate %:p:h<CR>
+
+  let g:dispatch_compilers['go test'] = 'go'
+  nnoremap <buffer> <Leader>t :<C-u>Dispatch go test %:p:h<CR>
+  nnoremap <buffer> <Leader>gt :<C-u>Dispatch go test %:p:h/...<CR>
+  nnoremap <buffer> <Leader>pt :<C-u>Dispatch go test ./...<CR>
+
+  let g:dispatch_compilers['golangci-lint run'] = 'go'
+  nnoremap <buffer> <Leader>l :<C-u>Dispatch golangci-lint run %:p:h<CR>
+  nnoremap <buffer> <Leader>gl :<C-u>Dispatch golangci-lint run %:p:h/...<CR>
+  nnoremap <buffer> <Leader>pl :<C-u>Dispatch golangci-lint run ./...<CR>
 '''
 
 [[plugins]]
@@ -705,7 +720,6 @@ hook_add = '''
 [plugins.ftplugin]
 go = '''
   let g:test#go#gotest#file_pattern = '\v.*\.go$'
-  nnoremap <buffer><silent> <Leader>t :<C-u>TestFile<CR>
   nnoremap <buffer><silent> <Leader>T :<C-u>TestNearest<CR>
 
   function! s:debugNearest()
