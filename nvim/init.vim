@@ -113,6 +113,10 @@ nnoremap <Leader>S :<C-u>source $MYVIMRC<CR>
 " close preview window
 nnoremap <silent> <ESC> :<C-u>nohlsearch<CR>:pclose<CR>
 
+" close quickfix window
+" close location list
+nnoremap <silent> g<ESC> :<C-u>nohlsearch<CR>:pclose<CR>:cclose<CR>:lclose<CR>
+
 " move quickfix window to bottom
 function! MoveQuickfixWindowToBottom()
     if !getwininfo(win_getid())[0].loclist
