@@ -23,6 +23,14 @@ set number
 "{{{ 5 syntax, highlighting and spelling
 set hlsearch
 nohlsearch
+set spell
+set spelloptions=camel
+set spelllang+=cjk
+let s:spellfile_dir = $XDG_CONFIG_HOME . '/nvim/spell'
+if !isdirectory(s:spellfile_dir)
+    call mkdir(s:spellfile_dir, 'p')
+endif
+let &spellfile = s:spellfile_dir . '/en.utf-8.add'
 "}}}
 "{{{ 6 multiple windows
 set laststatus=2
