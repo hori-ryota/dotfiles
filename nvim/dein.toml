@@ -259,6 +259,8 @@ hook_add = '''
 '''
 [plugins.ftplugin]
 defx = '''
+  setlocal nonumber
+
   " select
   nnoremap <silent><buffer><nowait><expr> x
         \ defx#do_action('toggle_select') . 'j'
@@ -507,13 +509,13 @@ hook_add = '''
         vim.cmd "nnoremap <buffer><silent> <Leader>ws  :<C-u>lua vim.lsp.buf.workspace_symbol()<CR>"
       end
 
-      local nvim_lsp = require'nvim_lsp'
+      local lspconfig = require'lspconfig'
 
-      nvim_lsp.vimls.setup{
+      lspconfig.vimls.setup{
         on_attach = bind_key_map;
       };
 
-      nvim_lsp.gopls.setup{
+      lspconfig.gopls.setup{
         on_attach = bind_key_map;
         settings = {
           gopls = {
@@ -524,32 +526,50 @@ hook_add = '''
           };
         };
       };
-      nvim_lsp.pyls.setup{
+      lspconfig.pyls.setup{
         on_attach = bind_key_map;
       };
-      nvim_lsp.tsserver.setup{
-        on_attach = bind_key_map;
-      };
-
-      nvim_lsp.html.setup{
-        on_attach = bind_key_map;
-      };
-      nvim_lsp.cssls.setup{
+      lspconfig.tsserver.setup{
         on_attach = bind_key_map;
       };
 
-      nvim_lsp.jsonls.setup{
+      lspconfig.html.setup{
         on_attach = bind_key_map;
       };
-      nvim_lsp.yamlls.setup{
-        on_attach = bind_key_map;
-      };
-
-      nvim_lsp.terraformls.setup{
+      lspconfig.cssls.setup{
         on_attach = bind_key_map;
       };
 
-      nvim_lsp.dockerls.setup{
+      lspconfig.jsonls.setup{
+        on_attach = bind_key_map;
+      };
+      lspconfig.yamlls.setup{
+        on_attach = bind_key_map;
+      };
+
+      lspconfig.terraformls.setup{
+        on_attach = bind_key_map;
+      };
+
+      lspconfig.dockerls.setup{
+        on_attach = bind_key_map;
+      };
+
+      lspconfig.efm.setup{
+        filetypes = {
+          'make',
+          'Dockerfile',
+          'sh',
+          'javascript',
+          'javascriptreact',
+          'typescript',
+          'typescriptreact',
+          'html',
+          'css',
+          'json',
+          'csv',
+          'proto',
+        };
         on_attach = bind_key_map;
       };
 EOF
@@ -855,6 +875,11 @@ css = '''
     setlocal tabstop=4
     setlocal shiftwidth=4
 '''
+go = '''
+    setlocal noexpandtab
+    setlocal tabstop=2
+    setlocal shiftwidth=2
+'''
 #}}}
 
 #{{{ TOML
@@ -872,7 +897,11 @@ on_ft = ['csv']
 #{{{ HTML, Javascript And Typescript
 [[plugins]]
 repo = 'leafgarland/typescript-vim'
-on_ft = ['typescript']
+on_ft = ['typescript', 'typescriptreact']
+
+[[plugins]]
+repo = 'peitalin/vim-jsx-typescript'
+on_ft = ['typescriptreact']
 
 [[plugins]]
 repo = 'maxmellon/vim-jsx-pretty'
@@ -884,7 +913,7 @@ on_ft = ['javascriptreact']
 
 [[plugins]]
 repo = 'mattn/emmet-vim'
-on_ft = ['html', 'javascript', 'typescript', 'javascriptreact']
+on_ft = ['html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact']
 hook_source = '''
   let g:user_emmet_leader_key = '<C-e>'
   let g:user_emmet_expandabbr_key = '<C-e><C-e>'
@@ -965,6 +994,10 @@ hook_add = '''
               \ 'colorscheme': 'iceberg',
               \ 'mode_map': { 'c': 'NORMAL' },
               \ 'active': {
+              \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename' ] ],
+              \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+              \ },
+              \ 'inactive': {
               \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename' ] ],
               \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
               \ },
