@@ -710,6 +710,8 @@ on_cmd = [
 hook_add = '''
   let g:dispatch_no_maps = 1
   let g:dispatch_compilers = {}
+  let g:dispatch_quickfix_height = 30
+  nnoremap <Leader>r :<C-u>Dispatch<CR>
 '''
 [plugins.ftplugin]
 sh = '''
