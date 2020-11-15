@@ -380,9 +380,9 @@ hook_post_source = '''
   endfunction
 
   "{{{ status settings
-	call gina#custom#command#option('status', '-u|--untracked-files')
-	call gina#custom#command#option('status', '-s|--short')
-	call gina#custom#command#option('status', '-b|--branch')
+  call gina#custom#command#option('status', '-u|--untracked-files')
+  call gina#custom#command#option('status', '-s|--short')
+  call gina#custom#command#option('status', '-b|--branch')
   call s:mapping('status', 'n', '<Tab>', '<Plug>(gina-builtin-choice)')
   call s:mapping('status', 'n', 'x', '<Plug>(gina-builtin-mark)j')
   call s:mapping('status', 'n', 'yy', '<Plug>(gina-yank-path)')
@@ -391,6 +391,8 @@ hook_post_source = '''
   call s:mapping('status', 'n', 'C', ':<C-u>Gina commit<CR>')
   call s:mapping('status', 'n', '<', '<Plug>(gina-index-stage)')
   call s:mapping('status', 'n', '>', '<Plug>(gina-index-unstage)')
+
+  call s:mapping('status', 'n', 'gp', ':<C-u>Gina push<CR>')
 
   call s:mapping('status', 'n', '<CR>', '<Plug>(gina-edit)')
   call s:mapping('status', 'n', 's', '<Plug>(gina-edit-split)')
@@ -408,17 +410,32 @@ hook_post_source = '''
   "}}}
 
   "{{{ commit settings
-	call gina#custom#command#option('commit', '-u|--untracked-files')
-	call gina#custom#command#option('commit', '-v|--verbose')
-	call gina#custom#command#option('commit', '-S|--gpg-sign')
+  call gina#custom#command#option('commit', '-u|--untracked-files')
+  call gina#custom#command#option('commit', '-v|--verbose')
+  call gina#custom#command#option('commit', '-S|--gpg-sign')
   call s:mapping('commit', 'n', 's!', '<Plug>(gina-commit-ammend)')
   "}}}
+
+  "{{{ branch settings
+  call gina#custom#command#option('branch', '-a|--all')
+  call gina#custom#command#option('checkout', '-b|--branch')
+  call s:mapping('branch', 'n', 'g<CR>', '<Plug>(gina-commit-checkout-track)')
+  call s:mapping('branch', 'n', 'M', '<Plug>(gina-commit-merge)')
+  call s:mapping('status', 'n', 'gp', ':<C-u>Gina push<CR>')
+  "}}}
+
+  "{{{ blame settings
+  let g:gina#command#blame#formatter#format = '%su%=%au on %ti %ma%in'
+  call s:mapping('blame', 'n', 'P', '<Plug>(gina-show-preview)')
+  "}}}
+
 '''
 hook_add = '''
   " let g:gina#command#commit#use_default_mappings = 0
   " let g:gina#command#diff#use_default_mappings = 0
   " let g:gina#command#status#use_default_mappings = 0
   nnoremap <space>vs :<C-u>Gina status<CR>
+  nnoremap <space>vb :<C-u>Gina branch<CR>
 
   "{{{ unuse default mappings
   " let g:gina#command#blame#use_default_mappings = 0
