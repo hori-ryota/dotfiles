@@ -545,6 +545,19 @@ hook_add = '''
       };
       lspconfig.pyls.setup{
         on_attach = bind_key_map;
+        settings = {
+          pyls = {
+            configurationSources = {'flake8'};
+            plugins = {
+              flake8 = {enabled = true;};
+              black = {enabled = true;};
+              mypy = {enabled = true;};
+              pyflakes = {enabled = false;};
+              pycodestyle = {enabled = false;};
+              autopep8 = {enabled = false;};
+            };
+          };
+        };
       };
       lspconfig.tsserver.setup{
         on_attach = bind_key_map;

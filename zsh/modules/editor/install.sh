@@ -39,6 +39,8 @@ npm install -g yaml-language-server
 ## Python
 ### LSP
 pip3 install --upgrade 'python-language-server[all]'
+pip3 install --upgrade pyls-black
+pip3 install --upgrade pyls-mypy
 
 ## Dockerfile
 ### LSP
