@@ -1,1 +1,1 @@
-brew install --cask java
+brew cask install java

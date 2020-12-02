@@ -1,4 +1,4 @@
-brew install --cask docker
+brew cask install docker
 
 brew install docker-completion
 brew install docker-compose-completion

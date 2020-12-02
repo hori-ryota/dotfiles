@@ -1,21 +1,21 @@
-brew install --cask 1password
-brew install --cask alfred
-brew install --cask appcleaner
-brew install --cask dropbox
-brew install --cask flux
-brew install --cask google-chrome
-brew install --cask google-japanese-ime
-brew install --cask iterm2
-brew install --cask karabiner-elements
-brew install --cask slack
+brew cask install 1password
+brew cask install alfred
+brew cask install appcleaner
+brew cask install dropbox
+brew cask install flux
+brew cask install google-chrome
+brew cask install google-japanese-ime
+brew cask install iterm2
+brew cask install karabiner-elements
+brew cask install slack
 
 # Fonts
-brew install --cask font-cica
+brew cask install font-cica
 
 # Quick Look
 ## Plugins
 ### https://github.com/sindresorhus/quick-look-plugins
-brew install --cask qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize suspicious-package quicklookase qlvideo
+brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize suspicious-package quicklookase qlvideo
 
 ## For QLClolorCode
 ### Show line number

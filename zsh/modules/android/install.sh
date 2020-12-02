@@ -1,1 +1,1 @@
-brew install --cask android-sdk
+brew cask install android-sdk

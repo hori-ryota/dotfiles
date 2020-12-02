@@ -1,1 +1,1 @@
-brew install --cask google-cloud-sdk
+brew cask install google-cloud-sdk
