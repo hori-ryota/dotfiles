@@ -9,13 +9,16 @@ ln -snf "$DOTFILEDIR"/nvim/cache/dein "$XDG_CACHE_HOME"/dein
 
 # install python
 zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../python/install.sh"
+source "$(dirname "${BASH_SOURCE:-$0}")/../python/export.zsh"
 pip3 install --upgrade pynvim
 
 # install npm
 zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../nodejs/install.sh"
+source "$(dirname "${BASH_SOURCE:-$0}")/../nodejs/export.zsh"
 
 # install go
 zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../go/install.sh"
+source "$(dirname "${BASH_SOURCE:-$0}")/../go/export.zsh"
 
 # For Languages
 
