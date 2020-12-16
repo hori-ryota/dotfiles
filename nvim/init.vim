@@ -181,5 +181,9 @@ augroup AutoRefreshSettings
 augroup END
 "}}}
 
+if filereadable(expand('~/.init.vim.local'))
+  source ~/.init.vim.local
+endif
+
 syntax on
 filetype plugin indent on
