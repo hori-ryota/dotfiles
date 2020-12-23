@@ -1,2 +1,1 @@
-export NODE_VERSION=v14.12.0
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+export NODE_VERSION=15.4.0
