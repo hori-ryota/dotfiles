@@ -627,7 +627,6 @@ EOF
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 on_event = 'InsertEnter'
-depends = 'cpsm'
 hook_source = '''
   " <TAB>: completion.
   inoremap <silent><expr> <TAB>
@@ -659,17 +658,11 @@ hook_post_source = '''
 
   call deoplete#custom#source('_', 'max_abbr_width', 0)
   call deoplete#custom#source('_', 'max_menu_width', 0)
-  call deoplete#custom#source('_', 'matchers', ['matcher_cpsm'])
+  call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
+  call deoplete#custom#source('denite', 'matchers', ['matcher_funn_fuzzy', 'matcher_length'])
 
   call deoplete#enable()
 '''
-
-#{{{ matchers
-[[plugins]]
-repo = 'nixprime/cpsm'
-build = 'brew install boost && PY3=ON ./install.sh && cp autoload/* bin/'
-lazy = 1
-#}}}
 
 #{{{ sources
 [[plugins]]
