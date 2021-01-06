@@ -44,10 +44,6 @@ tools:
   proto-buf: &proto-buf
     lint-command: 'buf check lint --file'
 
-  proto-prototool: &proto-prototool
-    lint-command: 'prototool lint'
-    format-command: 'prototool format -f -w'
-
 languages:
   make:
     - <<: *make-checkmake
@@ -85,4 +81,3 @@ languages:
 
   proto:
     - <<: *proto-buf
-    - <<: *proto-prototool
