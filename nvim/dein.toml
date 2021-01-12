@@ -831,6 +831,16 @@ hook_add = '''
     silent! xmap <unique> <Leader>wr <Plug>(operator-sandwich-replace)
 '''
 
+[[plugins]]
+repo = 'FooSoft/vim-argwrap'
+hook_add = '''
+    nmap <silent> <leader>x <Plug>(ArgWrapToggle)
+'''
+[plugins.ftplugin]
+go = '''
+    let b:argwrap_tail_comma = 1
+'''
+
 [[plugins]] # comment
 repo = 'tyru/caw.vim'
 [plugins.ftplugin]
