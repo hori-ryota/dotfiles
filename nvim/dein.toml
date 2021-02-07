@@ -552,6 +552,8 @@ hook_add = '''
               flake8 = {enabled = true;};
               black = {enabled = true;};
               mypy = {enabled = true;};
+              pydocstyle = {enabled = true;};
+              mccabe = {enabled = false;};
               pyflakes = {enabled = false;};
               pycodestyle = {enabled = false;};
               autopep8 = {enabled = false;};

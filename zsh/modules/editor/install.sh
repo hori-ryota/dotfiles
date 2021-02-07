@@ -85,6 +85,5 @@ go get -u github.com/Clever/csvlint/cmd/csvlint
 ## Go
 ### LSP
 echo 'Install golang.org/x/tools/gopls'
-go get -u golang.org/x/tools/gopls
 echo 'Install golang.org/x/tools/cmd/goimports'
-go get -u golang.org/x/tools/cmd/goimports
+go get -u golang.org/x/tools/gopls golang.org/x/tools/cmd/goimports
