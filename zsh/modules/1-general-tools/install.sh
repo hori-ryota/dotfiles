@@ -10,3 +10,4 @@ brew install peco
 brew install jq
 brew install q
 
+brew install binutils
