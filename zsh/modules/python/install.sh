@@ -8,3 +8,5 @@ asdf global python $PYTHON3_VERSION
 
 pip3 install --upgrade pip
 pip3 install --upgrade setuptools
+
+brew install poetry
