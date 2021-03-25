@@ -1,3 +1,4 @@
 .cache/
 cache/
 .cache
+/nvim/spell/

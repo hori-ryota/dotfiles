@@ -138,14 +138,14 @@ augroup END
 
 "{{{ dein.vim
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
-let s:dein_dir = s:cache_home . '/dein'
+let g:dein_dir = s:cache_home . '/dein'
 
 let g:dein#install_progress_type = 'title'
-let g:dein#install_log_filename = s:dein_dir . '/dein.log'
+let g:dein#install_log_filename = g:dein_dir . '/dein.log'
 
 "{{{ prepare dein.vim
 if &runtimepath !~# '/dein.vim'
-    let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+    let s:dein_repo_dir = g:dein_dir . '/repos/github.com/Shougo/dein.vim'
     "{{{ install if not exists
     if !isdirectory(s:dein_repo_dir)
         call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
@@ -161,8 +161,8 @@ let s:config_files = [
         \ expand('<sfile>'),
         \ s:toml_file,
         \ ]
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir, s:config_files)
+if dein#load_state(g:dein_dir)
+  call dein#begin(g:dein_dir, s:config_files)
   call dein#load_toml(s:toml_file)
   call dein#end()
   call dein#save_state()

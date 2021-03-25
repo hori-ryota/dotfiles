@@ -31,18 +31,20 @@ hook_post_source = '''
       \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
       \ 'winrow': float2nr((&lines * (1 - s:denite_win_height_percent + 2 * s:denite_win_height_offset)) / 2),
       \ 'auto_action': 'preview',
+      \ 'max_candidates': 1000000,
       \ })
 
+  call denite#custom#filter('matcher/clap', 'clap_path', g:dein_dir . '/repos/github.com/liuchengxu/vim-clap')
+
   " Change matchers.
-  call denite#custom#source(
-      \ '_', 'matchers', ['matcher/clap'])
+  call denite#custom#source('_', 'matchers', ['matcher/clap'])
 
   " Change file/rec command.
   call denite#custom#var('file/rec', 'command',
       \ ['rg', '--files', '--color', 'never',
       \ '--no-ignore',
       \ '--follow', '--hidden', '--smart-case',
-      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/', '--glob', '!.docker-compose-data/',
+      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/', '--glob', '!.docker-compose-data/', '--glob', '!.cache/',
       \ ])
 
   " Ripgrep command on grep source
@@ -51,7 +53,7 @@ hook_post_source = '''
       \ 'default_opts': [
       \ '--vimgrep', '--no-heading', '--color', 'never',
       \ '--no-ignore',
-      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/', '--glob', '!.docker-compose-data/',
+      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/', '--glob', '!.docker-compose-data/', '--glob', '!.cache/',
       \ '--follow', '--hidden', '--smart-case',
       \ ],
       \ 'recursive_opts': [],
@@ -184,6 +186,8 @@ denite = '''
   " operation
   nnoremap <silent><buffer><nowait><expr> H
               \ denite#do_map('move_up_path')
+  nnoremap <silent><buffer><nowait><expr> a
+              \ denite#do_map('open_filter_buffer')
   nnoremap <silent><buffer><nowait><expr> i
               \ denite#do_map('open_filter_buffer')
   nnoremap <silent><buffer><nowait><expr> I
