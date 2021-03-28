@@ -24,7 +24,7 @@ source "$(dirname "${BASH_SOURCE:-$0}")/../go/export.zsh"
 
 ## General LSP of linters
 echo 'Install github.com/mattn/efm-langserver'
-go get -u github.com/mattn/efm-langserver
+go install github.com/mattn/efm-langserver@latest
 ln -snf "$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)/efm-langserver" "$XDG_CONFIG_HOME/efm-langserver"
 
 ## Vim
@@ -33,7 +33,7 @@ npm install -g vim-language-server
 ## Makefile
 ### Linter
 echo 'Install github.com/mrtazz/checkmake'
-go get -u github.com/mrtazz/checkmake
+go install github.com/mrtazz/checkmake@latest
 
 ## Yaml
 ### LSP
@@ -80,10 +80,11 @@ npm install -g fixjson
 ## CSV
 ### LSP
 echo 'Install github.com/Clever/csvlint/cmd/csvlint'
-go get -u github.com/Clever/csvlint/cmd/csvlint
+go install github.com/Clever/csvlint/cmd/csvlint@latest
 
 ## Go
 ### LSP
 echo 'Install golang.org/x/tools/gopls'
+go install golang.org/x/tools/gopls@latest
 echo 'Install golang.org/x/tools/cmd/goimports'
-go get -u golang.org/x/tools/gopls golang.org/x/tools/cmd/goimports
+go install golang.org/x/tools/cmd/goimports@latest
