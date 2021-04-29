@@ -1002,7 +1002,7 @@ on_ft = 'go'
 [[plugins]]
 repo = 'iamcco/markdown-preview.nvim'
 on_ft = ['markdown', 'plantuml']
-build = 'cp app & npm install'
+build = 'cp app & yarn install'
 hook_source = '''
     let g:mkdp_command_for_global = 1
     let g:mkdp_auto_close = 0
