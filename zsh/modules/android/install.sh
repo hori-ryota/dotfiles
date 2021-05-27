@@ -1,1 +1,1 @@
-brew install android-sdk
+brew install android-studio
