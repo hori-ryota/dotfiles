@@ -519,14 +519,16 @@ hook_add = '''
         vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.signature_help()<CR>"
         vim.cmd "nnoremap <buffer><silent> <C-]>       :<C-u>lua vim.lsp.buf.definition()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>i   :<C-u>lua vim.lsp.buf.implementation()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>c   :<C-u>lua vim.lsp.buf.incoming_calls()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>R   :<C-u>lua vim.lsp.buf.rename()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>ds  :<C-u>lua vim.lsp.buf.document_symbol()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>dr  :<C-u>lua vim.lsp.buf.references()<CR>"
-        -- vim.cmd "nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>"
+        vim.cmd "vnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.range_code_action()<CR>"
         vim.cmd "nnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.formatting()<CR>"
         vim.cmd "vnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.range_formatting()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.document_highlight()<CR>"
-        -- vim.cmd "nnoremap <buffer><silent> <Leader>H :<C-u>call LanguageClient_clearDocumentHighlight()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>H   :<C-u>lua vim.lsp.buf.clear_references()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>ws  :<C-u>lua vim.lsp.buf.workspace_symbol()<CR>"
       end
 
@@ -724,16 +726,13 @@ hook_add = '''
   let g:dispatch_compilers = {}
   let g:dispatch_quickfix_height = 30
   nnoremap <Leader>r :<C-u>Dispatch<CR>
+  nnoremap g<Leader>r :<C-u>Dispatch<CR>
 '''
 [plugins.ftplugin]
 sh = '''
   nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch sh %<CR>
 '''
 go = '''
-  nnoremap <buffer> <Leader>t :<C-u>Dispatch go test %:p:h<CR>
-  nnoremap <buffer> <Leader>gt :<C-u>Dispatch go test %:p:h/...<CR>
-  nnoremap <buffer> <Leader>pt :<C-u>Dispatch go test ./...<CR>
-
   nnoremap <buffer> <Leader>r :<C-u>Dispatch go run %:p:h<CR>
   nnoremap <buffer> <Leader>G :<C-u>Dispatch go generate %:p:h<CR>
 
