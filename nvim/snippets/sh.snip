@@ -1,0 +1,9 @@
+snippet cdsd
+abbr    "cd \"$(dirname \"${BASH_SOURCE:-$0}\")\""
+options head
+  cd "$(dirname "${BASH_SOURCE:-\$0}")"
+
+snippet sd
+abbr    "dirname \"${BASH_SOURCE:-$0}\""
+options head
+  dirname "${BASH_SOURCE:-\$0}"
