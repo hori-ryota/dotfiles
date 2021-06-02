@@ -8,6 +8,7 @@ mkdir -p "$XDG_CACHE_HOME"
 mkdir -p "$XDG_DATA_HOME"
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+brew upgrade
 
 brew install zsh
 # change default shell to zsh (installed by homebrew)
