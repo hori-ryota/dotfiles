@@ -108,6 +108,16 @@ abbr "//go:generate go-genaccessor"
 options head
   //go:generate go-codegen go_accessor
 
+snippet tp
+abbr "t.Parallel()"
+options head
+  t.Parallel()
+
+snippet th
+abbr "t.Helper()"
+options head
+  t.Helper()
+
 snippet test
 abbr "test"
 options head
@@ -262,4 +272,10 @@ options head
 
   type $1UsecaseAuthorizer interface {
     AuthorizeActorTo$2(context.Context, Actor) domain.Error
+  }
+
+snippet cmpe
+options head
+  if diff := cmp.Diff(${1:want}, ${2:got}); diff != "" {
+    t.Errorf("${3}; diff (+got -want):\n%s",${4} diff)
   }
