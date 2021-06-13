@@ -543,9 +543,12 @@ hook_add = '''
         settings = {
           gopls = {
             analyses = {
-              fillreturns = true;
+              nilness = true;
               unusedparams = true;
+              unusedwrite = true;
             };
+            experimentalWorkspaceModule = true;
+            usePlaceholders = true;
           };
         };
       };
