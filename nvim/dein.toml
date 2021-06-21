@@ -753,6 +753,12 @@ go = '''
   nnoremap <buffer> <Leader>gl :<C-u>Dispatch golangci-lint run %:p:h/...<CR>
   nnoremap <buffer> <Leader>pl :<C-u>Dispatch golangci-lint run ./...<CR>
 '''
+python = '''
+  nnoremap <buffer> <Leader>r :<C-u>Dispatch python '%'<CR>
+'''
+terraform = '''
+  nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch terraform apply<CR>
+'''
 
 [[plugins]]
 repo = 'radenling/vim-dispatch-neovim'
@@ -785,6 +791,10 @@ go = '''
     unlet g:test#go#runner
   endfunction
   command! -buffer DebugNearest call s:debugNearest()
+'''
+python = '''
+  nnoremap <buffer><silent> <Leader>t :<C-u>TestFile<CR>
+  nnoremap <buffer><silent> <Leader>T :<C-u>TestNearest<CR>
 '''
 #}}}
 

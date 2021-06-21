@@ -1,4 +1,5 @@
 let g:vim_dir = $XDG_CONFIG_HOME . '/nvim'
+let g:python3_host_prog = $HOME . '/.asdf/shims/python'
 
 "{{{ Options
 " see `:options`
