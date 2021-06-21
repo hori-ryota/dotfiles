@@ -41,9 +41,14 @@ npm install -g yaml-language-server
 
 ## Python
 ### LSP
-pip3 install --upgrade 'python-language-server[all]'
-pip3 install --upgrade pyls-black
-pip3 install --upgrade pyls-mypy
+pip3 install --upgrade 'python-lsp-server[all]'
+pip3 install --upgrade pyls-flake8
+pip3 install --upgrade python-lsp-black
+pip3 install --upgrade mypy-ls
+pip3 install --upgrade pyls-isort
+
+### for Jupyter notebook
+pip3 install --upgrade jupytext
 
 ## Dockerfile
 ### LSP

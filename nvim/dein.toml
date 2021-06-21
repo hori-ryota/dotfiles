@@ -552,20 +552,24 @@ hook_add = '''
           };
         };
       };
-      lspconfig.pyls.setup{
+      lspconfig.pylsp.setup{
         on_attach = bind_key_map;
         settings = {
-          pyls = {
+          pylsp = {
             configurationSources = {'flake8'};
             plugins = {
               flake8 = {enabled = true;};
-              black = {enabled = true;};
               mypy = {enabled = true;};
               pydocstyle = {enabled = true;};
+
               mccabe = {enabled = false;};
-              pyflakes = {enabled = false;};
               pycodestyle = {enabled = false;};
+              pyflakes = {enabled = false;};
+
+              black = {enabled = true;};
+
               autopep8 = {enabled = false;};
+              yapf = {enabled = false;};
             };
           };
         };
