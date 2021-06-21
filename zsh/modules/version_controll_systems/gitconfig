@@ -4,6 +4,7 @@
 	delete-merged-branches = !git branch --merged | grep -vE '^\\*|^ *master$|^ *develop$' | xargs git branch -d
 	pulll = !sh -c 'git checkout $1 && git fetch --prune && git merge origin/$1 && git delete-merged-branches' -
 	pull-master = pulll master
+	pull-main = pulll main
 [core]
 	editor = nvim
 	excludesfile = ~/.gitignore_global

@@ -54,18 +54,6 @@ languages:
   sh:
     - <<: *sh-shellcheck
     - <<: *sh-shfmt
-  # 
-  # javascript:
-  #   - <<: *javascript-eslint
-  # 
-  # javascriptreact:
-  #   - <<: *javascript-eslint
-  # 
-  # typescript:
-  #   - <<: *javascript-eslint
-  # 
-  # typescriptreact:
-  #   - <<: *javascript-eslint
 
   html:
     - <<: *html-prettier

@@ -605,10 +605,6 @@ hook_add = '''
           'make',
           'Dockerfile',
           'sh',
-          'javascript',
-          'javascriptreact',
-          'typescript',
-          'typescriptreact',
           'html',
           'css',
           'json',
@@ -804,6 +800,9 @@ repo = 'tpope/vim-abolish'
 
 [[plugins]] # replacement in quickfix
 repo = 'thinca/vim-qfreplace'
+
+[[plugins]]
+repo = 'direnv/direnv.vim'
 
 #{{{ increment Date
 [[plugins]] 
@@ -1011,6 +1010,32 @@ hook_source = '''
 [[plugins]]
 repo = 'mattn/vim-goimports'
 on_ft = 'go'
+#}}}
+
+#{{{ Python
+# [[plugins]]
+# repo = 'goerz/jupytext.vim'
+#}}}
+
+#{{{ Flutter
+[[plugins]]
+repo = 'akinsho/flutter-tools.nvim'
+depends = [
+  'plenary.nvim',
+]
+hook_add = '''
+  lua << EOF
+      require'flutter-tools'.setup{
+        lsp = {
+          on_attach = bind_key_map;
+        }
+      }
+EOF
+'''
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+lazy = 1
 #}}}
 
 #{{{ Markdown
