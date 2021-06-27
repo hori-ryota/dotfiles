@@ -514,6 +514,7 @@ hook_add = '''
   lua << EOF
       function bind_key_map()
         vim.cmd "nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>:   :<C-u>lua vim.lsp.codelens.run()<CR>"
         -- vim.cmd "nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>"
         vim.cmd "nnoremap <buffer><silent> K           :<C-u>lua vim.lsp.buf.hover()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.signature_help()<CR>"
@@ -549,6 +550,15 @@ hook_add = '''
             };
             experimentalWorkspaceModule = true;
             usePlaceholders = true;
+            codelenses = {
+              gc_details = true;
+              generate = true;
+              regenerate_cgo = true;
+              test = true;
+              tidy = true;
+              upgrade_dependency = true;
+              vendor = true;
+            };
           };
         };
       };

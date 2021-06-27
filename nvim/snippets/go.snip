@@ -277,5 +277,5 @@ options head
 snippet cmpe
 options head
   if diff := cmp.Diff(${1:want}, ${2:got}); diff != "" {
-    t.Errorf("${3}; diff (+got -want):\n%s",${4} diff)
+    t.Errorf("${3}; diff (+got -want):\n%s", diff)
   }
