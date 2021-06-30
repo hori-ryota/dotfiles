@@ -1,0 +1,15 @@
+--no-ignore
+
+--glob=!.git/
+--glob=!.DS_Store
+--glob=!node_modules/
+--glob=!.docker-compose-data/
+--glob=!.cache/
+--glob=!build/
+--glob=!.dart_tool/
+--glob=!vendor/
+--glob=!Pods/
+
+--follow
+--hidden
+--smart-case

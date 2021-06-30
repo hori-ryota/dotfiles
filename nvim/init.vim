@@ -91,7 +91,7 @@ cnoremap <C-p> <Up>
 "{{{ 22 running make and jumping to errors
 " modify grep command to ripgrep
 if executable('rg')
-    let &grepprg = 'rg --vimgrep --no-ignore --glob !.git/ --glob !.DS_Store --glob !node_modules/ --glob !.docker-compose-data/ --follow --hidden --smart-case'
+    let &grepprg = 'rg --vimgrep'
     set grepformat=%f:%l:%c:%m
 endif
 "}}}

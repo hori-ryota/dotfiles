@@ -41,20 +41,13 @@ hook_post_source = '''
 
   " Change file/rec command.
   call denite#custom#var('file/rec', 'command',
-      \ ['rg', '--files', '--color', 'never',
-      \ '--no-ignore',
-      \ '--follow', '--hidden', '--smart-case',
-      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/', '--glob', '!.docker-compose-data/', '--glob', '!.cache/',
-      \ ])
+      \ ['rg', '--files', '--color', 'never'])
 
   " Ripgrep command on grep source
   call denite#custom#var('grep', {
       \ 'command': ['rg'],
       \ 'default_opts': [
       \ '--vimgrep', '--no-heading', '--color', 'never',
-      \ '--no-ignore',
-      \ '--glob', '!.git/', '--glob', '!.DS_Store', '--glob', '!node_modules/', '--glob', '!.docker-compose-data/', '--glob', '!.cache/',
-      \ '--follow', '--hidden', '--smart-case',
       \ ],
       \ 'recursive_opts': [],
       \ 'pattern_opt': ['--regexp'],
