@@ -903,6 +903,25 @@ hook_add = '''
 
 #}}}
 
+#{{{ Highlights
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+build = ':TSUpdate'
+hook_source = '''
+  lua << EOF
+    require'nvim-treesitter.configs'.setup{
+      ensure_installed = 'maintained';
+      highlight = {
+        enable = true;
+      };
+      indent = {
+        enable = true;
+      };
+    };
+EOF
+'''
+#}}}
+
 #{{{ Filetype
 
 [ftplugin] #{{{
@@ -941,12 +960,6 @@ go = '''
 '''
 #}}}
 
-#{{{ TOML
-[[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
-#}}}
-
 #{{{ CSV
 [[plugins]]
 repo = 'mechatroner/rainbow_csv'
@@ -954,22 +967,6 @@ on_ft = ['csv']
 #}}}
 
 #{{{ HTML, Javascript And Typescript
-[[plugins]]
-repo = 'leafgarland/typescript-vim'
-on_ft = ['typescript', 'typescriptreact']
-
-[[plugins]]
-repo = 'peitalin/vim-jsx-typescript'
-on_ft = ['typescriptreact']
-
-[[plugins]]
-repo = 'maxmellon/vim-jsx-pretty'
-on_ft = ['javascriptreact']
-
-[[plugins]]
-repo = 'jparise/vim-graphql'
-on_ft = ['javascriptreact']
-
 [[plugins]]
 repo = 'mattn/emmet-vim'
 on_ft = ['html', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact']
