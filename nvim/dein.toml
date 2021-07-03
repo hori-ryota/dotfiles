@@ -506,9 +506,9 @@ repo = 'neovim/nvim-lspconfig'
 hook_add = '''
   lua << EOF
       function bind_key_map()
+        -- vim.cmd "nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>:   :<C-u>lua vim.lsp.codelens.run()<CR>"
-        -- vim.cmd "nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>"
         vim.cmd "nnoremap <buffer><silent> K           :<C-u>lua vim.lsp.buf.hover()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.signature_help()<CR>"
         vim.cmd "nnoremap <buffer><silent> <C-]>       :<C-u>lua vim.lsp.buf.definition()<CR>"
@@ -1038,7 +1038,6 @@ EOF
 
 [[plugins]]
 repo = 'nvim-lua/plenary.nvim'
-lazy = 1
 #}}}
 
 #{{{ Markdown

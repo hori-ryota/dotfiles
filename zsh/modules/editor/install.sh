@@ -1,5 +1,5 @@
 brew install vim
-brew install --HEAD neovim
+brew install neovim
 
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
 
