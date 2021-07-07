@@ -503,7 +503,7 @@ repo = 'editorconfig/editorconfig-vim'
 #{{{ LSP
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-hook_add = '''
+hook_source = '''
   lua << EOF
       function bind_key_map()
         -- vim.cmd "nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>"
@@ -1023,7 +1023,7 @@ repo = 'akinsho/flutter-tools.nvim'
 depends = [
   'plenary.nvim',
 ]
-hook_add = '''
+hook_source = '''
   lua << EOF
       require'flutter-tools'.setup{
         lsp = {
@@ -1042,7 +1042,7 @@ repo = 'nvim-lua/plenary.nvim'
 [[plugins]]
 repo = 'iamcco/markdown-preview.nvim'
 on_ft = ['markdown', 'plantuml']
-build = 'cp app && asdf reshim nodejs && yarn install'
+build = 'cd app && yarn install'
 hook_source = '''
     let g:mkdp_command_for_global = 1
     let g:mkdp_auto_close = 0

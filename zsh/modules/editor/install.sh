@@ -68,17 +68,11 @@ brew install shfmt
 ### LSP
 npm install -g typescript-language-server
 
-## HTML
+## HTML,CSS,JSON
 ### LSP
-npm install -g vscode-html-languageserver-bin
-
-## CSS
-### LSP
-npm install -g vscode-css-languageserver-bin
+npm install -g vscode-langservers-extracted
 
 ## JSON
-### LSP
-npm install -g vscode-json-languageserver
 ### Formatter
 npm install -g fixjson
 

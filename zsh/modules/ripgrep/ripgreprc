@@ -9,6 +9,8 @@
 --glob=!.dart_tool/
 --glob=!vendor/
 --glob=!Pods/
+--glob=!.fvm/
+--glob=!.symlinks/
 
 --follow
 --hidden
