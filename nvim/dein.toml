@@ -1013,6 +1013,10 @@ hook_source = '''
 [[plugins]]
 repo = 'mattn/vim-goimports'
 on_ft = 'go'
+
+[[plugins]]
+repo = 'rhysd/vim-goyacc'
+on_ft = 'goyacc'
 #}}}
 
 #{{{ Python
