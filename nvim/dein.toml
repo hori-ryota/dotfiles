@@ -906,7 +906,9 @@ hook_add = '''
 #{{{ Highlights
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
-build = ':TSUpdate'
+hook_post_update = '''
+  execute ':TSUpdate'
+'''
 hook_source = '''
   lua << EOF
     require'nvim-treesitter.configs'.setup{
@@ -948,6 +950,7 @@ kotlin = '''
 markdown = '''
     setlocal tabstop=4
     setlocal shiftwidth=4
+    setlocal spellcapcheck='[.?!]\_[\])'" \t]\+'
 '''
 css = '''
     setlocal tabstop=4
