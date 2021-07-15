@@ -720,13 +720,6 @@ hook_add = '''
 #{{{ Async Execution
 [[plugins]]
 repo = 'tpope/vim-dispatch'
-on_cmd = [
-  'Copen',
-  'Dispatch',
-  'FocusDispatch',
-  'Make',
-  'Start',
-]
 hook_add = '''
   let g:dispatch_no_maps = 1
   let g:dispatch_compilers = {}
@@ -761,8 +754,7 @@ terraform = '''
 
 [[plugins]]
 repo = 'radenling/vim-dispatch-neovim'
-on_source = 'vim-dispatch'
-hook_source = '''
+hook_add = '''
   let g:dispatch_handlers = ['neovim']
 '''
 #}}}
