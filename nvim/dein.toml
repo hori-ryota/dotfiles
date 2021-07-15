@@ -746,7 +746,7 @@ go = '''
   nnoremap <buffer> <Leader>pl :<C-u>Dispatch golangci-lint run ./...<CR>
 '''
 python = '''
-  nnoremap <buffer> <Leader>r :<C-u>Dispatch python '%'<CR>
+  nnoremap <buffer> <Leader>r :<C-u>Dispatch python -m "$(echo '%' \| tr / .)"<CR>
 '''
 terraform = '''
   nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch terraform apply<CR>
@@ -1012,6 +1012,14 @@ on_ft = 'goyacc'
 #}}}
 
 #{{{ Python
+[[plugins]]
+repo = 'heavenshell/vim-pydocstring'
+on_ft = 'python'
+build = 'make install'
+hook_add = '''
+  let g:pydocstring_enable_mapping = 0
+  let g:pydocstring_formatter = 'google'
+'''
 # [[plugins]]
 # repo = 'goerz/jupytext.vim'
 #}}}
