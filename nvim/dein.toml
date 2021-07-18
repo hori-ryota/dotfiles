@@ -240,7 +240,7 @@ hook_post_source = '''
   call defx#custom#option('_', {
         \ 'show_ignored_files': 1,
         \ 'toggle': 1,
-        \ 'columns': 'mark:indent:icon:filename:type',
+        \ 'columns': 'mark:indent:icon:space:filename:type',
         \ 'floating_preview': 1,
         \ 'vertical_preview': 1,
         \ 'split': 'floating',
@@ -334,7 +334,7 @@ defx = '''
         \ defx#do_action('redraw')
   nnoremap <silent><buffer><nowait><expr> D
         \ defx#do_action('toggle_columns',
-        \                'mark:indent:filename:type:size:time')
+        \                'mark:indent:icon:space:filename:type:size:time')
   nnoremap <silent><buffer><nowait><expr> y
         \ defx#do_action('yank_path')
 
