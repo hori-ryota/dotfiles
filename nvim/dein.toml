@@ -746,7 +746,7 @@ go = '''
   nnoremap <buffer> <Leader>pl :<C-u>Dispatch golangci-lint run ./...<CR>
 '''
 python = '''
-  nnoremap <buffer> <Leader>r :<C-u>Dispatch python -m "$(echo '%' \| tr / .)"<CR>
+  nnoremap <buffer> <Leader>r :<C-u>Dispatch python -m "$(echo '%' \| tr / . \| sed -e 's/\.__main__\.py//')"<CR>
 '''
 terraform = '''
   nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch terraform apply<CR>
