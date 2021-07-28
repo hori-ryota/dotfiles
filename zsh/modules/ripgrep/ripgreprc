@@ -11,6 +11,8 @@
 --glob=!Pods/
 --glob=!.fvm/
 --glob=!.symlinks/
+--glob=!.mypy_cache/
+--glob=!.pytest_cache/
 
 --follow
 --hidden

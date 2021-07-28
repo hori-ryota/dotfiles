@@ -784,8 +784,8 @@ go = '''
   command! -buffer DebugNearest call s:debugNearest()
 '''
 python = '''
-  nnoremap <buffer><silent> <Leader>t :<C-u>TestFile<CR>
-  nnoremap <buffer><silent> <Leader>T :<C-u>TestNearest<CR>
+  nnoremap <buffer><silent> <Leader>t :<C-u>TestFile -s -l -vv<CR>
+  nnoremap <buffer><silent> <Leader>T :<C-u>TestNearest -s -l -vv<CR>
 '''
 #}}}
 
