@@ -389,7 +389,7 @@ hook_post_source = '''
   call s:mapping('status', 'n', '<', '<Plug>(gina-index-stage)')
   call s:mapping('status', 'n', '>', '<Plug>(gina-index-unstage)')
 
-  call s:mapping('status', 'n', 'gp', ':<C-u>Gina push<CR>')
+  call s:mapping('status', 'n', 'gP', ':<C-u>Gina push<CR>')
 
   call s:mapping('status', 'n', '<CR>', '<Plug>(gina-edit)')
   call s:mapping('status', 'n', 's', '<Plug>(gina-edit-split)')
@@ -404,6 +404,10 @@ hook_post_source = '''
   call s:mapping('status', 'n', 'gc', '<Plug>(gina-chaperon)')
 
   call s:mapping('status', 'n', 'gx', '<Plug>(gina-browse)')
+
+  call s:mapping('status', 'n', 'stu', ':<C-u>Gina stash --include-untracked --keep-index<CR>')
+  call s:mapping('status', 'n', 'sT', ':<C-u>Gina stash --include-untracked<CR>')
+  call s:mapping('status', 'n', 'stp', ':<C-u>Gina stash pop<CR>')
   "}}}
 
   "{{{ commit settings
@@ -414,11 +418,17 @@ hook_post_source = '''
   "}}}
 
   "{{{ branch settings
-  call gina#custom#command#option('branch', '-a|--all')
-  call gina#custom#command#option('checkout', '-b|--branch')
+  call s:mapping('branch', 'n', '<Tab>', '<Plug>(gina-builtin-choice)')
+  call s:mapping('branch', 'n', 'x', '<Plug>(gina-builtin-mark)j')
+
+  call s:mapping('branch', 'n', 'A', '<Plug>(gina-branch-new)')
+  call s:mapping('branch', 'n', 'R', '<Plug>(gina-branch-move)')
+  call s:mapping('branch', 'n', 'D', '<Plug>(gina-branch-delete-force)')
+
   call s:mapping('branch', 'n', 'g<CR>', '<Plug>(gina-commit-checkout-track)')
   call s:mapping('branch', 'n', 'M', '<Plug>(gina-commit-merge)')
-  call s:mapping('status', 'n', 'gp', ':<C-u>Gina push<CR>')
+
+  call s:mapping('branch', 'n', 'gp', ':<C-u>Gina push<CR>')
   "}}}
 
   "{{{ blame settings
@@ -432,7 +442,7 @@ hook_add = '''
   " let g:gina#command#diff#use_default_mappings = 0
   " let g:gina#command#status#use_default_mappings = 0
   nnoremap <space>vs :<C-u>Gina status<CR>
-  nnoremap <space>vb :<C-u>Gina branch<CR>
+  nnoremap <space>vb :<C-u>Gina branch --all<CR>
 
   "{{{ unuse default mappings
   " let g:gina#command#blame#use_default_mappings = 0
