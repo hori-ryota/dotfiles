@@ -7,13 +7,14 @@ mkdir -p "$XDG_CONFIG_HOME"
 mkdir -p "$XDG_CACHE_HOME"
 mkdir -p "$XDG_DATA_HOME"
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+type "brew" > /dev/null 2>&1 || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 brew upgrade
 
 brew install zsh
+
 # change default shell to zsh (installed by homebrew)
-sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
-chsh -s /usr/local/bin/zsh
+grep -q '^/usr/local/bin/zsh$' /etc/shells || sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
+[ "$SHELL" != '/user/local/bin/zsh' ] || chsh -s /usr/local/bin/zsh
 
 source "$(dirname "${BASH_SOURCE:-$0}")/zsh/modules/0-base-envs/export.zsh"
 

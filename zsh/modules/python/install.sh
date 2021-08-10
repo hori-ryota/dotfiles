@@ -9,5 +9,9 @@ asdf global python $PYTHON3_VERSION
 pip3 install --upgrade pip
 pip3 install --upgrade setuptools
 
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+if type "poetry" > /dev/null 2>&1; then
+  poetry self update
+else
+  curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+fi
 source "$HOME/.poetry/env"
