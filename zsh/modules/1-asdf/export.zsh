@@ -1,1 +1,1 @@
-. $(dirname $(dirname $(which brew)))/opt/asdf/asdf.sh
+. $(dirname $(dirname $(which brew)))/opt/asdf/libexec/asdf.sh
