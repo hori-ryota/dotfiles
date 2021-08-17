@@ -1,45 +1,32 @@
+[run]
+timeout = "5m"
 [linters]
-disable-all = true
-enable = [
-  'deadcode',
-  'errcheck',
-  'gosimple',
-  'govet',
-  'ineffassign',
-  'staticcheck',
-  'structcheck',
-  'typecheck',
-  'unused',
-  'varcheck',
-  'bodyclose',
-  'depguard',
-  'dogsled',
-  # 'dupl',
-  # 'funlen',
-  # 'gochecknoglobals',
-  # 'gochecknoinits',
+enable-all = true
+disable = [
+  'cyclop',
+  'exhaustivestruct',
+  'funlen',
+  'gochecknoglobals',
   'gocognit',
-  'goconst',
-  'gocritic',
   'gocyclo',
-  # 'godox',
-  'gofmt',
-  'goimports',
-  # 'golint',
-  # 'gomnd',
-  'goprintffuncname',
+  'godot',
+  'goerr113',
+  'golint',
+  'gomnd',
   'gosec',
   'interfacer',
-  # 'lll',
-  # 'maligned',
-  'misspell',
-  'nakedret',
-  'prealloc',
-  'rowserrcheck',
+  'lll',
+  'maligned',
+  'nlreturn',
+  'revive',
   'scopelint',
-  # 'stylecheck',
-  'unconvert',
+  'stylecheck',
   'unparam',
-  'whitespace',
-  # 'wsl',
+  'wrapcheck',
+  'wsl',
 ]
+
+
+[issues]
+max-issues-per-linter = 0
+max-same-issues = 0
