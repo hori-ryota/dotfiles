@@ -784,7 +784,8 @@ hook_add = '''
 [plugins.ftplugin]
 go = '''
   let g:test#go#gotest#file_pattern = '\v.*\.go$'
-  nnoremap <buffer><silent> <Leader>T :<C-u>TestNearest<CR>
+  nnoremap <buffer><silent> <Leader>T     :<C-u>TestNearest<CR>
+  nnoremap <buffer><silent> <Leader><C-t> :<C-u>TestLast<CR>
 
   function! s:debugNearest()
     let g:test#go#runner = 'delve'

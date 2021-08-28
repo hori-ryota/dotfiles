@@ -2,6 +2,7 @@
 *.log
 .envrc
 pyvenv.cfg
+.init.vim.local
 
 
 # gibo dump Dropbox Eclipse JetBrains Linux macOS MicrosoftOffice Vagrant Ninja Tags Vim VisualStudioCode Xcode

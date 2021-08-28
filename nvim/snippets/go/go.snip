@@ -276,5 +276,9 @@ options head
 snippet cmpe
 options head
   if diff := cmp.Diff(${1:want}, ${2:got}); diff != "" {
-    t.Errorf("${3}; diff (+got -want):\n%s", diff)
+    t.Errorf("${3} got ${4:'%+v'}; want $4; diff (+got -want):\n%s",${0} $1, $2, diff)
   }
+
+snippet terr
+options word
+  t.Fatalf("%s got unexpected error:\n%+v", dumpedRequest, err)

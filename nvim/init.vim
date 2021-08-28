@@ -178,10 +178,11 @@ augroup DeinHooks
   autocmd VimEnter * ++nested call dein#call_hook('post_source')
 augroup END
 "}}}
-
-if filereadable(expand('~/.init.vim.local'))
-  source ~/.init.vim.local
-endif
+"
+let s:local_initvim_files = findfile('.init.vim.local', escape(getcwd(), ' ') . ';', -1)
+for i in reverse(filter(s:local_initvim_files, 'filereadable(v:val)'))
+  source `=i`
+endfor
 
 syntax on
 filetype plugin indent on
