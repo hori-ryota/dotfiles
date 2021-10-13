@@ -20,6 +20,9 @@ source "$(dirname "${BASH_SOURCE:-$0}")/../nodejs/export.zsh"
 zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../go/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../go/export.zsh"
 
+# install deno
+zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../go/install.sh"
+
 # For Languages
 
 ## General LSP of linters

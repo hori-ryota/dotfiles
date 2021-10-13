@@ -8,6 +8,11 @@ hook_add = '''
 '''
 #}}}
 
+#{{{ ecosystems
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+#}}}
+
 #{{{ denite
 [[plugins]]
 repo = 'Shougo/denite.nvim'
@@ -649,59 +654,128 @@ EOF
 
 #{{{ Complement
 [[plugins]]
-repo = 'Shougo/deoplete.nvim'
+repo = 'Shougo/ddc.vim'
+depends = [
+  'denops.vim',
+  'pum.vim',
+]
 hook_add = '''
-	let g:deoplete#enable_at_startup = 1
+  " Use pum.vim
 
   " <TAB>: completion.
   inoremap <silent><expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ deoplete#manual_complete()
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
+    \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+    \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+    \ '<TAB>' : ddc#manual_complete()
+
+  inoremap <S-TAB> <Cmd>call pum#map#insert_relative(-1)<CR>
+  inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
+  inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
+  inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+  inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+
+  nnoremap :       <Cmd>call CommandlinePre()<CR>:
+
+  function! CommandlinePre() abort
+    call dein#source('ddc.vim')
+
+    cnoremap <silent><expr> <TAB>
+      \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+      \ ddc#manual_complete()
+    cnoremap <S-TAB> <Cmd>call pum#map#insert_relative(-1)<CR>
+    cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+    cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+
+    " Overwrite sources
+    let s:prev_buffer_config = ddc#custom#get_buffer()
+    call ddc#custom#patch_buffer('sources', ['necovim', 'cmdline-history', 'around'])
+
+    autocmd CmdlineLeave * ++once call CommandlinePost()
+
+    " Enable command line completion
+    call ddc#enable_cmdline_completion()
   endfunction
-
-  " <S-TAB>: completion back.
-  inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-  inoremap <silent><expr><C-e> deoplete#cancel_popup()
-  inoremap <silent><expr><C-l> deoplete#complete_common_string()
-
-  " <CR>: close popup and save indent.
-  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-  function! s:my_cr_function() abort
-    return pumvisible() ? deoplete#close_popup()."\<CR>" : "\<CR>"
+  function! CommandlinePost() abort
+    " Restore sources
+    call ddc#custom#set_buffer(s:prev_buffer_config)
+    cunmap <Tab>
   endfunction
 '''
 hook_post_source = '''
-  call deoplete#custom#option({
-    \ 'min_pattern_length': 1,
+  call ddc#custom#patch_global({
+    \   'smartCase': v:true,
+    \ })
+  call ddc#custom#patch_global('sources', [
+    \   'nvim-lsp',
+    \   'around',
+    \   'file',
+    \ ])
+  call ddc#custom#patch_global('sourceOptions', {
+    \   '_': {
+    \     'matchers': ['matcher_head', 'matcher_length'],
+    \     'sorters': ['sorter_rank'],
+    \   },
+    \   'around': {
+    \     'mark': 'A',
+    \   },
+    \   'file': {
+    \     'mark': 'F',
+    \     'isVolatile': v:true,
+    \     'forceCompletionPattern': '\S/\S*',
+    \   },
+    \   'nvim-lsp': {
+    \     'mark': 'lsp',
+    \     'forceCompletionPattern': '\.\w*|:\w*|->\w*',
+    \   },
+    \   'necovim': {
+    \     'mark': 'vim',
+    \   },
+    \   'cmdline-history': {
+    \     'mark': 'history',
+    \   },
     \ })
 
-  call deoplete#custom#source('_', 'max_abbr_width', 0)
-  call deoplete#custom#source('_', 'max_menu_width', 0)
-  call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy', 'matcher_length'])
-  call deoplete#custom#source('denite', 'matchers', ['matcher_full_fuzzy', 'matcher_length'])
+  " Use pum.vim
+  call ddc#custom#patch_global('autoCompleteEvents', [
+    \   'InsertEnter', 'TextChangedI', 'TextChangedP',
+    \   'CmdlineEnter', 'CmdlineChanged',
+    \ ])
+  call ddc#custom#patch_global('completionMenu', 'pum.vim')
 
-  call deoplete#enable()
+  call ddc#enable()
 '''
 
 #{{{ sources
 [[plugins]]
-repo = 'Shougo/deoplete-lsp'
-on_source = 'deoplete.nvim'
+repo = 'Shougo/ddc-around'
+
+[[plugins]]
+repo = 'Shougo/ddc-nvim-lsp'
+
+[[plugins]]
+repo = 'LumaKernel/ddc-file'
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-cmdline-history'
 #}}}
 
-#{{{ extension
+#{{{ filters
 [[plugins]]
-repo = 'Shougo/echodoc.vim'
-on_event = 'CompleteDone'
-hook_source = '''
-  let g:echodoc#type = 'floating'
-  call echodoc#enable()
-'''
+repo = 'Shougo/ddc-matcher_head'
+
+[[plugins]]
+repo = 'Shougo/ddc-matcher_length'
+
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+#}}}
+
+#{{{ ecosystems
+[[plugins]]
+repo = 'Shougo/pum.vim'
 #}}}
 
 #}}}
