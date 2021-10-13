@@ -434,7 +434,7 @@ hook_post_source = '''
   call s:mapping('branch', 'n', 'g<CR>', '<Plug>(gina-commit-checkout-track)')
   call s:mapping('branch', 'n', 'M', '<Plug>(gina-commit-merge)')
 
-  call s:mapping('branch', 'n', 'gp', ':<C-u>Gina push<CR>')
+  call s:mapping('branch', 'n', 'gP', ':<C-u>Gina push<CR>')
   "}}}
 
   "{{{ blame settings
