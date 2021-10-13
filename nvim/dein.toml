@@ -621,14 +621,14 @@ hook_source = '''
 
       lspconfig.efm.setup{
         filetypes = {
-          'make',
           'Dockerfile',
-          'sh',
-          'html',
           'css',
-          'json',
           'csv',
+          'html',
+          'json',
+          'make',
           'proto',
+          'sh',
         };
         on_attach = bind_key_map;
       };
