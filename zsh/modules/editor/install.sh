@@ -53,6 +53,10 @@ pip3 install --upgrade pyls-isort
 ### for Jupyter notebook
 pip3 install --upgrade jupytext
 
+### auto imports
+pip3 install --upgrade pyflyby
+ln -snf "$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)/pyflyby" "$HOME/.pyflyby"
+
 ## Dockerfile
 ### LSP
 npm install -g dockerfile-language-server-nodejs

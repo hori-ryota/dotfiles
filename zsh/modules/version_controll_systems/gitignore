@@ -2,6 +2,7 @@
 *.log
 .envrc
 pyvenv.cfg
+.pyflyby
 .init.vim.local
 
 

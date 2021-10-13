@@ -1019,6 +1019,7 @@ make = '''
 python = '''
     setlocal tabstop=4
     setlocal shiftwidth=4
+    nnoremap <buffer> gQ :<C-u>%!tidy-imports --black --quiet<CR>
 '''
 kotlin = '''
     setlocal tabstop=4
