@@ -15,7 +15,7 @@ brew install homebrew/cask-fonts/font-cica
 # Quick Look
 ## Plugins
 ### https://github.com/sindresorhus/quick-look-plugins
-brew install qlcolorcode qlmarkdown quicklook-json qlimagesize suspicious-package quicklookase qlvideo
+brew install qlcolorcode qlmarkdown qlimagesize suspicious-package quicklookase qlvideo
 
 ## For QLClolorCode
 ### Show line number
@@ -25,4 +25,3 @@ defaults write org.n8gray.QLColorCode hlTheme orion
 
 ## Enable text Selection
 defaults write com.apple.finder QLEnableTextSelection -bool true && killall Finder
-

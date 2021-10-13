@@ -205,7 +205,8 @@ denite-filter = '''
 #{{{ matchers
 [[plugins]]
 repo = 'liuchengxu/vim-clap'
-hook_post_update = '''
+rev = 'v0.29'
+hook_done_update = '''
   execute ':Clap install-binary'
 '''
 lazy = 1
@@ -983,13 +984,15 @@ hook_add = '''
 #{{{ Highlights
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
-hook_post_update = '''
+hook_done_update = '''
+  " execute ':TSInstall maintained'
   execute ':TSUpdate'
 '''
 hook_source = '''
   lua << EOF
     require'nvim-treesitter.configs'.setup{
       ensure_installed = 'maintained';
+      ignore_install = { "elixir" };
       highlight = {
         enable = true;
       };
