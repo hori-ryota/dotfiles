@@ -137,6 +137,7 @@ augroup FileTypeDetect
   autocmd BufRead,BufNewFile zlogin,zlogout,zpreztorc setfiletype zsh
   autocmd BufRead,BufNewFile zprofile,zshenv,zshrc    setfiletype zsh
   autocmd BufRead,BufNewFile *.go.y                   setfiletype goyacc
+  autocmd BufRead,BufNewFile *.uml                    setfiletype plantuml
 augroup END
 "}}}
 
