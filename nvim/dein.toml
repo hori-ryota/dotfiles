@@ -812,6 +812,8 @@ hook_add = '''
   let g:dispatch_quickfix_height = 30
   nnoremap <Leader>r :<C-u>Dispatch<CR>
   nnoremap g<Leader>r :<C-u>Dispatch<CR>
+  nnoremap <Leader>du :<C-u>Dispatch docker compose up --build -d<CR>
+  nnoremap <Leader>dd :<C-u>Dispatch docker compose down<CR>
 '''
 [plugins.ftplugin]
 sh = '''
