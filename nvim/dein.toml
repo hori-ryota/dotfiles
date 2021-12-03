@@ -634,15 +634,13 @@ hook_source = '''
       };
 EOF
 
-  hi! link LspDiagnosticsError       ALEVirtualTextError
-  hi! link LspDiagnosticsErrorSign   ALEErrorSign
-  hi! link LspDiagnosticsWarning     ALEVirtualTextWarning
-  hi! link LspDiagnosticsWarningSign ALEWarningSign
-  hi! link LspDiagnosticsInformation Identifier
-  hi! link LspDiagnosticsHint        ALEVirtualTextWarning
-  hi! link LspReferenceText          Normal
-  hi! link LspReferenceRead          Identifier
-  hi! link LspReferenceWrite         MoreMsg
+  hi! link DiagnosticsError  ALEVirtualTextError
+  hi! link DiagnosticsWarn   ALEVirtualTextWarning
+  hi! link DiagnosticsInfo   Identifier
+  hi! link DiagnosticsHint   ALEVirtualTextWarning
+  hi! link LspReferenceText  Normal
+  hi! link LspReferenceRead  Identifier
+  hi! link LspReferenceWrite MoreMsg
 
   function! s:ReloadLSP() abort
     lua vim.lsp.stop_client(vim.lsp.get_active_clients())
