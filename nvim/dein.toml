@@ -542,14 +542,25 @@ hook_source = '''
         vim.cmd "nnoremap <buffer><silent> <Leader>ws  :<C-u>lua vim.lsp.buf.workspace_symbol()<CR>"
       end
 
+      function on_attach()
+        bind_key_map()
+        vim.cmd "hi! link DiagnosticError   ALEVirtualTextError"
+        vim.cmd "hi! link DiagnosticWarn    ALEVirtualTextWarning"
+        vim.cmd "hi! link DiagnosticInfo    Identifier"
+        vim.cmd "hi! link DiagnosticHint    ALEVirtualTextWarning"
+        vim.cmd "hi! link LspReferenceText  Normal"
+        vim.cmd "hi! link LspReferenceRead  Identifier"
+        vim.cmd "hi! link LspReferenceWrite MoreMsg"
+      end
+
       local lspconfig = require'lspconfig'
 
       lspconfig.vimls.setup{
-        on_attach = bind_key_map;
+        on_attach = on_attach;
       };
 
       lspconfig.gopls.setup{
-        on_attach = bind_key_map;
+        on_attach = on_attach;
         settings = {
           gopls = {
             analyses = {
@@ -572,7 +583,7 @@ hook_source = '''
         };
       };
       lspconfig.pylsp.setup{
-        on_attach = bind_key_map;
+        on_attach = on_attach;
         settings = {
           pylsp = {
             configurationSources = {'flake8'};
@@ -594,29 +605,29 @@ hook_source = '''
         };
       };
       lspconfig.tsserver.setup{
-        on_attach = bind_key_map;
+        on_attach = on_attach;
       };
 
       lspconfig.html.setup{
-        on_attach = bind_key_map;
+        on_attach = on_attach;
       };
       lspconfig.cssls.setup{
-        on_attach = bind_key_map;
+        on_attach = on_attach;
       };
 
       lspconfig.jsonls.setup{
-        on_attach = bind_key_map;
+        on_attach = on_attach;
       };
       lspconfig.yamlls.setup{
-        on_attach = bind_key_map;
+        on_attach = on_attach;
       };
 
       lspconfig.terraformls.setup{
-        on_attach = bind_key_map;
+        on_attach = on_attach;
       };
 
       lspconfig.dockerls.setup{
-        on_attach = bind_key_map;
+        on_attach = on_attach;
       };
 
       lspconfig.efm.setup{
@@ -630,17 +641,9 @@ hook_source = '''
           'proto',
           'sh',
         };
-        on_attach = bind_key_map;
+        on_attach = on_attach;
       };
 EOF
-
-  hi! link DiagnosticsError  ALEVirtualTextError
-  hi! link DiagnosticsWarn   ALEVirtualTextWarning
-  hi! link DiagnosticsInfo   Identifier
-  hi! link DiagnosticsHint   ALEVirtualTextWarning
-  hi! link LspReferenceText  Normal
-  hi! link LspReferenceRead  Identifier
-  hi! link LspReferenceWrite MoreMsg
 
   function! s:ReloadLSP() abort
     lua vim.lsp.stop_client(vim.lsp.get_active_clients())
