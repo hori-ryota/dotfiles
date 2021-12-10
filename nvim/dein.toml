@@ -677,7 +677,7 @@ hook_add = '''
   inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
 '''
 hook_source = '''
-  nnoremap :       <Cmd>call CommandlinePre()<CR>:
+  nnoremap : <Cmd>call CommandlinePre()<CR>:
 
   function! CommandlinePre() abort
     call dein#source('ddc.vim')
@@ -835,7 +835,7 @@ go = '''
   nnoremap <buffer> <Leader>pl :<C-u>Dispatch golangci-lint run ./...<CR>
 '''
 python = '''
-  nnoremap <buffer> <Leader>r :<C-u>Dispatch python -m "$(echo '%' \| tr / . \| sed -e 's/\.__main__\.py//')"<CR>
+  nnoremap <buffer> <Leader>r :<C-u>Dispatch python -m "$(echo '%' \| tr / . \| sed -e 's/\.__main__\.py//' \| sed -e 's/\.py//')"<CR>
 '''
 terraform = '''
   nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch terraform apply<CR>
@@ -989,7 +989,7 @@ hook_add = '''
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 hook_done_update = '''
-  execute ':TSInstall maintained'
+  execute ':TSUpdate maintained'
 '''
 hook_source = '''
   lua << EOF
