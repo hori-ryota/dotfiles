@@ -5,5 +5,6 @@ source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 asdf plugin-add terraform
 asdf install terraform $TERRAFORM_VERSION
 asdf global terraform $TERRAFORM_VERSION
+asdf reshim terraform
 
 brew install hashicorp/tap/terraform-ls

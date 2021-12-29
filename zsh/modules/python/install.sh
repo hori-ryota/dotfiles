@@ -5,6 +5,7 @@ source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 asdf plugin-add python
 asdf install python $PYTHON3_VERSION
 asdf global python $PYTHON3_VERSION
+asdf reshim python
 
 pip3 install --upgrade pip
 pip3 install --upgrade setuptools

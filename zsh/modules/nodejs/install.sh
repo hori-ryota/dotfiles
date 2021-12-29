@@ -6,6 +6,7 @@ asdf plugin-add nodejs
 zsh -c '${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-release-team-keyring'
 asdf install nodejs $NODE_VERSION
 asdf global nodejs $NODE_VERSION
+asdf reshim nodejs
 
 npm install -g npm
 npm install -g yarn
