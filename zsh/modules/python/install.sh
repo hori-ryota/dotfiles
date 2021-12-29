@@ -12,6 +12,7 @@ pip3 install --upgrade setuptools
 if type "poetry" > /dev/null 2>&1; then
   poetry self update
 else
-  curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+  curl -sSL https://install.python-poetry.org | python3 -
 fi
-source "$HOME/.poetry/env"
+mkdir -p "$ZSH_COMPLETION_DIR"
+poetry completions zsh > "$ZSH_COMPLETION_DIR/_poetry"

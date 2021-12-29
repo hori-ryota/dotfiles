@@ -55,8 +55,8 @@ if [ -f "$HOME/.zshrc.local" ]; then
   source "$HOME/.zshrc.local"
 fi
 
-if [ -d "$HOME/.zsh/completion" ]; then
-  fpath=($HOME/.zsh/completion $fpath)
+if [ -d "$ZSH_COMPLETION_DIR" ]; then
+  fpath=($ZSH_COMPLETION_DIR $fpath)
 fi
 
 # ls
@@ -103,5 +103,3 @@ fi
 
 alias ll='ls -lh'        # Lists human readable sizes.
 alias la='ll -A'         # Lists human readable sizes, hidden files.
-
-export PATH="$HOME/.poetry/bin:$PATH"

@@ -2,3 +2,4 @@
 cache/
 .cache
 /nvim/spell/
+/zsh/completion/_poetry
