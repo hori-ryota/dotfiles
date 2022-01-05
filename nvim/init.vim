@@ -25,7 +25,7 @@ set number
 set hlsearch
 nohlsearch
 set spell
-set spellcapcheck=''
+set spellcapcheck=
 set spelloptions=camel
 set spelllang+=cjk
 let s:spellfile_dir = $XDG_CONFIG_HOME . '/nvim/spell'
