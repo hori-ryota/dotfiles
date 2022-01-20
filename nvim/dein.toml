@@ -830,9 +830,9 @@ go = '''
   nnoremap <buffer> <Leader>pt :<C-u>Dispatch go test ./...<CR>
 
   let g:dispatch_compilers['golangci-lint run'] = 'go'
-  nnoremap <buffer> <Leader>l :<C-u>Dispatch golangci-lint run %:p:h<CR>
-  nnoremap <buffer> <Leader>gl :<C-u>Dispatch golangci-lint run %:p:h/...<CR>
-  nnoremap <buffer> <Leader>pl :<C-u>Dispatch golangci-lint run ./...<CR>
+  nnoremap <buffer> <Leader>l :<C-u>Dispatch golangci-lint run --max-issues-per-linter 0 --max-same-issues 0 %:p:h<CR>
+  nnoremap <buffer> <Leader>gl :<C-u>Dispatch golangci-lint run --max-issues-per-linter 0 --max-same-issues 0 %:p:h/...<CR>
+  nnoremap <buffer> <Leader>pl :<C-u>Dispatch golangci-lint run --max-issues-per-linter 0 --max-same-issues 0 ./...<CR>
 '''
 python = '''
   nnoremap <buffer> <Leader>r :<C-u>Dispatch python -m "$(echo '%' \| tr / . \| sed -e 's/\.__main__\.py//' \| sed -e 's/\.py//')"<CR>
