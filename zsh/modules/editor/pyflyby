@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import calendar
 import dataclasses
 import datetime
 import glob
@@ -10,10 +11,11 @@ from abc import ABC, ABCMeta, abstractmethod
 from dataclasses import dataclass, field
 from enum import Enum, auto
 from operator import attrgetter
-from typing import (Any, Callable, Dict, Iterable, List, Mapping, OrderedDict,
-                    Tuple, Union, cast)
+from typing import (Any, Callable, Dict, Iterable, Iterator, List, Mapping,
+                    OrderedDict, Protocol, Tuple, Union, cast)
 from unittest import mock
 
+import numpy as np
 import pandas as pd
 import py
 import pytest

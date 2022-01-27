@@ -10,6 +10,8 @@ asdf reshim python
 pip3 install --upgrade pip
 pip3 install --upgrade setuptools
 
+"$(asdf which pip)" install --upgrade mypy
+
 if type "poetry" > /dev/null 2>&1; then
   poetry self update
 else

@@ -21,7 +21,7 @@ zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../go/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../go/export.zsh"
 
 # install deno
-zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../go/install.sh"
+zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../deno/install.sh"
 
 # For Languages
 
@@ -47,7 +47,10 @@ npm install -g yaml-language-server
 pip3 install --upgrade 'python-lsp-server[all]'
 pip3 install --upgrade pyls-flake8
 pip3 install --upgrade python-lsp-black
-pip3 install --upgrade mypy-ls
+if ! (type "mypy" > /dev/null 2>&1); then
+	pip3 install --upgrade mypy
+fi
+pip3 install --upgrade pylsp-mypy
 pip3 install --upgrade pyls-isort
 
 ### for Jupyter notebook

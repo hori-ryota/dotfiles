@@ -589,7 +589,10 @@ hook_source = '''
             configurationSources = {'flake8'};
             plugins = {
               flake8 = {enabled = true;};
-              mypy = {enabled = true;};
+              mypy = {
+                enabled = true;
+                dmypy = true;
+              };
               pydocstyle = {enabled = true;};
 
               mccabe = {enabled = false;};
@@ -1119,13 +1122,14 @@ hook_add = '''
 [[plugins]]
 repo = 'akinsho/flutter-tools.nvim'
 depends = [
+  'nvim-lspconfig',
   'plenary.nvim',
 ]
 hook_source = '''
   lua << EOF
       require'flutter-tools'.setup{
         lsp = {
-          on_attach = bind_key_map;
+          on_attach = on_attach;
         }
       }
 EOF
