@@ -33,7 +33,23 @@ function peco-ghq () {
   zle clear-screen
 }
 zle -N peco-ghq
-bindkey '^ ' peco-ghq
+
+# search ghq src and bookmarks with peco
+function peco-ghq-and-bookmarks () {
+  local selected_dir=$(cat <(ghq list -p) "$HOME/.bookmarkdirs" | peco --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-ghq-and-bookmarks
+
+if [ -f "$HOME/.bookmarkdirs" ]; then
+  bindkey '^ ' peco-ghq-and-bookmarks
+else
+  bindkey '^ ' peco-ghq
+fi
 
 # emacs like keybind
 bindkey "^A" beginning-of-line
