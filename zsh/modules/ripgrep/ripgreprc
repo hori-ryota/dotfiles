@@ -13,6 +13,7 @@
 --glob=!.symlinks/
 --glob=!.mypy_cache/
 --glob=!.pytest_cache/
+--glob=!.next/
 
 --follow
 --hidden

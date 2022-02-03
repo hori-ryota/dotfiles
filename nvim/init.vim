@@ -134,6 +134,7 @@ augroup FileTypeDetect
   autocmd BufRead,BufNewFile *.csv                    setfiletype csv
   autocmd BufRead,BufNewFile *.{snippets,snip}        setfiletype snippets
   autocmd BufRead,BufNewFile .envrc                   setfiletype zsh
+  autocmd BufRead,BufNewFile .env,.env.*              setfiletype zsh
   autocmd BufRead,BufNewFile zlogin,zlogout,zpreztorc setfiletype zsh
   autocmd BufRead,BufNewFile zprofile,zshenv,zshrc    setfiletype zsh
   autocmd BufRead,BufNewFile *.go.y                   setfiletype goyacc
