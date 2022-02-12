@@ -281,4 +281,6 @@ options head
 
 snippet terr
 options word
-  t.Fatalf("%s got unexpected error:\n%+v", dumpedRequest, err)
+  if err != nil {
+    t.Fatalf("%s got unexpected error:\n%+v", dumpedRequest, err)
+  }
