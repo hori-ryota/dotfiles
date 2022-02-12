@@ -732,6 +732,7 @@ hook_post_source = '''
     \   'smartCase': v:true,
     \ })
   call ddc#custom#patch_global('sources', [
+    \   'neosnippet',
     \   'nvim-lsp',
     \   'around',
     \   'file',
@@ -758,6 +759,9 @@ hook_post_source = '''
     \   },
     \   'cmdline-history': {
     \     'mark': 'history',
+    \   },
+    \   'neosnippet': {
+    \     'mark': 'neosnippet',
     \   },
     \ })
 
