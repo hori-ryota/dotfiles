@@ -551,6 +551,8 @@ hook_source = '''
         vim.cmd "hi! link LspReferenceText  Normal"
         vim.cmd "hi! link LspReferenceRead  Identifier"
         vim.cmd "hi! link LspReferenceWrite MoreMsg"
+
+        require'lsp_signature'.on_attach() -- for `ray-x/lsp_signature.nvim`
       end
 
       local lspconfig = require'lspconfig'
@@ -655,6 +657,23 @@ EOF
   command! ReloadLSP call s:ReloadLSP()
   nnoremap <Leader>L :<C-u>ReloadLSP<CR>
 '''
+
+#{{{ improvements
+[[plugins]]
+repo = 'ray-x/lsp_signature.nvim'
+hook_source = '''
+  lua << EOF
+    require'lsp_signature'.setup{
+      bind = true;
+      handler_opts = {
+        border = "rounded";
+      };
+      hi_parameter = "Underlined";
+    };
+EOF
+'''
+#}}}
+
 #}}}
 
 #{{{ Complement
