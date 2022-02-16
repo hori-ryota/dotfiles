@@ -357,6 +357,48 @@ defx = '''
 '''
 #}}}
 
+#{{{ Tag bar
+[[plugins]]
+repo = 'liuchengxu/vista.vim'
+on_func = [
+  'vista#',
+  'NearestMethodOrFunction',
+]
+on_cmd = 'Vista'
+hook_add = '''
+  nnoremap <silent> <space>t :<C-u>Vista!!<CR>
+
+  let g:vista_default_executive = 'ctags'
+  let g:vista_executive_for = {
+    \ 'markdown': 'toc',
+    \ 'go': 'nvim_lsp',
+    \ 'python': 'nvim_lsp',
+    \ 'typescript': 'nvim_lsp',
+    \ 'html': 'nvim_lsp',
+    \ 'css': 'nvim_lsp',
+    \ 'json': 'nvim_lsp',
+    \ 'yaml': 'nvim_lsp',
+    \ 'terraform': 'nvim_lsp',
+    \ 'Dockerfile': 'nvim_lsp',
+    \ }
+
+  let g:vista_no_mappings = 1
+  let g:vista#renderer#enable_icon = 0
+'''
+hook_source = '''
+  " for `lightline.vim`
+  function! NearestMethodOrFunction() abort
+    return get(b:, 'vista_nearest_method_or_function', '')
+  endfunction
+'''
+[plugins.ftplugin]
+vista_kind = '''
+  nnoremap <silent><buffer><nowait><expr> <CR> vista#cursor#FoldOrJump()
+  nnoremap <silent><buffer><nowait><expr> S vista#Sort()
+  nnoremap <silent><buffer><nowait><expr> P vista#cursor#TogglePreview()
+'''
+#}}}
+
 #{{{ VCS
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
@@ -1255,11 +1297,11 @@ hook_add = '''
               \ 'colorscheme': 'iceberg',
               \ 'mode_map': { 'c': 'NORMAL' },
               \ 'active': {
-              \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename' ] ],
+              \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename', 'nearest_method' ] ],
               \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
               \ },
               \ 'inactive': {
-              \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename' ] ],
+              \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename', 'nearest_method' ] ],
               \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
               \ },
               \ 'component_function': {
@@ -1270,6 +1312,7 @@ hook_add = '''
               \   'filetype': 'LightLineFiletype',
               \   'fileencoding': 'LightLineFileencoding',
               \   'mode': 'LightLineMode',
+              \   'nearest_method': 'NearestMethodOrFunction',
               \ },
               \ 'separator': { 'left': "\uE0B0", 'right': "\uE0B2" },
               \ 'subseparator': { 'left': "\uE0B1", 'right': "\uE0B3" }
