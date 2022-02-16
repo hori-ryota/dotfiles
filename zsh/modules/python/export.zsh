@@ -1,2 +1,2 @@
 export PYTHON3_VERSION=3.8.12
-export PATH="$PATH:$HOME/.local/bin"
+export POETRY_VERSION=1.1.13

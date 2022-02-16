@@ -7,15 +7,15 @@ asdf install python $PYTHON3_VERSION
 asdf global python $PYTHON3_VERSION
 asdf reshim python
 
+asdf plugin-add poetry
+asdf install poetry $POETRY_VERSION
+asdf global poetry $POETRY_VERSION
+asdf reshim poetry
+
 pip3 install --upgrade pip
 pip3 install --upgrade setuptools
 
 "$(asdf which pip)" install --upgrade mypy
 
-if type "poetry" > /dev/null 2>&1; then
-  poetry self update
-else
-  curl -sSL https://install.python-poetry.org | python3 -
-fi
 mkdir -p "$ZSH_COMPLETION_DIR"
 poetry completions zsh > "$ZSH_COMPLETION_DIR/_poetry"
