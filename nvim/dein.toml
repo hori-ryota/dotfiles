@@ -926,6 +926,10 @@ python = '''
 terraform = '''
   nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch terraform apply<CR>
 '''
+marp = '''
+  nnoremap <buffer> <Leader>r :<C-u>Dispatch marp --watch --preview %<CR>
+  nnoremap <buffer> <Leader>G :<C-u>Dispatch marp --pdf --allow-local-files --output %:s?.marp.md?.pdf? %<CR>
+'''
 
 [[plugins]]
 repo = 'radenling/vim-dispatch-neovim'

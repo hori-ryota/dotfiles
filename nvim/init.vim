@@ -131,6 +131,7 @@ autocmd FileType qf call MoveQuickfixWindowToBottom()
 augroup FileTypeDetect
   autocmd! 
   autocmd BufRead,BufNewFile *.{txt,text}             setfiletype markdown
+  autocmd BufRead,BufNewFile *.marp.md                setfiletype markdown.marp
   autocmd BufRead,BufNewFile *.csv                    setfiletype csv
   autocmd BufRead,BufNewFile *.{snippets,snip}        setfiletype snippets
   autocmd BufRead,BufNewFile .envrc                   setfiletype zsh
