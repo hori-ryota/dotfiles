@@ -856,13 +856,14 @@ hook_add = '''
 hook_post_source = '''
   call popup_preview#enable()
 '''
-
-# TODO: support LSP `textEdit` event on complete done
+#}}}
 
 #{{{ ecosystems
 [[plugins]]
 repo = 'Shougo/pum.vim'
 #}}}
+
+# TODO: support LSP `textEdit` event on complete done
 
 #}}}
 
