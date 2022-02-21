@@ -624,7 +624,20 @@ hook_source = '''
               vendor = true;
             };
             ["local"] = os.getenv("GO_IMPORTS_LOCAL");
+            directoryFilters = {
+              "-.git",
+              "-node_modules",
+              "-.mypy_cache",
+              "-__pycache__",
+              "-.pytest_cache",
+              "-.venv",
+              "-venv",
+            };
           };
+        };
+        filetypes = {
+          'go',
+          'gomod',
         };
       };
       lspconfig.pylsp.setup{
@@ -1158,7 +1171,7 @@ go = '''
         -- should be executed first.
         if action.edit or type(action.command) == "table" then
           if action.edit then
-            vim.lsp.util.apply_workspace_edit(action.edit)
+            vim.lsp.util.apply_workspace_edit(action.edit, "utf-16")
           end
           if type(action.command) == "table" then
             vim.lsp.buf.execute_command(action.command)
@@ -1222,6 +1235,9 @@ hook_source = '''
 [[plugins]]
 repo = 'rhysd/vim-goyacc'
 on_ft = 'goyacc'
+
+[[plugins]]
+repo = 'mattn/vim-gomod'
 #}}}
 
 #{{{ Python
