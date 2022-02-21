@@ -371,19 +371,14 @@ hook_add = '''
   let g:vista_default_executive = 'ctags'
   let g:vista_executive_for = {
     \ 'markdown': 'toc',
-    \ 'go': 'nvim_lsp',
-    \ 'python': 'nvim_lsp',
-    \ 'typescript': 'nvim_lsp',
-    \ 'html': 'nvim_lsp',
-    \ 'css': 'nvim_lsp',
-    \ 'json': 'nvim_lsp',
-    \ 'yaml': 'nvim_lsp',
-    \ 'terraform': 'nvim_lsp',
-    \ 'Dockerfile': 'nvim_lsp',
     \ }
 
-  let g:vista_no_mappings = 1
+  let g:vista_no_mappings = 0
   let g:vista#renderer#enable_icon = 0
+
+  let g:vista_sidebar_width = 80
+  let g:vista_cursor_delay = 0
+  let g:vista_echo_cursor_strategy = 'scroll'
 '''
 hook_source = '''
   " for `lightline.vim`
