@@ -559,24 +559,24 @@ repo = 'neovim/nvim-lspconfig'
 hook_source = '''
   lua << EOF
       function bind_key_map()
-        -- vim.cmd "nnoremap <buffer><silent> <Leader>; :<C-u>Denite -start-filter contextMenu<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>:   :<C-u>lua vim.lsp.codelens.run()<CR>"
-        vim.cmd "nnoremap <buffer><silent> K           :<C-u>lua vim.lsp.buf.hover()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.signature_help()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <C-]>       :<C-u>lua vim.lsp.buf.definition()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>i   :<C-u>lua vim.lsp.buf.implementation()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>c   :<C-u>lua vim.lsp.buf.incoming_calls()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>R   :<C-u>lua vim.lsp.buf.rename()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>ds  :<C-u>lua vim.lsp.buf.document_symbol()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>dr  :<C-u>lua vim.lsp.buf.references()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.code_action()<CR>"
-        vim.cmd "vnoremap <buffer><silent> <Leader>a   :<C-u>lua vim.lsp.buf.range_code_action()<CR>"
-        vim.cmd "nnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.formatting()<CR>"
-        vim.cmd "vnoremap <buffer><silent> gq          :<C-u>lua vim.lsp.buf.range_formatting()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>h   :<C-u>lua vim.lsp.buf.document_highlight()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>H   :<C-u>lua vim.lsp.buf.clear_references()<CR>"
-        vim.cmd "nnoremap <buffer><silent> <Leader>ws  :<C-u>lua vim.lsp.buf.workspace_symbol()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>a         :<C-u>lua vim.lsp.buf.code_action()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader><Leader>l :<C-u>lua vim.lsp.codelens.run()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader><Leader>L :<C-u>lua vim.diagnostic.open_float({focusable = false})<CR>"
+        vim.cmd "nnoremap <buffer><silent> K                 :<C-u>lua vim.lsp.buf.hover()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>h         :<C-u>lua vim.lsp.buf.signature_help()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <C-]>             :<C-u>lua vim.lsp.buf.definition()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>i         :<C-u>lua vim.lsp.buf.implementation()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>c         :<C-u>lua vim.lsp.buf.incoming_calls()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>R         :<C-u>lua vim.lsp.buf.rename()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>ds        :<C-u>lua vim.lsp.buf.document_symbol()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>dr        :<C-u>lua vim.lsp.buf.references()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>a         :<C-u>lua vim.lsp.buf.code_action()<CR>"
+        vim.cmd "vnoremap <buffer><silent> <Leader>a         :<C-u>lua vim.lsp.buf.range_code_action()<CR>"
+        vim.cmd "nnoremap <buffer><silent> gq                :<C-u>lua vim.lsp.buf.formatting()<CR>"
+        vim.cmd "vnoremap <buffer><silent> gq                :<C-u>lua vim.lsp.buf.range_formatting()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>h         :<C-u>lua vim.lsp.buf.document_highlight()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>H         :<C-u>lua vim.lsp.buf.clear_references()<CR>"
+        vim.cmd "nnoremap <buffer><silent> <Leader>ws        :<C-u>lua vim.lsp.buf.workspace_symbol()<CR>"
       end
 
       function on_attach()
@@ -589,7 +589,12 @@ hook_source = '''
         vim.cmd "hi! link LspReferenceRead  Identifier"
         vim.cmd "hi! link LspReferenceWrite MoreMsg"
 
+        vim.cmd "hi! link LspCodeLens Comment"
+        vim.cmd "hi! link LspCodeLensSeparator Comment"
+
         require'lsp_signature'.on_attach() -- for `ray-x/lsp_signature.nvim`
+
+        vim.cmd "autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()"
       end
 
       local lspconfig = require'lspconfig'
