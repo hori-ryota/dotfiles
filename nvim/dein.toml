@@ -593,18 +593,21 @@ hook_source = '''
         vim.cmd "hi! link LspCodeLensSeparator Comment"
 
         require'lsp_signature'.on_attach() -- for `ray-x/lsp_signature.nvim`
+      end
 
+      function on_attach_with_codelens()
+        on_attach()
         vim.cmd "autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()"
       end
 
       local lspconfig = require'lspconfig'
 
       lspconfig.vimls.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_with_codelens;
       };
 
       lspconfig.gopls.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_with_codelens;
         settings = {
           gopls = {
             analyses = {
@@ -641,7 +644,7 @@ hook_source = '''
         };
       };
       lspconfig.pylsp.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_with_codelens;
         settings = {
           pylsp = {
             configurationSources = {'flake8'};
@@ -666,29 +669,29 @@ hook_source = '''
         };
       };
       lspconfig.tsserver.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_with_codelens;
       };
 
       lspconfig.html.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_with_codelens;
       };
       lspconfig.cssls.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_with_codelens;
       };
 
       lspconfig.jsonls.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_with_codelens;
       };
       lspconfig.yamlls.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_with_codelens;
       };
 
       lspconfig.terraformls.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_with_codelens;
       };
 
       lspconfig.dockerls.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_with_codelens;
       };
 
       lspconfig.efm.setup{
