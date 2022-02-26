@@ -1080,6 +1080,11 @@ pu_uml_plantuml = '''
     let b:caw_wrap_oneline_comment = ["/'", "'/"]
     let b:caw_wrap_multiline_comment = {'right': "'/", 'left': "/'"}
 '''
+dart = '''
+    let b:caw_oneline_comment = "//"
+    let b:caw_wrap_oneline_comment = ["/*", "*/"]
+    let b:caw_wrap_multiline_comment = {'right': "*/", 'left': "/*"}
+'''
 
 [[plugins]] # for caw.vim
 repo = 'kana/vim-repeat'
