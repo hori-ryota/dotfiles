@@ -772,7 +772,7 @@ hook_source = '''
 
     " Overwrite sources
     let s:prev_buffer_config = ddc#custom#get_buffer()
-    call ddc#custom#patch_buffer('sources', ['necovim', 'cmdline-history', 'around'])
+    call ddc#custom#patch_buffer('sources', ['necovim', 'cmdline-history', 'around', 'buffer'])
 
     autocmd CmdlineLeave * ++once call CommandlinePost()
 
@@ -793,6 +793,7 @@ hook_post_source = '''
     \   'neosnippet',
     \   'nvim-lsp',
     \   'around',
+    \   'buffer',
     \   'file',
     \ ])
   call ddc#custom#patch_global('sourceOptions', {
@@ -802,6 +803,9 @@ hook_post_source = '''
     \   },
     \   'around': {
     \     'mark': 'A',
+    \   },
+    \   'buffer': {
+    \     'mark': 'B',
     \   },
     \   'file': {
     \     'mark': 'F',
@@ -817,9 +821,20 @@ hook_post_source = '''
     \   },
     \   'cmdline-history': {
     \     'mark': 'history',
+    \     'sorters': [],
+    \     'forceCompletionPattern': '.',
     \   },
     \   'neosnippet': {
     \     'mark': 'neosnippet',
+    \     'forceCompletionPattern': '\w',
+    \   },
+    \ })
+  call ddc#custom#patch_global('sourceParams', {
+    \   'buffer': {
+    \     'requireSameFiletype': v:false,
+    \   },
+    \   'cmdline-history': {
+    \     'maxSize': &history,
     \   },
     \ })
 
@@ -836,6 +851,9 @@ hook_post_source = '''
 #{{{ sources
 [[plugins]]
 repo = 'Shougo/ddc-around'
+
+[[plugins]]
+repo = 'matsui54/ddc-buffer'
 
 [[plugins]]
 repo = 'Shougo/ddc-nvim-lsp'
