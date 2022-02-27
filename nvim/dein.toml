@@ -1085,6 +1085,9 @@ dart = '''
     let b:caw_wrap_oneline_comment = ["/*", "*/"]
     let b:caw_wrap_multiline_comment = {'right': "*/", 'left': "/*"}
 '''
+json5 = '''
+    let b:caw_oneline_comment = "//"
+'''
 
 [[plugins]] # for caw.vim
 repo = 'kana/vim-repeat'
