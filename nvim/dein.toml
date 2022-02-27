@@ -644,7 +644,7 @@ hook_source = '''
         };
       };
       lspconfig.pylsp.setup{
-        on_attach = on_attach_with_codelens;
+        on_attach = on_attach;
         settings = {
           pylsp = {
             configurationSources = {'flake8'};
@@ -668,30 +668,30 @@ hook_source = '''
           };
         };
       };
-      lspconfig.tsserver.setup{
-        on_attach = on_attach_with_codelens;
-      };
 
+      lspconfig.tsserver.setup{
+        on_attach = on_attach;
+      };
       lspconfig.html.setup{
-        on_attach = on_attach_with_codelens;
+        on_attach = on_attach;
       };
       lspconfig.cssls.setup{
-        on_attach = on_attach_with_codelens;
+        on_attach = on_attach;
       };
 
       lspconfig.jsonls.setup{
-        on_attach = on_attach_with_codelens;
+        on_attach = on_attach;
       };
       lspconfig.yamlls.setup{
-        on_attach = on_attach_with_codelens;
+        on_attach = on_attach;
       };
 
       lspconfig.terraformls.setup{
-        on_attach = on_attach_with_codelens;
+        on_attach = on_attach;
       };
 
       lspconfig.dockerls.setup{
-        on_attach = on_attach_with_codelens;
+        on_attach = on_attach;
       };
 
       lspconfig.efm.setup{
