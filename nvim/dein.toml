@@ -1005,6 +1005,140 @@ python = '''
 '''
 #}}}
 
+#{{{ Debugger
+[[plugins]]
+repo = 'mfussenegger/nvim-dap'
+on_ft = [
+  'go',
+  'python',
+]
+hook_source = '''
+  nnoremap <silent> <Leader>ff :<C-u>lua require'dap'.continue()<CR>
+
+  nnoremap <silent> <Leader>fbb :<C-u>lua require'dap'.toggle_breakpoint()<CR>
+  nnoremap <silent> <Leader>fbc :<C-u>lua require'dap'.set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>
+  nnoremap <silent> <Leader>fbl :<C-u>lua require'dap'.set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>
+
+  nnoremap <silent> <Leader>fj :<C-u>lua require'dap'.step_over()<CR>
+  nnoremap <silent> <Leader>fl :<C-u>lua require'dap'.step_into()<CR>
+  nnoremap <silent> <Leader>fh :<C-u>lua require'dap'.step_out()<CR>
+
+  nnoremap <silent> <leader>f: :<C-u>lua require'dap'.repl.open()<CR>
+  nnoremap <silent> <leader>fR :<C-u>lua require'dap'.run_last()<CR>
+
+  nnoremap <silent> <Leader>fn :<C-u>lua require'dap'.down()<CR>
+  nnoremap <silent> <Leader>fp :<C-u>lua require'dap'.up()<CR>
+'''
+
+[[plugins]]
+repo = 'rcarriga/nvim-dap-ui'
+on_source = 'nvim-dap'
+depends = [
+  'nvim-dap',
+]
+hook_source = '''
+  nnoremap <buffer> <Leader>f<Space> :<C-u>lua require'dapui'.toggle()<CR>
+
+  lua << EOF
+    -- auto open
+    require'dap'.listeners.after.event_initialized["dapup_config"] = function()
+      require'dapui'.open()
+    end
+    -- auto close
+    require'dap'.listeners.before.event_terminated["dapup_config"] = function()
+      require'dapui'.close()
+    end
+    require'dap'.listeners.before.event_exited["dapup_config"] = function()
+      require'dapui'.close()
+    end
+
+    require("dapui").setup({
+      icons = { expanded = "▾", collapsed = "▸" },
+      mappings = {
+        -- Use a table to apply multiple mappings
+        expand = "o",
+        open = "<CR>",
+        remove = "d",
+        edit = "e",
+        repl = "r",
+      },
+      sidebar = {
+        elements = {
+          { id = "scopes", size = 0.3 },
+          { id = "watches", size = 0.2 },
+          { id = "stacks", size = 0.3 },
+          { id = "breakpoints", size = 0.2 },
+        },
+        size = 80,
+        position = "left", -- Can be "left", "right", "top", "bottom"
+      },
+      tray = {
+        elements = { "repl" },
+        size = 10,
+        position = "bottom", -- Can be "left", "right", "top", "bottom"
+      },
+      floating = {
+        max_height = nil, -- These can be integers or a float between 0 and 1.
+        max_width = nil, -- Floats will be treated as percentage of your screen.
+        border = "single", -- Border style. Can be "single", "double" or "rounded"
+        mappings = {
+          close = "<Esc>",
+        },
+      },
+      windows = { indent = 1 },
+    })
+
+EOF
+
+'''
+
+[[plugins]]
+repo = 'theHamsta/nvim-dap-virtual-text'
+on_source = 'nvim-dap'
+depends = [
+  'nvim-dap',
+]
+hook_source = '''
+  lua require("nvim-dap-virtual-text").setup()
+'''
+
+[[plugins]]
+repo = 'leoluz/nvim-dap-go'
+on_ft = [
+  'go',
+]
+depends = [
+  'nvim-dap',
+  'nvim-treesitter',
+]
+hook_source = '''
+  lua require('dap-go').setup()
+'''
+[plugins.ftplugin]
+go = '''
+  nnoremap <buffer> <Leader>ft :<C-u>lua require('dap-go').debug_test()<CR>
+'''
+
+[[plugins]]
+repo = 'mfussenegger/nvim-dap-python'
+on_ft = [
+  'python',
+]
+depends = [
+  'nvim-dap',
+  'nvim-treesitter',
+]
+hook_source = '''
+  lua require('dap-python').setup()
+'''
+[plugins.ftplugin]
+python = '''
+  nnoremap <buffer> <Leader>ft :<C-u>:lua require('dap-python').test_method()<CR>
+  nnoremap <buffer> <Leader>fc :<C-u>:lua require('dap-python').test_class()<CR>
+'''
+
+#}}}
+
 #{{{ Utils
 [[plugins]] # easily search for, substitute, and abbreviate multiple variants of a word
 repo = 'tpope/vim-abolish'
