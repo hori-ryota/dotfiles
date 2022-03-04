@@ -941,7 +941,7 @@ hook_add = '''
 sh = '''
   nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch sh %<CR>
 '''
-go = '''
+go_gomod = '''
   nnoremap <buffer> <Leader>r :<C-u>Dispatch -dir=%:h go run .<CR>
   nnoremap <buffer> <Leader>G :<C-u>Dispatch -dir=%:h go generate .<CR>
 
