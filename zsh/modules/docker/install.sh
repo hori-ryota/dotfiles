@@ -1,3 +1,3 @@
-brew install docker
+brew install rancher
 
 brew install hadolint
