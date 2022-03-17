@@ -24,16 +24,16 @@ tools:
     format-command: 'shfmt -ci -s -bn'
     format-stdin: true
 
-  javascript-eslint: &javascript-eslint
-    lint-command: 'npx eslint -f unix --stdin'
-    lint-ignore-exit-code: true
+  eslint: &eslint
+    lint-command: "eslint_d -f unix --stdin --stdin-filename ${INPUT}"
     lint-stdin: true
+    lint-formats:
+      - '%f:%l:%c: %m'
+    lint-ignore-exit-code: true
 
-  html-prettier: &html-prettier
-    format-command: 'npx prettier --parser html'
-
-  css-prettier: &css-prettier
-    format-command: 'npx prettier --parser css'
+  prettier: &prettier
+    format-command: 'npx --no-install prettier --stdin-filepath ${INPUT}'
+    format-stdin: true
 
   json-fixjson: &json-fixjson
     format-command: 'fixjson'
@@ -55,11 +55,27 @@ languages:
     - <<: *sh-shellcheck
     - <<: *sh-shfmt
 
+  javascript:
+    - <<: *eslint
+    - <<: *prettier
+
+  javascriptreact:
+    - <<: *eslint
+    - <<: *prettier
+
+  typescript:
+    - <<: *eslint
+    - <<: *prettier
+
+  typescriptreact:
+    - <<: *eslint
+    - <<: *prettier
+
   html:
-    - <<: *html-prettier
+    - <<: *prettier
 
   css:
-    - <<: *css-prettier
+    - <<: *prettier
 
   json:
     - <<: *json-fixjson

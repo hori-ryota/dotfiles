@@ -76,9 +76,10 @@ brew install shellcheck
 ### Formatter
 brew install shfmt
 
-## TypeScript
+## TypeScript and JavaScript
 ### LSP
 npm install -g typescript-language-server
+npm install -g eslint_d
 
 ## HTML,CSS,JSON
 ### LSP

@@ -669,8 +669,11 @@ hook_source = '''
         };
       };
 
+      function on_attach_for_tsserver(client)
+        client.resolved_capabilities.document_formatting = false;
+      end
       lspconfig.tsserver.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_for_tsserver;
       };
       lspconfig.html.setup{
         on_attach = on_attach;
@@ -700,10 +703,14 @@ hook_source = '''
           'css',
           'csv',
           'html',
+          'javascript',
+          'javascriptreact',
           'json',
           'make',
           'proto',
           'sh',
+          'typescript',
+          'typescriptreact',
         };
         on_attach = on_attach;
       };
@@ -1303,6 +1310,9 @@ markdown = '''
 css = '''
     setlocal tabstop=4
     setlocal shiftwidth=4
+'''
+javascript_javascriptreact_typescript_typescriptreact = '''
+    nnoremap <buffer> gQ :<C-u>%!eslint_d -f unix --stdin --stdin-filename %<CR>
 '''
 go = '''
     setlocal noexpandtab
