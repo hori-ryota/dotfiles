@@ -27,11 +27,6 @@ zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../deno/install.sh"
 
 # For Languages
 
-## General LSP of linters
-echo 'Install github.com/mattn/efm-langserver'
-go install github.com/mattn/efm-langserver@latest
-ln -snf "$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)/efm-langserver" "$XDG_CONFIG_HOME/efm-langserver"
-
 ## Vim
 npm install -g vim-language-server
 
@@ -43,6 +38,9 @@ go install github.com/mrtazz/checkmake@latest
 ## Yaml
 ### LSP
 npm install -g yaml-language-server
+
+### GitHub Actions
+go install github.com/rhysd/actionlint/cmd/actionlint@latest
 
 ## Python
 ### LSP

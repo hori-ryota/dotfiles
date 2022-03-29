@@ -11,6 +11,9 @@ hook_add = '''
 #{{{ ecosystems
 [[plugins]]
 repo = 'vim-denops/denops.vim'
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
 #}}}
 
 #{{{ denite
@@ -696,24 +699,6 @@ hook_source = '''
       lspconfig.dockerls.setup{
         on_attach = on_attach;
       };
-
-      lspconfig.efm.setup{
-        filetypes = {
-          'Dockerfile',
-          'css',
-          'csv',
-          'html',
-          'javascript',
-          'javascriptreact',
-          'json',
-          'make',
-          'proto',
-          'sh',
-          'typescript',
-          'typescriptreact',
-        };
-        on_attach = on_attach;
-      };
 EOF
 
   function! s:ReloadLSP() abort
@@ -723,6 +708,42 @@ EOF
   command! ReloadLSP call s:ReloadLSP()
   nnoremap <Leader>L :<C-u>ReloadLSP<CR>
 '''
+
+[[plugins]]
+repo = 'jose-elias-alvarez/null-ls.nvim'
+hook_source = '''
+  lua << EOF
+    require'null-ls'.setup{
+      sources = {
+        -- make
+        require'null-ls'.builtins.diagnostics.checkmake,
+        -- Dockerfile
+        require'null-ls'.builtins.diagnostics.hadolint,
+        -- sh
+        require'null-ls'.builtins.diagnostics.shellcheck,
+        require'null-ls'.builtins.formatting.shfmt,
+
+        -- prettier
+        require'null-ls'.builtins.formatting.prettierd,
+        -- javascript, typescript
+        require'null-ls'.builtins.diagnostics.eslint_d,
+        -- json
+        require'null-ls'.builtins.formatting.fixjson,
+
+        -- protobuf
+        require'null-ls'.builtins.diagnostics.buf,
+
+        -- GitHub Action
+        require'null-ls'.builtins.diagnostics.actionlint,
+      };
+      on_attach = on_attach;
+    };
+EOF
+'''
+depends = [
+  'nvim-lspconfig',
+  'plenary.nvim',
+]
 
 #{{{ improvements
 [[plugins]]
@@ -1443,9 +1464,6 @@ hook_source = '''
       }
 EOF
 '''
-
-[[plugins]]
-repo = 'nvim-lua/plenary.nvim'
 #}}}
 
 #{{{ Markdown
