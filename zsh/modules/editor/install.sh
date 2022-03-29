@@ -80,6 +80,7 @@ brew install shfmt
 ### LSP
 npm install -g typescript-language-server
 npm install -g eslint_d
+npm install -g @fsouza/prettierd
 
 ## HTML,CSS,JSON
 ### LSP

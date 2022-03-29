@@ -25,14 +25,14 @@ tools:
     format-stdin: true
 
   eslint: &eslint
-    lint-command: "eslint_d -f unix --stdin --stdin-filename ${INPUT}"
+    lint-command: 'eslint_d -f unix --stdin --stdin-filename "${INPUT}"'
     lint-stdin: true
     lint-formats:
       - '%f:%l:%c: %m'
     lint-ignore-exit-code: true
 
   prettier: &prettier
-    format-command: 'npx --no-install prettier --stdin-filepath ${INPUT}'
+    format-command: 'prettierd "${INPUT}"'
     format-stdin: true
 
   json-fixjson: &json-fixjson
