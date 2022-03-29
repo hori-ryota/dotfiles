@@ -603,7 +603,7 @@ hook_source = '''
       local lspconfig = require'lspconfig'
 
       lspconfig.vimls.setup{
-        on_attach = on_attach_with_codelens;
+        on_attach = on_attach;
       };
 
       lspconfig.gopls.setup{
