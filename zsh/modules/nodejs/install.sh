@@ -10,4 +10,5 @@ asdf reshim nodejs
 
 npm install -g npm
 npm install -g yarn
-asdf reshim nodejs
+
+npm install -g npm-check-updates
