@@ -685,8 +685,11 @@ hook_source = '''
         on_attach = on_attach;
       };
 
+      function on_attach_for_jsonls(client)
+        client.resolved_capabilities.document_formatting = false;
+      end
       lspconfig.jsonls.setup{
-        on_attach = on_attach;
+        on_attach = on_attach_for_jsonls;
       };
       lspconfig.yamlls.setup{
         on_attach = on_attach;
@@ -1284,7 +1287,7 @@ hook_add = '''
 #{{{ Highlights
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
-hook_done_update = ':TSUpdate'
+hook_done_update = 'TSUpdate'
 merged = 0
 hook_source = '''
   lua << EOF
