@@ -210,7 +210,7 @@ denite-filter = '''
 repo = 'liuchengxu/vim-clap'
 rev = 'v0.31'
 hook_done_update = '''
-  execute ':Clap install-binary'
+  Clap install-binary
 '''
 lazy = 1
 #}}}
@@ -1287,7 +1287,9 @@ hook_add = '''
 #{{{ Highlights
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
-hook_done_update = 'TSUpdate'
+hook_done_update = '''
+  TSUpdate
+'''
 merged = 0
 hook_source = '''
   lua << EOF
