@@ -130,19 +130,19 @@ autocmd FileType qf call MoveQuickfixWindowToBottom()
 "{{{ filetype detect
 augroup FileTypeDetect
   autocmd! 
-  autocmd BufRead,BufNewFile *.{txt,text}                  setfiletype markdown
-  autocmd BufRead,BufNewFile *.marp.md                     setfiletype markdown.marp
-  autocmd BufRead,BufNewFile *.csv                         setfiletype csv
-  autocmd BufRead,BufNewFile *.{snippets,snip}             setfiletype snippets
-  autocmd BufRead,BufNewFile .envrc                        setfiletype zsh
-  autocmd BufRead,BufNewFile .env,.env.*                   setfiletype zsh
-  autocmd BufRead,BufNewFile zlogin,zlogout,zpreztorc      setfiletype zsh
-  autocmd BufRead,BufNewFile zprofile,zshenv,zshrc         setfiletype zsh
-  autocmd BufRead,BufNewFile *.go.y                        setfiletype goyacc
-  autocmd BufRead,BufNewFile *.uml                         setfiletype plantuml
-  autocmd BufRead,BufNewFile *.vim.local                   setfiletype vim
-  autocmd BufRead,BufNewFile *Dockerfile*                  setfiletype Dockerfile
-  autocmd BufRead,BufNewFile tsconfig.json,tsconfig.*.json setfiletype jsonc
+  autocmd BufRead,BufNewFile *.{txt,text}             setfiletype markdown
+  autocmd BufRead,BufNewFile *.marp.md                setfiletype markdown.marp
+  autocmd BufRead,BufNewFile *.csv                    setfiletype csv
+  autocmd BufRead,BufNewFile *.{snippets,snip}        setfiletype snippets
+  autocmd BufRead,BufNewFile .envrc                   setfiletype zsh
+  autocmd BufRead,BufNewFile .env,.env.*              setfiletype zsh
+  autocmd BufRead,BufNewFile zlogin,zlogout,zpreztorc setfiletype zsh
+  autocmd BufRead,BufNewFile zprofile,zshenv,zshrc    setfiletype zsh
+  autocmd BufRead,BufNewFile *.go.y                   setfiletype goyacc
+  autocmd BufRead,BufNewFile *.uml                    setfiletype plantuml
+  autocmd BufRead,BufNewFile *.vim.local              setfiletype vim
+  autocmd BufRead,BufNewFile *Dockerfile*             setfiletype Dockerfile
+  autocmd BufRead,BufNewFile tsconfig.json,tsconfig.*.json,.eslintrc,.eslintrc.json setfiletype jsonc
 augroup END
 "}}}
 
