@@ -1,7 +1,6 @@
 brew install 1password
 brew install alfred
 brew install appcleaner
-brew install dropbox
 brew install flux
 brew install google-chrome
 brew install google-japanese-ime
@@ -15,7 +14,7 @@ brew install homebrew/cask-fonts/font-cica
 # Quick Look
 ## Plugins
 ### https://github.com/sindresorhus/quick-look-plugins
-brew install qlcolorcode qlmarkdown qlimagesize suspicious-package quicklookase qlvideo
+brew install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize suspicious-package apparency quicklookase qlvideo
 
 ## For QLClolorCode
 ### Show line number
