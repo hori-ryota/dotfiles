@@ -1010,6 +1010,7 @@ hook_add = '''
 repo = 'vim-test/vim-test'
 on_ft =  [
   'go',
+  'python',
 ]
 depends = [
   'vim-dispatch',
@@ -1340,7 +1341,7 @@ css = '''
     setlocal shiftwidth=4
 '''
 javascript_javascriptreact_typescript_typescriptreact = '''
-    nnoremap <buffer> gQ :<C-u>%!eslint_d -f unix --stdin --fix-to-stdout --stdin-filename '%'<CR>
+    nnoremap <buffer> gQ :<C-u>%!eslint_d -f unix --stdin --fix-to-stdout --stdin-filename "%"<CR>
 '''
 go = '''
     setlocal noexpandtab
