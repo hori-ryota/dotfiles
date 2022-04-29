@@ -729,7 +729,21 @@ hook_source = '''
         -- prettier
         require'null-ls'.builtins.formatting.prettierd,
         -- javascript, typescript
-        require'null-ls'.builtins.diagnostics.eslint_d,
+        require'null-ls'.builtins.diagnostics.eslint_d.with({
+          cwd = function(params)
+            -- https://github.com/jose-elias-alvarez/null-ls.nvim/pull/833
+            return require'null-ls.utils'.root_pattern(
+                -- https://eslint.org/docs/user-guide/configuring/configuration-files#configuration-file-formats
+                ".eslintrc",
+                ".eslintrc.js",
+                ".eslintrc.cjs",
+                ".eslintrc.yaml",
+                ".eslintrc.yml",
+                ".eslintrc.json",
+                "package.json"
+            )(params.bufname)
+          end
+        }),
         -- json
         require'null-ls'.builtins.formatting.fixjson,
 
