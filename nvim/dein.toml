@@ -1003,6 +1003,12 @@ go_gomod = '''
 python = '''
   nnoremap <buffer> <Leader>r :<C-u>Dispatch python -m "$(echo '%' \| tr / . \| sed -e 's/\.__main__\.py//' \| sed -e 's/\.py//')"<CR>
 '''
+javascript_javascriptreact_typescript_typescriptreact = '''
+  let g:dispatch_compilers['npx eslint'] = 'go'
+  nnoremap <buffer> <Leader>l :<C-u>Dispatch -dir=%:h npx eslint --cache -f unix "%"<CR>
+  nnoremap <buffer> <Leader>gl :<C-u>Dispatch -dir=%:h npx eslint --cache -f unix .<CR>
+  nnoremap <buffer> <Leader>pl :<C-u>Dispatch npx eslint --cache -f unix .<CR>
+'''
 terraform = '''
   nnoremap <buffer><silent> <Leader>r :<C-u>Dispatch terraform apply<CR>
   nnoremap <buffer><silent> <Leader>t :<C-u>Dispatch terraform plan<CR>
