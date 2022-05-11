@@ -1,11 +1,18 @@
-brew install go
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
+zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../1-asdf/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 mkdir -p "$GOPATH"
 
+asdf plugin-add golang
+asdf install golang $GO_VERSION
+asdf global golang $GO_VERSION
+asdf reshim golang
+
 echo 'Install github.com/golangci/golangci-lint'
-go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-ln -snf "$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)/golangci.toml" "$HOME/.golangci.toml"
+asdf plugin-add golangci-lint
+asdf install golangci-lint $GOLANGCI_LINT_VERSION
+asdf global golangci-lint $GOLANGCI_LINT_VERSION
+asdf reshim golangci-lint
 
 # install Debugger
 echo "Install github.com/go-delve/delve/cmd/dlv"
