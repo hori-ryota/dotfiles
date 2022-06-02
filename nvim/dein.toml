@@ -730,19 +730,18 @@ hook_source = '''
         require'null-ls'.builtins.formatting.prettierd,
         -- javascript, typescript
         require'null-ls'.builtins.diagnostics.eslint_d.with({
-          cwd = function(params)
-            -- https://github.com/jose-elias-alvarez/null-ls.nvim/pull/833
+          cwd = require'null-ls.helpers'.cache.by_bufnr(function(params)
             return require'null-ls.utils'.root_pattern(
-                -- https://eslint.org/docs/user-guide/configuring/configuration-files#configuration-file-formats
-                ".eslintrc",
-                ".eslintrc.js",
-                ".eslintrc.cjs",
-                ".eslintrc.yaml",
-                ".eslintrc.yml",
-                ".eslintrc.json",
-                "package.json"
+              -- https://eslint.org/docs/user-guide/configuring/configuration-files#configuration-file-formats
+              ".eslintrc",
+              ".eslintrc.js",
+              ".eslintrc.cjs",
+              ".eslintrc.yaml",
+              ".eslintrc.yml",
+              ".eslintrc.json",
+              "package.json"
             )(params.bufname)
-          end
+          end)
         }),
         -- json
         require'null-ls'.builtins.formatting.fixjson,
@@ -788,6 +787,59 @@ depends = [
   'pum.vim',
 ]
 hook_add = '''
+  nnoremap : <Cmd>call CommandlinePre(':')<CR>:
+  nnoremap ? <Cmd>call CommandlinePre('/')<CR>?
+
+  function! CommandlinePre(mode) abort
+    " Note: It disables default command line completion!
+    set wildchar=<C-t>
+    set wildcharm=<C-t>
+
+    cnoremap <buffer><expr> <TAB>
+      \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+      \ exists('b:ddc_cmdline_completion') ? ddc#manual_complete() : "\<C-t>"
+
+    " Overwrite sources
+    if !exists('b:prev_buffer_config')
+      let b:prev_buffer_config = ddc#custom#get_buffer()
+    endif
+    if a:mode ==# ':'
+      call ddc#custom#patch_buffer('cmdlineSources',
+        \ ['cmdline-history', 'cmdline', 'around'])
+      call ddc#custom#patch_buffer('keywordPattern', '[0-9a-zA-Z_:#]*')
+    else
+      call ddc#custom#patch_buffer('cmdlineSources',
+        \ ['around', 'line'])
+    endif
+
+    augroup DDCCommandlinePre
+      autocmd!
+      autocmd User DDCCmdlineLeave ++once call CommandlinePost()
+      autocmd InsertEnter <buffer> ++once call CommandlinePost()
+    augroup END
+
+    " Enable command line completion
+    call ddc#enable_cmdline_completion()
+  endfunction
+
+  function! CommandlinePost() abort
+    silent! cunmap <buffer> <Tab>
+
+    " Restore sources
+    if exists('b:prev_buffer_config')
+      call ddc#custom#set_buffer(b:prev_buffer_config)
+      unlet b:prev_buffer_config
+    else
+      call ddc#custom#set_buffer({})
+    endif
+
+    set wildcharm=<Tab>
+  endfunction
+
+    cnoremap <S-TAB> <Cmd>call pum#map#insert_relative(-1)<CR>
+    cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+    cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+
   " Use pum.vim
 
   " <TAB>: completion.
@@ -801,34 +853,6 @@ hook_add = '''
   inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
   inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
   inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-'''
-hook_source = '''
-  nnoremap : <Cmd>call CommandlinePre()<CR>:
-
-  function! CommandlinePre() abort
-    call dein#source('ddc.vim')
-
-    cnoremap <silent><expr> <TAB>
-      \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-      \ ddc#manual_complete()
-    cnoremap <S-TAB> <Cmd>call pum#map#insert_relative(-1)<CR>
-    cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-    cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-
-    " Overwrite sources
-    let s:prev_buffer_config = ddc#custom#get_buffer()
-    call ddc#custom#patch_buffer('sources', ['necovim', 'cmdline-history', 'around', 'buffer'])
-
-    autocmd CmdlineLeave * ++once call CommandlinePost()
-
-    " Enable command line completion
-    call ddc#enable_cmdline_completion()
-  endfunction
-  function! CommandlinePost() abort
-    " Restore sources
-    call ddc#custom#set_buffer(s:prev_buffer_config)
-    cunmap <Tab>
-  endfunction
 '''
 hook_post_source = '''
   call ddc#custom#patch_global({
@@ -889,6 +913,24 @@ hook_post_source = '''
     \   'CmdlineEnter', 'CmdlineChanged',
     \ ])
   call ddc#custom#patch_global('completionMenu', 'pum.vim')
+
+  inoremap <silent><expr> <TAB>
+    \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+    \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+    \ '<TAB>' : ddc#manual_complete()
+  inoremap <S-TAB> <Cmd>call pum#map#insert_relative(-1)<CR>
+  inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
+  inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
+  inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+  inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+
+  cnoremap <silent><expr> <TAB>
+    \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+    \ exists('b:ddc_cmdline_completion') ?
+    \ ddc#manual_complete() : nr2char(&wildcharm)
+  cnoremap <S-TAB> <Cmd>call pum#map#insert_relative(-1)<CR>
+  cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+  cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
 
   call ddc#enable()
 '''
@@ -1501,10 +1543,11 @@ EOF
 repo = 'iamcco/markdown-preview.nvim'
 on_ft = ['markdown', 'plantuml']
 build = 'cd app && yarn install'
-hook_source = '''
+hook_add = '''
     let g:mkdp_command_for_global = 1
     let g:mkdp_auto_close = 0
     let g:mkdp_markdown_css = g:vim_dir . '/markdown_preview-markdown.css'
+    let g:mkdp_theme = 'light'
 '''
 #}}}
 
