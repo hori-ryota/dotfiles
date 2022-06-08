@@ -1518,9 +1518,16 @@ hook_source = '''
       require'flutter-tools'.setup{
         lsp = {
           on_attach = on_attach;
-        }
+        };
       }
 EOF
+'''
+[plugins.ftplugin]
+dart = '''
+  nnoremap <buffer><silent> <space>t :<C-u>FlutterOutlineToggle<CR>
+'''
+flutterToolsOutline = '''
+  nnoremap <buffer><silent> <space>t :<C-u>FlutterOutlineToggle<CR>
 '''
 #}}}
 
@@ -1570,7 +1577,7 @@ hook_add = '''
               \ 'mode_map': { 'c': 'NORMAL' },
               \ 'active': {
               \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename', 'nearest_method' ] ],
-              \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+              \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ],
               \ },
               \ 'inactive': {
               \   'left': [ [ 'mode', 'paste' ], [ 'gitbranch', 'filename', 'nearest_method' ] ],

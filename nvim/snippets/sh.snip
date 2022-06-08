@@ -16,3 +16,11 @@ options head
 snippet reporoot
 abbr    "$(git rev-parse --show-toplevel)"
   $(git rev-parse --show-toplevel)
+
+snippet bash
+abbr    "bash header"
+  #!/usr/bin/env bash
+
+  set -eu
+
+  cd "$(dirname "${BASH_SOURCE:-\$0}")" || exit
