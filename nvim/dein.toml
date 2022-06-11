@@ -561,6 +561,13 @@ repo = 'editorconfig/editorconfig-vim'
 repo = 'neovim/nvim-lspconfig'
 hook_source = '''
   lua << EOF
+      vim.diagnostic.config({
+        virtual_text = {
+          source = true;
+          prefix = '';
+        };
+      });
+
       function bind_key_map()
         vim.cmd "nnoremap <buffer><silent> <Leader>a         :<C-u>lua vim.lsp.buf.code_action()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader><Leader>l :<C-u>lua vim.lsp.codelens.run()<CR>"
