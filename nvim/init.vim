@@ -36,6 +36,7 @@ let &spellfile = s:spellfile_dir . '/en.utf-8.add'
 "}}}
 "{{{ 6 multiple windows
 set laststatus=2
+set nohidden
 "}}}
 "{{{ 7 multiple tab pages
 "}}}
