@@ -664,8 +664,8 @@ hook_source = '''
                 enabled = true;
                 dmypy = true;
               };
-              pydocstyle = {enabled = true;};
 
+              pydocstyle = {enabled = false;};
               mccabe = {enabled = false;};
               pycodestyle = {enabled = false;};
               pyflakes = {enabled = false;};
