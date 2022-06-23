@@ -744,7 +744,11 @@ hook_source = '''
         require'null-ls'.builtins.diagnostics.buf,
 
         -- GitHub Action
-        require'null-ls'.builtins.diagnostics.actionlint,
+        require'null-ls'.builtins.diagnostics.actionlint.with({
+          runtime_condition = require'null-ls.helpers'.cache.by_bufnr(function(params)
+            return params.bufname:find(vim.pesc(".github/workflows")) ~= nil
+          end)
+        }),
       };
       on_attach = on_attach;
     };
@@ -1151,20 +1155,22 @@ hook_source = '''
         edit = "e",
         repl = "r",
       },
-      sidebar = {
-        elements = {
-          { id = "scopes", size = 0.3 },
-          { id = "watches", size = 0.2 },
-          { id = "stacks", size = 0.3 },
-          { id = "breakpoints", size = 0.2 },
+      layouts = {
+        {
+          elements = {
+            { id = "scopes", size = 0.3 },
+            { id = "watches", size = 0.2 },
+            { id = "stacks", size = 0.3 },
+            { id = "breakpoints", size = 0.2 },
+          },
+          size = 80,
+          position = "left", -- Can be "left", "right", "top", "bottom"
         },
-        size = 80,
-        position = "left", -- Can be "left", "right", "top", "bottom"
-      },
-      tray = {
-        elements = { "repl" },
-        size = 10,
-        position = "bottom", -- Can be "left", "right", "top", "bottom"
+        {
+          elements = { "repl" },
+          size = 10,
+          position = "bottom", -- Can be "left", "right", "top", "bottom"
+        },
       },
       floating = {
         max_height = nil, -- These can be integers or a float between 0 and 1.
