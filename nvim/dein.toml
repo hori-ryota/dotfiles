@@ -639,12 +639,23 @@ hook_source = '''
             ["local"] = os.getenv("GO_IMPORTS_LOCAL");
             directoryFilters = {
               "-.git",
+
+              -- for Node.JS
               "-node_modules",
+              -- for Python
               "-.mypy_cache",
               "-__pycache__",
               "-.pytest_cache",
               "-.venv",
               "-venv",
+
+              -- for Terraform
+              "-.terraform",
+
+              -- for MyProjects
+              "-data",
+              "-results",
+              "-results_plots",
             };
           };
         };
