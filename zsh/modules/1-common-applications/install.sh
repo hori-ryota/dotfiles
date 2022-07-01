@@ -1,7 +1,6 @@
 brew install 1password
 brew install alfred
 brew install appcleaner
-brew install flux
 brew install google-chrome
 brew install google-japanese-ime
 brew install iterm2
