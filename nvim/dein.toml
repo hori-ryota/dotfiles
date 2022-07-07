@@ -1399,7 +1399,7 @@ make = '''
 python = '''
     setlocal tabstop=4
     setlocal shiftwidth=4
-    nnoremap <buffer> gQ :<C-u>%!tidy-imports --black --quiet<CR>
+    nnoremap <buffer> gQ :<C-u>%!tidy-imports --black --quiet<CR>:<C-u>lua vim.lsp.buf.formatting()<CR>
 '''
 kotlin = '''
     setlocal tabstop=4
