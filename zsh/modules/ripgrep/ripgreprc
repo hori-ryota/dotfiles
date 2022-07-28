@@ -14,6 +14,7 @@
 --glob=!.mypy_cache/
 --glob=!.pytest_cache/
 --glob=!.next/
+--glob=!coverage/tmp/
 
 --follow
 --hidden
