@@ -6,13 +6,11 @@ mkdir -p "$GOPATH"
 asdf plugin-add golang
 asdf install golang $GO_VERSION
 asdf global golang $GO_VERSION
-asdf reshim golang
 
 echo 'Install github.com/golangci/golangci-lint'
 asdf plugin-add golangci-lint
 asdf install golangci-lint $GOLANGCI_LINT_VERSION
 asdf global golangci-lint $GOLANGCI_LINT_VERSION
-asdf reshim golangci-lint
 
 # install Debugger
 echo "Install github.com/go-delve/delve/cmd/dlv"

@@ -1,1 +1,1 @@
-export NODE_VERSION=16.15.1
+export NODE_VERSION=16.16.0

@@ -1,0 +1,1 @@
+export DENO_VERSION=1.24.3
