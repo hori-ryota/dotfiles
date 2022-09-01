@@ -2,7 +2,9 @@
 
 --glob=!.git/
 --glob=!.DS_Store
+--glob=!tsconfig.check.tsbuildinfo
 --glob=!node_modules/
+--glob=!.eslintcache
 --glob=!.docker-compose-data/
 --glob=!.cache/
 --glob=!build/
