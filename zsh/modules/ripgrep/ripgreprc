@@ -16,6 +16,8 @@
 --glob=!.mypy_cache/
 --glob=!.pytest_cache/
 --glob=!.next/
+--glob=!*.tsbuildinfo
+--glob=!storybook-static/
 --glob=!coverage/tmp/
 
 --follow
