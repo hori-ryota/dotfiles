@@ -1,4 +1,5 @@
 brew install 1password
+brew install 1password-cli
 brew install alfred
 brew install appcleaner
 brew install google-chrome
