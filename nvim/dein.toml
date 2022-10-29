@@ -582,7 +582,7 @@ hook_source = '''
         vim.cmd "nnoremap <buffer><silent> <Leader>dr        :<C-u>lua vim.lsp.buf.references()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>a         :<C-u>lua vim.lsp.buf.code_action()<CR>"
         vim.cmd "vnoremap <buffer><silent> <Leader>a         :<C-u>lua vim.lsp.buf.range_code_action()<CR>"
-        vim.cmd "nnoremap <buffer><silent> gq                :<C-u>lua vim.lsp.buf.formatting_sync()<CR>"
+        vim.cmd "nnoremap <buffer><silent> gq                :<C-u>lua vim.lsp.buf.format()<CR>"
         vim.cmd "vnoremap <buffer><silent> gq                :<C-u>lua vim.lsp.buf.range_formatting()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>h         :<C-u>lua vim.lsp.buf.document_highlight()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>H         :<C-u>lua vim.lsp.buf.clear_references()<CR>"
@@ -709,9 +709,9 @@ hook_source = '''
       };
 
       function on_attach_for_tsserver(client)
+        on_attach()
         client.server_capabilities.documentFormattingProvider = false;
         client.server_capabilities.documentRangeFormattingProvider = false;
-        on_attach()
       end
       lspconfig.tsserver.setup{
         on_attach = on_attach_for_tsserver;
@@ -724,9 +724,9 @@ hook_source = '''
       };
 
       function on_attach_for_jsonls(client)
+        on_attach()
         client.server_capabilities.documentFormattingProvider = false;
         client.server_capabilities.documentRangeFormattingProvider = false;
-        on_attach()
       end
       lspconfig.jsonls.setup{
         on_attach = on_attach_for_jsonls;
@@ -1442,7 +1442,7 @@ make = '''
 python = '''
     setlocal tabstop=4
     setlocal shiftwidth=4
-    nnoremap <buffer> gQ :<C-u>%!tidy-imports --black --quiet<CR>:<C-u>lua vim.lsp.buf.formatting_sync()<CR>
+    nnoremap <buffer> gQ :<C-u>%!tidy-imports --black --quiet<CR>:<C-u>lua vim.lsp.buf.format()<CR>
 '''
 kotlin = '''
     setlocal tabstop=4
@@ -1466,7 +1466,7 @@ go = '''
     setlocal shiftwidth=2
     augroup GoAutocmd
       autocmd!
-      autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
+      autocmd BufWritePre *.go lua vim.lsp.buf.format()
     augroup END
 
     " https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim-imports
