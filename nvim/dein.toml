@@ -757,6 +757,9 @@ repo = 'jose-elias-alvarez/null-ls.nvim'
 hook_source = '''
   lua << EOF
     require'null-ls'.setup{
+      diagnostics_format = '[#{c}] #{m} (#{s})';
+      update_in_insert = false;
+
       sources = {
         -- make
         require'null-ls'.builtins.diagnostics.checkmake,
