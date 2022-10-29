@@ -839,7 +839,7 @@ hook_add = '''
     endif
     if a:mode ==# ':'
       call ddc#custom#patch_buffer('cmdlineSources',
-        \ ['cmdline-history', 'cmdline', 'around'])
+        \ ['cmdline-history', 'necovim', 'cmdline', 'around', 'zsh'])
       call ddc#custom#patch_buffer('keywordPattern', '[0-9a-zA-Z_:#]*')
     else
       call ddc#custom#patch_buffer('cmdlineSources',
@@ -889,6 +889,8 @@ hook_add = '''
   inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
 '''
 hook_post_source = '''
+  call ddc#custom#patch_global('ui', 'pum')
+
   call ddc#custom#patch_global({
     \   'smartCase': v:true,
     \ })
@@ -922,9 +924,17 @@ hook_post_source = '''
     \   'necovim': {
     \     'mark': 'vim',
     \   },
+    \   'cmdline': {
+    \     'mark': 'cmdline',
+    \     'forceCompletionPattern': '.',
+    \   },
     \   'cmdline-history': {
     \     'mark': 'history',
     \     'sorters': [],
+    \     'forceCompletionPattern': '.',
+    \   },
+    \   'zsh': {
+    \     'mark': 'zsh',
     \     'forceCompletionPattern': '.',
     \   },
     \   'neosnippet': {
@@ -946,7 +956,6 @@ hook_post_source = '''
     \   'InsertEnter', 'TextChangedI', 'TextChangedP',
     \   'CmdlineEnter', 'CmdlineChanged',
     \ ])
-  call ddc#custom#patch_global('completionMenu', 'pum.vim')
 
   inoremap <silent><expr> <TAB>
     \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
@@ -969,15 +978,18 @@ hook_post_source = '''
   call ddc#enable()
 '''
 
+[[plugins]]
+repo = 'Shougo/ddc-ui-pum'
+
 #{{{ sources
 [[plugins]]
-repo = 'Shougo/ddc-around'
+repo = 'Shougo/ddc-source-around'
 
 [[plugins]]
 repo = 'matsui54/ddc-buffer'
 
 [[plugins]]
-repo = 'Shougo/ddc-nvim-lsp'
+repo = 'Shougo/ddc-source-nvim-lsp'
 
 [[plugins]]
 repo = 'LumaKernel/ddc-file'
@@ -986,7 +998,13 @@ repo = 'LumaKernel/ddc-file'
 repo = 'Shougo/neco-vim'
 
 [[plugins]]
-repo = 'Shougo/ddc-cmdline-history'
+repo = 'Shougo/ddc-source-cmdline'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-cmdline-history'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-zsh'
 #}}}
 
 #{{{ filters
