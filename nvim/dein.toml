@@ -208,9 +208,9 @@ denite-filter = '''
 #{{{ matchers
 [[plugins]]
 repo = 'liuchengxu/vim-clap'
-rev = 'v0.31'
+rev = 'v0.37'
 hook_done_update = '''
-  Clap install-binary
+  call clap#installer#force_download()
 '''
 lazy = 1
 #}}}
