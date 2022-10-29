@@ -582,7 +582,7 @@ hook_source = '''
         vim.cmd "nnoremap <buffer><silent> <Leader>dr        :<C-u>lua vim.lsp.buf.references()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>a         :<C-u>lua vim.lsp.buf.code_action()<CR>"
         vim.cmd "vnoremap <buffer><silent> <Leader>a         :<C-u>lua vim.lsp.buf.range_code_action()<CR>"
-        vim.cmd "nnoremap <buffer><silent> gq                :<C-u>lua vim.lsp.buf.formatting()<CR>"
+        vim.cmd "nnoremap <buffer><silent> gq                :<C-u>lua vim.lsp.buf.formatting_sync()<CR>"
         vim.cmd "vnoremap <buffer><silent> gq                :<C-u>lua vim.lsp.buf.range_formatting()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>h         :<C-u>lua vim.lsp.buf.document_highlight()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>H         :<C-u>lua vim.lsp.buf.clear_references()<CR>"
@@ -709,7 +709,9 @@ hook_source = '''
       };
 
       function on_attach_for_tsserver(client)
-        client.resolved_capabilities.document_formatting = false;
+        client.server_capabilities.documentFormattingProvider = false;
+        client.server_capabilities.documentRangeFormattingProvider = false;
+        on_attach()
       end
       lspconfig.tsserver.setup{
         on_attach = on_attach_for_tsserver;
@@ -722,7 +724,9 @@ hook_source = '''
       };
 
       function on_attach_for_jsonls(client)
-        client.resolved_capabilities.document_formatting = false;
+        client.server_capabilities.documentFormattingProvider = false;
+        client.server_capabilities.documentRangeFormattingProvider = false;
+        on_attach()
       end
       lspconfig.jsonls.setup{
         on_attach = on_attach_for_jsonls;
