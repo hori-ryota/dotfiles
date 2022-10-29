@@ -151,7 +151,7 @@ augroup END
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 let g:dein_dir = s:cache_home . '/dein'
 
-let g:dein#install_progress_type = 'title'
+let g:dein#install_progress_type = 'floating'
 let g:dein#auto_recache = 1
 let g:dein#install_log_filename = g:dein_dir . '/dein.log'
 
