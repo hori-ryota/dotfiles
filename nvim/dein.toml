@@ -730,6 +730,12 @@ hook_source = '''
       end
       lspconfig.jsonls.setup{
         on_attach = on_attach_for_jsonls;
+        settings = {
+          json = {
+            schemas = require('schemastore').json.schemas();
+            validate = { enable = true };
+          };
+        };
       };
       lspconfig.yamlls.setup{
         on_attach = on_attach;
@@ -809,6 +815,10 @@ hook_source = '''
     };
 EOF
 '''
+
+# for jsonls
+[[plugins]]
+repo = 'b0o/SchemaStore.nvim'
 #}}}
 
 #}}}
