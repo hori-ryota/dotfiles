@@ -401,7 +401,7 @@ vista_kind = '''
 [[plugins]]
 repo = 'lambdalisue/gina.vim'
 hook_post_source = '''
-	call gina#custom#execute(
+  call gina#custom#execute(
       \ '/\%(status\|branch\|ls\|grep\|changes\|tag\)',
       \ 'setlocal winfixheight',
       \)
@@ -905,7 +905,6 @@ hook_post_source = '''
     \   'smartCase': v:true,
     \ })
   call ddc#custom#patch_global('sources', [
-    \   'neosnippet',
     \   'nvim-lsp',
     \   'around',
     \   'buffer',
@@ -946,10 +945,6 @@ hook_post_source = '''
     \   'zsh': {
     \     'mark': 'zsh',
     \     'forceCompletionPattern': '.',
-    \   },
-    \   'neosnippet': {
-    \     'mark': 'neosnippet',
-    \     'forceCompletionPattern': '\w',
     \   },
     \ })
   call ddc#custom#patch_global('sourceParams', {
@@ -1309,7 +1304,7 @@ repo = 'thinca/vim-qfreplace'
 repo = 'direnv/direnv.vim'
 
 #{{{ increment Date
-[[plugins]] 
+[[plugins]]
 repo = 'tpope/vim-speeddating'
 hook_add = '''
     let g:speeddating_no_mappings = 1
