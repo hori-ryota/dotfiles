@@ -101,29 +101,6 @@ hook_post_source = '''
     \       'defaultAction': 'append',
     \     },
     \   },
-    \   'sources': [
-    \     {
-    \       'name': 'file_rec',
-    \       'params': {
-    \         'ignoredDirectories': [
-    \           '.git',
-    \           '.node_modules',
-    \           '.docker-compose-data',
-    \           '.cache',
-    \           'build',
-    \           'vendor',
-    \           'Pods',
-    \           '.fvm',
-    \           '.symlinks',
-    \           '.mypy_cache',
-    \           '.pytest_cache',
-    \           '.next',
-    \           'storybook-static',
-    \           'coverage',
-    \         ],
-    \       },
-    \     },
-    \   ],
     \   'sourceOptions': {
     \     '_': {
     \       'ignoreCase': v:true,
@@ -131,6 +108,9 @@ hook_post_source = '''
     \     },
     \     'file': {
     \       'sorters': ['sorter_alpha'],
+    \     },
+    \     'file_rec': {
+    \       'matchers': ['matcher_substring', 'matcher_relative'],
     \     },
     \     'file_old': {
     \       'matchers': ['matcher_substring', 'matcher_relative'],
@@ -145,8 +125,7 @@ hook_post_source = '''
     \   'sourceParams': {
     \     'file_rec': {
     \       'ignoredDirectories': [
-    \         '.git',
-    \         '.node_modules',
+    \         'node_modules',
     \         '.docker-compose-data',
     \         '.cache',
     \         'build',
@@ -161,11 +140,14 @@ hook_post_source = '''
     \         'coverage',
     \       ],
     \     },
-    \     'rg': {
-    \       'args': ['--json'],
+    \     'dein': {
+    \       'defaultAction': 'cd',
     \     },
     \     'markdown': {
     \       'style': 'indent',
+    \     },
+    \     'rg': {
+    \       'args': ['--json'],
     \     },
     \   },
     \ })
@@ -263,7 +245,8 @@ ddu-ff = '''
 '''
 ddu-ff-filter = '''
   nnoremap <silent><buffer><nowait> <CR> <Cmd>call ddu#ui#ff#close()<CR>
-  inoremap <silent><buffer><nowait> <CR> <Esc><Cmd>call ddu#ui#ff#close()<CR>
+  inoremap <silent><buffer><nowait> <CR> <ESC><Cmd>call ddu#ui#ff#close()<CR>
+  nnoremap <silent><buffer><nowait> <ESC> <Cmd>call ddu#ui#ff#close()<CR>
 '''
 #}}}
 
@@ -287,7 +270,7 @@ hook_add = '''
       \     'name': 'file',
       \     'options': {
       \       'path': s:opts.path,
-      \       'columns': ['filename'],
+      \       'columns': ['icon_filename'],
       \     },
       \   }],
       \   'uiParams': {
@@ -383,6 +366,25 @@ ddu-filer = '''
 
 [[plugins]]
 repo = 'Shougo/ddu-column-filename'
+
+[[plugins]]
+repo = 'ryota2357/ddu-column-icon_filename'
+depends = [
+  'ddu.vim',
+]
+hook_post_source = '''
+  call ddu#custom#patch_global({
+    \   'columnParams': {
+    \     'icon_filename': {
+    \       'span': 2,
+    \       'defaultIcon': {
+    \         'icon': ' ',
+    \         'color': 'NormalFloat',
+    \       },
+    \     },
+    \   },
+    \ })
+'''
 #}}}
 
 #{{{ kind
@@ -564,6 +566,8 @@ hook_add = '''
   " let g:gina#command#status#use_default_mappings = 0
   nnoremap <space>vs :<C-u>Gina status<CR>
   nnoremap <space>vb :<C-u>Gina branch --all<CR>
+  nnoremap <space>vo :<C-u>Gina browse :<CR>
+  vnoremap <space>vo :<C-u>'<,'>Gina browse :<CR>
 
   "{{{ unuse default mappings
   " let g:gina#command#blame#use_default_mappings = 0
