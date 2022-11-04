@@ -32,8 +32,8 @@ npm install -g vim-language-server
 
 ## Makefile
 ### Linter
-echo 'Install github.com/mrtazz/checkmake'
-go install github.com/mrtazz/checkmake@latest
+echo 'Install github.com/mrtazz/checkmake/cmd/checkmake'
+go install github.com/mrtazz/checkmake/cmd/checkmake@latest
 
 ## Yaml
 ### LSP
