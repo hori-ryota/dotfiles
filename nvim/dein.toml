@@ -205,7 +205,7 @@ ddu-ff = '''
   nnoremap <silent><buffer><nowait> <CR>
               \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
   nnoremap <silent><buffer><nowait> a
-              \ <Cmd>call ddu#ui#ff#do_action('newFile')<CR>
+              \ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'newFile'})<CR>
   nnoremap <silent><buffer><nowait> d
               \ <Cmd>call ddu#ui#ff#multi_actions([['itemAction', {'name': 'delete'}],['clearSelectAllItems']])<CR>
   nnoremap <silent><buffer><nowait> m
@@ -324,7 +324,7 @@ ddu-filer = '''
   nnoremap <silent><buffer><nowait> <CR>
               \ <Cmd>call ddu#ui#filer#do_action('itemAction')<CR>
   nnoremap <silent><buffer><nowait> a
-              \ <Cmd>call ddu#ui#filer#do_action('newFile')<CR>
+              \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'newFile'})<CR>
   nnoremap <silent><buffer><nowait> d
               \ <Cmd>call ddu#ui#filer#multi_actions([['itemAction', {'name': 'delete'}],['clearSelectAllItems']])<CR>
   nnoremap <silent><buffer><nowait> m
