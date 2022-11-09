@@ -381,6 +381,26 @@ hook_post_source = '''
     \         'icon': ' ',
     \         'color': 'NormalFloat',
     \       },
+    \       'colors': {
+    \         'default': 'NormalFloat',
+    \       },
+    \       'customSpecialIcons': {
+    \         '.gitmodules': {'icon': '', 'color': 'NormalFloat'},
+    \         '.envrc': {'icon': '', 'color': 'NormalFloat'},
+    \         '.editorconfig': {'icon': '', 'color': 'NormalFloat'},
+    \         '.eslintignore': {'icon': '', 'color': 'NormalFloat'},
+    \         '.prettierignore': {'icon': '', 'color': 'NormalFloat'},
+    \         '.prettierrc': {'icon': '', 'color': 'NormalFloat'},
+    \         '.tool-versions': {'icon': '', 'color': 'NormalFloat'},
+    \         'node_modules/': {'icon': '', 'color': 'NormalFloat'},
+    \         '.init.vim.local': {'icon': '', 'color': 'NormalFloat'},
+    \       },
+    \       'customFileIcons': {
+    \         'tf': {'icon': '', 'color': 'NormalFloat'},
+    \         'hcl': {'icon': '', 'color': 'NormalFloat'},
+    \         'tfstate': {'icon': '', 'color': 'NormalFloat'},
+    \         'json5': {'icon': '', 'color': 'NormalFloat'},
+    \       },
     \     },
     \   },
     \ })
