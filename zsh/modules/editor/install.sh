@@ -93,6 +93,10 @@ npm install -g fixjson
 echo 'Install github.com/Clever/csvlint/cmd/csvlint'
 go install github.com/Clever/csvlint/cmd/csvlint@latest
 
+## GraphQL
+### LSP
+npm install -g graphql-language-service-cli
+
 ## Go
 ### LSP
 echo 'Install golang.org/x/tools/gopls'

@@ -820,6 +820,16 @@ hook_source = '''
       lspconfig.cssls.setup{
         on_attach = on_attach;
       };
+      lspconfig.graphql.setup{
+        on_attach = on_attach;
+        filetypes = {
+          'graphql',
+          'typescript',
+          'typescriptreact',
+          'javascript',
+          'javascriptreact',
+        };
+      };
 
       function on_attach_for_jsonls(client)
         on_attach()
