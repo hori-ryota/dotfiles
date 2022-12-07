@@ -125,6 +125,8 @@ hook_post_source = '''
     \   'sourceParams': {
     \     'file_rec': {
     \       'ignoredDirectories': [
+    \         '.git',
+    \         '.terraform',
     \         'node_modules',
     \         '.docker-compose-data',
     \         '.cache',
@@ -254,12 +256,15 @@ ddu-ff-filter = '''
 [[plugins]]
 repo = 'Shougo/ddu-ui-filer'
 hook_add = '''
-  function! OpenDduFiler(opts)
+  function! OpenDduFiler(opts, params)
     let s:default_opts = {
       \   'path': getcwd(),
       \   'resume': v:false,
       \ }
     let s:opts = extend(s:default_opts, a:opts)
+    let s:default_params = {
+      \ }
+    let s:params = extend(s:default_params, a:params)
     let s:name = 'filer-'.trim(substitute(get(s:opts, 'id', s:opts.path), '/', '-', 'g'), '-')
     call ddu#start({
       \   'name': s:name,
@@ -274,9 +279,7 @@ hook_add = '''
       \     },
       \   }],
       \   'uiParams': {
-      \     'filer': {
-      \       'search': expand('%:p'),
-      \     },
+      \     'filer': s:params,
       \   },
       \ })
   endfunction
@@ -284,15 +287,24 @@ hook_add = '''
   nnoremap <silent> <space>e <Cmd>call OpenDduFiler({
       \   'path': getcwd(),
       \   'resume': v:true,
+      \ }, {
+      \ })<CR>
+  nnoremap <silent> <space>ge <Cmd>call OpenDduFiler({
+      \   'path': getcwd(),
+      \   'resume': v:true,
+      \ }, {
+      \   'search': expand('%:p'),
       \ })<CR>
   nnoremap <silent> <space>E <Cmd>call OpenDduFiler({
       \   'id': expand('%:h:p'),
       \   'path': getcwd(),
       \   'resume': v:true,
+      \ }, {
       \ })<CR>
   nnoremap <silent> <space>gE <Cmd>call OpenDduFiler({
       \   'path': expand('%:h:p'),
       \   'resume': v:true,
+      \ }, {
       \ })<CR>
 '''
 [plugins.ftplugin]
@@ -313,7 +325,7 @@ ddu-filer = '''
               \ <Cmd>call ddu#ui#filer#do_action('toggleAllItems')<CR>
 
   " operation
-  nnoremap <silent><buffer><nowait> <C-l>
+  nnoremap <buffer><nowait> <C-l>
               \ <Cmd>call ddu#ui#filer#do_action('checkItems')<CR>
 
   """ common """
@@ -394,6 +406,11 @@ hook_post_source = '''
     \         '.tool-versions': {'icon': '', 'color': 'NormalFloat'},
     \         'node_modules/': {'icon': '', 'color': 'NormalFloat'},
     \         '.init.vim.local': {'icon': '', 'color': 'NormalFloat'},
+    \         '.dockerignore': {'icon': '', 'color': 'NormalFloat'},
+    \         'go.mod': {'icon': '', 'color': 'NormalFloat'},
+    \         'go.sum': {'icon': '', 'color': 'NormalFloat'},
+    \         'golangci.toml': {'icon': '', 'color': 'NormalFloat'},
+    \         'terraform.tfstate.backup': {'icon': '', 'color': 'NormalFloat'},
     \       },
     \       'customFileIcons': {
     \         'tf': {'icon': '', 'color': 'NormalFloat'},

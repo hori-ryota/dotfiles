@@ -8,7 +8,7 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
 
 sed -i '' -E "s/(DENO_VERSION=).*/\1$(asdf latest deno)/" ./zsh/modules/deno/export.zsh
 
-sed -i '' -E "s/(GO_VERSION=).*/\1$(asdf latest golang 1.18)/" ./zsh/modules/go/export.zsh
+sed -i '' -E "s/(GO_VERSION=).*/\1$(asdf latest golang 1.19)/" ./zsh/modules/go/export.zsh
 sed -i '' -E "s/(GOLANGCI_LINT_VERSION=).*/\1$(asdf latest golangci-lint)/" ./zsh/modules/go/export.zsh
 
 sed -i '' -E "s/(NODE_VERSION=).*/\1$(asdf latest nodejs 16)/" ./zsh/modules/nodejs/export.zsh
