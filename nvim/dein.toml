@@ -741,7 +741,11 @@ hook_source = '''
               "-**/.git",
 
               -- for Node.JS
+              "-**/.next",
+              "-**/.swc",
               "-**/node_modules",
+              "-**/storybook-static",
+
               -- for Python
               "-**/.mypy_cache",
               "-**/__pycache__",
@@ -757,6 +761,7 @@ hook_source = '''
               "-**/results",
               "-**/results_plots",
             };
+
             templateExtensions = {
               ".go.tmpl",
               ".go.tpl",
@@ -808,6 +813,8 @@ hook_source = '''
                 enabled = true;
                 dmypy = true;
               };
+
+              rope_autoimport = {enabled = true;};
 
               pydocstyle = {enabled = false;};
               mccabe = {enabled = false;};

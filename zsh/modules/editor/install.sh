@@ -52,6 +52,7 @@ if ! (type "mypy" > /dev/null 2>&1); then
 fi
 pip3 install --upgrade pylsp-mypy
 pip3 install --upgrade pyls-isort
+pip3 install --upgrade pylsp-rope
 
 ### for Jupyter notebook
 pip3 install --upgrade jupytext
