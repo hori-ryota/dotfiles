@@ -56,9 +56,6 @@ hook_post_source = '''
   call ddu#custom#patch_global({
     \   'ui': 'ff',
     \   'uiOptions': {
-    \     'filer': {
-    \       'toggle': v:true,
-    \     },
     \   },
     \   'uiParams': {
     \     '_': {
@@ -79,10 +76,8 @@ hook_post_source = '''
     \     },
     \     'filer': {
     \       'split': 'floating',
-    \       'filterSplitDirection': 'floating',
     \       'sort': 'filename',
     \       'sortTreesFirst': v:true,
-    \       'toggle': v:true,
     \     },
     \   },
     \   'filterParams': {
@@ -105,6 +100,7 @@ hook_post_source = '''
     \     '_': {
     \       'ignoreCase': v:true,
     \       'matchers': ['matcher_substring'],
+    \       'maxItems': 1000000,
     \     },
     \     'file': {
     \       'sorters': ['sorter_alpha'],
@@ -238,6 +234,12 @@ ddu-ff = '''
               \ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'quickfix'})<CR>
   nnoremap <silent><buffer><nowait> L
               \ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'loclist'})<CR>
+  nnoremap <silent><buffer><nowait> gh
+              \ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<CR>
+  nnoremap <silent><buffer><nowait> g<CR>
+              \ ddu#ui#filer#is_tree() ?
+              \   "<Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'narrow'})<CR>" :
+              \   "<Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open'})<CR>"
   nnoremap <silent><buffer><nowait> <ESC>
               \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
 
@@ -280,6 +282,10 @@ hook_add = '''
       \   }],
       \   'uiParams': {
       \     'filer': s:params,
+      \   },
+      \   'uiOptions': {
+      \     'filer': {
+      \     },
       \   },
       \ })
   endfunction
@@ -367,12 +373,14 @@ ddu-filer = '''
               \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'quickfix'})<CR>
   nnoremap <silent><buffer><nowait> L
               \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'loclist'})<CR>
+  nnoremap <silent><buffer><nowait> gh
+              \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<CR>
+  nnoremap <silent><buffer><nowait><expr> g<CR>
+              \ ddu#ui#filer#is_tree() ?
+              \   "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>" :
+              \   "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
   nnoremap <silent><buffer><nowait> <ESC>
               \ <Cmd>call ddu#ui#filer#do_action('quit')<CR>
-
-  " operation
-  nnoremap <silent><buffer><nowait> H
-              \ <Cmd>call ddu#ui#filer#close()<CR>
 '''
 #}}}
 
@@ -684,10 +692,18 @@ hook_source = '''
         };
       });
 
+      -- [\[gopls\] delay diagnostics or not run them in insert mode · Issue \#127 · neovim/nvim\-lspconfig](https://github.com/neovim/nvim-lspconfig/issues/127)
+      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+        -- delay update diagnostics
+        update_in_insert = false,
+      });
+
       function bind_key_map()
         vim.cmd "nnoremap <buffer><silent> <Leader>a         :<C-u>lua vim.lsp.buf.code_action()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader><Leader>l :<C-u>lua vim.lsp.codelens.run()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader><Leader>L :<C-u>lua vim.diagnostic.open_float({focusable = false})<CR>"
+        vim.cmd "nnoremap <buffer><silent> [d                :<C-u>lua vim.diagnostic.goto_prev()<CR>"
+        vim.cmd "nnoremap <buffer><silent> ]d                :<C-u>lua vim.diagnostic.goto_next()<CR>"
         vim.cmd "nnoremap <buffer><silent> K                 :<C-u>lua vim.lsp.buf.hover()<CR>"
         vim.cmd "nnoremap <buffer><silent> <Leader>h         :<C-u>lua vim.lsp.buf.signature_help()<CR>"
         vim.cmd "nnoremap <buffer><silent> <C-]>             :<C-u>lua vim.lsp.buf.definition()<CR>"
@@ -752,14 +768,17 @@ hook_source = '''
               "-**/.pytest_cache",
               "-**/.venv",
               "-**/venv",
+              "-**/.neptune",
 
               -- for Terraform
               "-**/.terraform",
 
               -- for MyProjects
+              "-**/.cache",
               "-**/data",
               "-**/results",
               "-**/results_plots",
+              "-**/output",
             };
 
             templateExtensions = {
