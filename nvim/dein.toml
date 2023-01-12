@@ -56,6 +56,9 @@ hook_post_source = '''
   call ddu#custom#patch_global({
     \   'ui': 'ff',
     \   'uiOptions': {
+    \     'filer': {
+    \       'toggle': v:true,
+    \     },
     \   },
     \   'uiParams': {
     \     '_': {
@@ -183,19 +186,17 @@ repo = 'Shougo/ddu-ui-ff'
 [plugins.ftplugin]
 ddu-ff = '''
   """ only ff """
-
-  " select
-  nnoremap <silent><buffer><nowait> x
-              \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>j
-  nnoremap <silent><buffer><nowait> X
-              \ <Cmd>call ddu#ui#ff#do_action('toggleAllItems')<CR>
-
   nnoremap <silent><buffer><nowait> <C-l>
               \ <Cmd>call ddu#ui#ff#do_action('refreshItems')<CR>
   nnoremap <silent><buffer><nowait> A
               \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
 
   """ common """
+  " select
+  nnoremap <silent><buffer><nowait> x
+              \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>j
+  nnoremap <silent><buffer><nowait> X
+              \ <Cmd>call ddu#ui#ff#do_action('toggleAllItems')<CR>
 
   " action
   nnoremap <silent><buffer><nowait> <Tab>
@@ -234,9 +235,9 @@ ddu-ff = '''
               \ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'quickfix'})<CR>
   nnoremap <silent><buffer><nowait> L
               \ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'loclist'})<CR>
-  nnoremap <silent><buffer><nowait> gh
+  nnoremap <silent><buffer><nowait> <space>h
               \ <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<CR>
-  nnoremap <silent><buffer><nowait> g<CR>
+  nnoremap <silent><buffer><nowait> <space><CR>
               \ ddu#ui#filer#is_tree() ?
               \   "<Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'narrow'})<CR>" :
               \   "<Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open'})<CR>"
@@ -258,21 +259,19 @@ ddu-ff-filter = '''
 [[plugins]]
 repo = 'Shougo/ddu-ui-filer'
 hook_add = '''
-  function! OpenDduFiler(opts, params)
+  function! OpenDduFiler(opts)
     let s:default_opts = {
       \   'path': getcwd(),
       \   'resume': v:false,
       \ }
     let s:opts = extend(s:default_opts, a:opts)
-    let s:default_params = {
-      \ }
-    let s:params = extend(s:default_params, a:params)
     let s:name = 'filer-'.trim(substitute(get(s:opts, 'id', s:opts.path), '/', '-', 'g'), '-')
     call ddu#start({
       \   'name': s:name,
       \   'ui': 'filer',
       \   'sync': v:true,
       \   'resume': s:opts.resume,
+      \   'searchPath': s:opts.searchPath,
       \   'sources': [{
       \     'name': 'file',
       \     'options': {
@@ -280,9 +279,6 @@ hook_add = '''
       \       'columns': ['icon_filename'],
       \     },
       \   }],
-      \   'uiParams': {
-      \     'filer': s:params,
-      \   },
       \   'uiOptions': {
       \     'filer': {
       \     },
@@ -293,24 +289,17 @@ hook_add = '''
   nnoremap <silent> <space>e <Cmd>call OpenDduFiler({
       \   'path': getcwd(),
       \   'resume': v:true,
-      \ }, {
-      \ })<CR>
-  nnoremap <silent> <space>ge <Cmd>call OpenDduFiler({
-      \   'path': getcwd(),
-      \   'resume': v:true,
-      \ }, {
-      \   'search': expand('%:p'),
+      \   'searchPath': expand('%:p'),
       \ })<CR>
   nnoremap <silent> <space>E <Cmd>call OpenDduFiler({
       \   'id': expand('%:h:p'),
       \   'path': getcwd(),
       \   'resume': v:true,
-      \ }, {
+      \   'searchPath': expand('%:p'),
       \ })<CR>
   nnoremap <silent> <space>gE <Cmd>call OpenDduFiler({
       \   'path': expand('%:h:p'),
       \   'resume': v:true,
-      \ }, {
       \ })<CR>
 '''
 [plugins.ftplugin]
@@ -324,17 +313,16 @@ ddu-filer = '''
   nnoremap <silent><buffer><nowait><expr> O
               \ "<Cmd>call ddu#ui#filer#do_action('expandItem', {'mode': 'toggle', 'maxLevel': -1})<CR>"
 
-  " select
-  nnoremap <silent><buffer><nowait> x
-              \ <Cmd>call ddu#ui#filer#do_action('toggleSelectItem')<CR>j
-  nnoremap <silent><buffer><nowait> X
-              \ <Cmd>call ddu#ui#filer#do_action('toggleAllItems')<CR>
-
   " operation
   nnoremap <buffer><nowait> <C-l>
               \ <Cmd>call ddu#ui#filer#do_action('checkItems')<CR>
 
   """ common """
+  " select
+  nnoremap <silent><buffer><nowait> x
+              \ <Cmd>call ddu#ui#filer#do_action('toggleSelectItem')<CR>j
+  nnoremap <silent><buffer><nowait> X
+              \ <Cmd>call ddu#ui#filer#do_action('toggleAllItems')<CR>
 
   " action
   nnoremap <silent><buffer><nowait> <Tab>
@@ -373,9 +361,9 @@ ddu-filer = '''
               \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'quickfix'})<CR>
   nnoremap <silent><buffer><nowait> L
               \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'loclist'})<CR>
-  nnoremap <silent><buffer><nowait> gh
+  nnoremap <silent><buffer><nowait> <space>h
               \ <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow', 'params': {'path': '..'}})<CR>
-  nnoremap <silent><buffer><nowait><expr> g<CR>
+  nnoremap <silent><buffer><nowait><expr> <space><CR>
               \ ddu#ui#filer#is_tree() ?
               \   "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>" :
               \   "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
@@ -857,6 +845,11 @@ hook_source = '''
       lspconfig.tsserver.setup{
         on_attach = on_attach_for_tsserver;
       };
+      lspconfig.denols.setup{
+        on_attach = on_attach;
+        root_dir = lspconfig.util.root_pattern("deno.json", "denops"),
+      };
+
       lspconfig.html.setup{
         on_attach = on_attach;
       };
@@ -1701,14 +1694,14 @@ repo = 'mattn/vim-gomod'
 #}}}
 
 #{{{ Python
-[[plugins]]
-repo = 'heavenshell/vim-pydocstring'
-on_ft = 'python'
-build = 'make install'
-hook_add = '''
-  let g:pydocstring_enable_mapping = 0
-  let g:pydocstring_formatter = 'google'
-'''
+# [[plugins]]
+# repo = 'heavenshell/vim-pydocstring'
+# on_ft = 'python'
+# build = 'make install'
+# hook_add = '''
+#   let g:pydocstring_enable_mapping = 0
+#   let g:pydocstring_formatter = 'google'
+# '''
 # [[plugins]]
 # repo = 'goerz/jupytext.vim'
 #}}}
@@ -1880,5 +1873,15 @@ hook_add = '''
 '''
 hook_post_source = '''
     colorscheme iceberg
+'''
+#}}}
+
+#{{{ UI Extensions
+[[plugins]]
+repo = 'petertriho/nvim-scrollbar'
+hook_post_source = '''
+  lua << EOF
+    require("scrollbar").setup()
+EOF
 '''
 #}}}
