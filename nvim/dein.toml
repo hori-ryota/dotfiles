@@ -124,21 +124,30 @@ hook_post_source = '''
     \   'sourceParams': {
     \     'file_rec': {
     \       'ignoredDirectories': [
-    \         '.git',
-    \         '.terraform',
-    \         'node_modules',
-    \         '.docker-compose-data',
     \         '.cache',
-    \         'build',
-    \         'vendor',
-    \         'Pods',
+    \         '.dart_tool',
+    \         '.docker-compose-data',
     \         '.fvm',
-    \         '.symlinks',
+    \         '.git',
     \         '.mypy_cache',
-    \         '.pytest_cache',
+    \         '.neptune',
     \         '.next',
-    \         'storybook-static',
+    \         '.pytest_cache',
+    \         '.swc',
+    \         '.symlinks',
+    \         '.terraform',
+    \         '.venv',
+    \         'Pods',
+    \         '__pycache__',
     \         'coverage',
+    \         'data',
+    \         'node_modules',
+    \         'output',
+    \         'results',
+    \         'results_plots',
+    \         'storybook-static',
+    \         'vendor',
+    \         'venv',
     \       ],
     \     },
     \     'dein': {
@@ -742,7 +751,10 @@ hook_source = '''
           gopls = {
             ---- Build ----
             directoryFilters = {
+              -- common
               "-**/.git",
+              "-**/vendor",
+              "-**/.symlinks",
 
               -- for Node.JS
               "-**/.next",
@@ -761,12 +773,21 @@ hook_source = '''
               -- for Terraform
               "-**/.terraform",
 
+              -- for Dart and Flutter
+              "-**/.dart_tool",
+
+              -- for iOS
+              "-**/Pods",
+              "-**/.fvm",
+
               -- for MyProjects
               "-**/.cache",
               "-**/data",
               "-**/results",
               "-**/results_plots",
               "-**/output",
+              "-**/.docker-compose-data",
+              "-**/coverage",
             };
 
             templateExtensions = {

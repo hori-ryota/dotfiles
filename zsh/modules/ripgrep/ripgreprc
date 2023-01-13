@@ -1,24 +1,48 @@
 --no-ignore
 
+# common
 --glob=!.git/
 --glob=!.DS_Store
---glob=!tsconfig.check.tsbuildinfo
---glob=!node_modules/
---glob=!.eslintcache
---glob=!.docker-compose-data/
---glob=!.cache/
---glob=!build/
---glob=!.dart_tool/
 --glob=!vendor/
+--glob=!.symlinks/
+
+# for Node.JS
+--glob=!.next/
+--glob=!.swc/
+--glob=!node_modules/
+--glob=!storybook-static/
+
+--glob=!tsconfig.check.tsbuildinfo
+--glob=!.eslintcache
+--glob=!*.tsbuildinfo
+
+# for Python
+--glob=!.mypy_cache/
+--glob=!__pycache__/
+--glob=!.pytest_cache/
+--glob=!.venv/
+--glob=!venv/
+--glob=!.neptune/
+
+# for Terraform
+--glob=!.terraform/
+
+# for Dart and Flutter
+--glob=!.dart_tool/
+
+# for iOS
 --glob=!Pods/
 --glob=!.fvm/
---glob=!.symlinks/
---glob=!.mypy_cache/
---glob=!.pytest_cache/
---glob=!.next/
---glob=!*.tsbuildinfo
---glob=!storybook-static/
+
+# for MyProjects
+--glob=!.cache/
+--glob=!data/
+--glob=!results/
+--glob=!results_plots/
+--glob=!output/
+--glob=!.docker-compose-data/
 --glob=!coverage/tmp/
+
 
 --follow
 --hidden
