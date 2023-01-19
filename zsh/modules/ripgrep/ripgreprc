@@ -42,6 +42,7 @@
 --glob=!output/
 --glob=!.docker-compose-data/
 --glob=!coverage/tmp/
+--glob=!build/
 
 
 --follow

@@ -54,6 +54,7 @@ hook_post_source = '''
   let s:ddu_win_row = float2nr((&lines - s:ddu_win_height) / 2 + &lines + s:ddu_win_height_offset_percent)
 
   call ddu#custom#patch_global({
+    \   'resume': v:true,
     \   'ui': 'ff',
     \   'uiOptions': {
     \     'filer': {
@@ -195,12 +196,13 @@ repo = 'Shougo/ddu-ui-ff'
 [plugins.ftplugin]
 ddu-ff = '''
   """ only ff """
-  nnoremap <silent><buffer><nowait> <C-l>
-              \ <Cmd>call ddu#ui#ff#do_action('refreshItems')<CR>
   nnoremap <silent><buffer><nowait> A
               \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
 
   """ common """
+  nnoremap <silent><buffer><nowait> <C-l>
+              \ <Cmd>call ddu#ui#ff#do_action('refreshItems')<CR>
+
   " select
   nnoremap <silent><buffer><nowait> x
               \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>j
@@ -271,16 +273,17 @@ hook_add = '''
   function! OpenDduFiler(opts)
     let s:default_opts = {
       \   'path': getcwd(),
-      \   'resume': v:false,
+      \   'resume': v:true,
       \ }
     let s:opts = extend(s:default_opts, a:opts)
     let s:name = 'filer-'.trim(substitute(get(s:opts, 'id', s:opts.path), '/', '-', 'g'), '-')
-    call ddu#start({
+
+    let s:param = {
       \   'name': s:name,
       \   'ui': 'filer',
       \   'sync': v:true,
+      \   'profile': v:true,
       \   'resume': s:opts.resume,
-      \   'searchPath': s:opts.searchPath,
       \   'sources': [{
       \     'name': 'file',
       \     'options': {
@@ -292,23 +295,21 @@ hook_add = '''
       \     'filer': {
       \     },
       \   },
-      \ })
+      \ }
+    if has_key(s:opts, 'searchPath')
+      let s:param.searchPath = s:opts.searchPath
+    endif
+    call ddu#start(s:param)
   endfunction
 
   nnoremap <silent> <space>e <Cmd>call OpenDduFiler({
-      \   'path': getcwd(),
-      \   'resume': v:true,
-      \   'searchPath': expand('%:p'),
       \ })<CR>
-  nnoremap <silent> <space>E <Cmd>call OpenDduFiler({
-      \   'id': expand('%:h:p'),
-      \   'path': getcwd(),
-      \   'resume': v:true,
+  nnoremap <silent> <space>ge <Cmd>call OpenDduFiler({
       \   'searchPath': expand('%:p'),
       \ })<CR>
   nnoremap <silent> <space>gE <Cmd>call OpenDduFiler({
       \   'path': expand('%:h:p'),
-      \   'resume': v:true,
+      \   'searchPath': expand('%:p'),
       \ })<CR>
 '''
 [plugins.ftplugin]
@@ -323,8 +324,8 @@ ddu-filer = '''
               \ "<Cmd>call ddu#ui#filer#do_action('expandItem', {'mode': 'toggle', 'maxLevel': -1})<CR>"
 
   " operation
-  nnoremap <buffer><nowait> <C-l>
-              \ <Cmd>call ddu#ui#filer#do_action('checkItems')<CR>
+  nnoremap <silent><buffer><nowait> <C-l>
+              \ <Cmd>call ddu#ui#filer#do_action('refreshItems')<CR>
 
   """ common """
   " select
