@@ -99,6 +99,9 @@ go install github.com/Clever/csvlint/cmd/csvlint@latest
 ### LSP
 npm install -g graphql-language-service-cli
 
+## Astro
+npm install -g @astrojs/language-server
+
 ## Go
 ### LSP
 echo 'Install golang.org/x/tools/gopls'

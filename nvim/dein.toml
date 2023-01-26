@@ -405,11 +405,21 @@ hook_post_source = '''
     \       'customSpecialIcons': {
     \         '.gitmodules': {'icon': '', 'color': 'NormalFloat'},
     \         '.envrc': {'icon': '', 'color': 'NormalFloat'},
+    \         '.envrc.local': {'icon': '', 'color': 'NormalFloat'},
     \         '.editorconfig': {'icon': '', 'color': 'NormalFloat'},
     \         '.eslintignore': {'icon': '', 'color': 'NormalFloat'},
+    \         '.eslintrc.cjs': {'icon': '', 'color': 'NormalFloat'},
+    \         '.eslintcache': {'icon': '', 'color': 'NormalFloat'},
     \         '.prettierignore': {'icon': '', 'color': 'NormalFloat'},
     \         '.prettierrc': {'icon': '', 'color': 'NormalFloat'},
+    \         '.prettierrc.cjs': {'icon': '', 'color': 'NormalFloat'},
+    \         'package.json': {'icon': '', 'color': 'NormalFloat'},
+    \         'package-lock.json': {'icon': '', 'color': 'NormalFloat'},
+    \         'tsconfig.json': {'icon': '', 'color': 'NormalFloat'},
+    \         'tsconfig.check.json': {'icon': '', 'color': 'NormalFloat'},
     \         '.tool-versions': {'icon': '', 'color': 'NormalFloat'},
+    \         '.nvmrc': {'icon': '', 'color': 'NormalFloat'},
+    \         '.node-version': {'icon': '', 'color': 'NormalFloat'},
     \         'node_modules/': {'icon': '', 'color': 'NormalFloat'},
     \         '.init.vim.local': {'icon': '', 'color': 'NormalFloat'},
     \         '.dockerignore': {'icon': '', 'color': 'NormalFloat'},
@@ -423,6 +433,8 @@ hook_post_source = '''
     \         'hcl': {'icon': '', 'color': 'NormalFloat'},
     \         'tfstate': {'icon': '', 'color': 'NormalFloat'},
     \         'json5': {'icon': '', 'color': 'NormalFloat'},
+    \         'astro': {'icon': '', 'color': 'NormalFloat'},
+    \         'snip': {'icon': '', 'color': 'NormalFloat'},
     \       },
     \     },
     \   },
@@ -871,6 +883,10 @@ hook_source = '''
         on_attach = on_attach;
         root_dir = lspconfig.util.root_pattern("deno.json", "denops"),
       };
+      lspconfig.astro.setup{
+        on_attach = on_attach;
+        root_dir = lspconfig.util.root_pattern("astro.config.ts", "astro.config.mjs"),
+      };
 
       lspconfig.html.setup{
         on_attach = on_attach;
@@ -878,16 +894,16 @@ hook_source = '''
       lspconfig.cssls.setup{
         on_attach = on_attach;
       };
-      lspconfig.graphql.setup{
-        on_attach = on_attach;
-        filetypes = {
-          'graphql',
-          'typescript',
-          'typescriptreact',
-          'javascript',
-          'javascriptreact',
-        };
-      };
+      -- lspconfig.graphql.setup{
+      --   on_attach = on_attach;
+      --   filetypes = {
+      --     'graphql',
+      --     'typescript',
+      --     'typescriptreact',
+      --     'javascript',
+      --     'javascriptreact',
+      --   };
+      -- };
 
       function on_attach_for_jsonls(client)
         on_attach()
