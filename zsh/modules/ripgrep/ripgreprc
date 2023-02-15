@@ -43,6 +43,7 @@
 --glob=!.docker-compose-data/
 --glob=!coverage/tmp/
 --glob=!build/
+--glob=!dist/
 
 
 --follow

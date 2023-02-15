@@ -1,7 +1,7 @@
 brew install vim
 brew install neovim
 
-brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+brew install universal-ctags
 
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
 

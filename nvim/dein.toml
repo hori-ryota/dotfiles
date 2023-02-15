@@ -1083,9 +1083,6 @@ hook_add = '''
 hook_post_source = '''
   call ddc#custom#patch_global('ui', 'pum')
 
-  call ddc#custom#patch_global({
-    \   'smartCase': v:true,
-    \ })
   call ddc#custom#patch_global('sources', [
     \   'nvim-lsp',
     \   'around',
@@ -1291,9 +1288,9 @@ javascript_javascriptreact_typescript_typescriptreact = '''
   nnoremap <buffer> <Leader>pl :<C-u>Dispatch npx eslint --cache -f unix .<CR>
 '''
 terraform = '''
-  nnoremap <buffer><silent> <Leader>r :execute 'Dispatch -dir='.expand("$TERRAFORM_DIR").' terraform apply'<CR>
-  nnoremap <buffer><silent> <Leader>t :execute 'Dispatch -dir='.expand("$TERRAFORM_DIR").' terraform plan'<CR>
-  nnoremap <buffer><silent> <Leader><Leader>r :execute 'Dispatch -dir='.expand("$TERRAFORM_DIR").' terraform init'<CR>
+  nnoremap <buffer><silent> <Leader>r :execute 'Dispatch -dir='.expand(exists("$TERRAFORM_DIR") ? "$TERRAFORM_DIR" : ".").' terraform apply'<CR>
+  nnoremap <buffer><silent> <Leader>t :execute 'Dispatch -dir='.expand(exists("$TERRAFORM_DIR") ? "$TERRAFORM_DIR" : ".").' terraform plan'<CR>
+  nnoremap <buffer><silent> <Leader><Leader>r :execute 'Dispatch -dir='.expand(exists("$TERRAFORM_DIR") ? "$TERRAFORM_DIR" : ".").' terraform init'<CR>
 '''
 marp = '''
   nnoremap <buffer> <Leader>r :<C-u>Dispatch marp --watch --preview %<CR>
@@ -1915,11 +1912,11 @@ hook_post_source = '''
 #}}}
 
 #{{{ UI Extensions
-[[plugins]]
-repo = 'petertriho/nvim-scrollbar'
-hook_post_source = '''
-  lua << EOF
-    require("scrollbar").setup()
-EOF
-'''
+# [[plugins]]
+# repo = 'petertriho/nvim-scrollbar'
+# hook_post_source = '''
+#   lua << EOF
+#     require("scrollbar").setup()
+# EOF
+# '''
 #}}}
