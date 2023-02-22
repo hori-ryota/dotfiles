@@ -13,7 +13,9 @@ brew install homebrew/cask-fonts/font-cica
 # Quick Look
 ## Plugins
 ### https://github.com/sindresorhus/quick-look-plugins
-brew install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize suspicious-package apparency quicklookase qlvideo
+brew install --cask qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize suspicious-package apparency quicklookase qlvideo
+
+xattr -r ~/Library/QuickLook | grep -q "com.apple.quarantine" && xattr -d -r com.apple.quarantine ~/Library/QuickLook
 
 ## For QLClolorCode
 ### Show line number

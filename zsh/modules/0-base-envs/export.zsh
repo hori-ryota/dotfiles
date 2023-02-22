@@ -12,4 +12,4 @@ export LC_ALL=en_US.UTF-8
 export DOTFILEDIR="$HOME/.dotfiles"
 export DEV_DIR="$HOME/dev"
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+[ -f "/opt/homebrew/bin/brew" ] && eval "$(/opt/homebrew/bin/brew shellenv)"
