@@ -12,3 +12,4 @@ export LC_ALL=en_US.UTF-8
 export DOTFILEDIR="$HOME/.dotfiles"
 export DEV_DIR="$HOME/dev"
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
