@@ -26,7 +26,7 @@ set hlsearch
 nohlsearch
 set spell
 set spellcapcheck=
-set spelloptions=camel
+set spelloptions=camel,noplainbuffer
 set spelllang+=cjk
 let s:spellfile_dir = $XDG_CONFIG_HOME . '/nvim/spell'
 if !isdirectory(s:spellfile_dir)
