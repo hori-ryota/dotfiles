@@ -19,31 +19,33 @@ ln -snf "$DOTFILEDIR/zsh/runcoms/zprofile" "$HOME/.zprofile"
 ln -snf "$DOTFILEDIR/zsh/runcoms/zshenv" "$HOME/.zshenv"
 ln -snf "$DOTFILEDIR/zsh/runcoms/zshrc" "$HOME/.zshrc"
 
-type "brew" > /dev/null 2>&1 || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
+if type "brew" >/dev/null 2>&1; then
+	brew update
+else
+	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+fi
+eval "$("${HOMEBREW_PREFIX}"/bin/brew shellenv)"
 
 brew upgrade
 
 brew install zsh
 
 # change default shell to zsh (installed by homebrew)
-grep -q '^/opt/homebrew/bin/zsh$' /etc/shells || sudo sh -c "echo '/opt/homebrew/bin/zsh' >> /etc/shells"
-[ "$SHELL" != '/opt/homebrew/bin/zsh' ] && chsh -s /opt/homebrew/bin/zsh
+grep -q "^${HOMEBREW_PREFIX}/bin/zsh$" /etc/shells || sudo sh -c "echo '${HOMEBREW_PREFIX}/bin/zsh' >> /etc/shells"
+[ "$SHELL" != "${HOMEBREW_PREFIX}/bin/zsh" ] && chsh -s "${HOMEBREW_PREFIX}"/bin/zsh
 
 source "$(dirname "${BASH_SOURCE:-$0}")/zsh/modules/0-base-envs/export.zsh"
 
-for f in "$(dirname "${BASH_SOURCE:-$0}")/zsh/modules/"*"/install.sh"
-do
-  echo "Execute installation script ${f}"
-  zsh -c "${f}"
-  echo "Finish installation script ${f}"
+for f in "$(dirname "${BASH_SOURCE:-$0}")/zsh/modules/"*"/install.sh"; do
+	echo "Execute installation script ${f}"
+	zsh -c "${f}"
+	echo "Finish installation script ${f}"
 done
 
 # Library Preferences
 ## force sync local dir
-for source in "$DOTFILEDIR/Library/Preferences/"*
-do
-  dest="$HOME/Library/Preferences/"
-  rm -rf "${dest}${source##*/}"
-  ln -snf $source "${dest}${source##*/}"
+for source in "$DOTFILEDIR/Library/Preferences/"*; do
+	dest="$HOME/Library/Preferences/"
+	rm -rf "${dest}${source##*/}"
+	ln -snf $source "${dest}${source##*/}"
 done
