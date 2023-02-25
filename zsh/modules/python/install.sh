@@ -10,10 +10,10 @@ asdf plugin-add poetry
 asdf install poetry $POETRY_VERSION
 asdf global poetry $POETRY_VERSION
 
-"$(asdf which pip)" install --upgrade pip
-"$(asdf which pip)" install --upgrade setuptools
+pip install --upgrade pip
+pip install --upgrade setuptools
 
-"$(asdf which pip)" install --upgrade mypy
+pip install --upgrade mypy
 
 mkdir -p "$ZSH_COMPLETION_DIR"
 poetry completions zsh > "$ZSH_COMPLETION_DIR/_poetry"

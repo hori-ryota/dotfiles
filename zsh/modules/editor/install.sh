@@ -1,9 +1,11 @@
+source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
+zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../1-asdf/install.sh"
+source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
+
 brew install vim
 brew install neovim
 
 brew install universal-ctags
-
-source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
 
 # symlinks for Neovim
 ln -snf "$DOTFILEDIR"/nvim "$XDG_CONFIG_HOME"/nvim
@@ -12,7 +14,7 @@ ln -snf "$DOTFILEDIR"/nvim/cache/dein "$XDG_CACHE_HOME"/dein
 # install python
 zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../python/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../python/export.zsh"
-pip3 install --upgrade pynvim
+pip install --upgrade pynvim
 
 # install npm
 zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../nodejs/install.sh"
@@ -44,21 +46,21 @@ go install github.com/rhysd/actionlint/cmd/actionlint@latest
 
 ## Python
 ### LSP
-pip3 install --upgrade 'python-lsp-server[all]'
-pip3 install --upgrade pyls-flake8
-pip3 install --upgrade python-lsp-black
+pip install --upgrade 'python-lsp-server[all]'
+pip install --upgrade pyls-flake8
+pip install --upgrade python-lsp-black
 if ! (type "mypy" > /dev/null 2>&1); then
-	pip3 install --upgrade mypy
+	pip install --upgrade mypy
 fi
-pip3 install --upgrade pylsp-mypy
-pip3 install --upgrade pyls-isort
-pip3 install --upgrade pylsp-rope
+pip install --upgrade pylsp-mypy
+pip install --upgrade pyls-isort
+pip install --upgrade pylsp-rope
 
 ### for Jupyter notebook
-pip3 install --upgrade jupytext
+pip install --upgrade jupytext
 
 ### auto imports
-pip3 install --upgrade pyflyby
+pip install --upgrade pyflyby
 ln -snf "$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)/pyflyby" "$HOME/.pyflyby"
 
 ## Dockerfile
