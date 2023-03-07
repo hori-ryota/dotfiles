@@ -23,6 +23,8 @@ fi
 export HOMEBREW_NO_AUTO_UPDATE=1
 export HOMEBREW_NO_INSTALL_CLEANUP=1
 
-[[ ":$PATH:" != *":${HOMEBREW_PREFIX}/bin:"* ]] && \
-  [ -f ""${HOMEBREW_PREFIX}"/bin/brew" ] && \
-  eval "$("${HOMEBREW_PREFIX}"/bin/brew shellenv)"
+if [[ ! ":$PATH:" =~ ":${HOMEBREW_PREFIX}/bin:" ]]; then
+  if [ -f ""${HOMEBREW_PREFIX}"/bin/brew" ]; then
+    eval "$("${HOMEBREW_PREFIX}"/bin/brew shellenv)"
+  fi
+fi
