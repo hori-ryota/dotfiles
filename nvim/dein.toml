@@ -1193,13 +1193,13 @@ repo = 'Shougo/ddc-source-zsh'
 
 #{{{ filters
 [[plugins]]
-repo = 'Shougo/ddc-matcher_head'
+repo = 'Shougo/ddc-filter-matcher_head'
 
 [[plugins]]
-repo = 'Shougo/ddc-matcher_length'
+repo = 'Shougo/ddc-filter-matcher_length'
 
 [[plugins]]
-repo = 'Shougo/ddc-sorter_rank'
+repo = 'Shougo/ddc-filter-sorter_rank'
 #}}}
 
 #{{{ improvements
@@ -1259,6 +1259,8 @@ hook_add = '''
   nnoremap g<Leader>r :<C-u>Dispatch<CR>
   nnoremap <Leader>du :<C-u>Dispatch docker compose up --build -d<CR>
   nnoremap <Leader>dd :<C-u>Dispatch docker compose down<CR>
+
+  nnoremap <silent> g<Leader>r :execute 'Dispatch -dir='.expand(exists("$TERRAFORM_DIR") ? "$TERRAFORM_DIR" : ".").' terraform apply'<CR>
 '''
 [plugins.ftplugin]
 sh = '''
