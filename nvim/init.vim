@@ -141,6 +141,7 @@ augroup FileTypeDetect
   autocmd BufRead,BufNewFile zprofile,zshenv,zshrc    setfiletype zsh
   autocmd BufRead,BufNewFile *.go.y                   setfiletype goyacc
   autocmd BufRead,BufNewFile *.uml                    setfiletype plantuml
+  autocmd BufRead,BufNewFile *.mmd                    setfiletype mermaid
   autocmd BufRead,BufNewFile *.vim.local              setfiletype vim
   autocmd BufRead,BufNewFile *Dockerfile*             setfiletype Dockerfile
   autocmd BufRead,BufNewFile tsconfig.json,tsconfig.*.json,.eslintrc,.eslintrc.json setfiletype jsonc

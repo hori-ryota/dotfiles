@@ -104,7 +104,7 @@ hook_post_source = '''
     \     '_': {
     \       'ignoreCase': v:true,
     \       'matchers': ['matcher_substring'],
-    \       'maxItems': 1000000,
+    \       'maxItems': 10000,
     \     },
     \     'file': {
     \       'sorters': ['sorter_alpha'],
@@ -1773,7 +1773,7 @@ flutterToolsOutline = '''
 # Preview
 [[plugins]]
 repo = 'iamcco/markdown-preview.nvim'
-on_ft = ['markdown', 'plantuml']
+on_ft = ['markdown', 'plantuml', 'mermaid']
 build = 'cd app && yarn install'
 hook_add = '''
     let g:mkdp_command_for_global = 1
@@ -1787,6 +1787,12 @@ hook_add = '''
 [[plugins]]
 repo = 'aklt/plantuml-syntax'
 on_ft = 'plantuml'
+#}}}
+
+#{{{ Mermaid
+[[plugins]]
+repo = 'mracos/mermaid.vim'
+on_ft = 'mermaid'
 #}}}
 
 #{{{ Terraform
