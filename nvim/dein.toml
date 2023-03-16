@@ -919,9 +919,9 @@ hook_source = '''
           };
         };
       };
-      lspconfig.yamlls.setup{
-        on_attach = on_attach;
-      };
+      -- lspconfig.yamlls.setup{
+      --   on_attach = on_attach;
+      -- };
 
       lspconfig.terraformls.setup{
         on_attach = on_attach;
