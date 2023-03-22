@@ -1644,8 +1644,8 @@ css = '''
     setlocal tabstop=4
     setlocal shiftwidth=4
 '''
-javascript_javascriptreact_typescript_typescriptreact = '''
-    nnoremap <buffer> gQ :<C-u>%!eslint_d -f unix --stdin --fix-to-stdout --stdin-filename "%"<CR>
+javascript_javascriptreact_typescript_typescriptreact_astro = '''
+    nnoremap <buffer> gQ :<C-u>%!eslint_d -f unix --stdin --fix-to-stdout --stdin-filename "%"<CR>gq
 '''
 go = '''
     setlocal noexpandtab
