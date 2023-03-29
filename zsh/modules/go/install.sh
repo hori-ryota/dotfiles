@@ -19,8 +19,3 @@ go install github.com/go-delve/delve/cmd/dlv@latest
 # install Tools
 echo 'Install github.com/mattn/files'
 go install github.com/mattn/files@latest
-
-echo 'Install github.com/hori-ryota/go-codegen'
-go install github.com/hori-ryota/go-codegen@latest
-echo 'Install github.com/hori-ryota/go-genappevent'
-go install github.com/hori-ryota/go-genappevent@latest

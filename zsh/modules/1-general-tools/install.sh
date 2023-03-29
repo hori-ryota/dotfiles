@@ -8,3 +8,5 @@ brew install gcc
 brew install jq
 
 brew install binutils
+
+brew install watchman

@@ -1,0 +1,13 @@
+{
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextCurrentLineOnly": false,
+  "diagnostic.virtualTextFormat": "[%code] %message (%source)",
+  "diagnostic.virtualTextPrefix": " > ",
+
+  "suggest.virtualText": true,
+
+  "coc.preferences.enableMessageDialog": true,
+
+  "tree.key.toggleSelection": "x",
+  "tree.key.toggle": "o"
+}

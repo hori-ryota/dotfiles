@@ -14,7 +14,7 @@ ln -snf "$DOTFILEDIR"/nvim/cache/dein "$XDG_CACHE_HOME"/dein
 # install python
 zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../python/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../python/export.zsh"
-pip install --upgrade pynvim
+pip_install_targets=("pynvim")
 
 # install npm
 zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../nodejs/install.sh"
@@ -29,80 +29,36 @@ zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../deno/install.sh"
 
 # For Languages
 
-## Vim
-npm install -g vim-language-server
-
 ## Makefile
 ### Linter
 echo 'Install github.com/mrtazz/checkmake/cmd/checkmake'
 go install github.com/mrtazz/checkmake/cmd/checkmake@latest
 
 ## Yaml
-### LSP
-npm install -g yaml-language-server
-
 ### GitHub Actions
 go install github.com/rhysd/actionlint/cmd/actionlint@latest
 
 ## Python
 ### LSP
-pip install --upgrade 'python-lsp-server[all]'
-pip install --upgrade pyls-flake8
-pip install --upgrade python-lsp-black
 if ! (type "mypy" > /dev/null 2>&1); then
-	pip install --upgrade mypy
+  pip_install_targets+=(mypy)
 fi
-pip install --upgrade pylsp-mypy
-pip install --upgrade pyls-isort
-pip install --upgrade pylsp-rope
+if ! (type "rope" > /dev/null 2>&1); then
+  pip_install_targets+=(rope)
+fi
 
 ### for Jupyter notebook
-pip install --upgrade jupytext
-
-### auto imports
-pip install --upgrade pyflyby
-ln -snf "$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)/pyflyby" "$HOME/.pyflyby"
+pip_install_targets+=(jupytext)
 
 ## Dockerfile
-### LSP
-npm install -g dockerfile-language-server-nodejs
 ### Linter
 brew install hadolint
 
 ## Shell
-### LSP
-npm i -g bash-language-server
 ### Linter
 brew install shellcheck
 ### Formatter
 brew install shfmt
-
-## TypeScript and JavaScript
-### LSP
-npm install -g typescript
-npm install -g typescript-language-server
-npm install -g eslint_d
-npm install -g @fsouza/prettierd
-
-## HTML,CSS,JSON
-### LSP
-npm install -g vscode-langservers-extracted
-
-## JSON
-### Formatter
-npm install -g fixjson
-
-## CSV
-### LSP
-echo 'Install github.com/Clever/csvlint/cmd/csvlint'
-go install github.com/Clever/csvlint/cmd/csvlint@latest
-
-## GraphQL
-### LSP
-npm install -g graphql-language-service-cli
-
-## Astro
-npm install -g @astrojs/language-server
 
 ## Go
 ### LSP
@@ -110,3 +66,10 @@ echo 'Install golang.org/x/tools/gopls'
 go install golang.org/x/tools/gopls@latest
 echo 'Install golang.org/x/tools/cmd/goimports'
 go install golang.org/x/tools/cmd/goimports@latest
+echo 'Install github.com/fatih/gomodifytags'
+go install github.com/fatih/gomodifytags@latest
+echo 'Install github.com/josharian/impl'
+go install github.com/josharian/impl@latest
+
+echo "pip install --upgrade $pip_install_targets"
+pip install --upgrade $pip_install_targets

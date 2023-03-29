@@ -1,5 +1,6 @@
 let g:vim_dir = $XDG_CONFIG_HOME . '/nvim'
 let g:python3_host_prog = $HOME . '/.asdf/shims/python'
+let g:vim_data_dir = $XDG_DATA_HOME . '/nvim'
 
 "{{{ Options
 " see `:options`
@@ -24,6 +25,7 @@ set number
 "{{{ 5 syntax, highlighting and spelling
 set hlsearch
 nohlsearch
+set termguicolors
 set spell
 set spellcapcheck=
 set spelloptions=camel,noplainbuffer
@@ -129,6 +131,13 @@ endfunction
 autocmd FileType qf call MoveQuickfixWindowToBottom()
 
 "{{{ filetype detect
+function! SetFileTypeBasedOnParentDir(parent_dir_name, filetype) abort
+  let l:current_file_path = expand("%:p")
+  let l:parent_dir = fnamemodify(l:current_file_path, ":h:t")
+  if l:parent_dir == a:parent_dir_name
+    execute 'set filetype=' . a:filetype
+  endif
+endfunction
 augroup FileTypeDetect
   autocmd! 
   autocmd BufRead,BufNewFile *.{txt,text}             setfiletype markdown
@@ -145,6 +154,9 @@ augroup FileTypeDetect
   autocmd BufRead,BufNewFile *.vim.local              setfiletype vim
   autocmd BufRead,BufNewFile *Dockerfile*             setfiletype Dockerfile
   autocmd BufRead,BufNewFile tsconfig.json,tsconfig.*.json,.eslintrc,.eslintrc.json setfiletype jsonc
+  autocmd BufRead,BufNewFile coc-settings.json        setfiletype json5
+  autocmd BufRead,BufNewFile go.work.sum              setfiletype gosum
+  autocmd BufRead,BufNewFile go.work                  setfiletype gowork
 augroup END
 "}}}
 

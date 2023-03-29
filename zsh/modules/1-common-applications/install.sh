@@ -8,7 +8,7 @@ brew install karabiner-elements
 brew install slack
 
 # Fonts
-brew install homebrew/cask-fonts/font-cica
+brew install font-hackgen-nerd
 
 # Quick Look
 ## Plugins

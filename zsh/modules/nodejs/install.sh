@@ -6,9 +6,9 @@ asdf plugin-add nodejs
 asdf install nodejs $NODE_VERSION
 asdf global nodejs $NODE_VERSION
 
-"$(asdf which npm)" install -g npm
-"$(asdf which npm)" install -g yarn
-
-"$(asdf which npm)" install -g npm-check-updates
+"$(asdf which npm)" install -g \
+  npm \
+  yarn \
+  npm-check-updates
 
 asdf reshim nodejs

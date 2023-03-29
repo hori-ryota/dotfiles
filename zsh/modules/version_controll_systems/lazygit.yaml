@@ -1,0 +1,144 @@
+gui:
+  language: "en" # one of 'auto' | 'en' | 'zh' | 'pl' | 'nl' | 'ja' | 'ko'
+  mouseEvents: false
+  showFileTree: false # for rendering changes files in a tree format
+  showIcons: true
+  splitDiff: "auto" # one of 'auto' | 'always'
+git:
+  log:
+    showGraph: "always"
+    # displays the whole git graph by default in the commits panel (equivalent to passing the `--all` argument to `git log`)
+    showWholeGraph: true
+os:
+  editCommand: "nvim" # see 'Configuring File Editing' section
+quitOnTopLevelReturn: true
+disableStartupPopups: true
+notARepository: "skip"
+keybinding:
+  universal:
+    return: "<esc>"
+    quitWithoutChangingDirectory: null
+    togglePanel: null # goto the next panel
+    prevItem: "k" # go one line up
+    nextItem: "j" # go one line down
+    prevItem-alt: null # go one line up
+    nextItem-alt: null # go one line down
+    prevPage: null # go to next page in list
+    nextPage: null # go to previous page in list
+    gotoTop: "g" # go to top of list
+    gotoBottom: "G" # go to bottom of list
+    scrollLeft: "h" # scroll left within list view
+    scrollRight: "l" # scroll right within list view
+    prevBlock: "<C-k>" # goto the previous block / panel
+    nextBlock: "<C-j>" # goto the next block / panel
+    prevBlock-alt: null # goto the previous block / panel
+    nextBlock-alt: null # goto the next block / panel
+    jumpToBlock: ["1", "2", "3", "4", "5"] # goto the Nth block / panel
+    nextMatch: "n"
+    prevMatch: "N"
+    optionMenu: "?" # show help menu
+    optionMenu-alt1: null # show help menu
+    select: "x"
+    goInto: null
+    openRecentRepos: null
+    confirm: "<enter>"
+    remove: "d"
+    new: "a"
+    edit: "e"
+    openFile: "o"
+    scrollUpMain: "<C-b>" # main panel scroll up
+    scrollDownMain: "<C-f>" # main panel scroll down
+    scrollUpMain-alt1: null # main panel scroll up
+    scrollDownMain-alt1: null # main panel scroll down
+    scrollUpMain-alt2: null # main panel scroll up
+    scrollDownMain-alt2: null # main panel scroll down
+    executeCustomCommand: ":"
+    createRebaseOptionsMenu: null
+    pushFiles: "P"
+    pullFiles: "<C-p>"
+    refresh: "<C-l>"
+    createPatchOptionsMenu: null
+    nextTab: null
+    prevTab: null
+    nextScreenMode: null
+    prevScreenMode: null
+    undo: null
+    redo: null
+    filteringMenu: null
+    diffingMenu: null
+    diffingMenu-alt: null # deprecated
+    copyToClipboard: null
+    submitEditorText: null
+    appendNewline: null
+    extrasMenu: null
+    toggleWhitespaceInDiffView: null
+    increaseContextInDiffView: null
+    decreaseContextInDiffView: null
+  status:
+    checkForUpdate: null
+    recentRepos: null
+  files:
+    commitChanges: "C"
+    commitChangesWithoutHook: null # commit changes without pre-commit hook
+    amendLastCommit: "A"
+    commitChangesWithEditor: null
+    ignoreFile: null
+    refreshFiles: "<C-l>"
+    stashAllChanges: "S"
+    viewStashOptions: null
+    toggleStagedAll: "U" # stage/unstage all
+    viewResetOptions: null
+    fetch: null
+    toggleTreeView: "`"
+    openMergeTool: "M"
+    openStatusFilter: null
+  branches:
+    createPullRequest: "O"
+    viewPullRequestOptions: null
+    checkoutBranchByName: "<enter>"
+    forceCheckoutBranch: null
+    rebaseBranch: "F"
+    renameBranch: "R"
+    mergeIntoCurrentBranch: "M"
+    viewGitFlowOptions: null
+    fastForward: null # fast-forward this branch from its upstream
+    createTag: "T"
+    pushTag: null
+    setUpstream: null # set as upstream of checked-out branch
+    fetchRemote: null
+  commits:
+    squashDown: "S"
+    renameCommit: "R"
+    renameCommitWithEditor: null
+    viewResetOptions: null
+    markCommitAsFixup: null
+    createFixupCommit: "F" # create fixup commit for this commit
+    squashAboveCommits: null
+    moveDownCommit: null # move commit down one
+    moveUpCommit: null # move commit up one
+    amendToCommit: "A"
+    pickCommit: null # pick commit (when mid-rebase)
+    revertCommit: null
+    cherryPickCopy: "C"
+    cherryPickCopyRange: null
+    pasteCommits: null
+    tagCommit: null
+    checkoutCommit: "<enter>"
+    resetCherryPick: null
+    copyCommitMessageToClipboard: null
+    openLogMenu: null
+    viewBisectOptions: null
+  stash:
+    popStash: "<enter>"
+    renameStash: "R"
+  commitFiles:
+    checkoutCommitFile: null
+  main:
+    toggleDragSelect: null
+    toggleDragSelect-alt: null
+    toggleSelectHunk: null
+    pickBothHunks: null
+  submodules:
+    init: null
+    update: null
+    bulkMenu: null
