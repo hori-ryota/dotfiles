@@ -68,9 +68,9 @@ keybinding:
     diffingMenu: null
     diffingMenu-alt: null # deprecated
     copyToClipboard: null
-    submitEditorText: null
-    appendNewline: null
-    extrasMenu: null
+    submitEditorText: "<enter>"
+    appendNewline: "<a-enter>"
+    extrasMenu: "@"
     toggleWhitespaceInDiffView: null
     increaseContextInDiffView: null
     decreaseContextInDiffView: null
