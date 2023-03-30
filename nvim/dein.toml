@@ -358,6 +358,41 @@ EOF
 '''
 #}}}
 
+#{{{ ChatGPT
+[[plugins]]
+repo = 'dpayne/CodeGPT.nvim'
+depends = [
+  'nui.nvim',
+  'plenary.nvim',
+]
+on_cmd = 'Chat'
+hook_add = '''
+  xnoremap <leader>oc :Chat  completion<CR>
+  nnoremap <leader>oc V:Chat completion<CR>
+  xnoremap <leader>oe :Chat  code_edit<CR>
+  nnoremap <leader>oe V:Chat code_edit<CR>
+  xnoremap <leader>oE :Chat  explain<CR>
+  nnoremap <leader>oE V:Chat explain<CR>
+  xnoremap <leader>od :Chat  doc<CR>
+  nnoremap <leader>od V:Chat doc<CR>
+  xnoremap <leader>oO :Chat  opt<CR>
+  nnoremap <leader>oO V:Chat opt<CR>
+  xnoremap <leader>ot :Chat  tests<CR>
+  nnoremap <leader>ot V:Chat tests<CR>
+  xnoremap <leader>oC :Chat  chat<CR>
+  nnoremap <leader>oC V:Chat chat<CR>
+  xnoremap <leader>oo :Chat<space>
+  nnoremap <leader>oo V:Chat<space>
+'''
+hook_post_source = '''
+  " NOTE: waitlist中。使えるようになったら各commandを置き換えたい
+  " let g:codegpt_commands_defaults["explain"]["model"] = 'gpt-4'
+'''
+
+[[plugins]]
+repo = 'MunifTanjim/nui.nvim'
+#}}}
+
 #{{{ telescope
 [[plugins]]
 repo = 'nvim-telescope/telescope.nvim'
