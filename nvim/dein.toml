@@ -50,7 +50,6 @@ hook_add = '''
   endfunction
   inoremap <silent><expr> <TAB>
     \ coc#pum#visible() ? coc#pum#next(1) :
-    \ exists('b:_copilot.suggestions') ? copilot#Accept("\<CR>") :
     \ CheckBackspace() ? "\<TAB>" :
     \ coc#refresh()
   inoremap <silent><expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
@@ -322,6 +321,40 @@ hook_add = '''
   call coc#config('diagnostic-languageserver.filetypes.yaml', 'actionlint')
 
   augroup END
+'''
+#}}}
+
+#{{{ copilot
+[[plugins]]
+repo = 'zbirenbaum/copilot.lua'
+hook_add = '''
+  lua << EOF
+    require('copilot').setup({
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+        keymap = {
+          accept = '<C-Space>',
+          prev = '<C-k>',
+          next = '<C-j>',
+          dissmiss = '<C-d>',
+        },
+      },
+      panel = {
+        enabled = true,
+        keymap = {
+          accept = '<CR>',
+          jump_prev = '<C-k>',
+          jump_next = '<C-j>',
+          refresh = '<C-r>',
+          open = '<C-q>',
+        },
+        layout = {
+          position = 'right',
+        },
+      },
+    })
+EOF
 '''
 #}}}
 
