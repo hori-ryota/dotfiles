@@ -22,7 +22,7 @@ keybinding:
   universal:
     return: "<esc>"
     quitWithoutChangingDirectory: null
-    togglePanel: null # goto the next panel
+    togglePanel: "<C-w>" # goto the next panel
     prevItem: "k" # go one line up
     nextItem: "j" # go one line down
     prevItem-alt: null # go one line up
@@ -43,7 +43,7 @@ keybinding:
     optionMenu: "?" # show help menu
     optionMenu-alt1: null # show help menu
     select: "x"
-    goInto: null
+    goInto: "<enter>"
     openRecentRepos: null
     confirm: "<enter>"
     remove: "d"
@@ -66,8 +66,8 @@ keybinding:
     prevTab: null
     nextScreenMode: "<C-z>"
     prevScreenMode: null
-    undo: null
-    redo: null
+    undo: "u"
+    redo: "<C-r>"
     filteringMenu: null
     diffingMenu: null
     diffingMenu-alt: null # deprecated
@@ -138,11 +138,11 @@ keybinding:
   commitFiles:
     checkoutCommitFile: null
   main:
-    toggleDragSelect: null
+    toggleDragSelect: "V"
     toggleDragSelect-alt: null
-    toggleSelectHunk: null
+    toggleSelectHunk: "X"
     pickBothHunks: null
   submodules:
-    init: null
-    update: null
-    bulkMenu: null
+    init: "I"
+    update: "U"
+    bulkMenu: "B"
