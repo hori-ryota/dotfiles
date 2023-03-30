@@ -158,6 +158,16 @@ hook_add = '''
   " for Vim
   call add(g:coc_global_extensions, 'coc-vimlsp')
 
+  " for lua
+  call add(g:coc_global_extensions, 'coc-lua')
+  call coc#config('Lua', {
+    \ 'diagnostics': {
+    \   'globals': [
+    \     'vim',
+    \   ],
+    \ },
+    \ })
+
   " for Markdown
   call add(g:coc_global_extensions, 'coc-markdown-preview-enhanced')
   call coc#config('markdown-preview-enhanced', {
