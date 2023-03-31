@@ -1140,6 +1140,15 @@ python = '''
 '''
 #}}}
 
+#{{{ Docker
+[[plugins]]
+repo = 'skanehira/denops-docker.vim'
+hook_add = '''
+  nnoremap <Space>di <Cmd>DockerImages<CR>
+  nnoremap <Space>dc <Cmd>DockerContainers<CR>
+'''
+#}}}
+
 #{{{ Utils
 [[plugins]] # easily search for, substitute, and abbreviate multiple variants of a word
 repo = 'tpope/vim-abolish'
