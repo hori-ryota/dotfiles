@@ -27,6 +27,21 @@ hook_add = '''
           name = 'Txt',
           cterm_color = "113",
         },
+        ["docker-compose.yml"] = {
+          icon = "",
+          cterm_color = "68",
+          name = "Dockerfile",
+        },
+        ["docker-compose.yaml"] = {
+          icon = "",
+          cterm_color = "68",
+          name = "Dockerfile",
+        },
+        [".dockerignore"] = {
+          icon = "",
+          cterm_color = "68",
+          name = "Dockerfile",
+        },
       },
     })
 EOF
