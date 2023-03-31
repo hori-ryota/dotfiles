@@ -844,10 +844,11 @@ hook_add = '''
   let g:dispatch_no_maps = 1
   let g:dispatch_compilers = {}
   let g:dispatch_quicfix_height = 30
-  nnoremap <Leader>r  :<C-u>Dispatch<CR>
-  nnoremap g<Leader>r :<C-u>Dispatch<CR>
-  nnoremap <Leader>du :<C-u>Dispatch docker compose up --build -d<CR>
-  nnoremap <Leader>dd :<C-u>Dispatch docker compose down<CR>
+  nnoremap <Leader>r  <Cmd>Dispatch<CR>
+  nnoremap g<Leader>r <Cmd>Dispatch<CR>
+  nnoremap <Leader>du <Cmd>Dispatch -dir=%:h docker compose up -d<CR>
+  nnoremap <Leader>dU <Cmd>Dispatch -dir=%:h docker compose up --build -d<CR>
+  nnoremap <Leader>dd <Cmd>Dispatch -dir=%:h docker compose down<CR>
 
   nnoremap <silent> g<Leader>r :execute 'Dispatch -dir='.expand(exists("$TERRAFORM_DIR") ? "$TERRAFORM_DIR" : ".").' terraform apply'<CR>
 '''
