@@ -671,7 +671,7 @@ hook_add = '''
       apply('P',        api.fs.print_clipboard,         'print clipboard')
       apply('r',        api.fs.rename_node,             'rename')
       apply('S',        api.node.open.vertical,         'edit vertical')
-      apply('s',        api.node.open.edit,             'edit file')
+      apply('s',        api.node.open.horizontal,       'edit horizontal')
       apply('gcd',      api.tree.change_root_to_node,   'change root')
       apply('y',        api.fs.copy.absolute_path,      'yank absolute_path')
       apply('<space>h', api.tree.change_root_to_parent, 'change root to parent')
