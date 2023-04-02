@@ -1,4 +1,7 @@
 --{{{ config helpers
+local ko = {
+  nowait = true,
+}
 local ko_s = {
   nowait = true,
   silent = true,
@@ -105,8 +108,8 @@ vim.opt.fileformats = 'unix,mac,dos'
 --{{{ 20 command line editing
 vim.opt.wildmode = 'longest:full,full'
 vim.opt.wildoptions = 'pum'
-keymap('c', '<C-n>', '<Down>', ko_s)
-keymap('c', '<C-p>', '<Up>', ko_s)
+keymap('c', '<C-n>', '<Down>', ko)
+keymap('c', '<C-p>', '<Up>', ko)
 --}}}
 --{{{ 21 executing external commands
 --}}}
@@ -236,7 +239,8 @@ require('lazy').setup({
       vim.g.coc_data_home = vim.fn.stdpath('data') .. '/coc'
 
       vim.g.coc_root_patterns = { '.git', '.hg' }
-      vim.g.coc_global_extensions = {}
+      -- NOTE: vimの変数は `table.insert` で要素追加できないようなのでいったん他のtableに入れた上で最後に代入する
+      local coc_global_extensions = {}
 
       --{{{ define mappings
 
@@ -261,8 +265,8 @@ require('lazy').setup({
       --{{{ for snippets
       vim.g.coc_snippet_next = '<C-j>'
       vim.g.coc_snippet_prev = '<C-k>'
-      keymap('i', '<C-j>', '<Plug>(coc-snippets-expand-jump)')
-      keymap('x', '<C-j>', '<Plug>(coc-convert-snippet)')
+      keymap('i', '<C-j>', '<Plug>(coc-snippets-expand-jump)', ko)
+      keymap('x', '<C-j>', '<Plug>(coc-convert-snippet)', ko)
       --}}}
 
       --{{{ utility functions
@@ -295,7 +299,7 @@ require('lazy').setup({
         end
       end
       local function map_if_lsp(mode, keys, feature, action)
-        keymap(mode, keys, function() exec_if_has_provider(keys, feature, action) end)
+        keymap(mode, keys, function() exec_if_has_provider(keys, feature, action) end, ko)
       end
       --}}}
 
@@ -321,14 +325,14 @@ require('lazy').setup({
       keymap('n', 'c:', ':<C-u>CocCommand<Space>', ko_s)
 
       -- text objects
-      keymap('x', 'if', '<Plug>(coc-funcobj-i)')
-      keymap('o', 'if', '<Plug>(coc-funcobj-i)')
-      keymap('x', 'af', '<Plug>(coc-funcobj-a)')
-      keymap('o', 'af', '<Plug>(coc-funcobj-a)')
-      keymap('x', 'ic', '<Plug>(coc-classobj-i)')
-      keymap('o', 'ic', '<Plug>(coc-classobj-i)')
-      keymap('x', 'ac', '<Plug>(coc-classobj-a)')
-      keymap('o', 'ac', '<Plug>(coc-classobj-a)')
+      keymap('x', 'if', '<Plug>(coc-funcobj-i)', ko_s)
+      keymap('o', 'if', '<Plug>(coc-funcobj-i)', ko_s)
+      keymap('x', 'af', '<Plug>(coc-funcobj-a)', ko_s)
+      keymap('o', 'af', '<Plug>(coc-funcobj-a)', ko_s)
+      keymap('x', 'ic', '<Plug>(coc-classobj-i)', ko_s)
+      keymap('o', 'ic', '<Plug>(coc-classobj-i)', ko_s)
+      keymap('x', 'ac', '<Plug>(coc-classobj-a)', ko_s)
+      keymap('o', 'ac', '<Plug>(coc-classobj-a)', ko_s)
 
       -- optional select
       keymap('n', '<Leader>v', '<Plug>(coc-range-select)', ko_s)
@@ -341,22 +345,24 @@ require('lazy').setup({
         vim.api.nvim_create_autocmd('FileType', {
           pattern = filetype,
           callback = function()
-            vim.b.coc_root_pattern = root_pattern
+      -- NOTE: vimの変数は `table.insert` で要素追加できないようなのでいったん他のtableに入れた上で最後に代入する
+            local coc_root_pattern = root_pattern
             for _, v in ipairs(vim.g.coc_root_patterns) do
-              table.insert(vim.b.coc_root_pattern, v)
+              table.insert(coc_root_pattern, v)
             end
+            vim.b.coc_root_pattern = coc_root_pattern
           end,
         })
       end
       --}}}
       --{{{ for snippets
-      table.insert(vim.g.coc_global_extensions, 'coc-snippets')
+      table.insert(coc_global_extensions, 'coc-snippets')
       vim.fn['coc#config']('snippets', {
         userSnippetsDirectory = vim.fn.stdpath('config') .. '/snippets',
       })
       --}}}
       --{{{ for unsupported linters and formatters
-      table.insert(vim.g.coc_global_extensions, 'coc-diagnostic')
+      table.insert(coc_global_extensions, 'coc-diagnostic')
       vim.fn['coc#config']('diagnostic-languageserver', {
         mergeConfig = true,
         debug = true,
@@ -368,23 +374,23 @@ require('lazy').setup({
       --}}}
 
       --{{{ for configuration files
-      table.insert(vim.g.coc_global_extensions, 'coc-json')
-      table.insert(vim.g.coc_global_extensions, 'coc-yaml')
+      table.insert(coc_global_extensions, 'coc-json')
+      table.insert(coc_global_extensions, 'coc-yaml')
       --}}}
 
       --{{{ for Vim
-      table.insert(vim.g.coc_global_extensions, 'coc-vimlsp')
+      table.insert(coc_global_extensions, 'coc-vimlsp')
       --}}}
 
       --{{{ for lua
-      table.insert(vim.g.coc_global_extensions, 'coc-sumneko-lua')
+      table.insert(coc_global_extensions, 'coc-sumneko-lua')
       vim.fn['coc#config']('sumneko-lua', {
         enableNvimLuaDev = true,
       })
       --}}}
 
       --{{{ for Markdown
-      table.insert(vim.g.coc_global_extensions, 'coc-markdown-preview-enhanced')
+      table.insert(coc_global_extensions, 'coc-markdown-preview-enhanced')
       vim.fn['coc#config']('markdown-preview-enhanced', {
         enableScriptExecution = true,
       })
@@ -392,7 +398,7 @@ require('lazy').setup({
 
       --{{{ for Python
       prepend_root_pattern('python', { 'pyproject.toml' })
-      table.insert(vim.g.coc_global_extensions, 'coc-pyright')
+      table.insert(coc_global_extensions, 'coc-pyright')
       vim.fn['coc#config']('python', {
         ['formatting.provider'] = 'blackd',
         ['linting.flake8Enabled'] = true,
@@ -405,7 +411,7 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Go
-      table.insert(vim.g.coc_global_extensions, 'coc-go')
+      table.insert(coc_global_extensions, 'coc-go')
 
       vim.fn['coc#config']('go', {
         goplsOptions = {
@@ -480,12 +486,12 @@ require('lazy').setup({
       prepend_root_pattern('typescriptreact', { 'package.json' })
       prepend_root_pattern('javascript', { 'package.json' })
       prepend_root_pattern('javascriptreact', { 'package.json' })
-      table.insert(vim.g.coc_global_extensions, 'coc-tsserver')
-      table.insert(vim.g.coc_global_extensions, 'coc-react-refactor')
-      table.insert(vim.g.coc_global_extensions, 'coc-html')
-      table.insert(vim.g.coc_global_extensions, 'coc-css')
-      table.insert(vim.g.coc_global_extensions, 'coc-eslint')
-      table.insert(vim.g.coc_global_extensions, 'coc-prettier')
+      table.insert(coc_global_extensions, 'coc-tsserver')
+      table.insert(coc_global_extensions, 'coc-react-refactor')
+      table.insert(coc_global_extensions, 'coc-html')
+      table.insert(coc_global_extensions, 'coc-css')
+      table.insert(coc_global_extensions, 'coc-eslint')
+      table.insert(coc_global_extensions, 'coc-prettier')
       -- disable to use prettier
       vim.fn['coc#config']('typescript', {
         ['format.enabled'] = false,
@@ -508,15 +514,15 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Astro
-      table.insert(vim.g.coc_global_extensions, '@yaegassy/coc-astro')
+      table.insert(coc_global_extensions, '@yaegassy/coc-astro')
       --}}}
 
       --{{{ for Deno
-      table.insert(vim.g.coc_global_extensions, 'coc-deno')
+      table.insert(coc_global_extensions, 'coc-deno')
       --}}}
 
       --{{{ for Sell Scripts
-      table.insert(vim.g.coc_global_extensions, 'coc-sh')
+      table.insert(coc_global_extensions, 'coc-sh')
       vim.fn['coc#config']('diagnostic-languageserver.formatFiletypes.sh', 'shfmt')
       vim.fn['coc#config']('diagnostic-languageserver.formatFiletypes.zsh', 'shfmt')
       --}}}
@@ -530,7 +536,7 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Docker
-      table.insert(vim.g.coc_global_extensions, 'coc-docker')
+      table.insert(coc_global_extensions, 'coc-docker')
       vim.fn['coc#config']('diagnostic-languageserver.filetypes.Dockerfile', 'hadolint')
       --}}}
 
@@ -556,6 +562,8 @@ require('lazy').setup({
       vim.fn['coc#config']('diagnostic-languageserver.filetypes.yaml', 'actionlint')
       --}}}
       --}}}
+      
+      vim.g.coc_global_extensions = coc_global_extensions
     end,
   },
   --}}}
@@ -600,8 +608,8 @@ require('lazy').setup({
     cmd = 'Chat',
     init = function()
       local function map(lhs, action)
-        keymap('x', lhs, '<Cmd>Chat ' .. action .. '<CR>')
-        keymap('n', lhs, 'V<Cmd>Chat ' .. action .. '<CR>')
+        keymap('x', lhs, '<Cmd>Chat ' .. action .. '<CR>', ko)
+        keymap('n', lhs, 'V<Cmd>Chat ' .. action .. '<CR>', ko)
       end
       map('<leader>oc', 'completion')
       map('<leader>oe', 'code_edit')
@@ -610,8 +618,8 @@ require('lazy').setup({
       map('<leader>oO', 'opt')
       map('<leader>ot', 'tests')
       map('<leader>oC', 'chat')
-      keymap('x', '<Leader>oo', ':Chat<space>')
-      keymap('n', '<Leader>oo', 'V:Chat<space>')
+      keymap('x', '<Leader>oo', ':Chat<space>', ko)
+      keymap('n', '<Leader>oo', 'V:Chat<space>', ko)
     end,
   },
   --}}}
@@ -814,8 +822,8 @@ require('lazy').setup({
   {
     'lpoto/telescope-docker.nvim',
     init = function()
-      keymap('n', '<Space>di', function() require('telescope').extensions.docker.images() end)
-      keymap('n', '<Space>dc', function() require('telescope').extensions.docker.containers() end)
+      keymap('n', '<Space>di', function() require('telescope').extensions.docker.images() end, ko)
+      keymap('n', '<Space>dc', function() require('telescope').extensions.docker.containers() end, ko)
     end,
     config = function()
       require('telescope').load_extension('docker')
@@ -912,8 +920,8 @@ require('lazy').setup({
     },
     cmd = 'Octo',
     init = function()
-      keymap('n', '<Space>vil', '<Cmd>Octo issue list<CR>')
-      keymap('n', '<Space>vpl', '<Cmd>Octo pr list<CR>')
+      keymap('n', '<Space>vil', '<Cmd>Octo issue list<CR>', ko)
+      keymap('n', '<Space>vpl', '<Cmd>Octo pr list<CR>', ko)
     end,
     opts = {
       default_remote = { 'upstream', 'origin', 'hori-ryota' },
@@ -1057,10 +1065,10 @@ require('lazy').setup({
       vim.g.dispatch_no_maps = 1
       vim.g.dispatch_compilers = {}
       vim.g.dispatch_quicfix_height = 30
-      keymap('n', '<Leader>r', '<Cmd>Dispatch<CR>')
-      keymap('n', '<Leader>du', '<Cmd>Dispatch -dir=%:h docker compose up -d<CR>')
-      keymap('n', '<Leader>dU', '<Cmd>Dispatch -dir=%:h docker compose up --build -d<CR>')
-      keymap('n', '<Leader>dd', '<Cmd>Dispatch -dir=%:h docker compose down<CR>')
+      keymap('n', '<Leader>r', '<Cmd>Dispatch<CR>', ko)
+      keymap('n', '<Leader>du', '<Cmd>Dispatch -dir=%:h docker compose up -d<CR>', ko)
+      keymap('n', '<Leader>dU', '<Cmd>Dispatch -dir=%:h docker compose up --build -d<CR>', ko)
+      keymap('n', '<Leader>dd', '<Cmd>Dispatch -dir=%:h docker compose down<CR>', ko)
 
       vim.api.nvim_create_augroup('MyDispatch', {})
 
@@ -1101,10 +1109,10 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter',
     },
     init = function()
-      keymap('n', '<Leader>t', function() require("neotest").run.run(vim.fn.expand('%')) end)
-      keymap('n', '<Leader>T', function() require("neotest").run.run() end)
-      keymap('n', ']f', function() require("neotest").jump.next({ status = "failed" }) end)
-      keymap('n', '[f', function() require("neotest").jump.prev({ status = "failed" }) end)
+      keymap('n', '<Leader>t', function() require("neotest").run.run(vim.fn.expand('%')) end, ko)
+      keymap('n', '<Leader>T', function() require("neotest").run.run() end, ko)
+      keymap('n', ']f', function() require("neotest").jump.next({ status = "failed" }) end, ko)
+      keymap('n', '[f', function() require("neotest").jump.prev({ status = "failed" }) end, ko)
     end,
     config = function()
       local neotest_ns = vim.api.nvim_create_namespace('neotest')
