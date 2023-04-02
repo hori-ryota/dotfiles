@@ -23,6 +23,7 @@
 	pushinsteadof = "https://github.com/"
 	pushinsteadof = "git://github.com/"
 [ghq]
+	root = ~/.local/share/nvim/lazy
 	root = ~/dev/src
 [mergetool]
 	keepBackup = false
