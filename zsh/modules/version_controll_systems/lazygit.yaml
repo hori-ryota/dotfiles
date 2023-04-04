@@ -62,8 +62,8 @@ keybinding:
     pullFiles: "<C-p>"
     refresh: "<C-l>"
     createPatchOptionsMenu: null
-    nextTab: null
-    prevTab: null
+    nextTab: "]"
+    prevTab: "["
     nextScreenMode: "<C-z>"
     prevScreenMode: null
     undo: "u"
