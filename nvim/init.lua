@@ -290,7 +290,7 @@ require('lazy').setup({
                 'workspace_symbols',
                 'workspace_diagnostics',
               }, action) then
-            require('telescope').extensions.coc[action]()
+            require('telescope').extensions.coc[action]({})
           else
             vim.fn.CocActionAsync(action)
           end
@@ -345,7 +345,7 @@ require('lazy').setup({
         vim.api.nvim_create_autocmd('FileType', {
           pattern = filetype,
           callback = function()
-      -- NOTE: vimの変数は `table.insert` で要素追加できないようなのでいったん他のtableに入れた上で最後に代入する
+            -- NOTE: vimの変数は `table.insert` で要素追加できないようなのでいったん他のtableに入れた上で最後に代入する
             local coc_root_pattern = root_pattern
             for _, v in ipairs(vim.g.coc_root_patterns) do
               table.insert(coc_root_pattern, v)
@@ -562,7 +562,7 @@ require('lazy').setup({
       vim.fn['coc#config']('diagnostic-languageserver.filetypes.yaml', 'actionlint')
       --}}}
       --}}}
-      
+
       vim.g.coc_global_extensions = coc_global_extensions
     end,
   },
@@ -637,19 +637,19 @@ require('lazy').setup({
     cmd = 'Telescope',
     init = function() --{{{
       keymap('n', '<Space><Space>', '<Cmd>Telescope find_files<CR>', ko_s)
-      keymap('n', '<Space>w', '      <Cmd>Telescope file_browser<CR>', ko_s)
-      keymap('n', '<Space>W', '      <Cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>', ko_s)
-      keymap('n', '<Space>h', '      <Cmd>Telescope frecency<CR>', ko_s)
-      keymap('n', '<Space>b', '      <Cmd>Telescope buffers<CR>', ko_s)
-      keymap('n', '<Space>r', '      <Cmd>Telescope live_grep<CR>', ko_s)
-      keymap('n', '<Space>.', '      <Cmd>Telescope resume<CR>', ko_s)
+      keymap('n', '<Space>w', '<Cmd>Telescope file_browser<CR>', ko_s)
+      keymap('n', '<Space>W', '<Cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>', ko_s)
+      keymap('n', '<Space>h', '<Cmd>Telescope frecency<CR>', ko_s)
+      keymap('n', '<Space>b', '<Cmd>Telescope buffers<CR>', ko_s)
+      keymap('n', '<Space>r', '<Cmd>Telescope live_grep<CR>', ko_s)
+      keymap('n', '<Space>.', '<Cmd>Telescope resume<CR>', ko_s)
 
-      keymap('n', '<Space>vs', '     <Cmd>Telescope git_status initial_mode=normal<CR>', ko_s)
+      keymap('n', '<Space>vs', '<Cmd>Telescope git_status initial_mode=normal<CR>', ko_s)
 
-      keymap('n', '<Space>u', '      <Cmd>Telescope undo<CR>', ko_s)
+      keymap('n', '<Space>u', '<Cmd>Telescope undo<CR>', ko_s)
 
-      keymap('n', '<Space>t', '      <Cmd>Telescope treesitter<CR>', ko_s)
-      keymap('n', '<Space>p', '      <Cmd>Telescope registers<CR>', ko_s)
+      keymap('n', '<Space>t', '<Cmd>Telescope treesitter<CR>', ko_s)
+      keymap('n', '<Space>p', '<Cmd>Telescope registers<CR>', ko_s)
 
       -- memolist
       keymap('n', '<Space>ml', function()
@@ -927,84 +927,84 @@ require('lazy').setup({
       default_remote = { 'upstream', 'origin', 'hori-ryota' },
       mappings = {
         issue = {
-          close_issue = { lhs = '<Space>viC', desc = 'close issue' },
-          reopen_issue = { lhs = '<Space>viO', desc = 'reopen issue' },
-          list_issue = { lhs = '<Space>vil', desc = 'list open issues on same repo' },
-          reload = { lhs = '<C-l>', desc = 'reload' },
-          open_in_browser = { lhs = '<Space>vir', desc = 'open issue in browser' },
-          copy_url = { lhs = "<Space>viy", desc = "copy url to system clipboard" },
-          add_assignee = { lhs = "<Space>viaA", desc = "add assignee" },
-          remove_assignee = { lhs = "<Space>viaD", desc = "remove assignee" },
-          create_label = { lhs = "<Space>viLC", desc = "create label" },
-          add_label = { lhs = "<Space>viLA", desc = "add label" },
-          remove_label = { lhs = "<Space>viLD", desc = "remove label" },
-          goto_issue = { lhs = "<Space>vii", desc = "navigate to a local repo issue" },
-          add_comment = { lhs = "<Space>vicA", desc = "add comment" },
-          delete_comment = { lhs = "<Space>vicD", desc = "delete comment" },
+          close_issue = { lhs = "<Leader>DD", desc = "close PR" },
+          reopen_issue = { lhs = "<Leader>OO", desc = "reopen PR" },
+          list_issues = { lhs = "<Space>il", desc = "list open issues on same repo" },
+          reload = { lhs = "<C-l>", desc = "reload PR" },
+          open_in_browser = { lhs = "<Space>br", desc = "open PR in browser" },
+          copy_url = { lhs = "<Leader>y", desc = "copy url to system clipboard" },
+          add_assignee = { lhs = "<Leader>aA", desc = "add assignee" },
+          remove_assignee = { lhs = "<Leader>aD", desc = "remove assignee" },
+          create_label = { lhs = "<Leader>LC", desc = "create label" },
+          add_label = { lhs = "<Leader>LA", desc = "add label" },
+          remove_label = { lhs = "<Leader>LD", desc = "remove label" },
+          goto_issue = { lhs = "<C-]>", desc = "navigate to a local repo issue" },
+          add_comment = { lhs = "<Leader>cA", desc = "add comment" },
+          delete_comment = { lhs = "<Leader>cD", desc = "delete comment" },
           next_comment = { lhs = "]c", desc = "go to next comment" },
           prev_comment = { lhs = "[c", desc = "go to previous comment" },
-          react_hooray = { lhs = "<Space>vet", desc = "add/remove 🎉 reaction" },
-          react_heart = { lhs = "<Space>veh", desc = "add/remove ❤️ reaction" },
-          react_eyes = { lhs = "<Space>vee", desc = "add/remove 👀 reaction" },
-          react_thumbs_up = { lhs = "<Space>ve+", desc = "add/remove 👍 reaction" },
-          react_thumbs_down = { lhs = "<Space>ve-", desc = "add/remove 👎 reaction" },
-          react_rocket = { lhs = "<Space>ver", desc = "add/remove 🚀 reaction" },
-          react_laugh = { lhs = "<Space>ves", desc = "add/remove 😄 reaction" },
-          react_confused = { lhs = "<Space>vec", desc = "add/remove 😕 reaction" },
+          react_hooray = { lhs = "<Leader>et", desc = "add/remove 🎉 reaction" },
+          react_heart = { lhs = "<Leader>eh", desc = "add/remove ❤️ reaction" },
+          react_eyes = { lhs = "<Leader>ee", desc = "add/remove 👀 reaction" },
+          react_thumbs_up = { lhs = "<Leader>e+", desc = "add/remove 👍 reaction" },
+          react_thumbs_down = { lhs = "<Leader>e-", desc = "add/remove 👎 reaction" },
+          react_rocket = { lhs = "<Leader>er", desc = "add/remove 🚀 reaction" },
+          react_laugh = { lhs = "<Leader>es", desc = "add/remove 😄 reaction" },
+          react_confused = { lhs = "<Leader>ec", desc = "add/remove 😕 reaction" },
         },
         pull_request = {
-          checkout_pr = { lhs = "<Space>vpB", desc = "checkout PR" },
-          merge_pr = { lhs = "<Space>vpM", desc = "merge commit PR" },
-          squash_and_merge_pr = { lhs = "<Space>vpS", desc = "squash and merge PR" },
-          list_commits = { lhs = "<Space>ll", desc = "list PR commits" },
-          list_changed_files = { lhs = "<Space>lf", desc = "list PR changed files" },
-          show_pr_diff = { lhs = "<Space>ld", desc = "show PR diff" },
-          add_reviewer = { lhs = "<Space>vprA", desc = "add reviewer" },
-          remove_reviewer = { lhs = "<Space>vprD", desc = "remove reviewer request" },
-          close_issue = { lhs = "<Space>vpC", desc = "close PR" },
-          reopen_issue = { lhs = "<Space>voO", desc = "reopen PR" },
-          list_issues = { lhs = "<Space>vpl", desc = "list open issues on same repo" },
-          reload = { lhs = "<C-r>", desc = "reload PR" },
-          open_in_browser = { lhs = "<Space>vpr", desc = "open PR in browser" },
-          copy_url = { lhs = "<Space>vpy", desc = "copy url to system clipboard" },
-          goto_file = { lhs = "<Space>vpf", desc = "go to file" },
-          add_assignee = { lhs = "<Space>vpaA", desc = "add assignee" },
-          remove_assignee = { lhs = "<Space>vpaD", desc = "remove assignee" },
-          create_label = { lhs = "<Space>vpLC", desc = "create label" },
-          add_label = { lhs = "<Space>vpLA", desc = "add label" },
-          remove_label = { lhs = "<Space>vpLD", desc = "remove label" },
-          goto_issue = { lhs = "<Space>vpi", desc = "navigate to a local repo issue" },
-          add_comment = { lhs = "<Space>vpcA", desc = "add comment" },
-          delete_comment = { lhs = "<Space>vpcD", desc = "delete comment" },
+          checkout_pr = { lhs = "<Leader>X", desc = "checkout PR" },
+          merge_pr = { lhs = "<Leader>MM", desc = "merge commit PR" },
+          squash_and_merge_pr = { lhs = "<Leader>SS", desc = "squash and merge PR" },
+          list_commits = { lhs = "<Space>l", desc = "list PR commits" },
+          list_changed_files = { lhs = "<Space>f", desc = "list PR changed files" },
+          show_pr_diff = { lhs = "<Space>d", desc = "show PR diff" },
+          add_reviewer = { lhs = "<Leader>rA", desc = "add reviewer" },
+          remove_reviewer = { lhs = "<Leader>rD", desc = "remove reviewer request" },
+          close_issue = { lhs = "<Leader>DD", desc = "close PR" },
+          reopen_issue = { lhs = "<Leader>OO", desc = "reopen PR" },
+          list_issues = { lhs = "<Space>il", desc = "list open issues on same repo" },
+          reload = { lhs = "<C-l>", desc = "reload PR" },
+          open_in_browser = { lhs = "<Space>br", desc = "open PR in browser" },
+          copy_url = { lhs = "<Leader>y", desc = "copy url to system clipboard" },
+          goto_file = { lhs = "gf", desc = "go to file" },
+          add_assignee = { lhs = "<Leader>aA", desc = "add assignee" },
+          remove_assignee = { lhs = "<Leader>aD", desc = "remove assignee" },
+          create_label = { lhs = "<Leader>LC", desc = "create label" },
+          add_label = { lhs = "<Leader>LA", desc = "add label" },
+          remove_label = { lhs = "<Leader>LD", desc = "remove label" },
+          goto_issue = { lhs = "<C-]>", desc = "navigate to a local repo issue" },
+          add_comment = { lhs = "<Leader>cA", desc = "add comment" },
+          delete_comment = { lhs = "<Leader>cD", desc = "delete comment" },
           next_comment = { lhs = "]c", desc = "go to next comment" },
           prev_comment = { lhs = "[c", desc = "go to previous comment" },
-          react_hooray = { lhs = "<Space>vet", desc = "add/remove 🎉 reaction" },
-          react_heart = { lhs = "<Space>veh", desc = "add/remove ❤️ reaction" },
-          react_eyes = { lhs = "<Space>vee", desc = "add/remove 👀 reaction" },
-          react_thumbs_up = { lhs = "<Space>ve+", desc = "add/remove 👍 reaction" },
-          react_thumbs_down = { lhs = "<Space>ve-", desc = "add/remove 👎 reaction" },
-          react_rocket = { lhs = "<Space>ver", desc = "add/remove 🚀 reaction" },
-          react_laugh = { lhs = "<Space>ves", desc = "add/remove 😄 reaction" },
-          react_confused = { lhs = "<Space>vec", desc = "add/remove 😕 reaction" },
+          react_hooray = { lhs = "<Leader>et", desc = "add/remove 🎉 reaction" },
+          react_heart = { lhs = "<Leader>eh", desc = "add/remove ❤️ reaction" },
+          react_eyes = { lhs = "<Leader>ee", desc = "add/remove 👀 reaction" },
+          react_thumbs_up = { lhs = "<Leader>e+", desc = "add/remove 👍 reaction" },
+          react_thumbs_down = { lhs = "<Leader>e-", desc = "add/remove 👎 reaction" },
+          react_rocket = { lhs = "<Leader>er", desc = "add/remove 🚀 reaction" },
+          react_laugh = { lhs = "<Leader>es", desc = "add/remove 😄 reaction" },
+          react_confused = { lhs = "<Leader>ec", desc = "add/remove 😕 reaction" },
         },
         review_thread = {
-          goto_issue = { lhs = "<Space>vpi", desc = "navigate to a local repo issue" },
-          add_comment = { lhs = "<Space>vpcA", desc = "add comment" },
-          add_suggestion = { lhs = "<Space>vpG", desc = "add suggestion" },
-          delete_comment = { lhs = "<Space>vpcD", desc = "delete comment" },
+          goto_issue = { lhs = "<C-]>", desc = "navigate to a local repo issue" },
+          add_comment = { lhs = "<Leader>cA", desc = "add comment" },
+          add_suggestion = { lhs = "<Leader>gA", desc = "add suggestion" },
+          delete_comment = { lhs = "<Leader>cD", desc = "delete comment" },
           next_comment = { lhs = "]c", desc = "go to next comment" },
           prev_comment = { lhs = "[c", desc = "go to previous comment" },
           select_next_entry = { lhs = "]e", desc = "move to previous changed file" },
           select_prev_entry = { lhs = "[e", desc = "move to next changed file" },
           close_review_tab = { lhs = "<C-c>", desc = "close review tab" },
-          react_hooray = { lhs = "<Space>vet", desc = "add/remove 🎉 reaction" },
-          react_heart = { lhs = "<Space>veh", desc = "add/remove ❤️ reaction" },
-          react_eyes = { lhs = "<Space>vee", desc = "add/remove 👀 reaction" },
-          react_thumbs_up = { lhs = "<Space>ve+", desc = "add/remove 👍 reaction" },
-          react_thumbs_down = { lhs = "<Space>ve-", desc = "add/remove 👎 reaction" },
-          react_rocket = { lhs = "<Space>ver", desc = "add/remove 🚀 reaction" },
-          react_laugh = { lhs = "<Space>ves", desc = "add/remove 😄 reaction" },
-          react_confused = { lhs = "<Space>vec", desc = "add/remove 😕 reaction" },
+          react_hooray = { lhs = "<Leader>et", desc = "add/remove 🎉 reaction" },
+          react_heart = { lhs = "<Leader>eh", desc = "add/remove ❤️ reaction" },
+          react_eyes = { lhs = "<Leader>ee", desc = "add/remove 👀 reaction" },
+          react_thumbs_up = { lhs = "<Leader>e+", desc = "add/remove 👍 reaction" },
+          react_thumbs_down = { lhs = "<Leader>e-", desc = "add/remove 👎 reaction" },
+          react_rocket = { lhs = "<Leader>er", desc = "add/remove 🚀 reaction" },
+          react_laugh = { lhs = "<Leader>es", desc = "add/remove 😄 reaction" },
+          react_confused = { lhs = "<Leader>ec", desc = "add/remove 😕 reaction" },
         },
         submit_win = {
           approve_review = { lhs = "<Space>vp<C-a>", desc = "approve review" },
@@ -1013,28 +1013,28 @@ require('lazy').setup({
           close_review_tab = { lhs = "<Space>vp<C-d>", desc = "close review tab" },
         },
         review_diff = {
-          add_review_comment = { lhs = "<Space>vpcA", desc = "add a new review comment" },
-          add_review_suggestion = { lhs = "<Space>vpgA", desc = "add a new review suggestion" },
-          focus_files = { lhs = "<Space>vpx", desc = "move focus to changed file panel" },
-          toggle_files = { lhs = "<Space>vpz", desc = "hide/show changed files panel" },
+          add_review_comment = { lhs = "<Leader>cA", desc = "add a new review comment" },
+          add_review_suggestion = { lhs = "<Leader>gA", desc = "add a new review suggestion" },
+          focus_files = { lhs = "<Space>F", desc = "move focus to changed file panel" },
+          toggle_files = { lhs = "<Space>f", desc = "hide/show changed files panel" },
           next_thread = { lhs = "]t", desc = "move to next thread" },
           prev_thread = { lhs = "[t", desc = "move to previous thread" },
           select_next_entry = { lhs = "]e", desc = "move to previous changed file" },
           select_prev_entry = { lhs = "[e", desc = "move to next changed file" },
-          close_review_tab = { lhs = "<Space>vprq", desc = "close review tab" },
-          toggle_viewed = { lhs = "<Space>vpv", desc = "toggle viewer viewed state" },
+          close_review_tab = { lhs = "<Esc>", desc = "close review tab" },
+          toggle_viewed = { lhs = "<Leader>V", desc = "toggle viewer viewed state" },
         },
         file_panel = {
           next_entry = { lhs = "j", desc = "move to next changed file" },
           prev_entry = { lhs = "k", desc = "move to previous changed file" },
           select_entry = { lhs = "o", desc = "show selected changed file diffs" },
           refresh_files = { lhs = "<C-l>", desc = "refresh changed files panel" },
-          focus_files = { lhs = "<Space>vpx", desc = "move focus to changed file panel" },
-          toggle_files = { lhs = "<Space>vpz", desc = "hide/show changed files panel" },
+          focus_files = { lhs = "<Space>F", desc = "move focus to changed file panel" },
+          toggle_files = { lhs = "<Space>f", desc = "hide/show changed files panel" },
           select_next_entry = { lhs = "]e", desc = "move to previous changed file" },
           select_prev_entry = { lhs = "[e", desc = "move to next changed file" },
-          close_review_tab = { lhs = "<Space>vprq", desc = "close review tab" },
-          toggle_viewed = { lhs = "<Space>vpv", desc = "toggle viewer viewed state" },
+          close_review_tab = { lhs = "<Esc>", desc = "close review tab" },
+          toggle_viewed = { lhs = "<Leader>V", desc = "toggle viewer viewed state" },
         },
       },
     },
@@ -1137,7 +1137,7 @@ require('lazy').setup({
             },
           }),
           require('neotest-python'),
-          require('neotest-jest'),
+          -- require('neotest-jest'),
           require('neotest-vitest'),
           require('neotest-dart'),
         },
@@ -1284,7 +1284,14 @@ require('lazy').setup({
     keys = {
       'gc',
       'gb',
-    }
+      {'gc', mode = 'o'},
+      {'gb', mode = 'o'},
+      {'gc', mode = 'x'},
+      {'gb', mode = 'x'},
+    },
+    config = function()
+      require('Comment').setup({})
+    end,
   },
   --}}}
   --{{{ Memo
@@ -1542,6 +1549,7 @@ require('lazy').setup({
   --{{{ Status bar
   {
     'nvim-lualine/lualine.nvim',
+    lazy = false,
     depends = {
       'nvim-tree/nvim-web-devicons',
       'neoclide/coc.nvim',
