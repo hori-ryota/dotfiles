@@ -251,14 +251,16 @@ require('lazy').setup({
           let col = col('.') - 1
           return !col || getline('.')[col - 1]  =~ '\s'
         endfunction
+
+        " Insert <tab> when previous text is space, refresh completion if not.
         inoremap <silent><expr> <TAB>
-          \ coc#pum#visible() ? coc#pum#next(1) :
-          \ CheckBackspace() ? '\<TAB>' :
+          \ coc#pum#visible() ? coc#pum#next(1):
+          \ CheckBackspace() ? "\<Tab>" :
           \ coc#refresh()
-        inoremap <silent><expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : '\<C-h>'
+        inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
         inoremap <silent><expr> <c-space> coc#refresh()
-        inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-          \: '\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>'
+        inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
+          \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
       ]])
       --}}}
 
@@ -1284,10 +1286,10 @@ require('lazy').setup({
     keys = {
       'gc',
       'gb',
-      {'gc', mode = 'o'},
-      {'gb', mode = 'o'},
-      {'gc', mode = 'x'},
-      {'gb', mode = 'x'},
+      { 'gc', mode = 'o' },
+      { 'gb', mode = 'o' },
+      { 'gc', mode = 'x' },
+      { 'gb', mode = 'x' },
     },
     config = function()
       require('Comment').setup({})
