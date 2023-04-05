@@ -1094,6 +1094,16 @@ require('lazy').setup({
             function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform init -upgrade') end, ko_b)
         end,
       })
+
+      local function bind_makeprg(filetype, makeprg)
+        vim.api.nvim_create_autocmd('FileType', {
+          pattern = filetype,
+          callback = function()
+            vim.opt_local.makeprg = makeprg
+          end,
+        })
+      end
+      bind_makeprg('sh', '%')
     end
   },
   {
