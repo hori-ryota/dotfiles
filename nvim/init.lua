@@ -145,7 +145,7 @@ end, ko_s)
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'qf',
   callback = function()
-    if vim.fn.getwininfo((vim.fn.win_getid())[1].loclist) then
+    if vim.fn.getwininfo((vim.fn.win_getid()))[1].loclist then
       vim.cmd.wincmd('J')
     end
   end,
