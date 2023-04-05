@@ -807,7 +807,7 @@ require('lazy').setup({
   },
   {
     'nvim-telescope/telescope-frecency.nvim',
-    depends = {
+    dependencies = {
       'kkharji/sqlite.lua',
     },
     config = function()
@@ -915,7 +915,7 @@ require('lazy').setup({
   --{{{ GitHub
   {
     'pwntester/octo.nvim',
-    depends = {
+    dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons',
       'nvim-telescope/telescope.nvim',
@@ -1051,7 +1051,7 @@ require('lazy').setup({
   --{{{ Async Execution
   {
     'tpope/vim-dispatch',
-    depends = {
+    dependencies = {
       'radenling/vim-dispatch-neovim',
     },
     cmd = {
@@ -1106,7 +1106,7 @@ require('lazy').setup({
   --{{{ Testing
   {
     'nvim-neotest/neotest',
-    depends = {
+    dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
     },
@@ -1552,7 +1552,7 @@ require('lazy').setup({
   {
     'nvim-lualine/lualine.nvim',
     lazy = false,
-    depends = {
+    dependencies = {
       'nvim-tree/nvim-web-devicons',
       'neoclide/coc.nvim',
     },
