@@ -19,6 +19,12 @@ ln -snf "$DOTFILEDIR/zsh/runcoms/zprofile" "$HOME/.zprofile"
 ln -snf "$DOTFILEDIR/zsh/runcoms/zshenv" "$HOME/.zshenv"
 ln -snf "$DOTFILEDIR/zsh/runcoms/zshrc" "$HOME/.zshrc"
 
+if ! xcode-select -p 1>/dev/null; then
+  xcode-select --install
+  echo 'execute again after installation of command line developer tools.'
+  exit 2
+fi
+
 if type "brew" >/dev/null 2>&1; then
 	brew update
 else
