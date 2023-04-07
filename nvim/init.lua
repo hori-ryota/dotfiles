@@ -677,8 +677,7 @@ require('lazy').setup({
       local fb_actions = require('telescope').extensions.file_browser.actions
       require("telescope").setup({
         defaults = {
-          mappings = {
-            --{{{
+          mappings = { --{{{
             n = {
               ['<esc>']      = actions.close,
               ['<CR>']       = actions.select_default,
@@ -743,8 +742,8 @@ require('lazy').setup({
             prefer_locations = true,
           },
           file_browser = {
-            mappings = {
-              --{{{
+            hidden = true,
+            mappings = { --{{{
               n = {
                 A = fb_actions.create,
                 R = fb_actions.rename,
