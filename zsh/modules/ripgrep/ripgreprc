@@ -11,6 +11,7 @@
 --glob=!.swc/
 --glob=!node_modules/
 --glob=!storybook-static/
+--glob=!__screenshots__/
 
 --glob=!tsconfig.check.tsbuildinfo
 --glob=!.eslintcache
