@@ -57,7 +57,7 @@ keybinding:
     scrollUpMain-alt2: null # main panel scroll up
     scrollDownMain-alt2: null # main panel scroll down
     executeCustomCommand: ":"
-    createRebaseOptionsMenu: null
+    createRebaseOptionsMenu: "m"
     pushFiles: "P"
     pullFiles: "<C-p>"
     refresh: "<C-l>"
@@ -116,7 +116,7 @@ keybinding:
     renameCommitWithEditor: null
     viewResetOptions: null
     markCommitAsFixup: null
-    createFixupCommit: "F" # create fixup commit for this commit
+    createFixupCommit: "E" # create fixup commit for this commit
     squashAboveCommits: null
     moveDownCommit: null # move commit down one
     moveUpCommit: null # move commit up one
