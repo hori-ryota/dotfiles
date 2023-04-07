@@ -1064,12 +1064,12 @@ require('lazy').setup({
     },
     init = function()
       vim.g.dispatch_no_maps = 1
-      vim.g.dispatch_compilers = {}
       vim.g.dispatch_quicfix_height = 30
       keymap('n', '<Leader>r', '<Cmd>Dispatch<CR>', ko)
       keymap('n', '<Leader>du', '<Cmd>Dispatch -dir=%:h docker compose up -d<CR>', ko)
       keymap('n', '<Leader>dU', '<Cmd>Dispatch -dir=%:h docker compose up --build -d<CR>', ko)
       keymap('n', '<Leader>dd', '<Cmd>Dispatch -dir=%:h docker compose down<CR>', ko)
+      keymap('n', '<Leader>dl', ':<C-u>Dispatch -dir=%:h docker compose logs', ko)
 
       vim.api.nvim_create_augroup('MyDispatch', {})
 
