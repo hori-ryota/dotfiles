@@ -1,0 +1,53 @@
+snippet ctx
+	ctx context.Context()
+snippet ctxb
+	context.Background()
+snippet ctxbb
+	ctx := context.Background()
+	${0}
+snippet ctxt
+	context.TODO()
+
+snippet tp
+  t.Parallel()
+	${0}
+snippet th
+  t.Helper()
+	${0}
+
+snippet test
+  func Test${1}(t *testing.T) {
+		${0}
+	}
+snippet tt
+  t.Run("${1}", func(t *testing.T) {
+    ${0}
+  })
+snippet ttr
+  for _, tt := range []struct{
+    name string
+  }{
+    {
+      name: "",
+    },
+  }{
+    tt := tt
+    t.Run(tt.name, func(t *testing.T) {
+      ${0}
+    })
+  }
+
+snippet mc
+  ctrl, ctx := gomock.WithContext(context.Background(), t)
+snippet mockgen
+  //go:generate mockgen -source $GOFILE -destination mock_$GOPACKAGE/${GOFILE}_mock.go
+
+snippet cmpe
+  if diff := cmp.Diff(${1:want}, ${2:got}); diff != "" {
+    t.Errorf("${3} got ${4:'%+v'}; want $4; diff (+got -want):\n%s",${0} $2, $1, diff)
+  }
+
+snippet terr
+  if err != nil {
+    t.Fatalf("%s got unexpected error:\n%+v", dumpedRequest, err)
+  }

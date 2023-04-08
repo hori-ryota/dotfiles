@@ -16,15 +16,6 @@ local ko_sb = {
   buffer = true,
 }
 local keymap = vim.keymap.set
-
-local function contains(list, target)
-  for _, v in ipairs(list) do
-    if v == target then
-      return true
-    end
-  end
-  return false
-end
 --}}}
 
 --{{{ Options
@@ -171,11 +162,9 @@ file_type_detect('*.uml', 'plantuml')
 file_type_detect('*.mmd', 'mermaid')
 file_type_detect('*.vim.local', 'vim')
 file_type_detect('*.lua.local', 'lua')
-file_type_detect('*Dockerfile*', 'Dockerfile')
+file_type_detect('*Dockerfile*', 'dockerfile')
 file_type_detect({ 'tsconfig.json', 'tsconfig.*.json', 'eslintrc', 'eslintrc.json' }, 'jsonc')
-file_type_detect('coc-settings.json', 'json5')
-file_type_detect('go.work.sum', 'gosum')
-file_type_detect('go.work', 'gowork')
+file_type_detect('editorconfig', 'editorconfig')
 --}}}
 
 --{{{ install lazy.nvim
@@ -226,346 +215,465 @@ require('lazy').setup({
     },
   },
   --}}}
-  --{{{ coc
+  --{{{ LSP
   {
-    'neoclide/coc.nvim',
-    branch = 'release',
+    'neovim/nvim-lspconfig', --{{{
     dependencies = {
-      'fannheyward/telescope-coc.nvim',
+      'hrsh7th/cmp-nvim-lsp',
+      'j-hui/fidget.nvim',
     },
     lazy = false,
     config = function()
-      vim.api.nvim_create_augroup('MyCoc', {})
-      vim.g.coc_data_home = vim.fn.stdpath('data') .. '/coc'
+      vim.api.nvim_create_augroup('MyLspConfig', {})
+      vim.diagnostic.config({
+        --{{{
+        virtual_text = {
+          source = true,
+          prefix = '',
+        },
+      }); --}}}
 
-      vim.g.coc_root_patterns = { '.git', '.hg' }
-      -- NOTE: vimの変数は `table.insert` で要素追加できないようなのでいったん他のtableに入れた上で最後に代入する
-      local coc_global_extensions = {}
+      --{{{ [\[gopls\] delay diagnostics or not run them in insert mode · Issue \#127 · neovim/nvim\-lspconfig](https://github.com/neovim/nvim-lspconfig/issues/127)
+      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+        -- delay update diagnostics
+        update_in_insert = false,
+      });                           --}}}
 
-      --{{{ define mappings
-
-      --{{{ for completion
-      -- NOTE: documentの使い方と変えると面倒なのでコピペして扱うような設定は非luaで妥協しておく
-      vim.cmd([[
-        function! CheckBackspace() abort
-          let col = col('.') - 1
-          return !col || getline('.')[col - 1]  =~ '\s'
-        endfunction
-
-        " Insert <tab> when previous text is space, refresh completion if not.
-        inoremap <silent><expr> <TAB>
-          \ coc#pum#visible() ? coc#pum#next(1):
-          \ CheckBackspace() ? "\<Tab>" :
-          \ coc#refresh()
-        inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-        inoremap <silent><expr> <c-space> coc#refresh()
-        inoremap <silent><expr> <CR> coc#pum#visible() ? coc#_select_confirm()
-          \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-      ]])
-      --}}}
-
-      --{{{ for snippets
-      vim.g.coc_snippet_next = '<C-j>'
-      vim.g.coc_snippet_prev = '<C-k>'
-      keymap('i', '<C-j>', '<Plug>(coc-snippets-expand-jump)', ko)
-      keymap('x', '<C-j>', '<Plug>(coc-convert-snippet)', ko)
-      --}}}
-
-      --{{{ utility functions
-      local function exec_if_has_provider(keys, feature, action)
-        if feature == '' or vim.fn.CocAction('hasProvider', feature) then
-          if contains({
-                'mru',
-                'links',
-                'commands',
-                'locations',
-                'references',
-                'definitions',
-                'declarations',
-                'implementations',
-                'type_definitions',
-                'diagnostics',
-                'code_actions',
-                'line_code_actions',
-                'file_code_actions',
-                'document_symbols',
-                'workspace_symbols',
-                'workspace_diagnostics',
-              }, action) then
-            require('telescope').extensions.coc[action]({})
-          else
-            vim.fn.CocActionAsync(action)
+      local function bind_key_map() --{{{
+        local function telescope(f)
+          return function()
+            require('telescope.builtin')[f]()
           end
-        else
-          vim.fn.feedkeys(keys, 'in')
         end
+        keymap('n', '<Leader>a', vim.lsp.buf.code_action, ko_sb)
+        keymap('n', '<Leader><Leader>l', vim.lsp.codelens.run, ko_sb)
+        keymap('n', '<Leader><Leader>L', function() vim.diagnostic.open_float({ focusable = false }) end, ko_sb)
+        keymap('n', '[f', vim.diagnostic.goto_prev, ko_sb)
+        keymap('n', ']f', vim.diagnostic.goto_next, ko_sb)
+        keymap('n', '<Space>f', telescope('diagnostics'), ko_sb)
+        keymap('n', 'K', vim.lsp.buf.hover, ko_sb)
+        keymap('n', '<Space><Tab>', vim.lsp.buf.signature_help, ko_sb)
+        keymap('n', '<C-]>', telescope('lsp_definitions'), ko_sb)
+        keymap('n', '<Leader>i', telescope('lsp_implementations'), ko_sb)
+        keymap('n', '<Leader>c', telescope('lsp_incoming_calls'), ko_sb)
+        keymap('n', '<Leader>R', vim.lsp.buf.rename, ko_sb)
+        keymap('n', '<Leader>gr', telescope('lsp_references'), ko_sb)
+        keymap('n', '<Leader>a', vim.lsp.buf.code_action, ko_sb)
+        keymap('v', '<Leader>a', vim.lsp.buf.code_action, ko_sb)
+        keymap('n', 'gq', vim.lsp.buf.format, ko_sb)
+        keymap('v', 'gq', vim.lsp.buf.format, ko_sb)
+        keymap('n', '<Leader>ws', vim.lsp.buf.workspace_symbol, ko_sb)
+      end --}}}
+
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = 'MyLspConfig',
+        callback = function()
+          bind_key_map()
+          vim.cmd('hi! link DiagnosticError      ALEVirtualTextError')
+          vim.cmd('hi! link DiagnosticWarn       ALEVirtualTextWarning')
+          vim.cmd('hi! link DiagnosticInfo       Identifier')
+          vim.cmd('hi! link DiagnosticHint       ALEVirtualTextWarning')
+          vim.cmd('hi! link LspReferenceText     Normal')
+          vim.cmd('hi! link LspReferenceRead     Identifier')
+          vim.cmd('hi! link LspReferenceWrite    MoreMsg')
+          vim.cmd('hi! link LspCodeLens          Comment')
+          vim.cmd('hi! link LspCodeLensSeparator Comment')
+        end,
+      })
+
+      local lspconfig = require('lspconfig')
+
+      local function disable_formatter(client)
+        client.server_capabilities.documentFormattingProvider = false;
+        client.server_capabilities.documentRangeFormattingProvider = false;
       end
-      local function map_if_lsp(mode, keys, feature, action)
-        keymap(mode, keys, function() exec_if_has_provider(keys, feature, action) end, ko)
-      end
-      --}}}
 
-      keymap('n', '<Leader>a', '<Plug>(coc-codeaction-cursor)', ko_s)
-      keymap('n', '<Leader>A', '<Plug>(coc-codeaction-source)', ko_s)
-      keymap('n', '<Leader><Leader>l', '<Plug>(coc-codelends-action)', ko_s)
-      keymap('n', '[f', '<Plug>(coc-diagnostic-prev)', ko_s)
-      keymap('n', ']f', '<Plug>(coc-diagnostic-next)', ko_s)
-      map_if_lsp('n', '<Space>f', '', 'diagnostics')
-      keymap('n', '[s', '<Cmd>CocCommand document.jumpToPrevSymbol<CR>', ko_s)
-      keymap('n', ']s', '<Cmd>CocCommand document.jumpToNextSymbol<CR>', ko_s)
-      keymap('n', '<Space>o', '<Cmd>CocCommand List outline<CR>', ko_s)
-      map_if_lsp('n', 'K', 'hover', 'doHover')
-      map_if_lsp('n', '<C-]>', 'definition', 'definitions')
-      map_if_lsp('n', 't<C-]>', 'typeDefinition', 'type_definitions')
-      map_if_lsp('n', 'g<C-]>', 'declaration', 'declarations')
-      map_if_lsp('n', '<Leader>i', 'implementation', 'implementations')
-      keymap('n', '<Leader>c', function() vim.fn.CocActionAsync('showIncomingCalls') end, ko_s)
-      keymap('n', '<Leader>R', '<Plug>(coc-rename)', ko_s)
-      map_if_lsp('n', '<Leader>dr', 'reference', 'references')
-      map_if_lsp('n', 'gq', 'format', 'format')
-      keymap('n', 'gQ', '<Plug>(coc-fix-current)', ko_s)
-      keymap('n', 'c:', ':<C-u>CocCommand<Space>', ko_s)
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      -- text objects
-      keymap('x', 'if', '<Plug>(coc-funcobj-i)', ko_s)
-      keymap('o', 'if', '<Plug>(coc-funcobj-i)', ko_s)
-      keymap('x', 'af', '<Plug>(coc-funcobj-a)', ko_s)
-      keymap('o', 'af', '<Plug>(coc-funcobj-a)', ko_s)
-      keymap('x', 'ic', '<Plug>(coc-classobj-i)', ko_s)
-      keymap('o', 'ic', '<Plug>(coc-classobj-i)', ko_s)
-      keymap('x', 'ac', '<Plug>(coc-classobj-a)', ko_s)
-      keymap('o', 'ac', '<Plug>(coc-classobj-a)', ko_s)
-
-      -- optional select
-      keymap('n', '<Leader>v', '<Plug>(coc-range-select)', ko_s)
-      keymap('x', '<Leader>v', '<Plug>(coc-range-select)', ko_s)
-      --}}}
-
-      --{{{ filetype settings (mainly extensions settings)
-      --{{{ utility functions
-      local function prepend_root_pattern(filetype, root_pattern)
-        vim.api.nvim_create_autocmd('FileType', {
-          pattern = filetype,
-          callback = function()
-            -- NOTE: vimの変数は `table.insert` で要素追加できないようなのでいったん他のtableに入れた上で最後に代入する
-            local coc_root_pattern = root_pattern
-            for _, v in ipairs(vim.g.coc_root_patterns) do
-              table.insert(coc_root_pattern, v)
-            end
-            vim.b.coc_root_pattern = coc_root_pattern
-          end,
-        })
-      end
-      --}}}
+      --{{{ filetype settings
       --{{{ for snippets
-      table.insert(coc_global_extensions, 'coc-snippets')
-      vim.fn['coc#config']('snippets', {
-        userSnippetsDirectory = vim.fn.stdpath('config') .. '/snippets',
-      })
-      --}}}
-      --{{{ for unsupported linters and formatters
-      table.insert(coc_global_extensions, 'coc-diagnostic')
-      vim.fn['coc#config']('diagnostic-languageserver', {
-        mergeConfig = true,
-        debug = true,
-        filetypes = {},
-        formatFiletypes = {},
-        linters = {},
-        formatters = {},
-      })
+      -- table.insert(coc_global_extensions, 'coc-snippets')
+      -- vim.fn['coc#config']('snippets', {
+      --   userSnippetsDirectory = vim.fn.stdpath('config') .. '/snippets',
+      -- })
       --}}}
 
       --{{{ for configuration files
-      table.insert(coc_global_extensions, 'coc-json')
-      table.insert(coc_global_extensions, 'coc-yaml')
+      lspconfig.jsonls.setup({
+        capabilities = capabilities,
+        init_options = {
+          -- use prettier
+          provideFormatter = false,
+        },
+        filetypes = { 'json', 'jsonc', 'json5' }
+      })
+      lspconfig.yamlls.setup({
+        capabilities = capabilities,
+        settings = {
+          yaml = {
+            schemaStore = {
+              enable = true,
+            },
+          },
+        },
+      })
       --}}}
 
       --{{{ for Vim
-      table.insert(coc_global_extensions, 'coc-vimlsp')
+      lspconfig.vimls.setup({
+        capabilities = capabilities,
+      })
       --}}}
 
       --{{{ for lua
-      table.insert(coc_global_extensions, 'coc-sumneko-lua')
-      vim.fn['coc#config']('sumneko-lua', {
-        enableNvimLuaDev = true,
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { 'vim' },
+            },
+          },
+        },
       })
       --}}}
 
       --{{{ for Markdown
-      table.insert(coc_global_extensions, 'coc-markdown-preview-enhanced')
-      vim.fn['coc#config']('markdown-preview-enhanced', {
-        enableScriptExecution = true,
+      lspconfig.marksman.setup({
+        capabilities = capabilities,
       })
       --}}}
 
       --{{{ for Python
-      prepend_root_pattern('python', { 'pyproject.toml' })
-      table.insert(coc_global_extensions, 'coc-pyright')
-      vim.fn['coc#config']('python', {
-        ['formatting.provider'] = 'blackd',
-        ['linting.flake8Enabled'] = true,
-        ['linting.mypyEnabled'] = true,
-      })
-      vim.fn['coc#config']('pyright', {
-        ['organizeImports.provider'] = 'pytest',
-        ['testing.provider'] = 'pytest',
+      lspconfig.pyright.setup({
+        capabilities = capabilities,
       })
       --}}}
 
       --{{{ for Go
-      table.insert(coc_global_extensions, 'coc-go')
-
-      vim.fn['coc#config']('go', {
-        goplsOptions = {
-          ---- Build ----
-          directoryFilters = {
-            -- common
-            '-**/.git',
-            '-**/vendor',
-            '-**/.symlinks',
-            -- for Node.JS
-            '-**/.next',
-            '-**/.swc',
-            '-**/node_modules',
-            '-**/storybook-static',
-            -- for Python
-            '-**/.mypy_cache',
-            '-**/__pycache__',
-            '-**/.pytest_cache',
-            '-**/.venv',
-            '-**/venv',
-            '-**/.neptune',
-            -- for Terraform
-            '-**/.terraform',
-            -- for Dart and Flutter
-            '-**/.dart_tool',
-            -- for iOS
-            '-**/Pods',
-            '-**/.fvm',
-            -- for MyProjects
-            '-**/.cache',
-            '-**/data',
-            '-**/results',
-            '-**/results_plots',
-            '-**/output',
-            '-**/.docker-compose-data',
-            '-**/coverage',
+      vim.lsp.set_log_level("debug")
+      lspconfig.gopls.setup({
+        capabilities = capabilities,
+        settings = {
+          gopls = {
+            verboseOutput = true,
+            ---- Build ----
+            directoryFilters = { --{{{
+              -- common
+              '-**/.git',
+              '-**/vendor',
+              '-**/.symlinks',
+              -- for Node.JS
+              '-**/.next',
+              '-**/.swc',
+              '-**/node_modules',
+              '-**/storybook-static',
+              -- for Python
+              '-**/.mypy_cache',
+              '-**/__pycache__',
+              '-**/.pytest_cache',
+              '-**/.venv',
+              '-**/venv',
+              '-**/.neptune',
+              -- for Terraform
+              '-**/.terraform',
+              -- for Dart and Flutter
+              '-**/.dart_tool',
+              -- for iOS
+              '-**/Pods',
+              '-**/.fvm',
+              -- for MyProjects
+              '-**/.cache',
+              '-**/data',
+              '-**/results',
+              '-**/results_plots',
+              '-**/output',
+              '-**/.docker-compose-data',
+              '-**/coverage',
+            }, --}}}
+            templateExtensions = {
+              '.go.tmpl',
+              '.go.tpl',
+              '.gotmpl',
+              '.gotpl',
+            },
+            ---- Formatting ----
+            ['local'] = os.getenv('GO_IMPORTS_LOCAL'),
+            ---- UI ----
+            codelenses = {
+              gc_details = true,
+              generate = true,
+              regenerate_cgo = true,
+              test = true,
+              tidy = true,
+              upgrade_dependency = true,
+              vendor = true,
+            },
+            ---- UI Completion ----
+            usePlaceholders = true,
+            ---- UI Diagnostic ----
+            analyses = {
+              nilness = true,
+              unusedwrite = true,
+            },
+            ---- UI Documentation ----
+            ---- UI Inlayhint ----
+            ---- UI Navigation ----
           },
-          templateExtensions = {
-            '.go.tmpl',
-            '.go.tpl',
-            '.gotmpl',
-            '.gotpl',
-          },
-          ---- Formatting ----
-          ['local'] = os.getenv('GO_IMPORTS_LOCAL'),
-          ---- UI ----
-          codelenses = {
-            gc_details = true,
-            generate = true,
-            regenerate_cgo = true,
-            test = true,
-            tidy = true,
-            upgrade_dependency = true,
-            vendor = true,
-          },
-          ---- UI Completion ----
-          usePlaceholders = true,
-          ---- UI Diagnostic ----
-          analyses = {
-            nilness = true,
-            unusedwrite = true,
-          },
-          ---- UI Documentation ----
-          ---- UI Inlayhint ----
-          ---- UI Navigation ----
+        },
+        filetypes = {
+          'go',
+          'gomod',
+          'gowork',
         },
       })
       --}}}
 
       --{{{ for Node.js and frontend development
-      prepend_root_pattern('typescript', { 'package.json' })
-      prepend_root_pattern('typescriptreact', { 'package.json' })
-      prepend_root_pattern('javascript', { 'package.json' })
-      prepend_root_pattern('javascriptreact', { 'package.json' })
-      table.insert(coc_global_extensions, 'coc-tsserver')
-      table.insert(coc_global_extensions, 'coc-react-refactor')
-      table.insert(coc_global_extensions, 'coc-html')
-      table.insert(coc_global_extensions, 'coc-css')
-      table.insert(coc_global_extensions, 'coc-eslint')
-      table.insert(coc_global_extensions, 'coc-prettier')
-      -- disable to use prettier
-      vim.fn['coc#config']('typescript', {
-        ['format.enabled'] = false,
+      lspconfig.tsserver.setup({
+        capabilities = capabilities,
+        -- use prettier as formatter
+        on_attach = disable_formatter
       })
-      vim.fn['coc#config']('javascript', {
-        ['format.enabled'] = false,
+      lspconfig.html.setup({
+        capabilities = capabilities,
+        -- use prettier as formatter
+        init_options = { provideFormatter = false },
       })
-      vim.fn['coc#config']('html', {
-        ['format.enabled'] = false,
+      lspconfig.cssls.setup({
+        capabilities = capabilities,
+        -- use prettier as formatter
+        init_options = { provideFormatter = false },
       })
-      vim.fn['coc#config']('css', {
-        ['format.enabled'] = false,
+      lspconfig.eslint.setup({
+        capabilities = capabilities,
       })
-      vim.fn['coc#config']('scss', {
-        ['format.enabled'] = false,
-      })
-      vim.fn['coc#config']('less', {
-        ['format.enabled'] = false,
+      lspconfig.stylelint_lsp.setup({
+        capabilities = capabilities,
       })
       --}}}
 
       --{{{ for Astro
-      table.insert(coc_global_extensions, '@yaegassy/coc-astro')
+      lspconfig.astro.setup({
+        capabilities = capabilities,
+        root_dir = lspconfig.util.root_pattern("astro.config.*"),
+      })
       --}}}
 
       --{{{ for Deno
-      table.insert(coc_global_extensions, 'coc-deno')
+      lspconfig.denols.setup({
+        capabilities = capabilities,
+        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+      })
       --}}}
 
       --{{{ for Sell Scripts
-      table.insert(coc_global_extensions, 'coc-sh')
-      vim.fn['coc#config']('diagnostic-languageserver.formatFiletypes.sh', 'shfmt')
-      vim.fn['coc#config']('diagnostic-languageserver.formatFiletypes.zsh', 'shfmt')
+      lspconfig.bashls.setup({
+        capabilities = capabilities,
+      })
       --}}}
 
       --{{{ for Terraform
-      vim.fn['coc#config']('languageserver.terraform', {
-        command = 'terraform-ls',
-        args = { 'serve' },
-        filetypes = { 'terraform', 'tf' },
+      lspconfig.terraformls.setup({
+        capabilities = capabilities,
       })
       --}}}
 
       --{{{ for Docker
-      table.insert(coc_global_extensions, 'coc-docker')
-      vim.fn['coc#config']('diagnostic-languageserver.filetypes.Dockerfile', 'hadolint')
+      lspconfig.dockerls.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.docker_compose_language_service.setup({
+        capabilities = capabilities,
+      })
       --}}}
+      --}}}
+    end,
+  }, --}}}
+  {
+    'jose-elias-alvarez/null-ls.nvim',
+    lazy = false,
+    config = function()
+      require('null-ls').setup({
+        diagnostics_format = '[#{c}] #{m} (#{s})',
+        update_in_insert = false,
+        sources = {
+          -- make
+          require('null-ls').builtins.diagnostics.checkmake,
+          -- Dockerfile
+          require('null-ls').builtins.diagnostics.hadolint,
+          -- sh
+          require('null-ls').builtins.formatting.shfmt,
+          -- prettier
+          require('null-ls').builtins.formatting.prettierd,
+          -- json
+          require('null-ls').builtins.formatting.fixjson,
+          -- Go
+          require('null-ls').builtins.code_actions.gomodifytags,
+          require('null-ls').builtins.code_actions.impl,
+          require('null-ls').builtins.diagnostics.golangci_lint,
+          require('null-ls').builtins.formatting.goimports,
+          -- Python
+          require('null-ls').builtins.diagnostics.flake8,
+          require('null-ls').builtins.diagnostics.mypy,
+          require('null-ls').builtins.formatting.isort,
+          -- GitHub Action
+          require('null-ls').builtins.diagnostics.actionlint.with({
+            runtime_condition = require('null-ls.helpers').cache.by_bufnr(function(params)
+              return params.bufname:find(vim.pesc(".github/workflows")) ~= nil
+            end)
+          }),
 
-      --{{{ for GitHub Actions
-      vim.fn['coc#config']('diagnostic-languageserver.linters.actionlint', {
-        command = 'actionlint',
-        rootPatterns = { '.github' },
-        debounce = 100,
-        isStdout = true,
-        isStderr = false,
-        args = { '-format', '{{json .}}' },
-        sourceName = 'actionlint',
-        parseJson = {
-          sourceName = 'filepath',
-          sourceNameFilter = true,
-          line = 'line',
-          column = 'column',
-          endLine = 'end_line',
-          endColumn = 'end_column',
-          message = '${message}'
+          -- { "go", "javascript", "lua", "python", "typescript" }
+          require('null-ls').builtins.code_actions.refactoring,
         },
       })
-      vim.fn['coc#config']('diagnostic-languageserver.filetypes.yaml', 'actionlint')
-      --}}}
-      --}}}
+    end,
+  },
+  {
+    'j-hui/fidget.nvim',
+    config = function()
+      require('fidget').setup()
+    end,
+  },
+  --}}}
+  --{{{ Completion
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lsp',
+      'saadparwaiz1/cmp_luasnip',
+    },
+    event = {
+      'InsertEnter',
+      'CmdlineEnter',
+    },
+    config = function()
+      local cmp = require('cmp')
+      local types = require('cmp.types')
+      local mapping = cmp.mapping
 
-      vim.g.coc_global_extensions = coc_global_extensions
+      local select_next_item_i = function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item({ behavior = types.cmp.SelectBehavior.Insert })
+        else
+          fallback()
+        end
+      end
+      local select_next_item_c = function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          fallback()
+        end
+      end
+      local select_prev_item_i = function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item({ behavior = types.cmp.SelectBehavior.Insert })
+        else
+          fallback()
+        end
+      end
+      local select_prev_item_c = function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end
+
+      cmp.setup({
+        mapping = {
+          --{{{
+          ['<Tab>'] = {
+            i = select_next_item_i,
+            c = select_next_item_c,
+          },
+          ['<S-Tab>'] = {
+            i = select_prev_item_i,
+            c = select_prev_item_c,
+          },
+          ['<C-n>'] = {
+            i = select_next_item_i,
+            c = select_next_item_c,
+          },
+          ['<C-p>'] = {
+            i = select_prev_item_i,
+            c = select_prev_item_c,
+          },
+          ['<CR>'] = {
+            i = cmp.mapping.confirm({ select = false }),
+            c = cmp.mapping.confirm({ select = false }),
+          },
+          ['<C-e>'] = {
+            i = mapping.abort(),
+            c = mapping.abort(),
+          },
+          ['<C-b>'] = {
+            i = cmp.mapping.scroll_docs(-4),
+            c = cmp.mapping.scroll_docs(-4),
+          },
+          ['<C-f>'] = {
+            i = cmp.mapping.scroll_docs(4),
+            c = cmp.mapping.scroll_docs(4),
+          }
+        }, --}}}
+        snippet = {
+          expand = function(args)
+            require('luasnip').lsp_expand(args.body)
+          end
+        },
+        sources = cmp.config.sources({
+          { name = 'luasnip' },
+          { name = 'nvim_lsp' },
+          { name = 'nvim_lsp_signature_help' },
+          { name = 'path' },
+          { name = 'buffer' },
+        }),
+      })
+      cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'buffer' },
+        }
+      })
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' },
+          { name = 'cmdline' },
+          { name = 'cmdline_history' },
+          { name = 'buffer' },
+        })
+      })
+    end,
+  },
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-nvim-lsp-signature-help',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/cmp-cmdline',
+  'dmitmel/cmp-cmdline-history',
+  {
+    'saadparwaiz1/cmp_luasnip',
+    dependencies = {
+      'L3MON4D3/LuaSnip',
+    },
+  },
+  --}}}
+  --{{{ Snippets
+  {
+    'L3MON4D3/LuaSnip',
+    version = '1.*',
+    cmd = 'InsertEnter',
+    build = "make install_jsregexp",
+    config = function()
+      require('luasnip.loaders.from_snipmate').lazy_load({ paths = "./snippets" })
+      local luasnip = require('luasnip')
+      keymap('i', '<C-l>', function() luasnip.expand_or_jump() end, ko_s)
     end,
   },
   --}}}
@@ -632,7 +740,6 @@ require('lazy').setup({
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons',
-      'fannheyward/telescope-coc.nvim',
       'nvim-telescope/telescope-file-browser.nvim',
       'nvim-telescope/telescope-frecency.nvim',
     },
@@ -677,7 +784,8 @@ require('lazy').setup({
       local fb_actions = require('telescope').extensions.file_browser.actions
       require("telescope").setup({
         defaults = {
-          mappings = { --{{{
+          mappings = {
+            --{{{
             n = {
               ['<esc>']      = actions.close,
               ['<CR>']       = actions.select_default,
@@ -738,12 +846,10 @@ require('lazy').setup({
           } --}}}
         },
         extensions = {
-          coc = {
-            prefer_locations = true,
-          },
           file_browser = {
             hidden = true,
-            mappings = { --{{{
+            mappings = {
+              --{{{
               n = {
                 A = fb_actions.create,
                 R = fb_actions.rename,
@@ -791,12 +897,6 @@ require('lazy').setup({
         },
       })
     end, --}}}
-  },
-  {
-    'fannheyward/telescope-coc.nvim',
-    config = function()
-      require('telescope').load_extension('coc')
-    end,
   },
   {
     'nvim-telescope/telescope-file-browser.nvim',
@@ -1041,12 +1141,6 @@ require('lazy').setup({
     },
   },
   --}}}
-  --{{{ editorconfig
-  {
-    'editorconfig/editorconfig-vim',
-    lazy = false,
-  },
-  --}}}
   --{{{ Async Execution
   {
     'tpope/vim-dispatch',
@@ -1282,12 +1376,12 @@ require('lazy').setup({
     keys = {
       { '<Leader>x', '<Plug>(ArgWrapToggle)' },
     },
-    config = {
+    config = function()
       vim.api.nvim_create_autocmd('FileType', {
         pattern = 'go',
         callback = function() vim.b.argwrap_tail_comma = 1 end,
       })
-    },
+    end,
   },
   {
     -- comment
@@ -1563,7 +1657,6 @@ require('lazy').setup({
     lazy = false,
     dependencies = {
       'nvim-tree/nvim-web-devicons',
-      'neoclide/coc.nvim',
     },
     opts = {
       options = {
@@ -1580,7 +1673,7 @@ require('lazy').setup({
         lualine_a = { 'mode' },
         lualine_b = { 'branch', {
           'diagnostics',
-          source = { 'coc' },
+          source = { 'nvim_lsp' },
           sections = { 'error', 'warn' },
           symbols = {
             error = 'E',
@@ -1596,7 +1689,7 @@ require('lazy').setup({
             path = 1,
           },
         },
-        lualine_x = { 'g:coc_status', 'encoding', 'fileformat', 'filetype' },
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
         lualine_y = { 'progress' },
         lualine_z = { 'location' },
       },

@@ -1,26 +1,18 @@
-snippet Tab_trigger "Description" b
+snippet cdsd
+  cd "$(dirname "\${BASH_SOURCE:-\$0}")" || exit
 
-endsnippet
+snippet sd
+  dirname "\${BASH_SOURCE:-\$0}"
 
-snippet cdsd "cd \"$(dirname \"${BASH_SOURCE:-$0}\")\"" b
-cd "$(dirname "${BASH_SOURCE:-\$0}")" || exit
-endsnippet
+snippet sbb
+  #!/usr/bin/env bash
 
-snippet sd "dirname \"${BASH_SOURCE:-$0}\"" b
-dirname "${BASH_SOURCE:-\$0}"
-endsnippet
+snippet reporoot
+  $(git rev-parse --show-toplevel)
 
-snippet sbb "#!/usr/bin/env bash" b
-#!/usr/bin/env bash
-endsnippet
+snippet bash
+  #!/usr/bin/env bash
 
-snippet reporoot "$(git rev-parse --show-toplevel)" b
-endsnippet
+  set -eu
 
-snippet bash "bash header" b
-#!/usr/bin/env bash
-
-set -eu
-
-cd "$(dirname "${BASH_SOURCE:-\$0}")" || exit
-endsnippet
+  cd "$(dirname "\${BASH_SOURCE:-\$0}")" || exit
