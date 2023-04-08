@@ -107,8 +107,8 @@ go install github.com/fatih/gomodifytags@latest
 echo 'Install github.com/josharian/impl'
 go install github.com/josharian/impl@latest
 
-echo "pip install --upgrade $pip_install_targets[@]"
-pip install --upgrade $pip_install_targets[@]
+echo "pip install --upgrade ${pip_install_targets[@]}"
+pip install --upgrade ${pip_install_targets[@]}
 
-echo "npm install -g $npm_install_targets[@]"
-npm install -g $npm_install_targets[@]
+echo "npm install -g ${npm_install_targets[@]}"
+npm install -g ${npm_install_targets[@]}
