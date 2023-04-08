@@ -351,12 +351,10 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Go
-      vim.lsp.set_log_level("debug")
       lspconfig.gopls.setup({
         capabilities = capabilities,
         settings = {
           gopls = {
-            verboseOutput = true,
             ---- Build ----
             directoryFilters = { --{{{
               -- common
