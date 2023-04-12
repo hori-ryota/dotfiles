@@ -146,3 +146,10 @@ keybinding:
     init: "I"
     update: "U"
     bulkMenu: "B"
+customCommands:
+  - key: "<C-d>"
+    command: "git pull-and-clean-default"
+    context: "global"
+  - key: "<C-d>"
+    command: "git pull-and-clean {{.SelectedLocalBranch.Name}}"
+    context: "localBranches"

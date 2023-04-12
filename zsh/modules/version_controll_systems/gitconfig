@@ -1,10 +1,10 @@
 [include]
 	path = ~/.gitconfig.local
 [alias]
-	delete-merged-branches = !git branch --merged | grep -vE '^\\*|^ *master$|^ *develop$' | xargs git branch -d
-	pulll = !sh -c 'git checkout $1 && git fetch --prune && git merge origin/$1 && git delete-merged-branches' -
-	pull-master = pulll master
-	pull-main = pulll main
+	delete-merged-branches = !git branch --merged | grep -vE '^\\*|^ *main$|^ *master$' | xargs git branch -d; git fetch --prune
+  show-default-branch = !git symbolic-ref refs/remotes/origin/HEAD | cut -d '/' -f 4
+	pull-and-clean = !sh -c 'git switch $1 && git fetch --prune && git merge origin/$1 && git delete-merged-branches' -
+	pull-and-clean-default = !git pull-and-clean "$(git show-default-branch)"
 [core]
 	editor = nvim
 	quotepath = false
