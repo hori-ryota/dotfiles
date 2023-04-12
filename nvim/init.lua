@@ -165,6 +165,12 @@ file_type_detect('*.lua.local', 'lua')
 file_type_detect('*Dockerfile*', 'dockerfile')
 file_type_detect({ 'tsconfig.json', 'tsconfig.*.json', 'eslintrc', 'eslintrc.json' }, 'jsonc')
 file_type_detect('editorconfig', 'editorconfig')
+file_type_detect({ 'gitconfig', 'gitconfig.*', '.gitconfig.*' }, 'gitconfig')
+file_type_detect({ 'gitignore', 'gitignore.*', '.gitignore.*' }, 'gitignore')
+file_type_detect('*.hcl', 'hcl')
+file_type_detect({ '.terraformrc', 'terraform.rc' }, 'hcl')
+file_type_detect({ '*.tf', '*.tfvars' }, 'terraform')
+file_type_detect({ '*.tfstate', '*.tfstate.backup' }, 'hcl')
 --}}}
 
 --{{{ install lazy.nvim
@@ -287,6 +293,19 @@ require('lazy').setup({
         client.server_capabilities.documentFormattingProvider = false;
         client.server_capabilities.documentRangeFormattingProvider = false;
       end
+      local function on_save(filetype, f)
+        vim.api.nvim_create_autocmd('FileType', {
+          group = 'MyLspConfig',
+          pattern = filetype,
+          callback = function()
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              group = 'MyLspConfig',
+              buffer = 0,
+              callback = f,
+            })
+          end,
+        })
+      end
 
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -336,6 +355,7 @@ require('lazy').setup({
           },
         },
       })
+      on_save('lua', function() vim.lsp.buf.format() end)
       --}}}
 
       --{{{ for Markdown
@@ -425,6 +445,7 @@ require('lazy').setup({
           'gowork',
         },
       })
+      on_save('go', function() vim.lsp.buf.format() end)
       --}}}
 
       --{{{ for Node.js and frontend development
@@ -456,6 +477,7 @@ require('lazy').setup({
         capabilities = capabilities,
         root_dir = lspconfig.util.root_pattern("astro.config.*"),
       })
+      on_save('astro', function() vim.lsp.buf.format() end)
       --}}}
 
       --{{{ for Deno
@@ -475,6 +497,7 @@ require('lazy').setup({
       lspconfig.terraformls.setup({
         capabilities = capabilities,
       })
+      on_save('terraform', function() vim.lsp.buf.format() end)
       --}}}
 
       --{{{ for Docker
@@ -597,11 +620,9 @@ require('lazy').setup({
           },
           ['<C-n>'] = {
             i = select_next_item_i,
-            c = select_next_item_c,
           },
           ['<C-p>'] = {
             i = select_prev_item_i,
-            c = select_prev_item_c,
           },
           ['<CR>'] = {
             i = cmp.mapping.confirm({ select = false }),
@@ -1189,7 +1210,7 @@ require('lazy').setup({
 
       vim.api.nvim_create_autocmd('FileType', {
         group = 'MyDispatch',
-        pattern = 'terraform',
+        pattern = { 'terraform', 'tf' },
         callback = function()
           keymap('n', '<Leader>r', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform apply') end,
             ko_b)
@@ -1256,7 +1277,7 @@ require('lazy').setup({
             },
           }),
           require('neotest-python'),
-          -- require('neotest-jest'),
+          require('neotest-jest'),
           require('neotest-vitest'),
           require('neotest-dart'),
         },
