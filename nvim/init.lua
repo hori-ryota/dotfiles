@@ -293,17 +293,12 @@ require('lazy').setup({
         client.server_capabilities.documentFormattingProvider = false;
         client.server_capabilities.documentRangeFormattingProvider = false;
       end
-      local function on_save(filetype, f)
-        vim.api.nvim_create_autocmd('FileType', {
+
+      local function fmt_on_save()
+        vim.api.nvim_create_autocmd('BufWritePre', {
           group = 'MyLspConfig',
-          pattern = filetype,
-          callback = function()
-            vim.api.nvim_create_autocmd('BufWritePre', {
-              group = 'MyLspConfig',
-              buffer = 0,
-              callback = f,
-            })
-          end,
+          buffer = 0,
+          callback = function() vim.lsp.buf.format() end,
         })
       end
 
@@ -355,7 +350,6 @@ require('lazy').setup({
           },
         },
       })
-      on_save('lua', function() vim.lsp.buf.format() end)
       --}}}
 
       --{{{ for Markdown
@@ -444,13 +438,17 @@ require('lazy').setup({
           'gomod',
           'gowork',
         },
+        on_attach = function()
+          fmt_on_save()
+        end,
       })
-      on_save('go', function() vim.lsp.buf.format() end)
       --}}}
 
       --{{{ for Node.js and frontend development
       lspconfig.tsserver.setup({
         capabilities = capabilities,
+        root_dir = lspconfig.util.root_pattern("package.json"),
+        single_file_support = false,
         -- use prettier as formatter
         on_attach = disable_formatter
       })
@@ -476,14 +474,25 @@ require('lazy').setup({
       lspconfig.astro.setup({
         capabilities = capabilities,
         root_dir = lspconfig.util.root_pattern("astro.config.*"),
+        on_attach = function()
+          fmt_on_save()
+        end,
       })
-      on_save('astro', function() vim.lsp.buf.format() end)
       --}}}
 
       --{{{ for Deno
       lspconfig.denols.setup({
         capabilities = capabilities,
         root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+        on_attach = function()
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            group = 'MyLspConfig',
+            buffer = 0,
+            callback = function() vim.lsp.buf.format() end,
+          })
+
+          vim.opt_local.makeprg = 'deno run --allow-read --allow-net %'
+        end,
       })
       --}}}
 
@@ -496,8 +505,10 @@ require('lazy').setup({
       --{{{ for Terraform
       lspconfig.terraformls.setup({
         capabilities = capabilities,
+        on_attach = function()
+          fmt_on_save()
+        end,
       })
-      on_save('terraform', function() vim.lsp.buf.format() end)
       --}}}
 
       --{{{ for Docker
