@@ -79,6 +79,7 @@ pip_install_targets+=(jupytext)
 ### LSP
 npm_install_targets+=("typescript" "typescript-language-server")
 npm_install_targets+=("stylelint-lsp")
+npm_install_targets+=("@tailwindcss/language-server")
 
 ### Astro
 npm_install_targets+=("@astrojs/language-server")

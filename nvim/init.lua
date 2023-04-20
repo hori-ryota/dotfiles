@@ -457,15 +457,18 @@ require('lazy').setup({
         -- use prettier as formatter
         init_options = { provideFormatter = false },
       })
-      lspconfig.cssls.setup({
-        capabilities = capabilities,
-        -- use prettier as formatter
-        init_options = { provideFormatter = false },
-      })
+      -- lspconfig.cssls.setup({
+      --   capabilities = capabilities,
+      --   -- use prettier as formatter
+      --   init_options = { provideFormatter = false },
+      -- })
       lspconfig.eslint.setup({
         capabilities = capabilities,
       })
       lspconfig.stylelint_lsp.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.tailwindcss.setup({
         capabilities = capabilities,
       })
       --}}}
