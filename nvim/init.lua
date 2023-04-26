@@ -791,7 +791,6 @@ require('lazy').setup({
 
       keymap('n', '<Space>u', '<Cmd>Telescope undo<CR>', ko_s)
 
-      keymap('n', '<Space>t', '<Cmd>Telescope treesitter<CR>', ko_s)
       keymap('n', '<Space>p', '<Cmd>Telescope registers<CR>', ko_s)
 
       -- memolist
@@ -1265,6 +1264,9 @@ require('lazy').setup({
       keymap('n', '<Leader>T', function() require("neotest").run.run() end, ko)
       keymap('n', ']f', function() require("neotest").jump.next({ status = "failed" }) end, ko)
       keymap('n', '[f', function() require("neotest").jump.prev({ status = "failed" }) end, ko)
+      keymap('n', '<Space>to', function() require("neotest").output.open({ enter = true }) end, ko)
+      keymap('n', '<Space>ts', function() require("neotest").summary.open() end, ko)
+      keymap('n', '<Space>ta', function() require("neotest").output.open({ enter = true }) end, ko)
     end,
     config = function()
       local neotest_ns = vim.api.nvim_create_namespace('neotest')
@@ -1291,7 +1293,15 @@ require('lazy').setup({
           require('neotest-python'),
           require('neotest-jest'),
           require('neotest-vitest'),
+          require('neotest-playwright').adapter({
+            options = {
+              enable_dynamic_test_discovery = true,
+            },
+          }),
           require('neotest-dart'),
+        },
+        consumers = {
+          playwright = require("neotest-playwright.consumers").consumers,
         },
         icons = {
           failed  = '',
@@ -1318,6 +1328,7 @@ require('lazy').setup({
   'nvim-neotest/neotest-python',
   'haydenmeade/neotest-jest',
   'marilari88/neotest-vitest',
+  'thenbe/neotest-playwright',
   'sidlatau/neotest-dart',
   -- NOTE: neotest-denoはまだWIPな模様（README.mdにWIPと記載、docに `*neotest.config*` がありhelptagsが本体との重複で失敗する）
   --}}}
