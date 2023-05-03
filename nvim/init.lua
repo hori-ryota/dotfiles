@@ -1044,6 +1044,20 @@ require('lazy').setup({
     },
   },
   --}}}
+  --{{{ Git
+  {
+    'f-person/git-blame.nvim',
+    keys = {
+      { '<Space>vBB', '<Cmd>GitBlameToggle<CR>' },
+      { '<Space>vBy', '<Cmd>GitBlameCopySHA<CR>' },
+      { '<Space>vBy', '<Cmd>GitBlameCopyFileURL<CR>' },
+      { '<Space>vO',  '<Cmd>GitBlameOpenFileURL<CR>' },
+    },
+    init = function()
+      vim.g.gitblame_date_format = '%Y-%m-%d %H:%m:%S'
+    end
+  },
+  --}}}
   --{{{ GitHub
   {
     'pwntester/octo.nvim',
