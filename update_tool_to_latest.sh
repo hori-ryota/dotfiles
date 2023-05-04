@@ -6,6 +6,8 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
 
 (cd ./zprezto && git pull origin master && git submodule update --init)
 
+asdf plugin update --all
+
 sed -i '' -E "s/(DENO_VERSION=).*/\1$(asdf latest deno)/" ./zsh/modules/deno/export.zsh
 
 sed -i '' -E "s/(GO_VERSION=).*/\1$(asdf latest golang 1.20)/" ./zsh/modules/go/export.zsh

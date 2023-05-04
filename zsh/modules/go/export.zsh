@@ -1,4 +1,4 @@
-export GO_VERSION=1.20.3
+export GO_VERSION=1.20.4
 export GOLANGCI_LINT_VERSION=1.52.2
 export GOPATH="$DEV_DIR"
 export PATH="$PATH:$GOPATH/bin"
