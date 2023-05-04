@@ -47,11 +47,3 @@ for f in "$(dirname "${BASH_SOURCE:-$0}")/zsh/modules/"*"/install.sh"; do
 	zsh -c "${f}"
 	echo "Finish installation script ${f}"
 done
-
-# Library Preferences
-## force sync local dir
-for source in "$DOTFILEDIR/Library/Preferences/"*; do
-	dest="$HOME/Library/Preferences/"
-	rm -rf "${dest}${source##*/}"
-	ln -snf $source "${dest}${source##*/}"
-done
