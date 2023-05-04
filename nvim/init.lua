@@ -789,8 +789,6 @@ require('lazy').setup({
 
       keymap('n', '<Space>vs', '<Cmd>Telescope git_status initial_mode=normal<CR>', ko_s)
 
-      keymap('n', '<Space>u', '<Cmd>Telescope undo<CR>', ko_s)
-
       keymap('n', '<Space>p', '<Cmd>Telescope registers<CR>', ko_s)
 
       -- memolist
@@ -947,12 +945,6 @@ require('lazy').setup({
     end,
   },
   'kkharji/sqlite.lua',
-  {
-    'debugloop/telescope-undo.nvim',
-    config = function()
-      require('telescope').load_extension('undo')
-    end,
-  },
   {
     'lpoto/telescope-docker.nvim',
     init = function()
@@ -1469,6 +1461,14 @@ require('lazy').setup({
     config = function()
       require('Comment').setup({})
     end,
+  },
+  --}}}
+  --{{{ Undo
+  {
+    'simnalamburt/vim-mundo',
+    keys = {
+      { '<Space>u', '<Cmd>MundoToggle<CR>' },
+    },
   },
   --}}}
   --{{{ Memo
