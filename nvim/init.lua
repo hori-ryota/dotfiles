@@ -791,6 +791,8 @@ require('lazy').setup({
       keymap('n', '<Space>.', '<Cmd>Telescope resume<CR>', ko_s)
 
       keymap('n', '<Space>vs', '<Cmd>Telescope git_status initial_mode=normal<CR>', ko_s)
+      keymap('n', '<Space>vl', '<Cmd>Telescope git_commits initial_mode=normal<CR>', ko_s)
+      keymap('n', '<Space>vL', '<Cmd>Telescope git_bcommits initial_mode=normal<CR>', ko_s)
 
       keymap('n', '<Space>p', '<Cmd>Telescope registers<CR>', ko_s)
 
