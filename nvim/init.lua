@@ -720,7 +720,7 @@ require('lazy').setup({
         enabled = true,
         auto_trigger = true,
         keymap = {
-          accept = '<C-Space>',
+          accept = '<C-;>',
           prev = '<C-k>',
           next = '<C-j>',
           dissmiss = '<C-d>',
@@ -732,7 +732,7 @@ require('lazy').setup({
           accept = '<CR>',
           jump_prev = '<C-k>',
           jump_next = '<C-j>',
-          refresh = '<C-r>',
+          refresh = '<C-l>',
           open = '<C-q>',
         },
         layout = {
