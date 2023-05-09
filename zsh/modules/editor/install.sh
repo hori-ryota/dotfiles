@@ -76,6 +76,7 @@ fi
 pip_install_targets+=(jupytext)
 
 ## Node.js and frontend development
+npm_install_targets+=("@fsouza/prettierd")
 ### LSP
 npm_install_targets+=("typescript" "typescript-language-server")
 npm_install_targets+=("stylelint-lsp")
