@@ -1253,7 +1253,7 @@ require('lazy').setup({
           end,
         })
       end
-      bind_makeprg('sh', '%')
+      bind_makeprg('sh', '%:p')
     end
   },
   {
