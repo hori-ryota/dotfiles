@@ -1735,7 +1735,6 @@ require('lazy').setup({
     init = function()
       vim.g.mkdp_command_for_global = 1
       vim.g.mkdp_auto_close = 0
-      vim.g.mkdp_markdown_css = vim.fn.stdpath('config') .. '/markdown_preview-markdown.css'
       vim.g.mkdp_theme = 'light'
     end,
   },
