@@ -319,7 +319,6 @@ require('lazy').setup({
           -- use prettier
           provideFormatter = false,
         },
-        filetypes = { 'json', 'jsonc', 'json5' }
       })
       lspconfig.yamlls.setup({
         capabilities = capabilities,
