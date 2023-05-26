@@ -979,6 +979,9 @@ require('lazy').setup({
       git = {
         ignore = false,
       },
+      view = {
+        width = 60,
+      },
       renderer = {
         icons = {
           git_placement = 'signcolumn',
