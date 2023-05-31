@@ -1275,11 +1275,11 @@ require('lazy').setup({
     init = function()
       keymap('n', '<Leader>t', function() require("neotest").run.run(vim.fn.expand('%')) end, ko)
       keymap('n', '<Leader>T', function() require("neotest").run.run() end, ko)
-      keymap('n', ']f', function() require("neotest").jump.next({ status = "failed" }) end, ko)
-      keymap('n', '[f', function() require("neotest").jump.prev({ status = "failed" }) end, ko)
+      keymap('n', '<Leader>gt', function() require("neotest").run.run(vim.fn.expand('%:h')) end, ko)
+      keymap('n', ']T', function() require("neotest").jump.next({ status = "failed" }) end, ko)
+      keymap('n', '[T', function() require("neotest").jump.prev({ status = "failed" }) end, ko)
       keymap('n', '<Space>to', function() require("neotest").output.open({ enter = true }) end, ko)
-      keymap('n', '<Space>ts', function() require("neotest").summary.open() end, ko)
-      keymap('n', '<Space>ta', function() require("neotest").output.open({ enter = true }) end, ko)
+      keymap('n', '<Space>ts', function() require("neotest").summary.toggle() end, ko)
     end,
     config = function()
       local neotest_ns = vim.api.nvim_create_namespace('neotest')
@@ -1324,15 +1324,18 @@ require('lazy').setup({
           unknown = '',
         },
         summary = {
-          next_failed = "]f",
-          prev_failed = "[f",
-          expand = "o",
-          expand_all = "O",
-          jumpto = "<C-]>",
-          mark = 'x',
-          clear_marked = 'X',
-          run = 'r',
-          run_marked = 'R',
+          mappings = {
+            next_failed = ']T',
+            prev_failed = '[T',
+            expand = 'o',
+            expand_all = 'O',
+            jumpto = '<CR>',
+            mark = 'x',
+            clear_marked = 'X',
+            run = 'r',
+            run_marked = 'R',
+            short = 'P',
+          },
         },
       })
     end,
