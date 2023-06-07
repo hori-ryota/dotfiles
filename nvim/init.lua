@@ -412,10 +412,10 @@ require('lazy').setup({
             ['local'] = os.getenv('GO_IMPORTS_LOCAL'),
             ---- UI ----
             codelenses = {
-              gc_details = true,
+              gc_details = false,
               generate = true,
               regenerate_cgo = true,
-              test = true,
+              test = false,
               tidy = true,
               upgrade_dependency = true,
               vendor = true,
@@ -717,31 +717,34 @@ require('lazy').setup({
   {
     'zbirenbaum/copilot.lua',
     event = 'InsertEnter',
-    opts = {
-      suggestion = {
-        enabled = true,
-        auto_trigger = true,
-        keymap = {
-          accept = '<C-a>',
-          prev = '<C-k>',
-          next = '<C-j>',
-          dissmiss = '<C-d>',
+    config = function()
+      require('copilot').setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = '<C-a>',
+            prev = '<C-k>',
+            next = '<C-j>',
+            dissmiss = '<C-d>',
+          },
         },
-      },
-      panel = {
-        enabled = true,
-        keymap = {
-          accept = '<CR>',
-          jump_prev = '<C-k>',
-          jump_next = '<C-j>',
-          refresh = '<C-l>',
-          open = '<C-q>',
+        panel = {
+          enabled = true,
+          keymap = {
+            accept = '<CR>',
+            jump_prev = '<C-k>',
+            jump_next = '<C-j>',
+            refresh = '<C-l>',
+            open = '<C-q>',
+          },
+          layout = {
+            position = 'right',
+          },
         },
-        layout = {
-          position = 'right',
-        },
-      },
-    },
+      })
+      -- vim.api.nvim_command('highlight link CopilotSuggestion Comment')
+    end,
   },
   --}}}
   --{{{ ChatGPT
@@ -1353,7 +1356,7 @@ require('lazy').setup({
     -- easily search for, substitute, and abbreviate multiple variants of a word
 
     'tpope/vim-abolish',
-    cmd = { 'S', 'Abolish', 'Subvert' },
+    lazy = false,
   },
   {
     -- replacement in quickfix
