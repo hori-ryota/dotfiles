@@ -1,1 +1,1 @@
-export DENO_VERSION=1.33.2
+export DENO_VERSION=1.34.1
