@@ -1226,6 +1226,11 @@ require('lazy').setup({
       keymap('n', '<Leader>dd', '<Cmd>Dispatch -dir=%:h docker compose down<CR>', ko)
       keymap('n', '<Leader>dl', ':<C-u>Dispatch -dir=%:h docker compose logs', ko)
 
+      keymap('n', '<Leader>nb', '<Cmd>Dispatch -dir=%:h pnpm run -w build-all<CR>', ko)
+      keymap('n', '<Leader>nc', '<Cmd>Dispatch -dir=%:h pnpm run -w check-all<CR>', ko)
+      keymap('n', '<Leader>nq', '<Cmd>Dispatch -dir=%:h pnpm run -w autofix-all<CR>', ko)
+      keymap('n', '<Leader>ni', '<Cmd>Dispatch -dir=%:h pnpm install<CR>', ko)
+
       vim.api.nvim_create_augroup('MyDispatch', {})
 
       local function terraform_dir()
@@ -1235,6 +1240,11 @@ require('lazy').setup({
         end
         return dir
       end
+
+      keymap('n', '<Leader>fp', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform plan') end, ko)
+      keymap('n', '<Leader>fa', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform apply') end, ko)
+      keymap('n', '<Leader>fi', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform init') end, ko)
+      keymap('n', '<Leader>fu', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform init -upgrade') end, ko)
 
       vim.api.nvim_create_autocmd('FileType', {
         group = 'MyDispatch',
