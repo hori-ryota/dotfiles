@@ -82,6 +82,7 @@ npm_install_targets+=("typescript" "typescript-language-server")
 npm_install_targets+=("stylelint-lsp")
 npm_install_targets+=("emmet-ls")
 npm_install_targets+=("@tailwindcss/language-server")
+npm_install_targets+=("@prisma/language-server")
 
 ### Astro
 npm_install_targets+=("@astrojs/language-server")

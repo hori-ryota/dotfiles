@@ -473,6 +473,9 @@ require('lazy').setup({
       lspconfig.emmet_ls.setup({
         capabilities = capabilities,
       })
+      lspconfig.prismals.setup({
+        capabilities = capabilities,
+      })
       --}}}
 
       --{{{ for Astro
@@ -1661,7 +1664,7 @@ require('lazy').setup({
           'po',
           'poe_filter',
           'pony',
-          'prisma',
+          -- 'prisma',
           -- 'proto',
           'prql',
           'pug',
