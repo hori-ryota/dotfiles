@@ -1232,7 +1232,9 @@ require('lazy').setup({
       keymap('n', '<Leader>nb', '<Cmd>Dispatch -dir=%:h pnpm run -w build-all<CR>', ko)
       keymap('n', '<Leader>nc', '<Cmd>Dispatch -dir=%:h pnpm run -w check-all<CR>', ko)
       keymap('n', '<Leader>nq', '<Cmd>Dispatch -dir=%:h pnpm run -w autofix-all<CR>', ko)
+      keymap('n', '<Leader>ng', '<Cmd>Dispatch -dir=%:h pnpm run -w generate-all<CR>', ko)
       keymap('n', '<Leader>ni', '<Cmd>Dispatch -dir=%:h pnpm install<CR>', ko)
+      keymap('n', '<Leader>na', ':<C-u>Dispatch -dir=%:h pnpm add ', ko)
 
       vim.api.nvim_create_augroup('MyDispatch', {})
 
