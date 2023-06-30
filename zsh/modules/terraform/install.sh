@@ -1,9 +1,9 @@
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
-zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../1-asdf/install.sh"
+zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../1-rtx/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 
-asdf plugin-add terraform
-asdf install terraform $TERRAFORM_VERSION
-asdf global terraform $TERRAFORM_VERSION
+rtx plugins install terraform
+rtx install terraform $TERRAFORM_VERSION
+rtx global terraform $TERRAFORM_VERSION
 
 brew install hashicorp/tap/terraform-ls

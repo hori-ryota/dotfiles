@@ -3,6 +3,9 @@ if [[ -s "$HOME/.zprezto/runcoms/zshrc" ]]; then
   source "$HOME/.zprezto/runcoms/zshrc"
 fi
 
+# modules
+source "$HOME/.zsh/modules/zshrc"
+
 # replace git to hub
 eval "$(hub alias -s)"
 

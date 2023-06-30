@@ -1,0 +1,1 @@
+eval "$(rtx hook-env)"

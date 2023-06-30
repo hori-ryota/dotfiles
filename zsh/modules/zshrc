@@ -1,0 +1,4 @@
+for f in "$(dirname "${BASH_SOURCE:-$0}")/"*"/zshrc"
+do
+  source "$f"
+done
