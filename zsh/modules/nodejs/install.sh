@@ -9,4 +9,5 @@ rtx global nodejs $NODE_VERSION
 npm install -g \
   npm \
   yarn \
+  pnpm \
   npm-check-updates
