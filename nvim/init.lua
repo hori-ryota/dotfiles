@@ -62,18 +62,16 @@ keymap('t', '<ESC>', '<C-\\><C-n>', ko_s)
 --}}}
 --{{{ 9 using the mouse
 --}}}
---{{{ 10 printing
+--{{{ 10 messages and info
 --}}}
---{{{ 11 messages and info
+--{{{ 11 selecting text
 --}}}
---{{{ 12 selecting text
---}}}
---{{{ 13 editing text
+--{{{ 12 editing text
 vim.opt.undofile = true
 vim.opt.completeopt = 'menuone'
 vim.opt.infercase = true
 --}}}
---{{{ 14 tabs and indenting
+--{{{ 13 tabs and indenting
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.shiftround = true
@@ -81,43 +79,45 @@ vim.opt.smarttab = false
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 --}}}
---{{{ 15 folding
+--{{{ 14 folding
 vim.opt.foldmethod = 'marker'
 --}}}
---{{{ 16 diff mode
+--{{{ 15 diff mode
 vim.opt.diffopt:append('vertical')
 vim.opt.diffopt:append('algorithm:histogram')
 --}}}
---{{{ 17 mapping
+--{{{ 16 mapping
 vim.opt.ttimeoutlen = 10
 --}}}
---{{{ 18 reading and writing files
+--{{{ 17 reading and writing files
 vim.opt.fileformats = 'unix,mac,dos'
 --}}}
---{{{ 19 the swap file
+--{{{ 18 the swap file
 --}}}
---{{{ 20 command line editing
+--{{{ 19 command line editing
 vim.opt.wildmode = 'longest:full,full'
 vim.opt.wildoptions = 'pum'
 keymap('c', '<C-n>', '<Down>', ko)
 keymap('c', '<C-p>', '<Up>', ko)
 --}}}
---{{{ 21 executing external commands
+--{{{ 20 executing external commands
 --}}}
---{{{ 22 running make and jumping to errors
+--{{{ 21 running make and jumping to errors
 -- modify grep command to ripgrep
 if vim.fn.executable('rg') then
   vim.opt.grepprg = 'rg --vimgrep'
   vim.opt.grepformat = '%f:%l:%c:%m'
 end
 --}}}
---{{{ 23 language specific
+--{{{ 22 language specific
 --}}}
---{{{ 24 multi-byte characters
+--{{{ 23 multi-byte characters
 vim.opt.fileencodings = 'utf-8,sjis'
 --}}}
---{{{ 25 various
+--{{{ 24 various
 vim.opt.sessionoptions:append('winpos')
+vim.opt.sessionoptions:append('winpos')
+vim.opt.exrc = true
 --}}}
 --}}}
 
@@ -1249,7 +1249,8 @@ require('lazy').setup({
       keymap('n', '<Leader>fp', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform plan') end, ko)
       keymap('n', '<Leader>fa', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform apply') end, ko)
       keymap('n', '<Leader>fi', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform init') end, ko)
-      keymap('n', '<Leader>fu', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform init -upgrade') end, ko)
+      keymap('n', '<Leader>fu', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform init -upgrade') end,
+        ko)
 
       vim.api.nvim_create_autocmd('FileType', {
         group = 'MyDispatch',
