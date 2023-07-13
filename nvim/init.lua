@@ -784,14 +784,12 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons',
       'nvim-telescope/telescope-file-browser.nvim',
-      'nvim-telescope/telescope-frecency.nvim',
     },
     cmd = 'Telescope',
     init = function() --{{{
       keymap('n', '<Space><Space>', '<Cmd>Telescope find_files<CR>', ko_s)
       keymap('n', '<Space>w', '<Cmd>Telescope file_browser<CR>', ko_s)
       keymap('n', '<Space>W', '<Cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>', ko_s)
-      keymap('n', '<Space>h', '<Cmd>Telescope frecency<CR>', ko_s)
       keymap('n', '<Space>b', '<Cmd>Telescope buffers<CR>', ko_s)
       keymap('n', '<Space>r', '<Cmd>Telescope live_grep<CR>', ko_s)
       keymap('n', '<Space>.', '<Cmd>Telescope resume<CR>', ko_s)
@@ -944,15 +942,6 @@ require('lazy').setup({
     'nvim-telescope/telescope-file-browser.nvim',
     config = function()
       require('telescope').load_extension('file_browser')
-    end,
-  },
-  {
-    'nvim-telescope/telescope-frecency.nvim',
-    dependencies = {
-      'kkharji/sqlite.lua',
-    },
-    config = function()
-      require('telescope').load_extension('frecency')
     end,
   },
   'kkharji/sqlite.lua',
