@@ -5,7 +5,9 @@
 .envrc
 pyvenv.cfg
 .pyflyby
-.init.vim.local
+.nvim.lua
+.nvimrc
+.exrc
 
 # for ripgrep
 .rgignore

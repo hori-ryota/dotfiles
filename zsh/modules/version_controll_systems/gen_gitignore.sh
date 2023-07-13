@@ -12,7 +12,9 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
 	echo ".envrc"
 	echo "pyvenv.cfg"
 	echo ".pyflyby"
-	echo ".init.vim.local"
+	echo ".nvim.lua"
+	echo ".nvimrc"
+	echo ".exrc"
 	echo ""
 
 	echo "# for ripgrep"
