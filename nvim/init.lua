@@ -1762,6 +1762,10 @@ require('lazy').setup({
       vim.g.mkdp_theme = 'light'
     end,
   },
+  {
+    'aklt/plantuml-syntax',
+    ft = { 'markdown', 'plantuml' },
+  },
   --}}}
   --{{{ Status bar
   {
