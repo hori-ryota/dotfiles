@@ -6,8 +6,7 @@ rtx plugins install nodejs
 rtx install nodejs $NODE_VERSION
 rtx global nodejs $NODE_VERSION
 
+corepack enable
+
 npm install -g \
-  npm \
-  yarn \
-  pnpm \
   npm-check-updates
