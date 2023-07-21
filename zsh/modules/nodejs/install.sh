@@ -5,6 +5,7 @@ source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 rtx plugins install nodejs
 rtx install nodejs $NODE_VERSION
 rtx global nodejs $NODE_VERSION
+rtx reshim
 
 corepack enable
 

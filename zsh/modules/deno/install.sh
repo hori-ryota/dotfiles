@@ -5,3 +5,4 @@ source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 rtx plugins install deno
 rtx install deno $DENO_VERSION
 rtx global deno $DENO_VERSION
+rtx reshim

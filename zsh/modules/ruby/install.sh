@@ -5,3 +5,4 @@ source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 rtx plugins install ruby
 rtx install ruby $RUBY_VERSION
 rtx global ruby $RUBY_VERSION
+rtx reshim

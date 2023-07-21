@@ -6,11 +6,13 @@ mkdir -p "$GOPATH"
 rtx plugins install golang
 rtx install golang $GO_VERSION
 rtx global golang $GO_VERSION
+rtx reshim
 
 echo 'Install github.com/golangci/golangci-lint'
 rtx plugins install golangci-lint
 rtx install golangci-lint $GOLANGCI_LINT_VERSION
 rtx global golangci-lint $GOLANGCI_LINT_VERSION
+rtx reshim
 
 # install Debugger
 echo "Install github.com/go-delve/delve/cmd/dlv"
