@@ -99,7 +99,7 @@ keybinding:
   branches:
     createPullRequest: "O"
     viewPullRequestOptions: null
-    checkoutBranchByName: "<enter>"
+    checkoutBranchByName: X
     forceCheckoutBranch: null
     rebaseBranch: "F"
     renameBranch: "R"
