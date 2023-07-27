@@ -464,9 +464,9 @@ require('lazy').setup({
       lspconfig.eslint.setup({
         capabilities = capabilities,
       })
-      lspconfig.stylelint_lsp.setup({
-        capabilities = capabilities,
-      })
+      -- lspconfig.stylelint_lsp.setup({
+      --   capabilities = capabilities,
+      -- })
       lspconfig.tailwindcss.setup({
         capabilities = capabilities,
       })
