@@ -21,30 +21,30 @@ notARepository: "skip"
 keybinding:
   universal:
     return: "<esc>"
-    quitWithoutChangingDirectory: null
+    quitWithoutChangingDirectory: Q
     togglePanel: "<C-w>" # goto the next panel
     prevItem: "k" # go one line up
     nextItem: "j" # go one line down
-    prevItem-alt: null # go one line up
-    nextItem-alt: null # go one line down
-    prevPage: null # go to next page in list
-    nextPage: null # go to previous page in list
+    prevItem-alt: Q # go one line up
+    nextItem-alt: Q # go one line down
+    prevPage: Q # go to next page in list
+    nextPage: Q # go to previous page in list
     gotoTop: "g" # go to top of list
     gotoBottom: "G" # go to bottom of list
     scrollLeft: "h" # scroll left within list view
     scrollRight: "l" # scroll right within list view
     prevBlock: "<C-k>" # goto the previous block / panel
     nextBlock: "<C-j>" # goto the next block / panel
-    prevBlock-alt: null # goto the previous block / panel
-    nextBlock-alt: null # goto the next block / panel
+    prevBlock-alt: Q # goto the previous block / panel
+    nextBlock-alt: Q # goto the next block / panel
     jumpToBlock: ["1", "2", "3", "4", "5"] # goto the Nth block / panel
     nextMatch: "n"
     prevMatch: "N"
     optionMenu: "?" # show help menu
-    optionMenu-alt1: null # show help menu
+    optionMenu-alt1: Q # show help menu
     select: "x"
     goInto: "<enter>"
-    openRecentRepos: null
+    openRecentRepos: Q
     confirm: "<enter>"
     remove: "d"
     new: "a"
@@ -52,96 +52,96 @@ keybinding:
     openFile: "o"
     scrollUpMain: "<C-b>" # main panel scroll up
     scrollDownMain: "<C-f>" # main panel scroll down
-    scrollUpMain-alt1: null # main panel scroll up
-    scrollDownMain-alt1: null # main panel scroll down
-    scrollUpMain-alt2: null # main panel scroll up
-    scrollDownMain-alt2: null # main panel scroll down
+    scrollUpMain-alt1: Q # main panel scroll up
+    scrollDownMain-alt1: Q # main panel scroll down
+    scrollUpMain-alt2: Q # main panel scroll up
+    scrollDownMain-alt2: Q # main panel scroll down
     executeCustomCommand: ":"
     createRebaseOptionsMenu: "m"
     pushFiles: "P"
     pullFiles: "<C-p>"
     refresh: "<C-l>"
-    createPatchOptionsMenu: null
+    createPatchOptionsMenu: Q
     nextTab: "]"
     prevTab: "["
     nextScreenMode: "<C-z>"
-    prevScreenMode: null
+    prevScreenMode: Q
     undo: "u"
     redo: "<C-r>"
-    filteringMenu: null
-    diffingMenu: null
-    diffingMenu-alt: null # deprecated
-    copyToClipboard: null
+    filteringMenu: Q
+    diffingMenu: Q
+    diffingMenu-alt: Q # deprecated
+    copyToClipboard: Q
     submitEditorText: "<enter>"
     appendNewline: "<a-enter>"
     extrasMenu: "@"
-    toggleWhitespaceInDiffView: null
-    increaseContextInDiffView: null
-    decreaseContextInDiffView: null
+    toggleWhitespaceInDiffView: Q
+    increaseContextInDiffView: Q
+    decreaseContextInDiffView: Q
   status:
-    checkForUpdate: null
-    recentRepos: null
+    checkForUpdate: Q
+    recentRepos: Q
   files:
     commitChanges: "C"
-    commitChangesWithoutHook: null # commit changes without pre-commit hook
+    commitChangesWithoutHook: Q # commit changes without pre-commit hook
     amendLastCommit: "A"
-    commitChangesWithEditor: null
-    ignoreFile: null
+    commitChangesWithEditor: Q
+    ignoreFile: Q
     refreshFiles: "<C-l>"
     stashAllChanges: "S"
-    viewStashOptions: null
+    viewStashOptions: Q
     toggleStagedAll: "U" # stage/unstage all
-    viewResetOptions: null
-    fetch: null
+    viewResetOptions: Q
+    fetch: Q
     toggleTreeView: "`"
     openMergeTool: "M"
-    openStatusFilter: null
+    openStatusFilter: Q
   branches:
     createPullRequest: "O"
-    viewPullRequestOptions: null
+    viewPullRequestOptions: Q
     checkoutBranchByName: X
-    forceCheckoutBranch: null
+    forceCheckoutBranch: Q
     rebaseBranch: "F"
     renameBranch: "R"
     mergeIntoCurrentBranch: "M"
-    viewGitFlowOptions: null
-    fastForward: null # fast-forward this branch from its upstream
+    viewGitFlowOptions: Q
+    fastForward: Q # fast-forward this branch from its upstream
     createTag: "T"
-    pushTag: null
-    setUpstream: null # set as upstream of checked-out branch
-    fetchRemote: null
+    pushTag: Q
+    setUpstream: Q # set as upstream of checked-out branch
+    fetchRemote: Q
   commits:
     squashDown: "S"
     renameCommit: "R"
-    renameCommitWithEditor: null
-    viewResetOptions: null
-    markCommitAsFixup: null
+    renameCommitWithEditor: Q
+    viewResetOptions: Q
+    markCommitAsFixup: Q
     createFixupCommit: "E" # create fixup commit for this commit
-    squashAboveCommits: null
-    moveDownCommit: null # move commit down one
-    moveUpCommit: null # move commit up one
+    squashAboveCommits: Q
+    moveDownCommit: Q # move commit down one
+    moveUpCommit: Q # move commit up one
     amendToCommit: "A"
-    pickCommit: null # pick commit (when mid-rebase)
-    revertCommit: null
+    pickCommit: Q # pick commit (when mid-rebase)
+    revertCommit: Q
     cherryPickCopy: "C"
-    cherryPickCopyRange: null
-    pasteCommits: null
-    tagCommit: null
+    cherryPickCopyRange: Q
+    pasteCommits: Q
+    tagCommit: Q
     checkoutCommit: "<enter>"
-    resetCherryPick: null
-    copyCommitMessageToClipboard: null
-    openLogMenu: null
-    viewBisectOptions: null
+    resetCherryPick: Q
+    copyCommitMessageToClipboard: Q
+    openLogMenu: Q
+    viewBisectOptions: Q
   stash:
     popStash: "<enter>"
     renameStash: "R"
   commitFiles:
-    checkoutCommitFile: null
+    checkoutCommitFile: Q
   main:
     toggleDragSelect: "V"
-    toggleDragSelect-alt: null
+    toggleDragSelect-alt: Q
     toggleSelectHunk: "X"
-    pickBothHunks: null
+    pickBothHunks: Q
   submodules:
     init: "I"
     update: "U"
