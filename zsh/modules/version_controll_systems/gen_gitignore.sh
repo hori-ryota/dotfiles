@@ -22,5 +22,5 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
 	echo ""
 
 	# Use [simonwhitaker/gibo: Easy access to gitignore boilerplates](https://github.com/simonwhitaker/gibo).
-	gibo dump Dropbox Eclipse JetBrains Linux macOS MicrosoftOffice Vagrant Ninja Tags Vim VisualStudioCode Xcode
+	gibo dump Dropbox Eclipse JetBrains Linux macOS MicrosoftOffice Vagrant Ninja Vim VisualStudioCode Xcode
 } >gitignore
