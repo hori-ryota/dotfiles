@@ -79,7 +79,7 @@ pip_install_targets+=(jupytext)
 npm_install_targets+=("@fsouza/prettierd")
 ### LSP
 npm_install_targets+=("typescript" "typescript-language-server")
-npm_install_targets+=("emmet-ls")
+npm_install_targets+=("@olrtg/emmet-language-server")
 npm_install_targets+=("@tailwindcss/language-server")
 npm_install_targets+=("@prisma/language-server")
 

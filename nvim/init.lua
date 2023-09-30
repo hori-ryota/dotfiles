@@ -470,7 +470,7 @@ require('lazy').setup({
       lspconfig.tailwindcss.setup({
         capabilities = capabilities,
       })
-      lspconfig.emmet_ls.setup({
+      lspconfig.emmet_language_server.setup({
         capabilities = capabilities,
       })
       lspconfig.prismals.setup({
