@@ -1756,6 +1756,36 @@ require('lazy').setup({
     'aklt/plantuml-syntax',
     ft = { 'markdown', 'plantuml' },
   },
+  -- Web
+  {
+    'windwp/nvim-ts-autotag',
+    ft = {
+      -- https://github.com/windwp/nvim-ts-autotag/tree/main#default-values
+      'html',
+      'javascript',
+      'typescript',
+      'javascriptreact',
+      'typescriptreact',
+      'svelte',
+      'vue',
+      'tsx',
+      'jsx',
+      'rescript',
+      'xml',
+      'php',
+      'markdown',
+      'astro',
+      'glimmer',
+      'handlebars',
+      'hbs',
+    },
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+    },
+    config = function()
+      require('nvim-ts-autotag').setup({})
+    end,
+  },
   --}}}
   --{{{ Status bar
   {
