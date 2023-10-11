@@ -239,6 +239,8 @@ require('lazy').setup({
         },
       }); --}}}
 
+      keymap('n', '<Leader>L', '<Cmd>LspRestart<CR>', ko)
+
       --{{{ [\[gopls\] delay diagnostics or not run them in insert mode · Issue \#127 · neovim/nvim\-lspconfig](https://github.com/neovim/nvim-lspconfig/issues/127)
       vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
         -- delay update diagnostics
