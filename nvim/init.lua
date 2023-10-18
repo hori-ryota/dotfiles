@@ -163,7 +163,7 @@ file_type_detect('*.mmd', 'mermaid')
 file_type_detect('*.vim.local', 'vim')
 file_type_detect('*.lua.local', 'lua')
 file_type_detect('*Dockerfile*', 'dockerfile')
-file_type_detect({ 'tsconfig.json', 'tsconfig.*.json', 'eslintrc', 'eslintrc.json' }, 'jsonc')
+file_type_detect({ 'tsconfig.json', 'tsconfig.*.json', 'eslintrc', 'eslintrc.json', 'tasks.json', 'extensions.json' }, 'jsonc')
 file_type_detect('editorconfig', 'editorconfig')
 file_type_detect({ 'gitconfig', 'gitconfig.*', '.gitconfig.*' }, 'gitconfig')
 file_type_detect({ 'gitignore', 'gitignore.*', '.gitignore.*' }, 'gitignore')
@@ -439,6 +439,15 @@ require('lazy').setup({
           'gomod',
           'gowork',
         },
+        on_attach = function()
+          fmt_on_save()
+        end,
+      })
+      --}}}
+
+      --{{{ for Rust
+      lspconfig.rust_analyzer.setup({
+        capabilities = capabilities,
         on_attach = function()
           fmt_on_save()
         end,

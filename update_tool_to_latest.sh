@@ -13,6 +13,8 @@ sed -i '' -E "s/(DENO_VERSION=).*/\1$(rtx latest deno)/" ./zsh/modules/deno/expo
 sed -i '' -E "s/(GO_VERSION=).*/\1$(rtx latest golang@1.20)/" ./zsh/modules/go/export.zsh
 sed -i '' -E "s/(GOLANGCI_LINT_VERSION=).*/\1$(rtx latest golangci-lint)/" ./zsh/modules/go/export.zsh
 
+sed -i '' -E "s/(RUST_VERSION=).*/\1$(rtx latest rust)/" ./zsh/modules/rust/export.zsh
+
 sed -i '' -E "s/(NODE_VERSION=).*/\1$(rtx latest nodejs@18)/" ./zsh/modules/nodejs/export.zsh
 
 sed -i '' -E "s/(PYTHON3_VERSION=).*/\1$(rtx latest python@3.9)/" ./zsh/modules/python/export.zsh

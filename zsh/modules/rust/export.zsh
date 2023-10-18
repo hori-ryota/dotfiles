@@ -1,0 +1,1 @@
+export RUST_VERSION=1.73.0
