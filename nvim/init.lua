@@ -1491,20 +1491,20 @@ require('lazy').setup({
       },
       -- replace
       {
-        '<Leader>rd',
+        '<Leader>wrd',
         '<Plug>(operator-sandwich-replace)' ..
         '<Plug>(operator-sandwich-release-count)' ..
         '<Plug>(textobj-sandwich-query-a)',
         mode = 'n'
       },
       {
-        '<Leader>rdb',
+        '<Leader>wrdb',
         '<Plug>(operator-sandwich-replace)' ..
         '<Plug>(operator-sandwich-release-count)' .. '<Plug>(textobj-sandwich-auto-a)',
         mode = 'n'
       },
       {
-        '<Leader>rd',
+        '<Leader>wrd',
         '<Plug>(operator-sandwich-replace)',
         mode = 'x'
       },
