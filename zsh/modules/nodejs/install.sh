@@ -10,4 +10,5 @@ rtx reshim
 corepack enable
 
 npm install -g \
-  npm-check-updates
+  npm-check-updates \
+  @antfu/ni

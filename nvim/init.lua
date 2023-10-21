@@ -163,7 +163,8 @@ file_type_detect('*.mmd', 'mermaid')
 file_type_detect('*.vim.local', 'vim')
 file_type_detect('*.lua.local', 'lua')
 file_type_detect('*Dockerfile*', 'dockerfile')
-file_type_detect({ 'tsconfig.json', 'tsconfig.*.json', 'eslintrc', 'eslintrc.json', 'tasks.json', 'extensions.json' }, 'jsonc')
+file_type_detect({ 'tsconfig.json', 'tsconfig.*.json', 'eslintrc', 'eslintrc.json', 'tasks.json', 'extensions.json' },
+  'jsonc')
 file_type_detect('editorconfig', 'editorconfig')
 file_type_detect({ 'gitconfig', 'gitconfig.*', '.gitconfig.*' }, 'gitconfig')
 file_type_detect({ 'gitignore', 'gitignore.*', '.gitignore.*' }, 'gitignore')
@@ -193,6 +194,23 @@ require('lazy').setup({
   'vim-denops/denops.vim',
   'nvim-lua/plenary.nvim',
   'MunifTanjim/nui.nvim',
+  {
+    'stevearc/dressing.nvim',
+    lazy = false,
+    init = function()
+      require('dressing').setup({
+        select = {
+          telescope = {
+            layout_config = {
+              bottom_pane = {
+                height = '0.95',
+              }
+            },
+          },
+        },
+      })
+    end,
+  },
   {
     'nvim-tree/nvim-web-devicons',
     opts = {
@@ -1207,36 +1225,84 @@ require('lazy').setup({
   --}}}
   --{{{ Async Execution
   {
-    'tpope/vim-dispatch',
+    'stevearc/overseer.nvim',
     dependencies = {
-      'radenling/vim-dispatch-neovim',
+      'MunifTanjim/nui.nvim',
+      'nvim-telescope/telescope.nvim',
     },
-    cmd = {
-      'Make',
-      'Copen',
-      'Dispatch',
-      'FocusDispatch',
-      'AbortDispatch',
-      'Start',
-      'Spawn',
-    },
+    lazy = false,
     init = function()
-      vim.g.dispatch_no_maps = 1
-      vim.g.dispatch_quicfix_height = 30
-      keymap('n', '<Leader>r', '<Cmd>Dispatch<CR>', ko)
-      keymap('n', '<Leader>du', '<Cmd>Dispatch -dir=%:h docker compose up -d<CR>', ko)
-      keymap('n', '<Leader>dU', '<Cmd>Dispatch -dir=%:h docker compose up --build -d<CR>', ko)
-      keymap('n', '<Leader>dd', '<Cmd>Dispatch -dir=%:h docker compose down<CR>', ko)
-      keymap('n', '<Leader>dl', ':<C-u>Dispatch -dir=%:h docker compose logs', ko)
+      require('overseer').setup({
+        task_list = {
+          bindings = {
+            ["?"] = "ShowHelp",
+            ["g?"] = "ShowHelp",
+            ["<CR>"] = "RunAction",
+            ["E"] = "Edit",
+            ["O"] = "Open",
+            ["V"] = "OpenVsplit",
+            ["S"] = "OpenSplit",
+            ["F"] = "OpenFloat",
+            ["Q"] = "OpenQuickFix",
+            ["P"] = "TogglePreview",
+            ["zo"] = "IncreaseDetail",
+            ["zc"] = "DecreaseDetail",
+            ["zO"] = "IncreaseAllDetail",
+            ["zC"] = "DecreaseAllDetail",
+            ["{"] = "DecreaseWidth",
+            ["}"] = "IncreaseWidth",
+            ["<C-k>"] = "PrevTask",
+            ["<C-j>"] = "NextTask",
+            ["<C-f>"] = "ScrollOutputUp",
+            ["<C-b>"] = "ScrollOutputDown",
+            ["<ESC>"] = "Close",
+          },
+        },
+      })
+      keymap('n', '<Space>o', '<Cmd>OverseerToggle bottom<CR>', ko)
+      keymap('n', '<Leader>o', '<Cmd>OverseerRun<CR><Cmd>OverseerOpen bottom<CR>', ko)
 
-      keymap('n', '<Leader>nb', '<Cmd>Dispatch -dir=%:h pnpm run -w build-all<CR>', ko)
-      keymap('n', '<Leader>nc', '<Cmd>Dispatch -dir=%:h pnpm run -w check-all<CR>', ko)
-      keymap('n', '<Leader>nq', '<Cmd>Dispatch -dir=%:h pnpm run -w autofix-all<CR>', ko)
-      keymap('n', '<Leader>ng', '<Cmd>Dispatch -dir=%:h pnpm run -w generate-all<CR>', ko)
-      keymap('n', '<Leader>ni', '<Cmd>Dispatch -dir=%:h pnpm install<CR>', ko)
-      keymap('n', '<Leader>na', ':<C-u>Dispatch -dir=%:h pnpm add ', ko)
+      local overseer = require('overseer')
 
-      vim.api.nvim_create_augroup('MyDispatch', {})
+      for k, v in pairs({
+        ["<Leader>ni"] = "ni",
+        ["<Leader>nb"] = "nr build",
+        ["<Leader>nc"] = "nr check",
+        ["<Leader>ng"] = "nr generate",
+        ["<Leader>nq"] = "nr autofix",
+        ["<Leader>npb"] = "turbo run build",
+        ["<Leader>npc"] = "turbo run check",
+        ["<Leader>npg"] = "turbo run generate",
+        ["<Leader>npq"] = "turbo run autofix",
+        ["<Leader>du"] = "docker compose up -d",
+        ["<Leader>dU"] = "docker compose up -d --build",
+        ["<Leader>dd"] = "docker compose down",
+        ["<Leader>dl"] = "docker compose logs -f",
+        ["<Leader>fP"] = "terroform plan",
+        ["<Leader>fA"] = "terroform apply",
+        ["<Leader>fI"] = "terroform init",
+        ["<Leader>fU"] = "terroform init -upgrade",
+      }) do
+        keymap('n', k, function()
+          overseer.run_template({
+            name = 'shell',
+            params = {
+              cmd = v,
+              cwd = vim.fn.expand('%:h'),
+            },
+          })
+        end, ko)
+      end
+      keymap('n', '<Leader>na', function()
+        overseer.run_template({
+          name = 'shell',
+          params = {
+            cmd = 'ni ',
+            cwd = vim.fn.expand('%:h'),
+          },
+          prompt = 'always',
+        })
+      end, ko)
 
       local function terraform_dir()
         local dir = os.getenv('TERRAFORM_DIR')
@@ -1245,43 +1311,22 @@ require('lazy').setup({
         end
         return dir
       end
-
-      keymap('n', '<Leader>fp', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform plan') end, ko)
-      keymap('n', '<Leader>fa', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform apply') end, ko)
-      keymap('n', '<Leader>fi', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform init') end, ko)
-      keymap('n', '<Leader>fu', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform init -upgrade') end,
-        ko)
-
-      vim.api.nvim_create_autocmd('FileType', {
-        group = 'MyDispatch',
-        pattern = { 'terraform', 'tf' },
-        callback = function()
-          keymap('n', '<Leader>r', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform apply') end,
-            ko_b)
-          keymap('n', '<Leader>t', function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform plan') end, ko_b)
-          keymap('n', '<Leader><Leader>r',
-            function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform init') end, ko_b)
-          keymap('n', '<Leader><Leader><Leader>r',
-            function() vim.cmd.Dispatch('-dir=' .. terraform_dir() .. ' terraform init -upgrade') end, ko_b)
-        end,
-      })
-
-      local function bind_makeprg(filetype, makeprg)
-        vim.api.nvim_create_autocmd('FileType', {
-          group = 'MyDispatch',
-          pattern = filetype,
-          callback = function()
-            vim.opt_local.makeprg = makeprg
-          end,
-        })
+      for k, v in pairs({
+        ["<Leader>fp"] = "terroform plan",
+        ["<Leader>fa"] = "terroform apply",
+        ["<Leader>fi"] = "terroform init",
+        ["<Leader>fu"] = "terroform init -upgrade",
+      }) do
+        keymap('n', k, function()
+          overseer.run_template({
+            name = 'shell',
+            params = {
+              cmd = v,
+              cwd = terraform_dir(),
+            },
+          })
+        end, ko)
       end
-      bind_makeprg('sh', '%:p')
-    end
-  },
-  {
-    'radenling/vim-dispatch-neovim',
-    init = function()
-      vim.g.dispatch_handlers = { 'neovim' }
     end
   },
   --}}}
