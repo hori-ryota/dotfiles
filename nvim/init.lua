@@ -1466,6 +1466,10 @@ require('lazy').setup({
     cmd = 'Qfreplace',
   },
   {
+    'itchyny/vim-qfedit',
+    lazy = false,
+  },
+  {
     'direnv/direnv.vim',
     lazy = false,
   },
