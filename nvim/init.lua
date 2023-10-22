@@ -1829,6 +1829,13 @@ require('lazy').setup({
       };
     end
   },
+  {
+    'brenoprata10/nvim-highlight-colors',
+    lazy = false,
+    init = function()
+      require('nvim-highlight-colors').setup()
+    end,
+  },
   --}}}
   --{{{ FileType plugins
   -- CSV
