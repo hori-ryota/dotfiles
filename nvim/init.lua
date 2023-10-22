@@ -990,6 +990,7 @@ require('lazy').setup({
     'nvim-tree/nvim-tree.lua',
     dependencies = {
       'nvim-tree/nvim-web-devicons',
+      'stevearc/oil.nvim',
     },
     init = function()
       keymap('n', '<Space>e', function() require('nvim-tree.api').tree.toggle() end, ko_s)
@@ -1059,6 +1060,13 @@ require('lazy').setup({
         apply('gcd', api.tree.change_root_to_node, 'change root')
         apply('y', api.fs.copy.absolute_path, 'yank absolute_path')
         apply('<space>h', api.tree.change_root_to_parent, 'change root to parent')
+        apply('<space>l', api.tree.change_root_to_node, 'change root to node')
+        apply('E', function()
+          local lib = require('nvim-tree.lib')
+          local node = lib.get_node_at_cursor()
+          local dir = node.type == 'directory' and node.absolute_path or node.parent.absolute_path
+          require('oil').open(dir)
+        end, 'open by oil.nvim')
 
         apply('?', api.tree.toggle_help, 'help')
         apply('gf', api.live_filter.start, 'live fitler start')
@@ -1066,6 +1074,38 @@ require('lazy').setup({
       end
       ,
     },
+  },
+  {
+    'stevearc/oil.nvim',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    init = function()
+      require("oil").setup({
+        default_file_exploler = false,
+        use_default_keymaps = false,
+        keymaps = {
+          ["g?"] = "actions.show_help",
+          ["<CR>"] = "actions.select",
+          ["<Space>v"] = "actions.select_vsplit",
+          ["<Space>s"] = "actions.select_split",
+          ["<Space>t"] = "actions.select_tab",
+          ["<Space>p"] = "actions.preview",
+          ["<C-c>"] = "actions.close",
+          ["<C-l>"] = "actions.refresh",
+          ["<Space>h"] = "actions.parent",
+          ["_"] = "actions.open_cwd",
+          ["`"] = "actions.cd",
+          ["~"] = "actions.tcd",
+          ["gs"] = "actions.change_sort",
+          ["gx"] = "actions.open_external",
+          ["g."] = "actions.toggle_hidden",
+        },
+        view_options = {
+          show_hidden = true,
+        },
+      })
+    end,
   },
   --}}}
   --{{{ Git
