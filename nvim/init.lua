@@ -1113,9 +1113,9 @@ require('lazy').setup({
     'f-person/git-blame.nvim',
     keys = {
       { '<Space>vBB', '<Cmd>GitBlameToggle<CR>' },
-      { '<Space>vBy', '<Cmd>GitBlameCopySHA<CR>' },
-      { '<Space>vBy', '<Cmd>GitBlameCopyFileURL<CR>' },
-      { '<Space>vO',  '<Cmd>GitBlameOpenFileURL<CR>' },
+      { '<Space>vBh', '<Cmd>GitBlameCopySHA<CR><Cmd>GitBlameDisable<CR>' },
+      { '<Space>vBy', '<Cmd>GitBlameCopyCommitURL<CR><Cmd>GitBlameDisable<CR>' },
+      { '<Space>vO',  '<Cmd>GitBlameOpenFileURL<CR><Cmd>GitBlameDisable<CR>' },
     },
     init = function()
       vim.g.gitblame_date_format = '%Y-%m-%d %H:%m:%S'
