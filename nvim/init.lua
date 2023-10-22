@@ -1567,6 +1567,23 @@ require('lazy').setup({
     end,
   },
   {
+    'ziontee113/syntax-tree-surfer',
+    lazy = false,
+    init = function()
+      require('syntax-tree-surfer').setup()
+      keymap('n', '<Leader><Leader><', '<Cmd>STSSwapUpNormal<CR>', ko)
+      keymap('n', '<Leader><Leader>>', '<Cmd>STSSwapDownNormal<CR>', ko)
+      keymap('n', '<Leader>>', '<Cmd>STSSwapCurrentNodeNextNormal<CR>', ko)
+      keymap('n', '<Leader><', '<Cmd>STSSwapCurrentNodePrevNormal<CR>', ko)
+      keymap('x', '<Leader>>', '<Cmd>STSSwapNextVisual<CR>', ko)
+      keymap('x', '<Leader><', '<Cmd>STSSwapPrevVisual<CR>', ko)
+      keymap("x", "J", '<cmd>STSSelectNextSiblingNode<cr>', ko)
+      keymap("x", "K", '<cmd>STSSelectPrevSiblingNode<cr>', ko)
+      keymap("x", "H", '<cmd>STSSelectParentNode<cr>', ko)
+      keymap("x", "L", '<cmd>STSSelectChildNode<cr>', ko)
+    end,
+  },
+  {
     -- comment
     'numToStr/Comment.nvim',
     keys = {
