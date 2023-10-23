@@ -782,26 +782,64 @@ require('lazy').setup({
   --}}}
   --{{{ ChatGPT
   {
-    'dpayne/CodeGPT.nvim',
+    "jackMort/ChatGPT.nvim",
     dependencies = {
-      'MunifTanjim/nui.nvim',
-      'nvim-lua/plenary.nvim',
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"
     },
-    cmd = 'Chat',
-    init = function()
-      local function map(lhs, action)
-        keymap('x', lhs, '<Cmd>Chat ' .. action .. '<CR>', ko)
-        keymap('n', lhs, 'V<Cmd>Chat ' .. action .. '<CR>', ko)
-      end
-      map('<leader>oc', 'completion')
-      map('<leader>oe', 'code_edit')
-      map('<leader>oE', 'explain')
-      map('<leader>od', 'doc')
-      map('<leader>oO', 'opt')
-      map('<leader>ot', 'tests')
-      map('<leader>oC', 'chat')
-      keymap('x', '<Leader>oo', ':Chat<space>', ko)
-      keymap('n', '<Leader>oo', 'V:Chat<space>', ko)
+    event = "VeryLazy",
+    config = function()
+      require("chatgpt").setup({
+        openai_params = {
+          model = "gpt-4",
+        },
+        edit_with_instructions = {
+          diff = true,
+          keymaps = {
+            close = "<C-q>",
+            accept = "<C-y>",
+            toggle_diff = "<C-d>",
+            toggle_settings = "<C-o>",
+            cycle_windows = "<Tab>",
+            use_output_as_input = "<C-]>",
+          },
+        },
+        chat = {
+          wellcome_mesasge = "ChatGPT",
+          keymaps = {
+            close = { "<C-q>" },
+            yank_last = "<C-y><C-y>",
+            yank_last_code = "<C-y>y",
+            scroll_up = "<C-b>",
+            scroll_down = "<C-f>",
+            new_session = "<C-a>",
+            cycle_windows = "<Tab>",
+            cycle_modes = "<C-t>",
+            next_message = "<C-j>",
+            prev_message = "<C-k>",
+            select_session = "<CR>",
+            rename_session = "R",
+            delete_session = "D",
+            draft_message = "<C-h>",
+            edit_message = "E",
+            delete_message = "D",
+            toggle_settings = "<C-o>",
+            toggle_message_role = "<C-x>",
+            toggle_system_role_open = "<C-e>",
+            stop_generating = "<C-c>",
+          },
+        },
+        popup_input = {
+          submit = "<C-]>",
+          submit_n = "<CR>",
+          max_visible_lines = 20,
+        },
+      })
+      keymap('n', '<Space>cc', '<Cmd>ChatGPT<CR>', ko)
+      keymap('n', '<Space>ci', '<Cmd>ChatGPTEditWithInteractions<CR>', ko)
+      keymap('x', '<Space>ci', ':ChatGPTEditWithInteractions<CR>', ko)
+      keymap('n', '<Space>cr', ':ChatGPT Run ', ko)
     end,
   },
   --}}}
@@ -2005,6 +2043,7 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       vim.cmd.colorscheme('iceberg')
+      vim.api.nvim_set_hl(0, "FloatBorder", { link = "LineNr" })
     end,
   },
   --}}}
