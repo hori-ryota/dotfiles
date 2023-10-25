@@ -837,8 +837,8 @@ require('lazy').setup({
         },
       })
       keymap('n', '<Space>cc', '<Cmd>ChatGPT<CR>', ko)
-      keymap('n', '<Space>ci', '<Cmd>ChatGPTEditWithInteractions<CR>', ko)
-      keymap('x', '<Space>ci', ':ChatGPTEditWithInteractions<CR>', ko)
+      keymap('n', '<Space>ci', '<Cmd>ChatGPTEditWithInstructions<CR>', ko)
+      keymap('x', '<Space>ci', ':ChatGPTEditWithInstructions<CR>', ko)
       keymap('n', '<Space>cr', ':ChatGPT Run ', ko)
     end,
   },
