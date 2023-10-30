@@ -1340,7 +1340,6 @@ require('lazy').setup({
           },
           direction = "bottom",
         },
-        },
       })
       keymap('n', '<Space>o', '<Cmd>OverseerToggle<CR>', ko)
       keymap('n', '<Leader>o', '<Cmd>OverseerRun<CR><Cmd>OverseerOpen<CR>', ko)
