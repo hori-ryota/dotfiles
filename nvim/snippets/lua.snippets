@@ -1,0 +1,17 @@
+snippet keys
+	for k, v in pairs({
+		["${0}"] = "",
+	}) do
+		vim.keymap.set('n', k, function()
+			require("overseer").run_template({
+				name = 'shell',
+				params = {
+					cmd = v,
+					cwd = vim.fn.expand('%:h'),
+				},
+			})
+			require("overseer").open()
+		end, {
+			nowait = true,
+		})
+	end

@@ -492,6 +492,9 @@ require('lazy').setup({
       -- })
       lspconfig.eslint.setup({
         capabilities = capabilities,
+        on_attach = function()
+          keymap('n', 'gQ', '<Cmd>EslintFixAll<CR><Cmd>lua vim.lsp.buf.format()<CR>', ko_b)
+        end,
       })
       -- lspconfig.stylelint_lsp.setup({
       --   capabilities = capabilities,
@@ -1335,12 +1338,24 @@ require('lazy').setup({
             ["<C-b>"] = "ScrollOutputDown",
             ["<ESC>"] = "Close",
           },
+          direction = "bottom",
+        },
         },
       })
-      keymap('n', '<Space>o', '<Cmd>OverseerToggle bottom<CR>', ko)
-      keymap('n', '<Leader>o', '<Cmd>OverseerRun<CR><Cmd>OverseerOpen bottom<CR>', ko)
+      keymap('n', '<Space>o', '<Cmd>OverseerToggle<CR>', ko)
+      keymap('n', '<Leader>o', '<Cmd>OverseerRun<CR><Cmd>OverseerOpen<CR>', ko)
 
       local overseer = require('overseer')
+
+      keymap('n', '<Leader>r', function()
+        overseer.run_template({
+          name = 'shell',
+          params = {
+            cmd = '%',
+          },
+        })
+        overseer.open()
+      end, ko)
 
       for k, v in pairs({
         ["<Leader>ni"] = "ni",
@@ -1348,18 +1363,18 @@ require('lazy').setup({
         ["<Leader>nc"] = "nr check",
         ["<Leader>ng"] = "nr generate",
         ["<Leader>nq"] = "nr autofix",
-        ["<Leader>npb"] = "turbo run build",
-        ["<Leader>npc"] = "turbo run check",
-        ["<Leader>npg"] = "turbo run generate",
-        ["<Leader>npq"] = "turbo run autofix",
+        ["<Leader>npb"] = "nlx turbo run build",
+        ["<Leader>npc"] = "nlx turbo run check",
+        ["<Leader>npg"] = "nlx turbo run generate",
+        ["<Leader>npq"] = "nlx turbo run autofix",
         ["<Leader>du"] = "docker compose up -d",
         ["<Leader>dU"] = "docker compose up -d --build",
         ["<Leader>dd"] = "docker compose down",
         ["<Leader>dl"] = "docker compose logs -f",
-        ["<Leader>fP"] = "terroform plan",
-        ["<Leader>fA"] = "terroform apply",
-        ["<Leader>fI"] = "terroform init",
-        ["<Leader>fU"] = "terroform init -upgrade",
+        ["<Leader>fP"] = "terraform plan",
+        ["<Leader>fA"] = "terraform apply",
+        ["<Leader>fI"] = "terraform init",
+        ["<Leader>fU"] = "terraform init -upgrade",
       }) do
         keymap('n', k, function()
           overseer.run_template({
@@ -1369,6 +1384,7 @@ require('lazy').setup({
               cwd = vim.fn.expand('%:h'),
             },
           })
+          overseer.open()
         end, ko)
       end
       keymap('n', '<Leader>na', function()
@@ -1390,10 +1406,10 @@ require('lazy').setup({
         return dir
       end
       for k, v in pairs({
-        ["<Leader>fp"] = "terroform plan",
-        ["<Leader>fa"] = "terroform apply",
-        ["<Leader>fi"] = "terroform init",
-        ["<Leader>fu"] = "terroform init -upgrade",
+        ["<Leader>fp"] = "terraform plan",
+        ["<Leader>fa"] = "terraform apply",
+        ["<Leader>fi"] = "terraform init",
+        ["<Leader>fu"] = "terraform init -upgrade",
       }) do
         keymap('n', k, function()
           overseer.run_template({
@@ -1403,6 +1419,7 @@ require('lazy').setup({
               cwd = terraform_dir(),
             },
           })
+          overseer.open()
         end, ko)
       end
     end
