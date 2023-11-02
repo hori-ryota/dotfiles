@@ -1350,7 +1350,7 @@ require('lazy').setup({
         overseer.run_template({
           name = 'shell',
           params = {
-            cmd = '%',
+            cmd = vim.fn.expand('%:p'),
           },
         })
         overseer.open()
