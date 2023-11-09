@@ -1,11 +1,13 @@
 brew install 1password
 brew install alfred
 brew install appcleaner
-brew install google-chrome
 brew install google-japanese-ime
 brew install iterm2
 brew install karabiner-elements
 brew install slack
+
+# 以下はbrew管理するとアプリ自身の更新管理と競合するのでbrewで入れない
+# brew install google-chrome
 
 # Fonts
 brew install font-hackgen-nerd

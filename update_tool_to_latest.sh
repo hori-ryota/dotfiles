@@ -23,3 +23,5 @@ sed -i '' -E "s/(POETRY_VERSION=).*/\1$(rtx latest poetry)/" ./zsh/modules/pytho
 sed -i '' -E "s/(RUBY_VERSION=).*/\1$(rtx latest ruby)/" ./zsh/modules/ruby/export.zsh
 
 sed -i '' -E "s/(TERRAFORM_VERSION=).*/\1$(rtx latest terraform)/" ./zsh/modules/terraform/export.zsh
+
+sed -i '' -E "s/(GCLOUD_VERSION=).*/\1$(rtx latest gcloud)/" ./zsh/modules/google-cloud-sdk/export.zsh
