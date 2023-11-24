@@ -1,4 +1,4 @@
-export GCLOUD_VERSION=454.0.0
+export GCLOUD_VERSION=455.0.0
 
 if GCLOUD_DIR=$(rtx where gcloud 2>/dev/null); then
   if [ -z "$BASH_VERSION" ] || [ "${BASH##*/}" != "bash" ]; then
