@@ -574,7 +574,7 @@ require('lazy').setup({
     end,
   }, --}}}
   {
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     lazy = false,
     config = function()
       require('null-ls').setup({
@@ -625,7 +625,6 @@ require('lazy').setup({
   },
   {
     'j-hui/fidget.nvim',
-    tag = "legacy",
     config = function()
       require('fidget').setup()
     end,
@@ -760,7 +759,7 @@ require('lazy').setup({
   --{{{ Snippets
   {
     'L3MON4D3/LuaSnip',
-    version = '1.*',
+    version = 'v2.*',
     cmd = 'InsertEnter',
     build = "make install_jsregexp",
     config = function()
