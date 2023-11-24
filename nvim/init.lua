@@ -874,6 +874,7 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
       'nvim-tree/nvim-web-devicons',
       'nvim-telescope/telescope-file-browser.nvim',
+      'AckslD/nvim-neoclip.lua',
     },
     cmd = 'Telescope',
     init = function() --{{{
@@ -888,7 +889,10 @@ require('lazy').setup({
       keymap('n', '<Space>vl', '<Cmd>Telescope git_commits initial_mode=normal<CR>', ko_s)
       keymap('n', '<Space>vL', '<Cmd>Telescope git_bcommits initial_mode=normal<CR>', ko_s)
 
-      keymap('n', '<Space>p', '<Cmd>Telescope registers<CR>', ko_s)
+      keymap('n', '<Space>p', '<Cmd>Telescope neoclip<CR>', ko_s)
+      keymap('n', '<Space>q', '<Cmd>Telescope macroscope<CR>', ko_s)
+      keymap('n', '<Space>ip', '<C-u>Telescope neoclip ', ko_s)
+      keymap('n', '<Space>iq', '<C-u>Telescope macroscope ', ko_s)
 
       -- memolist
       keymap('n', '<Space>ml', function()
@@ -1034,7 +1038,6 @@ require('lazy').setup({
       require('telescope').load_extension('file_browser')
     end,
   },
-  'kkharji/sqlite.lua',
   {
     'lpoto/telescope-docker.nvim',
     init = function()
@@ -1043,6 +1046,42 @@ require('lazy').setup({
     end,
     config = function()
       require('telescope').load_extension('docker')
+    end,
+  },
+  'kkharji/sqlite.lua',
+  {
+    'AckslD/nvim-neoclip.lua',
+    dependencies = {
+      'kkharji/sqlite.lua',
+    },
+    config = function()
+      require('neoclip').setup({
+        enable_persistent_history = true,
+        enable_macro_history = true,
+        keys = {
+          telescope = {
+            i = {
+              select = '<c-\\>',
+              paste = '<cr>',
+              paste_behind = '<c-\\>',
+              replay = '<c-q>',  -- replay a macro
+              delete = '<c-\\>', -- delete an entry
+              edit = '<c-\\>',   -- edit an entry
+              custom = {},
+            },
+            n = {
+              select = '<c-\\>',
+              paste = '<cr>',
+              paste_behind = '<c-\\>',
+              replay = '<c-q>',  -- replay a macro
+              delete = '<c-\\>', -- delete an entry
+              edit = '<c-\\>',   -- edit an entry
+              custom = {},
+            },
+          },
+        },
+      })
+      require('telescope').load_extension('neoclip')
     end,
   },
   --}}}
