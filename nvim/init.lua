@@ -480,6 +480,17 @@ require('lazy').setup({
         -- use prettier as formatter
         on_attach = disable_formatter
       })
+      lspconfig.biome.setup({
+        capabilities = capabilities,
+        root_dir = lspconfig.util.root_pattern("biome.json"),
+        single_file_support = false,
+        cmd = { 'nlx', '@biomejs/biome', 'lsp-proxy' },
+        on_attach = function()
+          keymap('n', 'gQ', "<Cmd>execute '!nlx @biomejs/biome check --apply-unsafe ' . shellescape(expand('%:p'))<CR>",
+            ko_b)
+          fmt_on_save()
+        end,
+      })
       lspconfig.html.setup({
         capabilities = capabilities,
         -- use prettier as formatter
@@ -577,9 +588,19 @@ require('lazy').setup({
           -- sh
           require('null-ls').builtins.formatting.shfmt,
           -- prettier
-          require('null-ls').builtins.formatting.prettierd,
-          -- json
-          require('null-ls').builtins.formatting.fixjson,
+          require('null-ls').builtins.formatting.prettierd.with({
+            -- use biome instead of prettier
+            runtime_condition = function()
+              for _, client in ipairs(vim.lsp.buf_get_clients()) do
+                if client.name == 'biome' then
+                  return false
+                end
+              end
+              return true
+            end
+          }),
+          -- biome
+          require('null-ls').builtins.formatting.biome,
           -- Go
           require('null-ls').builtins.code_actions.gomodifytags,
           require('null-ls').builtins.code_actions.impl,
