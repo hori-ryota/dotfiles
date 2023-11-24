@@ -1434,15 +1434,31 @@ require('lazy').setup({
       end, ko)
 
       for k, v in pairs({
+        ["<Leader>npb"] = "nlx turbo run build",
+        ["<Leader>npc"] = "nlx turbo run check",
+        ["<Leader>npg"] = "nlx turbo run generate",
+        ["<Leader>npq"] = "nlx turbo run autofix",
+        ["<Leader>dpu"] = "docker compose up -d",
+        ["<Leader>dpU"] = "docker compose up -d --build",
+        ["<Leader>dpd"] = "docker compose down",
+        ["<Leader>dpl"] = "docker compose logs -f",
+      }) do
+        keymap('n', k, function()
+          overseer.run_template({
+            name = 'shell',
+            params = {
+              cmd = v,
+            },
+          })
+          overseer.open()
+        end, ko)
+      end
+      for k, v in pairs({
         ["<Leader>ni"] = "ni",
         ["<Leader>nb"] = "nr build",
         ["<Leader>nc"] = "nr check",
         ["<Leader>ng"] = "nr generate",
         ["<Leader>nq"] = "nr autofix",
-        ["<Leader>npb"] = "nlx turbo run build",
-        ["<Leader>npc"] = "nlx turbo run check",
-        ["<Leader>npg"] = "nlx turbo run generate",
-        ["<Leader>npq"] = "nlx turbo run autofix",
         ["<Leader>du"] = "docker compose up -d",
         ["<Leader>dU"] = "docker compose up -d --build",
         ["<Leader>dd"] = "docker compose down",
