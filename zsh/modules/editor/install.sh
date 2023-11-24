@@ -116,5 +116,5 @@ go install github.com/josharian/impl@latest
 echo "pip install --upgrade ${pip_install_targets[@]}"
 pip install --upgrade ${pip_install_targets[@]}
 
-echo "npm install -g ${npm_install_targets[@]}"
-npm install -g ${npm_install_targets[@]}
+echo "pnpm install -g ${npm_install_targets[@]}"
+pnpm install -g ${npm_install_targets[@]}
