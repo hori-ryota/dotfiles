@@ -885,9 +885,28 @@ require('lazy').setup({
       keymap('n', '<Space>r', '<Cmd>Telescope live_grep<CR>', ko_s)
       keymap('n', '<Space>.', '<Cmd>Telescope resume<CR>', ko_s)
 
-      keymap('n', '<Space>vs', '<Cmd>Telescope git_status initial_mode=normal<CR>', ko_s)
-      keymap('n', '<Space>vl', '<Cmd>Telescope git_commits initial_mode=normal<CR>', ko_s)
-      keymap('n', '<Space>vL', '<Cmd>Telescope git_bcommits initial_mode=normal<CR>', ko_s)
+      keymap('n', '<Space>vs', '<Cmd>Telescope git_status<CR>', ko_s)
+      keymap('n', '<Space>vl', function()
+        require('telescope.builtin').git_commits({
+          git_command = {
+            "git",
+            "log",
+            "--pretty=%h %cd [%an] %s %d",
+            "--date=iso-local",
+            "--", ".",
+          }
+        })
+      end, ko_s)
+      keymap('n', '<Space>vL', function()
+        require('telescope.builtin').git_bcommits({
+          git_command = {
+            "git",
+            "log",
+            "--pretty=%h %cd [%an] %s %d",
+            "--date=iso-local",
+          }
+        })
+      end, ko_s)
 
       keymap('n', '<Space>p', '<Cmd>Telescope neoclip<CR>', ko_s)
       keymap('n', '<Space>q', '<Cmd>Telescope macroscope<CR>', ko_s)
@@ -899,7 +918,6 @@ require('lazy').setup({
         require('telescope.builtin').find_files({
           cwd = vim.g.memolist_path,
           find_command = { 'rg', '--files', '--sortr', 'path' },
-          initial_mode = 'normal'
         })
       end, ko_s)
       keymap('n', '<Space>mr', function()
