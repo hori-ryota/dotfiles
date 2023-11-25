@@ -600,7 +600,12 @@ require('lazy').setup({
             end
           }),
           -- biome
-          require('null-ls').builtins.formatting.biome,
+          require('null-ls').builtins.formatting.biome.with({
+            command = 'nlx @biomejs/biome',
+            condition = function(utils)
+              return utils.root_has_file({ "biome.json" })
+            end,
+          }),
           -- Go
           require('null-ls').builtins.code_actions.gomodifytags,
           require('null-ls').builtins.code_actions.impl,
