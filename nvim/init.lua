@@ -1421,6 +1421,7 @@ require('lazy').setup({
             ["<ESC>"] = "Close",
           },
           direction = "bottom",
+          min_height = 20,
         },
       })
       keymap('n', '<Space>o', '<Cmd>OverseerToggle<CR>', ko)
