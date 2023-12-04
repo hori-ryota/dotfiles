@@ -590,14 +590,9 @@ require('lazy').setup({
           -- prettier
           require('null-ls').builtins.formatting.prettierd.with({
             -- use biome instead of prettier
-            runtime_condition = function()
-              for _, client in ipairs(vim.lsp.buf_get_clients()) do
-                if client.name == 'biome' then
-                  return false
-                end
-              end
-              return true
-            end
+            condition = function(utils)
+              return utils.root_has_file({ ".prettierrc", ".prettierrc.js", ".prettierrc.cjs", ".prettierrc.json" })
+            end,
           }),
           -- biome
           require('null-ls').builtins.formatting.biome.with({
