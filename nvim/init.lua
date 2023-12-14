@@ -484,9 +484,9 @@ require('lazy').setup({
         capabilities = capabilities,
         root_dir = lspconfig.util.root_pattern("biome.json"),
         single_file_support = false,
-        cmd = { 'nlx', '@biomejs/biome', 'lsp-proxy' },
+        cmd = { 'na', 'exec', 'biome', 'lsp-proxy' },
         on_attach = function()
-          keymap('n', 'gQ', "<Cmd>execute '!nlx @biomejs/biome check --apply-unsafe ' . shellescape(expand('%:p'))<CR>",
+          keymap('n', 'gQ', "<Cmd>execute '!na exec biome check --apply-unsafe ' . shellescape(expand('%:p'))<CR>",
             ko_b)
           fmt_on_save()
         end,
@@ -596,10 +596,14 @@ require('lazy').setup({
           }),
           -- biome
           require('null-ls').builtins.formatting.biome.with({
-            command = 'nlx @biomejs/biome',
-            condition = function(utils)
-              return utils.root_has_file({ "biome.json" })
-            end,
+            command = "na",
+            args = {
+              "exec",
+              "biome",
+              "format",
+              "--write",
+              "$FILENAME",
+            },
           }),
           -- Go
           require('null-ls').builtins.code_actions.gomodifytags,
