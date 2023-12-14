@@ -589,27 +589,23 @@ require('lazy').setup({
           require('null-ls').builtins.formatting.shfmt,
           -- prettier
           require('null-ls').builtins.formatting.prettierd.with({
-            -- use biome instead of prettier
             condition = function(utils)
-              return utils.root_has_file({
-                ".prettierrc",
-                ".prettierrc.js",
-                ".prettierrc.cjs",
-                ".prettierrc.json",
-                ".prettierignore",
-              })
+              -- use biome instead of prettier
+              return not (utils.root_has_file({
+                "biome.json",
+                ",biome",
+              }) or os.getenv('USE_BIOME'))
             end,
           }),
           -- biome
           require('null-ls').builtins.formatting.biome.with({
-            command = "na",
-            args = {
-              "exec",
-              "biome",
-              "format",
-              "--write",
-              "$FILENAME",
-            },
+            prefer_local = "node_modules/.bin",
+            condition = function(utils)
+              return utils.root_has_file({
+                "biome.json",
+                ",biome",
+              }) or os.getenv('USE_BIOME')
+            end,
           }),
           -- Go
           require('null-ls').builtins.code_actions.gomodifytags,
