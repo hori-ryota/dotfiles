@@ -591,7 +591,13 @@ require('lazy').setup({
           require('null-ls').builtins.formatting.prettierd.with({
             -- use biome instead of prettier
             condition = function(utils)
-              return utils.root_has_file({ ".prettierrc", ".prettierrc.js", ".prettierrc.cjs", ".prettierrc.json" })
+              return utils.root_has_file({
+                ".prettierrc",
+                ".prettierrc.js",
+                ".prettierrc.cjs",
+                ".prettierrc.json",
+                ".prettierignore",
+              })
             end,
           }),
           -- biome
