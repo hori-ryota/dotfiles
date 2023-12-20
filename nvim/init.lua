@@ -590,11 +590,19 @@ require('lazy').setup({
           -- prettier
           require('null-ls').builtins.formatting.prettierd.with({
             condition = function(utils)
-              -- use biome instead of prettier
-              return not (utils.root_has_file({
-                "biome.json",
-                ",biome",
-              }) or os.getenv('USE_BIOME'))
+              return utils.root_has_file({
+                -- https://prettier.io/docs/en/configuration.html
+                ".prettierrc",
+                ".prettierrc.json",
+                ".prettierrc.yml",
+                ".prettierrc.yaml",
+                ".prettierrc.json5",
+                ".prettierrc.js",
+                ".prettierrc.cjs",
+                ".prettierrc.toml",
+                "prettier.config.js",
+                "prettier.config.cjs",
+              })
             end,
           }),
           -- biome
