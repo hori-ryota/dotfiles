@@ -1699,20 +1699,20 @@ require('lazy').setup({
       },
       -- replace
       {
-        '<Leader>wrd',
+        '<Leader>wr',
         '<Plug>(operator-sandwich-replace)' ..
         '<Plug>(operator-sandwich-release-count)' ..
         '<Plug>(textobj-sandwich-query-a)',
         mode = 'n'
       },
       {
-        '<Leader>wrdb',
+        '<Leader>wrb',
         '<Plug>(operator-sandwich-replace)' ..
         '<Plug>(operator-sandwich-release-count)' .. '<Plug>(textobj-sandwich-auto-a)',
         mode = 'n'
       },
       {
-        '<Leader>wrd',
+        '<Leader>wr',
         '<Plug>(operator-sandwich-replace)',
         mode = 'x'
       },
