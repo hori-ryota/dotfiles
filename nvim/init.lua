@@ -611,8 +611,7 @@ require('lazy').setup({
             condition = function(utils)
               return utils.root_has_file({
                 "biome.json",
-                ",biome",
-              }) or os.getenv('USE_BIOME')
+              })
             end,
           }),
           -- Go
