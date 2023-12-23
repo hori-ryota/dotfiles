@@ -588,32 +588,7 @@ require('lazy').setup({
           -- sh
           require('null-ls').builtins.formatting.shfmt,
           -- prettier
-          require('null-ls').builtins.formatting.prettierd.with({
-            condition = function(utils)
-              return utils.root_has_file({
-                -- https://prettier.io/docs/en/configuration.html
-                ".prettierrc",
-                ".prettierrc.json",
-                ".prettierrc.yml",
-                ".prettierrc.yaml",
-                ".prettierrc.json5",
-                ".prettierrc.js",
-                ".prettierrc.cjs",
-                ".prettierrc.toml",
-                "prettier.config.js",
-                "prettier.config.cjs",
-              })
-            end,
-          }),
-          -- biome
-          require('null-ls').builtins.formatting.biome.with({
-            prefer_local = "node_modules/.bin",
-            condition = function(utils)
-              return utils.root_has_file({
-                "biome.json",
-              })
-            end,
-          }),
+          require('null-ls').builtins.formatting.prettierd,
           -- Go
           require('null-ls').builtins.code_actions.gomodifytags,
           require('null-ls').builtins.code_actions.impl,
