@@ -1379,6 +1379,7 @@ require('lazy').setup({
     lazy = false,
     init = function()
       require('overseer').setup({
+        templates = { "builtin", "shell_scripts" },
         task_list = {
           bindings = {
             ["?"] = "ShowHelp",
@@ -1402,6 +1403,9 @@ require('lazy').setup({
             ["<C-b>"] = "ScrollOutputUp",
             ["<C-f>"] = "ScrollOutputDown",
             ["<ESC>"] = "Close",
+            ["R"] = "<Cmd>OverseerQuickAction restart<CR>",
+            ["W"] = "<Cmd>OverseerQuickAction watch<CR>",
+            ["D"] = "<Cmd>OverseerQuickAction stop<CR>",
           },
           direction = "bottom",
           min_height = 20,
