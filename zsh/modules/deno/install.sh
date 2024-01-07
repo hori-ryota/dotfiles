@@ -1,8 +1,8 @@
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
-zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../1-rtx/install.sh"
+zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../1-mise/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 
-rtx plugins install deno
-rtx install deno $DENO_VERSION
-rtx global deno $DENO_VERSION
-rtx reshim
+mise plugins install deno
+mise install deno $DENO_VERSION
+mise global deno $DENO_VERSION
+mise reshim

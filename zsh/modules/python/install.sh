@@ -1,16 +1,16 @@
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
-zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../1-rtx/install.sh"
+zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../1-mise/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 
-rtx plugins install python
-rtx install python $PYTHON3_VERSION
-rtx global python $PYTHON3_VERSION
-rtx reshim
+mise plugins install python
+mise install python $PYTHON3_VERSION
+mise global python $PYTHON3_VERSION
+mise reshim
 
-rtx plugins install poetry
-rtx install poetry $POETRY_VERSION
-rtx global poetry $POETRY_VERSION
-rtx reshim
+mise plugins install poetry
+mise install poetry $POETRY_VERSION
+mise global poetry $POETRY_VERSION
+mise reshim
 
 pip install --upgrade \
   pip \

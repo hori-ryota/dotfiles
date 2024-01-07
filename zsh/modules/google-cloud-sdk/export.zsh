@@ -1,6 +1,6 @@
 export GCLOUD_VERSION=455.0.0
 
-if GCLOUD_DIR=$(rtx where gcloud 2>/dev/null); then
+if GCLOUD_DIR=$(mise where gcloud 2>/dev/null); then
   if [ -z "$BASH_VERSION" ] || [ "${BASH##*/}" != "bash" ]; then
     source ""${GCLOUD_DIR}"/path.zsh.inc"
     source ""${GCLOUD_DIR}"/completion.zsh.inc"
