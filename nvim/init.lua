@@ -542,7 +542,7 @@ require('lazy').setup({
             callback = function() vim.lsp.buf.format() end,
           })
 
-          vim.opt_local.makeprg = 'deno run --allow-read --allow-net %'
+          vim.opt_local.makeprg = 'deno run -A %'
         end,
       })
       --}}}
@@ -1420,11 +1420,21 @@ require('lazy').setup({
         overseer.run_template({
           name = 'shell',
           params = {
-            cmd = vim.fn.expand('%:p'),
+            cmd = vim.opt.makeprg:get(),
+            -- to set vim.opt_local.makeprg each filetype
           },
         })
         overseer.open()
       end, ko)
+
+      vim.api.nvim_create_augroup('MyOverseer', {})
+      vim.api.nvim_create_autocmd('FileType', {
+        group = 'MyOverseer',
+        pattern = 'sh',
+        callback = function()
+          vim.opt_local.makeprg = '%'
+        end,
+      })
 
       for k, v in pairs({
         ["<Leader>npb"] = "nlx turbo run build",
