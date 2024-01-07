@@ -1,1 +1,1 @@
-export RUST_VERSION=1.74.0
+export RUST_VERSION=1.75.0

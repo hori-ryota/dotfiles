@@ -1,1 +1,1 @@
-export RUBY_VERSION=3.2.2
+export RUBY_VERSION=3.3.0
