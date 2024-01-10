@@ -588,7 +588,7 @@ require('lazy').setup({
           -- sh
           require('null-ls').builtins.formatting.shfmt,
           -- prettier
-          require('null-ls').builtins.formatting.prettierd,
+          require('null-ls').builtins.formatting.prettier,
           -- Go
           require('null-ls').builtins.code_actions.gomodifytags,
           require('null-ls').builtins.code_actions.impl,
