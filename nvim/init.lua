@@ -1472,6 +1472,7 @@ require('lazy').setup({
         ["<Leader>fA"] = "terraform apply",
         ["<Leader>fI"] = "terraform init",
         ["<Leader>fU"] = "terraform init -upgrade",
+        ["<Leader>kg"] = "go generate",
       }) do
         keymap('n', k, function()
           overseer.run_template({
