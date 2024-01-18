@@ -604,6 +604,14 @@ require('lazy').setup({
               return params.bufname:find(vim.pesc(".github/workflows")) ~= nil
             end)
           }),
+          -- Proto
+          require('null-ls').builtins.formatting.clang_format.with({
+            condition = function(utils)
+              return utils.root_has_file({
+                ".clang-format",
+              })
+            end,
+          }),
 
           -- { "go", "javascript", "lua", "python", "typescript" }
           require('null-ls').builtins.code_actions.refactoring,
