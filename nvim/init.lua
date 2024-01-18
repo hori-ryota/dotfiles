@@ -480,17 +480,17 @@ require('lazy').setup({
         -- use prettier as formatter
         on_attach = disable_formatter
       })
-      lspconfig.biome.setup({
-        capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern("biome.json"),
-        single_file_support = false,
-        cmd = { 'na', 'exec', 'biome', 'lsp-proxy' },
-        on_attach = function()
-          keymap('n', 'gQ', "<Cmd>execute '!na exec biome check --apply-unsafe ' . shellescape(expand('%:p'))<CR>",
-            ko_b)
-          fmt_on_save()
-        end,
-      })
+      -- lspconfig.biome.setup({
+      --   capabilities = capabilities,
+      --   root_dir = lspconfig.util.root_pattern("biome.json"),
+      --   single_file_support = false,
+      --   cmd = { 'na', 'exec', 'biome', 'lsp-proxy' },
+      --   on_attach = function()
+      --     keymap('n', 'gQ', "<Cmd>execute '!na exec biome check --apply-unsafe ' . shellescape(expand('%:p'))<CR>",
+      --       ko_b)
+      --     fmt_on_save()
+      --   end,
+      -- })
       lspconfig.html.setup({
         capabilities = capabilities,
         -- use prettier as formatter
