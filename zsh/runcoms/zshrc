@@ -6,9 +6,6 @@ fi
 # modules
 source "$HOME/.zsh/modules/zshrc"
 
-# replace git to hub
-eval "$(hub alias -s)"
-
 # search history with peco
 function peco-select-history() {
     local tac

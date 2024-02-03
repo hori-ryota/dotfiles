@@ -1,6 +1,5 @@
 brew install git
 brew install git-secrets
-brew install hub
 brew install ghq
 brew install git-lfs
 brew install lazygit
