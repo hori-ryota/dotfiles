@@ -9,6 +9,7 @@ gui:
     'Hori Ryota': 'blue'
 git:
   log:
+    order: "date-order"
     showGraph: "always"
     # displays the whole git graph by default in the commits panel (equivalent to passing the `--all` argument to `git log`)
     showWholeGraph: true
@@ -71,7 +72,7 @@ keybinding:
     filteringMenu: Q
     diffingMenu: Q
     diffingMenu-alt: Q # deprecated
-    copyToClipboard: Q
+    copyToClipboard: y
     submitEditorText: "<enter>"
     appendNewline: "<a-enter>"
     extrasMenu: "@"
@@ -125,7 +126,7 @@ keybinding:
     revertCommit: Q
     cherryPickCopy: "C"
     cherryPickCopyRange: Q
-    pasteCommits: Q
+    pasteCommits: "Y"
     tagCommit: Q
     checkoutCommit: "<enter>"
     resetCherryPick: Q
