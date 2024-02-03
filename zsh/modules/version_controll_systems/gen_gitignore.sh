@@ -21,6 +21,10 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
 	echo ".rgignore"
 	echo ""
 
+	echo "# for tmuxinator"
+	echo ".tmuxinator.yml"
+	echo ""
+
 	# Use [simonwhitaker/gibo: Easy access to gitignore boilerplates](https://github.com/simonwhitaker/gibo).
 	gibo dump Dropbox Eclipse JetBrains Linux macOS MicrosoftOffice Vagrant Ninja Tags Vim VisualStudioCode Xcode
 
