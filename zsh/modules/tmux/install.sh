@@ -1,6 +1,7 @@
 brew install tmux
 brew install fpp
 brew install urlview
+brew install tmuxinator
 
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
 

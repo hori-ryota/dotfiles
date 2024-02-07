@@ -1,0 +1,1 @@
+alias t='tmux attach-session -d || tmux'

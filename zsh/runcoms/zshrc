@@ -51,6 +51,30 @@ else
   bindkey '^ ' peco-ghq
 fi
 
+# search tmuxinator with peco
+function peco-tmuxinator () {
+  local selected_session=$(tmuxinator list | tail -n +2 | tr -s ' ' '\n' | peco --query "$LBUFFER")
+  if [ -n "$selected_session" ]; then
+    BUFFER="tmuxinator start ${selected_session}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-tmuxinator
+bindkey '^z^z' peco-tmuxinator
+
+# search tmuxinator edit with peco
+function peco-tmuxinator-edit () {
+  local selected_session=$(tmuxinator list | tail -n +2 | tr -s ' ' '\n' | peco --query "$LBUFFER")
+  if [ -n "$selected_session" ]; then
+    BUFFER="tmuxinator new ${selected_session}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-tmuxinator-edit
+bindkey '^ze' peco-tmuxinator-edit
+
 # emacs like keybind
 bindkey "^A" beginning-of-line
 bindkey "^B" backward-char
