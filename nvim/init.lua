@@ -380,6 +380,20 @@ require('lazy').setup({
       --{{{ for Python
       lspconfig.pyright.setup({
         capabilities = capabilities,
+        settings = {
+          python = {
+            venvPath = ".",
+            pythonPath = "./.venv/bin/python",
+            analysis = {
+              extraPaths = { "." },
+              autoImportCompletions = true,
+              autoSearchPaths = true,
+            }
+          }
+        },
+        on_attach = function()
+          keymap('n', 'gQ', '<Cmd>PyrightOrganizeImports<CR><Cmd>lua vim.lsp.buf.format()<CR>', ko_b)
+        end,
       })
       --}}}
 
@@ -598,6 +612,7 @@ require('lazy').setup({
           require('null-ls').builtins.diagnostics.flake8,
           require('null-ls').builtins.diagnostics.mypy,
           require('null-ls').builtins.formatting.isort,
+          require('null-ls').builtins.formatting.black,
           -- GitHub Action
           require('null-ls').builtins.diagnostics.actionlint.with({
             runtime_condition = require('null-ls.helpers').cache.by_bufnr(function(params)
@@ -1434,7 +1449,6 @@ require('lazy').setup({
         })
         overseer.open()
       end, ko)
-
       vim.api.nvim_create_augroup('MyOverseer', {})
       vim.api.nvim_create_autocmd('FileType', {
         group = 'MyOverseer',
@@ -1443,6 +1457,17 @@ require('lazy').setup({
           vim.opt_local.makeprg = '%'
         end,
       })
+
+      keymap('n', '<Leader><Leader>r', function()
+        overseer.run_template({
+          name = 'shell',
+          params = {
+            cmd = '',
+            cwd = vim.fn.expand('%:h'),
+          },
+          prompt = 'always',
+        })
+      end, ko)
 
       for k, v in pairs({
         ["<Leader>npb"] = "nlx turbo run build",
@@ -1498,6 +1523,16 @@ require('lazy').setup({
           name = 'shell',
           params = {
             cmd = 'ni ',
+            cwd = vim.fn.expand('%:h'),
+          },
+          prompt = 'always',
+        })
+      end, ko)
+      keymap('n', '<Leader>ja', function()
+        overseer.run_template({
+          name = 'shell',
+          params = {
+            cmd = 'poetry add ',
             cwd = vim.fn.expand('%:h'),
           },
           prompt = 'always',
