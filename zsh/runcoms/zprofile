@@ -3,3 +3,5 @@ if [[ -s "$HOME/.zprezto/runcoms/zprofile" ]]; then
 fi
 
 source "$HOME/.zsh/modules/export.zsh"
+
+export PATH="$PATH:$HOME/bin"
