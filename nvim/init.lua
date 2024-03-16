@@ -589,6 +589,9 @@ require('lazy').setup({
   }, --}}}
   {
     'nvimtools/none-ls.nvim',
+    dependencies = {
+      'nvimtools/none-ls-extras.nvim',
+    },
     lazy = false,
     config = function()
       require('null-ls').setup({
@@ -609,30 +612,23 @@ require('lazy').setup({
           require('null-ls').builtins.diagnostics.golangci_lint,
           require('null-ls').builtins.formatting.goimports,
           -- Python
-          require('null-ls').builtins.diagnostics.flake8,
+          require('none-ls.diagnostics.ruff'),
           require('null-ls').builtins.diagnostics.mypy,
-          require('null-ls').builtins.formatting.isort,
           require('null-ls').builtins.formatting.black,
           -- GitHub Action
-          require('null-ls').builtins.diagnostics.actionlint.with({
-            runtime_condition = require('null-ls.helpers').cache.by_bufnr(function(params)
-              return params.bufname:find(vim.pesc(".github/workflows")) ~= nil
-            end)
-          }),
+          require('null-ls').builtins.diagnostics.actionlint,
           -- Proto
-          require('null-ls').builtins.formatting.clang_format.with({
-            condition = function(utils)
-              return utils.root_has_file({
-                ".clang-format",
-              })
-            end,
-          }),
+          require('null-ls').builtins.diagnostics.buf,
+          require('null-ls').builtins.formatting.buf,
 
           -- { "go", "javascript", "lua", "python", "typescript" }
           require('null-ls').builtins.code_actions.refactoring,
         },
       })
     end,
+  },
+  {
+    'nvimtools/none-ls-extras.nvim',
   },
   {
     'j-hui/fidget.nvim',
@@ -1652,7 +1648,6 @@ require('lazy').setup({
   --{{{ Utilities
   {
     -- easily search for, substitute, and abbreviate multiple variants of a word
-
     'tpope/vim-abolish',
     lazy = false,
   },
@@ -1993,6 +1988,7 @@ require('lazy').setup({
           'passwd',
           -- 'perl',
           'php',
+          'php_only',
           'phpdoc',
           'pioasm',
           'po',
