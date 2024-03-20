@@ -1398,7 +1398,7 @@ require('lazy').setup({
     lazy = false,
     init = function()
       require('overseer').setup({
-        templates = { "builtin", "shell_scripts" },
+        templates = { "shell_scripts", "buf" , "builtin" },
         task_list = {
           bindings = {
             ["?"] = "ShowHelp",
