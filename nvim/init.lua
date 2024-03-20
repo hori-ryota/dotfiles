@@ -1568,6 +1568,7 @@ require('lazy').setup({
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
+      'nvim-neotest/nvim-nio',
     },
     init = function()
       keymap('n', '<Leader>t', function() require("neotest").run.run(vim.fn.expand('%')) end, ko)
@@ -1626,17 +1627,19 @@ require('lazy').setup({
             prev_failed = '[T',
             expand = 'o',
             expand_all = 'O',
-            jumpto = '<CR>',
+            jumpto = '<C-]>',
             mark = 'x',
             clear_marked = 'X',
             run = 'r',
             run_marked = 'R',
             short = 'P',
+            output = 'go',
           },
         },
       })
     end,
   },
+  'nvim-neotest/nvim-nio',
   'nvim-neotest/neotest-go',
   'nvim-neotest/neotest-python',
   'haydenmeade/neotest-jest',
