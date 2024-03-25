@@ -3,3 +3,4 @@
 !.pyflyby
 !*.local
 !.rgignore
+!.git
