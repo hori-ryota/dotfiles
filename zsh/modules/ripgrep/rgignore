@@ -1,6 +1,8 @@
+.mypy_cache/
+node_modules/
+.pnpm-store/
 !,*
 !.envrc
 !.pyflyby
 !*.local
 !.rgignore
-!.git
