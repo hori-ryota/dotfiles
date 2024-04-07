@@ -1964,7 +1964,7 @@ require('lazy').setup({
           'kdl',
           -- 'kotlin',
           'lalrpop',
-          -- 'latex',
+          'latex',
           'ledger',
           'llvm',
           -- 'lua',
