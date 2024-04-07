@@ -413,6 +413,7 @@ require('lazy').setup({
               '-**/.swc',
               '-**/node_modules',
               '-**/storybook-static',
+              '-**/.pnpm-store',
               -- for Python
               '-**/.mypy_cache',
               '-**/__pycache__',
@@ -452,14 +453,13 @@ require('lazy').setup({
               test = false,
               tidy = true,
               upgrade_dependency = true,
-              vendor = true,
+              vendor = false,
             },
             ---- UI Completion ----
             usePlaceholders = true,
             ---- UI Diagnostic ----
             analyses = {
-              nilness = true,
-              unusedwrite = true,
+              unusedparams = false,
             },
             ---- UI Documentation ----
             ---- UI Inlayhint ----
