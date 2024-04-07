@@ -21,31 +21,33 @@ disableStartupPopups: true
 notARepository: "skip"
 keybinding:
   universal:
+    quit: "q"
+    quit-alt1: "<c-c>" # alternative/alias of quit
     return: "<esc>"
-    quitWithoutChangingDirectory: Q
+    quitWithoutChangingDirectory: "<disabled>"
     togglePanel: "<C-w>" # goto the next panel
     prevItem: "k" # go one line up
     nextItem: "j" # go one line down
-    prevItem-alt: Q # go one line up
-    nextItem-alt: Q # go one line down
-    prevPage: Q # go to next page in list
-    nextPage: Q # go to previous page in list
+    prevItem-alt: "<disabled>" # go one line up
+    nextItem-alt: "<disabled>" # go one line down
+    prevPage: "<disabled>" # go to next page in list
+    nextPage: "<disabled>" # go to previous page in list
     gotoTop: "g" # go to top of list
     gotoBottom: "G" # go to bottom of list
     scrollLeft: "h" # scroll left within list view
     scrollRight: "l" # scroll right within list view
     prevBlock: "<C-k>" # goto the previous block / panel
     nextBlock: "<C-j>" # goto the next block / panel
-    prevBlock-alt: Q # goto the previous block / panel
-    nextBlock-alt: Q # goto the next block / panel
+    prevBlock-alt: "<disabled>" # goto the previous block / panel
+    nextBlock-alt: "<disabled>" # goto the next block / panel
     jumpToBlock: ["1", "2", "3", "4", "5"] # goto the Nth block / panel
     nextMatch: "n"
     prevMatch: "N"
     optionMenu: "?" # show help menu
-    optionMenu-alt1: Q # show help menu
+    optionMenu-alt1: "<disabled>" # show help menu
     select: "x"
     goInto: "<enter>"
-    openRecentRepos: Q
+    openRecentRepos: "<disabled>"
     confirm: "<enter>"
     remove: "d"
     new: "a"
@@ -53,96 +55,98 @@ keybinding:
     openFile: "o"
     scrollUpMain: "<C-b>" # main panel scroll up
     scrollDownMain: "<C-f>" # main panel scroll down
-    scrollUpMain-alt1: Q # main panel scroll up
-    scrollDownMain-alt1: Q # main panel scroll down
-    scrollUpMain-alt2: Q # main panel scroll up
-    scrollDownMain-alt2: Q # main panel scroll down
+    scrollUpMain-alt1: "<disabled>" # main panel scroll up
+    scrollDownMain-alt1: "<disabled>" # main panel scroll down
+    scrollUpMain-alt2: "<disabled>" # main panel scroll up
+    scrollDownMain-alt2: "<disabled>" # main panel scroll down
     executeCustomCommand: ":"
     createRebaseOptionsMenu: "m"
     pushFiles: "P"
     pullFiles: "<C-p>"
     refresh: "<C-l>"
-    createPatchOptionsMenu: Q
+    createPatchOptionsMenu: "<disabled>"
     nextTab: "]"
     prevTab: "["
     nextScreenMode: "<C-z>"
-    prevScreenMode: Q
+    prevScreenMode: "<disabled>"
     undo: "u"
     redo: "<C-r>"
-    filteringMenu: Q
-    diffingMenu: Q
-    diffingMenu-alt: Q # deprecated
+    filteringMenu: "<disabled>"
+    diffingMenu: "<disabled>"
+    diffingMenu-alt: "<disabled>" # deprecated
     copyToClipboard: y
     submitEditorText: "<enter>"
-    appendNewline: "<a-enter>"
     extrasMenu: "@"
-    toggleWhitespaceInDiffView: Q
-    increaseContextInDiffView: Q
-    decreaseContextInDiffView: Q
+    toggleWhitespaceInDiffView: "<disabled>"
+    increaseContextInDiffView: "<disabled>"
+    decreaseContextInDiffView: "<disabled>"
+    toggleRangeSelect: 'v'
+    rangeSelectUp: '<disabled>'
+    rangeSelectDown: '<disabled>'
   status:
-    checkForUpdate: Q
-    recentRepos: Q
+    checkForUpdate: "<disabled>"
+    recentRepos: "<disabled>"
   files:
     commitChanges: "C"
-    commitChangesWithoutHook: Q # commit changes without pre-commit hook
+    commitChangesWithoutHook: "<disabled>" # commit changes without pre-commit hook
     amendLastCommit: "A"
-    commitChangesWithEditor: Q
-    ignoreFile: Q
+    commitChangesWithEditor: "<disabled>"
+    findBaseCommitForFixup: "<disabled>"
+    confirmDiscard: '<disabled>'
+    ignoreFile: "<disabled>"
     refreshFiles: "<C-l>"
     stashAllChanges: "S"
-    viewStashOptions: Q
+    viewStashOptions: "<disabled>"
     toggleStagedAll: "U" # stage/unstage all
-    viewResetOptions: Q
-    fetch: Q
+    viewResetOptions: "D"
+    fetch: "<disabled>"
     toggleTreeView: "`"
     openMergeTool: "M"
-    openStatusFilter: Q
+    openStatusFilter: "<disabled>"
   branches:
     createPullRequest: "O"
-    viewPullRequestOptions: Q
+    viewPullRequestOptions: "<disabled>"
     checkoutBranchByName: X
-    forceCheckoutBranch: Q
+    forceCheckoutBranch: "<disabled>"
     rebaseBranch: "F"
     renameBranch: "R"
     mergeIntoCurrentBranch: "M"
-    viewGitFlowOptions: Q
-    fastForward: Q # fast-forward this branch from its upstream
+    viewGitFlowOptions: "<disabled>"
+    fastForward: "<disabled>" # fast-forward this branch from its upstream
     createTag: "T"
-    pushTag: Q
-    setUpstream: Q # set as upstream of checked-out branch
-    fetchRemote: Q
+    pushTag: "<disabled>"
+    setUpstream: "<disabled>" # set as upstream of checked-out branch
+    fetchRemote: "<disabled>"
   commits:
     squashDown: "S"
-    renameCommit: "R"
-    renameCommitWithEditor: Q
-    viewResetOptions: Q
-    markCommitAsFixup: Q
-    createFixupCommit: "E" # create fixup commit for this commit
-    squashAboveCommits: Q
-    moveDownCommit: Q # move commit down one
-    moveUpCommit: Q # move commit up one
-    amendToCommit: "A"
-    pickCommit: Q # pick commit (when mid-rebase)
-    revertCommit: Q
-    cherryPickCopy: "C"
-    cherryPickCopyRange: Q
-    pasteCommits: "Y"
-    tagCommit: Q
+    renameCommit: "<disabled>"
+    renameCommitWithEditor: "R"
+    viewResetOptions: D
+    markCommitAsFixup: "<disabled>"
+    createFixupCommit: "A" # create fixup commit for this commit
+    squashAboveCommits: "<disabled>"
+    moveDownCommit: "<disabled>" # move commit down one
+    moveUpCommit: "<disabled>" # move commit up one
+    amendToCommit: "E"
+    pickCommit: "<disabled>" # pick commit (when mid-rebase)
+    revertCommit: "<disabled>"
+    cherryPickCopy: "x"
+    cherryPickCopyRange: "<disabled>"
+    pasteCommits: "C"
+    tagCommit: "<disabled>"
     checkoutCommit: "<enter>"
-    resetCherryPick: Q
-    copyCommitMessageToClipboard: Q
-    openLogMenu: Q
-    viewBisectOptions: Q
+    resetCherryPick: "X"
+    copyCommitMessageToClipboard: "y"
+    openLogMenu: "<disabled>"
+    viewBisectOptions: "<disabled>"
   stash:
     popStash: "<enter>"
     renameStash: "R"
   commitFiles:
-    checkoutCommitFile: Q
+    checkoutCommitFile: "<disabled>"
   main:
-    toggleDragSelect: "V"
-    toggleDragSelect-alt: Q
     toggleSelectHunk: "X"
-    pickBothHunks: Q
+    pickBothHunks: "<disabled>"
   submodules:
     init: "I"
     update: "U"
