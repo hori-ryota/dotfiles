@@ -10,3 +10,4 @@ brew install jq
 brew install binutils
 
 brew install watchman
+brew install go-task
