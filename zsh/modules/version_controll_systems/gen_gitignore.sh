@@ -25,6 +25,10 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
 	echo ".tmuxinator.yml"
 	echo ""
 
+	echo "# for https://taskfile.dev/"
+	echo ".task"
+	echo ""
+
 	# Use [simonwhitaker/gibo: Easy access to gitignore boilerplates](https://github.com/simonwhitaker/gibo).
 	gibo dump Dropbox Eclipse JetBrains Linux macOS MicrosoftOffice Vagrant Ninja Tags Vim VisualStudioCode Xcode
 
