@@ -494,17 +494,15 @@ require('lazy').setup({
         -- use prettier as formatter
         on_attach = disable_formatter
       })
-      -- lspconfig.biome.setup({
-      --   capabilities = capabilities,
-      --   root_dir = lspconfig.util.root_pattern("biome.json"),
-      --   single_file_support = false,
-      --   cmd = { 'na', 'exec', 'biome', 'lsp-proxy' },
-      --   on_attach = function()
-      --     keymap('n', 'gQ', "<Cmd>execute '!na exec biome check --apply-unsafe ' . shellescape(expand('%:p'))<CR>",
-      --       ko_b)
-      --     fmt_on_save()
-      --   end,
-      -- })
+      lspconfig.biome.setup({
+        capabilities = capabilities,
+        cmd = { 'na', 'exec', 'biome', 'lsp-proxy' },
+        on_attach = function()
+          keymap('n', 'gQ', "<Cmd>execute '!na exec biome check --apply-unsafe ' . shellescape(expand('%:p'))<CR>",
+            ko_b)
+          fmt_on_save()
+        end,
+      })
       lspconfig.html.setup({
         capabilities = capabilities,
         -- use prettier as formatter
@@ -604,7 +602,15 @@ require('lazy').setup({
           require('null-ls').builtins.diagnostics.hadolint,
           -- sh
           require('null-ls').builtins.formatting.shfmt,
-          -- prettier
+          -- prettier or biome
+          require('null-ls').builtins.formatting.biome.with({
+            only_local = "node_modules/.bin",
+          }),
+          require('null-ls').builtins.formatting.prettier.with({
+            condition = function(utils)
+              return not utils.root_has_file({ "biome.json", "biome.jsonc" })
+            end,
+          }),
           require('null-ls').builtins.formatting.prettier,
           -- Go
           require('null-ls').builtins.code_actions.gomodifytags,
@@ -1398,7 +1404,7 @@ require('lazy').setup({
     lazy = false,
     init = function()
       require('overseer').setup({
-        templates = { "shell_scripts", "buf" , "builtin" },
+        templates = { "shell_scripts", "buf", "builtin" },
         task_list = {
           bindings = {
             ["?"] = "ShowHelp",
