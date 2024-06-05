@@ -602,10 +602,7 @@ require('lazy').setup({
           require('null-ls').builtins.diagnostics.hadolint,
           -- sh
           require('null-ls').builtins.formatting.shfmt,
-          -- prettier or biome
-          require('null-ls').builtins.formatting.biome.with({
-            only_local = "node_modules/.bin",
-          }),
+          -- prettier
           require('null-ls').builtins.formatting.prettier.with({
             condition = function(utils)
               return not utils.root_has_file({ "biome.json", "biome.jsonc" })
