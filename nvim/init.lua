@@ -611,7 +611,6 @@ require('lazy').setup({
               return not utils.root_has_file({ "biome.json", "biome.jsonc" })
             end,
           }),
-          require('null-ls').builtins.formatting.prettier,
           -- Go
           require('null-ls').builtins.code_actions.gomodifytags,
           require('null-ls').builtins.code_actions.impl,
