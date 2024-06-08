@@ -163,6 +163,7 @@ file_type_detect('*.uml', 'plantuml')
 file_type_detect('*.mmd', 'mermaid')
 file_type_detect('*.vim.local', 'vim')
 file_type_detect('*.lua.local', 'lua')
+file_type_detect('.dockerignore', 'dockerignore')
 file_type_detect('*Dockerfile*', 'dockerfile')
 file_type_detect({ 'tsconfig.json', 'tsconfig.*.json', 'eslintrc', 'eslintrc.json', 'tasks.json', 'extensions.json' },
   'jsonc')
