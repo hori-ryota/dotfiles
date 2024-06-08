@@ -153,6 +153,7 @@ local function file_type_detect(pattern, type)
   })
 end
 
+file_type_detect('CMakeLists.txt', 'cmake')
 file_type_detect('*.{txt,text}', 'markdown')
 file_type_detect('*.marp.md', 'markdown.marp')
 file_type_detect({ 'envrc', 'envrc.*' }, 'zsh')
@@ -582,6 +583,20 @@ require('lazy').setup({
         capabilities = capabilities,
       })
       --}}}
+
+      --{{{ for cmake
+      lspconfig.neocmake.setup({
+        capabilities = capabilities,
+      })
+      --}}}
+
+      --{{{ for C/C++
+      lspconfig.clangd.setup({
+        capabilities = capabilities,
+        on_attach = function()
+          fmt_on_save()
+        end,
+      })
       --}}}
     end,
   }, --}}}

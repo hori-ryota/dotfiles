@@ -31,6 +31,10 @@ source "$(dirname "${BASH_SOURCE:-$0}")/../go/export.zsh"
 # install deno
 zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../deno/install.sh"
 
+# install rust
+zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../rust/install.sh"
+source "$(dirname "${BASH_SOURCE:-$0}")/../rust/export.zsh"
+
 # VSCode language servers
 npm_install_targets+=("vscode-langservers-extracted")
 
@@ -52,6 +56,13 @@ brew install lua-language-server
 ### Linter
 echo 'Install github.com/mrtazz/checkmake/cmd/checkmake'
 go install github.com/mrtazz/checkmake/cmd/checkmake@latest
+
+## cmake
+cargo install neocmakelsp
+
+## C/C++
+### LSP
+brew install llvm
 
 ## Shell
 ### LSP
