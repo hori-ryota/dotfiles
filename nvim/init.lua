@@ -1839,6 +1839,18 @@ require('lazy').setup({
       require('Comment').setup({})
     end,
   },
+  {
+    -- comment
+    'tris203/hawtkeys.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    lazy = false,
+    config = function()
+      require('hawtkeys').setup({})
+    end,
+  },
   --}}}
   --{{{ Undo
   {
