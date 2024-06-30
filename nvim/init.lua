@@ -500,7 +500,7 @@ require('lazy').setup({
         capabilities = capabilities,
         cmd = { 'na', 'exec', 'biome', 'lsp-proxy' },
         on_attach = function()
-          keymap('n', 'gQ', "<Cmd>execute '!na exec biome check --apply-unsafe ' . shellescape(expand('%:p'))<CR>",
+          keymap('n', 'gQ', "<Cmd>execute '!na exec biome check --write --unsafe ' . shellescape(expand('%:p'))<CR>",
             ko_b)
           fmt_on_save()
         end,
