@@ -57,9 +57,6 @@ brew install lua-language-server
 echo 'Install github.com/mrtazz/checkmake/cmd/checkmake'
 go install github.com/mrtazz/checkmake/cmd/checkmake@latest
 
-## cmake
-cargo install neocmakelsp
-
 ## C/C++
 ### LSP
 brew install llvm
