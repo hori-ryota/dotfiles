@@ -73,6 +73,7 @@ go install github.com/rhysd/actionlint/cmd/actionlint@latest
 ## Python
 ### LSP
 pip_install_targets+=("pyright")
+pip_install_targets+=("ruff")
 if ! (type "mypy" > /dev/null 2>&1); then
   pip_install_targets+=("mypy")
 fi
