@@ -10,8 +10,7 @@ brew install slack
 # brew install google-chrome
 
 # Fonts
-brew tap homebrew/cask-fonts
-brew install font-hackgen-nerd
+brew install --cask font-hackgen-nerd
 
 # Quick Look
 ## Plugins

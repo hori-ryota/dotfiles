@@ -1,5 +1,5 @@
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
-zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../1-mise/install.sh"
+source "$(dirname "${BASH_SOURCE:-$0}")/../1-mise/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 
 brew install vim
@@ -15,24 +15,24 @@ ln -snf "$DOTFILEDIR"/nvim "$XDG_CONFIG_HOME"/nvim
 ln -snf "$DOTFILEDIR"/nvim/cache/dein "$XDG_CACHE_HOME"/dein
 
 # install python
-zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../python/install.sh"
+source "$(dirname "${BASH_SOURCE:-$0}")/../python/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../python/export.zsh"
 pip_install_targets=("pynvim")
 
 # install npm
-zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../nodejs/install.sh"
+source "$(dirname "${BASH_SOURCE:-$0}")/../nodejs/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../nodejs/export.zsh"
 npm_install_targets=()
 
 # install go
-zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../go/install.sh"
+source "$(dirname "${BASH_SOURCE:-$0}")/../go/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../go/export.zsh"
 
 # install deno
-zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../deno/install.sh"
+source "$(dirname "${BASH_SOURCE:-$0}")/../deno/install.sh"
 
 # install rust
-zsh -c "$(dirname "${BASH_SOURCE:-$0}")/../rust/install.sh"
+source "$(dirname "${BASH_SOURCE:-$0}")/../rust/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../rust/export.zsh"
 
 # VSCode language servers
