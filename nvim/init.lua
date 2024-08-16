@@ -380,8 +380,22 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Python
-      lspconfig.pyright.setup({
+      lspconfig.ruff.setup({
         capabilities = capabilities,
+        on_attach = function()
+          keymap('n', 'gQ', function() vim.lsp.buf.code_action({
+            context = {
+              only = {
+                "source.fixAll.ruff",
+              },
+            },
+            apply = true,
+          }) end, ko_b)
+        end,
+      })
+      lspconfig.basedpyright.setup({
+        capabilities = capabilities,
+        cmd = { 'poetry', 'run', '--quiet', 'basedpyright-langserver', '--stdio', '||', 'basedpyright-langserver', '--stdio'},
         settings = {
           python = {
             venvPath = ".",
@@ -393,9 +407,6 @@ require('lazy').setup({
             }
           }
         },
-        on_attach = function()
-          keymap('n', 'gQ', '<Cmd>PyrightOrganizeImports<CR><Cmd>lua vim.lsp.buf.format()<CR>', ko_b)
-        end,
       })
       --}}}
 
@@ -599,6 +610,7 @@ require('lazy').setup({
         end,
       })
       --}}}
+
       --}}}
     end,
   }, --}}}
@@ -630,10 +642,6 @@ require('lazy').setup({
           require('null-ls').builtins.code_actions.impl,
           require('null-ls').builtins.diagnostics.golangci_lint,
           require('null-ls').builtins.formatting.goimports,
-          -- Python
-          require('none-ls.diagnostics.ruff'),
-          require('null-ls').builtins.diagnostics.mypy,
-          require('null-ls').builtins.formatting.black,
           -- GitHub Action
           require('null-ls').builtins.diagnostics.actionlint,
           -- Proto
