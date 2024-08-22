@@ -251,8 +251,7 @@ require('lazy').setup({
     lazy = false,
     config = function()
       vim.api.nvim_create_augroup('MyLspConfig', {})
-      vim.diagnostic.config({
-        --{{{
+      vim.diagnostic.config({ --{{{
         virtual_text = {
           source = true,
           prefix = '',
@@ -265,7 +264,8 @@ require('lazy').setup({
       vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
         -- delay update diagnostics
         update_in_insert = false,
-      });                           --}}}
+      });
+      --}}}
 
       local function bind_key_map() --{{{
         local function telescope(f)
@@ -349,6 +349,9 @@ require('lazy').setup({
             schemaStore = {
               enable = true,
             },
+            schemas = {
+              ['https://taskfile.dev/schema.json'] = 'Taskfile.*.y*ml',
+            },
           },
         },
       })
@@ -383,19 +386,21 @@ require('lazy').setup({
       lspconfig.ruff.setup({
         capabilities = capabilities,
         on_attach = function()
-          keymap('n', 'gQ', function() vim.lsp.buf.code_action({
-            context = {
-              only = {
-                "source.fixAll.ruff",
+          keymap('n', 'gQ', function()
+            vim.lsp.buf.code_action({
+              context = {
+                only = {
+                  "source.fixAll.ruff",
+                },
               },
-            },
-            apply = true,
-          }) end, ko_b)
+              apply = true,
+            })
+          end, ko_b)
         end,
       })
       lspconfig.basedpyright.setup({
         capabilities = capabilities,
-        cmd = { 'poetry', 'run', '--quiet', 'basedpyright-langserver', '--stdio', '||', 'basedpyright-langserver', '--stdio'},
+        cmd = { 'poetry', 'run', '--quiet', 'basedpyright-langserver', '--stdio', '||', 'basedpyright-langserver', '--stdio' },
         settings = {
           python = {
             venvPath = ".",
@@ -625,8 +630,6 @@ require('lazy').setup({
         diagnostics_format = '[#{c}] #{m} (#{s})',
         update_in_insert = false,
         sources = {
-          -- make
-          require('null-ls').builtins.diagnostics.checkmake,
           -- Dockerfile
           require('null-ls').builtins.diagnostics.hadolint,
           -- sh
