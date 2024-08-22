@@ -156,6 +156,7 @@ end
 file_type_detect('CMakeLists.txt', 'cmake')
 file_type_detect('*.{txt,text}', 'markdown')
 file_type_detect('*.marp.md', 'markdown.marp')
+file_type_detect({ '*.env', '*.env.*' }, 'sh')
 file_type_detect({ 'envrc', 'envrc.*' }, 'zsh')
 file_type_detect({ 'zlogin', 'zlogout', 'zpreztorc', 'zprofile', 'zshenv', 'zshrc' }, 'zsh')
 file_type_detect('*.go.y', 'goyacc')
@@ -594,7 +595,12 @@ require('lazy').setup({
 
       --{{{ for Sell Scripts
       lspconfig.bashls.setup({
-        capabilities = capabilities,
+        on_attach = function(_, bufnr)
+          local filename = vim.api.nvim_buf_get_name(bufnr)
+          if string.match(filename, "%.env$") or string.match(filename, "%.env%..*$") then
+            vim.diagnostic.disable(bufnr)
+          end
+        end,
       })
       --}}}
 

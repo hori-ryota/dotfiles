@@ -1,3 +1,0 @@
-.env.* disable=SC2034
-.env   disable=SC2034
-*.env  disable=SC2034

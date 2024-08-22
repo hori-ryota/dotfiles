@@ -105,8 +105,6 @@ brew install hadolint
 ## Shell
 ### Linter
 brew install shellcheck
-#### symlinks for shellcheckrc
-ln -snf "$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)/shellcheckrc" "$XDG_CONFIG_HOME/.shellcheckrc"
 
 ### Formatter
 brew install shfmt
