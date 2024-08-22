@@ -651,6 +651,16 @@ require('lazy').setup({
         diagnostics_format = '[#{c}] #{m} (#{s})',
         update_in_insert = false,
         sources = {
+          -- Makefile
+          require('null-ls').builtins.diagnostics.checkmake.with({
+            filter = function(diagnostic)
+              if diagnostic.message:match('Missing required phony target "all"') or
+                  diagnostic.message:match('Missing required phony target "clean"') then
+                return false
+              end
+              return true
+            end,
+          }),
           -- Dockerfile
           require('null-ls').builtins.diagnostics.hadolint,
           -- sh
