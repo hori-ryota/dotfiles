@@ -833,6 +833,7 @@ require('lazy').setup({
           },
           layout = {
             position = 'right',
+            ratio = 0.4,
           },
         },
       })
