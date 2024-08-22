@@ -341,17 +341,32 @@ require('lazy').setup({
           -- use prettier
           provideFormatter = false,
         },
+        settings = {
+          json = {
+            schemas = require('schemastore').json.schemas(),
+            validate = { enable = true },
+          },
+        },
       })
       lspconfig.yamlls.setup({
         capabilities = capabilities,
         settings = {
           yaml = {
             schemaStore = {
-              enable = true,
+              -- use SchemaStore.nvim instead
+              enable = false,
+              url = "",
             },
-            schemas = {
-              ['https://taskfile.dev/schema.json'] = 'Taskfile.*.y*ml',
-            },
+            schemas = require('schemastore').yaml.schemas({
+              extra = {
+                {
+                  description = "Taskfile files",
+                  fileMatch = { "Taskfile.*.yaml", "Taskfile.*.yml" },
+                  name = "Taskfile config",
+                  url = "https://taskfile.dev/schema.json"
+                }
+              },
+            }),
           },
         },
       })
@@ -2176,6 +2191,10 @@ require('lazy').setup({
     config = function()
       require('nvim-ts-autotag').setup({})
     end,
+  },
+  -- for configuration files
+  {
+    'b0o/SchemaStore.nvim',
   },
   --}}}
   --{{{ Status bar
