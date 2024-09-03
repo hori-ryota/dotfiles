@@ -164,7 +164,7 @@ file_type_detect('*.uml', 'plantuml')
 file_type_detect('*.mmd', 'mermaid')
 file_type_detect('*.vim.local', 'vim')
 file_type_detect('*.lua.local', 'lua')
-file_type_detect('.dockerignore', 'dockerignore')
+file_type_detect('*.dockerignore', 'dockerignore')
 file_type_detect('*Dockerfile*', 'dockerfile')
 file_type_detect({ 'tsconfig.json', 'tsconfig.*.json', 'eslintrc', 'eslintrc.json', 'tasks.json', 'extensions.json' },
   'jsonc')
@@ -631,8 +631,11 @@ require('lazy').setup({
       --{{{ for C/C++
       lspconfig.clangd.setup({
         capabilities = capabilities,
-        on_attach = function()
-          fmt_on_save()
+        on_attach = function(_, bufnr)
+          local filename = vim.api.nvim_buf_get_name(bufnr)
+          if not string.match(filename, "%.proto$") then
+            fmt_on_save()
+          end
         end,
       })
       --}}}
