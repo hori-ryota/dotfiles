@@ -1658,13 +1658,8 @@ require('lazy').setup({
       require('neotest').setup({
         -- your neotest config here
         adapters = {
-          require('neotest-go')({
-            experimental = {
-              test_table = true,
-            },
-            args = {
-              '-count=1',
-            },
+          require('neotest-golang')({
+            testify_enabled = true,
           }),
           require('neotest-python'),
           require('neotest-jest'),
@@ -1705,7 +1700,9 @@ require('lazy').setup({
     end,
   },
   'nvim-neotest/nvim-nio',
-  'nvim-neotest/neotest-go',
+  {
+    'fredrikaverpil/neotest-golang',
+  },
   'nvim-neotest/neotest-python',
   'haydenmeade/neotest-jest',
   'marilari88/neotest-vitest',
