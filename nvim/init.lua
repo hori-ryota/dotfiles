@@ -1510,6 +1510,17 @@ require('lazy').setup({
         })
         overseer.open()
       end, ko)
+
+      vim.api.nvim_create_user_command("OverseerRestartLast", function()
+        local tasks = overseer.list_tasks({ recent_first = true })
+        if vim.tbl_isempty(tasks) then
+          vim.notify("No tasks found", vim.log.levels.WARN)
+        else
+          overseer.run_action(tasks[1], "restart")
+        end
+      end, {})
+      keymap('n', '<Leader>l', '<Cmd>OverseerRestartLast<CR>', ko)
+
       vim.api.nvim_create_augroup('MyOverseer', {})
       vim.api.nvim_create_autocmd('FileType', {
         group = 'MyOverseer',
