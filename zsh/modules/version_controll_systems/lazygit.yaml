@@ -1,160 +1,160 @@
 gui:
-  language: "en" # one of 'auto' | 'en' | 'zh' | 'pl' | 'nl' | 'ja' | 'ko'
-  mouseEvents: false
-  showFileTree: false # for rendering changes files in a tree format
-  showIcons: true
-  splitDiff: "auto" # one of 'auto' | 'always'
-  authorColors:
-    'hori-ryota': 'blue'
-    'Hori Ryota': 'blue'
+    language: "en" # one of 'auto' | 'en' | 'zh' | 'pl' | 'nl' | 'ja' | 'ko'
+    mouseEvents: false
+    showFileTree: false # for rendering changes files in a tree format
+    showIcons: true
+    splitDiff: "auto" # one of 'auto' | 'always'
+    authorColors:
+        'hori-ryota': 'blue'
+        'Hori Ryota': 'blue'
 git:
-  log:
-    order: "date-order"
-    showGraph: "always"
-    # displays the whole git graph by default in the commits panel (equivalent to passing the `--all` argument to `git log`)
-    showWholeGraph: true
+    log:
+        order: "date-order"
+        showGraph: "always"
+        # displays the whole git graph by default in the commits panel (equivalent to passing the `--all` argument to `git log`)
+        showWholeGraph: true
 os:
-  editCommand: "nvim" # see 'Configuring File Editing' section
-  editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
+    editCommand: "nvim" # see 'Configuring File Editing' section
+    editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
 quitOnTopLevelReturn: true
 disableStartupPopups: true
 notARepository: "skip"
 keybinding:
-  universal:
-    quit: "q"
-    quit-alt1: "<c-c>" # alternative/alias of quit
-    return: "<esc>"
-    quitWithoutChangingDirectory: "<disabled>"
-    togglePanel: "<C-w>" # goto the next panel
-    prevItem: "k" # go one line up
-    nextItem: "j" # go one line down
-    prevItem-alt: "<disabled>" # go one line up
-    nextItem-alt: "<disabled>" # go one line down
-    prevPage: "<disabled>" # go to next page in list
-    nextPage: "<disabled>" # go to previous page in list
-    gotoTop: "g" # go to top of list
-    gotoBottom: "G" # go to bottom of list
-    scrollLeft: "h" # scroll left within list view
-    scrollRight: "l" # scroll right within list view
-    prevBlock: "<C-k>" # goto the previous block / panel
-    nextBlock: "<C-j>" # goto the next block / panel
-    prevBlock-alt: "<disabled>" # goto the previous block / panel
-    nextBlock-alt: "<disabled>" # goto the next block / panel
-    jumpToBlock: ["1", "2", "3", "4", "5"] # goto the Nth block / panel
-    nextMatch: "n"
-    prevMatch: "N"
-    optionMenu: "?" # show help menu
-    optionMenu-alt1: "<disabled>" # show help menu
-    select: "x"
-    goInto: "<enter>"
-    openRecentRepos: "<disabled>"
-    confirm: "<enter>"
-    remove: "d"
-    new: "a"
-    edit: "e"
-    openFile: "o"
-    scrollUpMain: "<C-b>" # main panel scroll up
-    scrollDownMain: "<C-f>" # main panel scroll down
-    scrollUpMain-alt1: "<disabled>" # main panel scroll up
-    scrollDownMain-alt1: "<disabled>" # main panel scroll down
-    scrollUpMain-alt2: "<disabled>" # main panel scroll up
-    scrollDownMain-alt2: "<disabled>" # main panel scroll down
-    executeCustomCommand: ":"
-    createRebaseOptionsMenu: "m"
-    pushFiles: "P"
-    pullFiles: "<C-p>"
-    refresh: "<C-l>"
-    createPatchOptionsMenu: "<disabled>"
-    nextTab: "]"
-    prevTab: "["
-    nextScreenMode: "<C-z>"
-    prevScreenMode: "<disabled>"
-    undo: "u"
-    redo: "<C-r>"
-    filteringMenu: "<disabled>"
-    diffingMenu: "<disabled>"
-    diffingMenu-alt: "<disabled>" # deprecated
-    copyToClipboard: y
-    submitEditorText: "<enter>"
-    extrasMenu: "@"
-    toggleWhitespaceInDiffView: "<disabled>"
-    increaseContextInDiffView: "<disabled>"
-    decreaseContextInDiffView: "<disabled>"
-    toggleRangeSelect: 'v'
-    rangeSelectUp: '<disabled>'
-    rangeSelectDown: '<disabled>'
-  status:
-    checkForUpdate: "<disabled>"
-    recentRepos: "<disabled>"
-  files:
-    commitChanges: "C"
-    commitChangesWithoutHook: "<disabled>" # commit changes without pre-commit hook
-    amendLastCommit: "A"
-    commitChangesWithEditor: "<disabled>"
-    findBaseCommitForFixup: "<disabled>"
-    confirmDiscard: '<disabled>'
-    ignoreFile: "<disabled>"
-    refreshFiles: "<C-l>"
-    stashAllChanges: "S"
-    viewStashOptions: "<disabled>"
-    toggleStagedAll: "U" # stage/unstage all
-    viewResetOptions: "D"
-    fetch: "<disabled>"
-    toggleTreeView: "`"
-    openMergeTool: "M"
-    openStatusFilter: "<disabled>"
-  branches:
-    createPullRequest: "O"
-    viewPullRequestOptions: "<disabled>"
-    checkoutBranchByName: X
-    forceCheckoutBranch: "<disabled>"
-    rebaseBranch: "F"
-    renameBranch: "R"
-    mergeIntoCurrentBranch: "M"
-    viewGitFlowOptions: "<disabled>"
-    fastForward: "<disabled>" # fast-forward this branch from its upstream
-    createTag: "T"
-    pushTag: "<disabled>"
-    setUpstream: "<disabled>" # set as upstream of checked-out branch
-    fetchRemote: "<disabled>"
-  commits:
-    squashDown: "S"
-    renameCommit: "<disabled>"
-    renameCommitWithEditor: "R"
-    viewResetOptions: D
-    markCommitAsFixup: "<disabled>"
-    createFixupCommit: "A" # create fixup commit for this commit
-    squashAboveCommits: "<disabled>"
-    moveDownCommit: "<disabled>" # move commit down one
-    moveUpCommit: "<disabled>" # move commit up one
-    amendToCommit: "E"
-    pickCommit: "<disabled>" # pick commit (when mid-rebase)
-    revertCommit: "<disabled>"
-    cherryPickCopy: "x"
-    cherryPickCopyRange: "<disabled>"
-    pasteCommits: "C"
-    tagCommit: "<disabled>"
-    checkoutCommit: "<enter>"
-    resetCherryPick: "X"
-    copyCommitMessageToClipboard: "y"
-    openLogMenu: "<disabled>"
-    viewBisectOptions: "<disabled>"
-  stash:
-    popStash: "<enter>"
-    renameStash: "R"
-  commitFiles:
-    checkoutCommitFile: "<disabled>"
-  main:
-    toggleSelectHunk: "X"
-    pickBothHunks: "<disabled>"
-  submodules:
-    init: "I"
-    update: "U"
-    bulkMenu: "B"
+    universal:
+        quit: "q"
+        quit-alt1: "<c-c>" # alternative/alias of quit
+        return: "<esc>"
+        quitWithoutChangingDirectory: "<disabled>"
+        togglePanel: "<C-w>" # goto the next panel
+        prevItem: "k" # go one line up
+        nextItem: "j" # go one line down
+        prevItem-alt: "<disabled>" # go one line up
+        nextItem-alt: "<disabled>" # go one line down
+        prevPage: "<disabled>" # go to next page in list
+        nextPage: "<disabled>" # go to previous page in list
+        gotoTop: "g" # go to top of list
+        gotoBottom: "G" # go to bottom of list
+        scrollLeft: "h" # scroll left within list view
+        scrollRight: "l" # scroll right within list view
+        prevBlock: "<C-k>" # goto the previous block / panel
+        nextBlock: "<C-j>" # goto the next block / panel
+        prevBlock-alt: "<disabled>" # goto the previous block / panel
+        nextBlock-alt: "<disabled>" # goto the next block / panel
+        jumpToBlock: ["1", "2", "3", "4", "5"] # goto the Nth block / panel
+        nextMatch: "n"
+        prevMatch: "N"
+        optionMenu: "?" # show help menu
+        optionMenu-alt1: "<disabled>" # show help menu
+        select: "x"
+        goInto: "<enter>"
+        openRecentRepos: "<disabled>"
+        confirm: "<enter>"
+        remove: "d"
+        new: "a"
+        edit: "e"
+        openFile: "o"
+        scrollUpMain: "<C-b>" # main panel scroll up
+        scrollDownMain: "<C-f>" # main panel scroll down
+        scrollUpMain-alt1: "<disabled>" # main panel scroll up
+        scrollDownMain-alt1: "<disabled>" # main panel scroll down
+        scrollUpMain-alt2: "<disabled>" # main panel scroll up
+        scrollDownMain-alt2: "<disabled>" # main panel scroll down
+        executeShellCommand: ":"
+        createRebaseOptionsMenu: "m"
+        pushFiles: "P"
+        pullFiles: "<C-p>"
+        refresh: "<C-l>"
+        createPatchOptionsMenu: "<disabled>"
+        nextTab: "]"
+        prevTab: "["
+        nextScreenMode: "<C-z>"
+        prevScreenMode: "<disabled>"
+        undo: "u"
+        redo: "<C-r>"
+        filteringMenu: "<disabled>"
+        diffingMenu: "<disabled>"
+        diffingMenu-alt: "<disabled>" # deprecated
+        copyToClipboard: y
+        submitEditorText: "<enter>"
+        extrasMenu: "@"
+        toggleWhitespaceInDiffView: "<disabled>"
+        increaseContextInDiffView: "<disabled>"
+        decreaseContextInDiffView: "<disabled>"
+        toggleRangeSelect: 'v'
+        rangeSelectUp: '<disabled>'
+        rangeSelectDown: '<disabled>'
+    status:
+        checkForUpdate: "<disabled>"
+        recentRepos: "<disabled>"
+    files:
+        commitChanges: "C"
+        commitChangesWithoutHook: "<disabled>" # commit changes without pre-commit hook
+        amendLastCommit: "A"
+        commitChangesWithEditor: "<disabled>"
+        findBaseCommitForFixup: "<disabled>"
+        confirmDiscard: '<disabled>'
+        ignoreFile: "<disabled>"
+        refreshFiles: "<C-l>"
+        stashAllChanges: "S"
+        viewStashOptions: "<disabled>"
+        toggleStagedAll: "U" # stage/unstage all
+        viewResetOptions: "D"
+        fetch: "<disabled>"
+        toggleTreeView: "`"
+        openMergeTool: "M"
+        openStatusFilter: "<disabled>"
+    branches:
+        createPullRequest: "O"
+        viewPullRequestOptions: "<disabled>"
+        checkoutBranchByName: X
+        forceCheckoutBranch: "<disabled>"
+        rebaseBranch: "F"
+        renameBranch: "R"
+        mergeIntoCurrentBranch: "M"
+        viewGitFlowOptions: "<disabled>"
+        fastForward: "<disabled>" # fast-forward this branch from its upstream
+        createTag: "T"
+        pushTag: "<disabled>"
+        setUpstream: "<disabled>" # set as upstream of checked-out branch
+        fetchRemote: "<disabled>"
+    commits:
+        squashDown: "S"
+        renameCommit: "<disabled>"
+        renameCommitWithEditor: "R"
+        viewResetOptions: D
+        markCommitAsFixup: "<disabled>"
+        createFixupCommit: "A" # create fixup commit for this commit
+        squashAboveCommits: "<disabled>"
+        moveDownCommit: "<disabled>" # move commit down one
+        moveUpCommit: "<disabled>" # move commit up one
+        amendToCommit: "E"
+        pickCommit: "<disabled>" # pick commit (when mid-rebase)
+        revertCommit: "<disabled>"
+        cherryPickCopy: "x"
+        cherryPickCopyRange: "<disabled>"
+        pasteCommits: "C"
+        tagCommit: "<disabled>"
+        checkoutCommit: "<enter>"
+        resetCherryPick: "X"
+        copyCommitMessageToClipboard: "y"
+        openLogMenu: "<disabled>"
+        viewBisectOptions: "<disabled>"
+    stash:
+        popStash: "<enter>"
+        renameStash: "R"
+    commitFiles:
+        checkoutCommitFile: "<disabled>"
+    main:
+        toggleSelectHunk: "X"
+        pickBothHunks: "<disabled>"
+    submodules:
+        init: "I"
+        update: "U"
+        bulkMenu: "B"
 customCommands:
-  - key: "<C-d>"
-    command: "git pull-and-clean-default"
-    context: "global"
-  - key: "<C-d>"
-    command: "git pull-and-clean {{.SelectedLocalBranch.Name}}"
-    context: "localBranches"
+    - key: "<C-d>"
+      command: "git pull-and-clean-default"
+      context: "global"
+    - key: "<C-d>"
+      command: "git pull-and-clean {{.SelectedLocalBranch.Name}}"
+      context: "localBranches"
