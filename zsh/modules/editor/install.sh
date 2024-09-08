@@ -17,7 +17,7 @@ ln -snf "$DOTFILEDIR"/nvim/cache/dein "$XDG_CACHE_HOME"/dein
 # install python
 source "$(dirname "${BASH_SOURCE:-$0}")/../python/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../python/export.zsh"
-pip_install_targets=("pynvim")
+uv tool install --upgrade pynvim
 
 # install npm
 source "$(dirname "${BASH_SOURCE:-$0}")/../nodejs/install.sh"
@@ -72,18 +72,12 @@ go install github.com/rhysd/actionlint/cmd/actionlint@latest
 
 ## Python
 ### LSP
-if ! (type "basedpyright" > /dev/null 2>&1); then
-  pip_install_targets+=("basedpyright")
-fi
-if ! (type "ruff" > /dev/null 2>&1); then
-  pip_install_targets+=("ruff")
-fi
-if ! (type "rope" > /dev/null 2>&1); then
-  pip_install_targets+=("rope")
-fi
+uv tool install --upgrade basedpyright
+uv tool install --upgrade ruff
+uv tool install --upgrade rope
 
 ### for Jupyter notebook
-pip_install_targets+=(jupytext)
+uv tool install --upgrade jupytext
 
 ## Node.js and frontend development
 ### LSP
@@ -119,9 +113,6 @@ echo 'Install github.com/fatih/gomodifytags'
 go install github.com/fatih/gomodifytags@latest
 echo 'Install github.com/josharian/impl'
 go install github.com/josharian/impl@latest
-
-echo "pip install --upgrade ${pip_install_targets[@]}"
-pip install --upgrade ${pip_install_targets[@]}
 
 echo "pnpm install -g ${npm_install_targets[@]}"
 pnpm install -g ${npm_install_targets[@]}

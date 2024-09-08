@@ -17,10 +17,5 @@ mise global uv $UV_VERSION
 
 mise reshim
 
-pip install --upgrade \
-  pip \
-  setuptools \
-  mypy
-
 mkdir -p "$ZSH_COMPLETION_DIR"
 poetry completions zsh > "$ZSH_COMPLETION_DIR/_poetry"

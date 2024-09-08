@@ -416,7 +416,7 @@ require('lazy').setup({
       })
       lspconfig.basedpyright.setup({
         capabilities = capabilities,
-        cmd = { 'poetry', 'run', '--quiet', 'basedpyright-langserver', '--stdio', '||', 'basedpyright-langserver', '--stdio' },
+        cmd = { 'uv', 'run', '--quiet', 'basedpyright-langserver', '--stdio', '||', 'basedpyright-langserver', '--stdio' },
         settings = {
           python = {
             venvPath = ".",
@@ -1604,7 +1604,7 @@ require('lazy').setup({
         overseer.run_template({
           name = 'shell',
           params = {
-            cmd = 'poetry add ',
+            cmd = 'uv add ',
             cwd = vim.fn.expand('%:h'),
           },
           prompt = 'always',
