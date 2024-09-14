@@ -3,6 +3,8 @@ source "$(dirname "${BASH_SOURCE:-$0}")/../1-mise/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 
 brew install vim
+
+brew install luarocks # for lazy.nvim
 brew install neovim
 
 brew install universal-ctags
