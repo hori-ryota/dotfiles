@@ -670,8 +670,10 @@ require('lazy').setup({
           require('null-ls').builtins.formatting.shfmt,
           -- prettier
           require('null-ls').builtins.formatting.prettier.with({
-            condition = function(utils)
-              return not utils.root_has_file({ "biome.json", "biome.jsonc" })
+            condition = function()
+              local file_dir = vim.fn.expand('%:p:h')
+              return vim.fn.findfile('biome.jsonc', file_dir .. ';') == '' and
+              vim.fn.findfile('biome.json', file_dir .. ';') == ''
             end,
           }),
           -- Go
