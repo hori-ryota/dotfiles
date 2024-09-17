@@ -197,6 +197,7 @@ require('lazy').setup({
   'vim-denops/denops.vim',
   'nvim-lua/plenary.nvim',
   'MunifTanjim/nui.nvim',
+  'antoinemadec/FixCursorHold.nvim', -- for https://github.com/antoinemadec/FixCursorHold.nvim/issues/13 for neotest
   {
     'stevearc/dressing.nvim',
     lazy = false,
@@ -1647,6 +1648,7 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
       'nvim-neotest/nvim-nio',
+      'antoinemadec/FixCursorHold.nvim',
     },
     init = function()
       keymap('n', '<Leader>t', function() require("neotest").run.run(vim.fn.expand('%')) end, ko)
@@ -1660,13 +1662,7 @@ require('lazy').setup({
     config = function()
       local neotest_ns = vim.api.nvim_create_namespace('neotest')
       vim.diagnostic.config({
-        virtual_text = {
-          format = function(diagnostic)
-            local message =
-                diagnostic.message:gsub('\n', ' '):gsub('\t', ' '):gsub('%s+', ' '):gsub('^%s+', '')
-            return message
-          end,
-        },
+        virtual_text = false,
       }, neotest_ns)
       require('neotest').setup({
         -- your neotest config here
@@ -1674,19 +1670,19 @@ require('lazy').setup({
           require('neotest-golang')({
             testify_enabled = true,
           }),
-          require('neotest-python'),
-          require('neotest-jest'),
-          require('neotest-vitest'),
-          require('neotest-playwright').adapter({
-            options = {
-              enable_dynamic_test_discovery = true,
-            },
-          }),
-          require('neotest-dart'),
+          -- require('neotest-python'),
+          -- require('neotest-jest'),
+          -- require('neotest-vitest'),
+          -- require('neotest-playwright').adapter({
+          --   options = {
+          --     enable_dynamic_test_discovery = true,
+          --   },
+          -- }),
+          -- require('neotest-dart'),
         },
-        consumers = {
-          playwright = require("neotest-playwright.consumers").consumers,
-        },
+        -- consumers = {
+        --   playwright = require("neotest-playwright.consumers").consumers,
+        -- },
         icons = {
           failed  = '',
           passed  = '',
@@ -1716,12 +1712,12 @@ require('lazy').setup({
   {
     'fredrikaverpil/neotest-golang',
   },
-  'nvim-neotest/neotest-python',
-  'haydenmeade/neotest-jest',
-  'marilari88/neotest-vitest',
-  'thenbe/neotest-playwright',
-  'sidlatau/neotest-dart',
-  -- NOTE: neotest-denoはまだWIPな模様（README.mdにWIPと記載、docに `*neotest.config*` がありhelptagsが本体との重複で失敗する）
+  -- 'nvim-neotest/neotest-python',
+  -- 'haydenmeade/neotest-jest',
+  -- 'marilari88/neotest-vitest',
+  -- 'thenbe/neotest-playwright',
+  -- 'sidlatau/neotest-dart',
+  -- -- NOTE: neotest-denoはまだWIPな模様（README.mdにWIPと記載、docに `*neotest.config*` がありhelptagsが本体との重複で失敗する）
   --}}}
   --{{{ Utilities
   {
