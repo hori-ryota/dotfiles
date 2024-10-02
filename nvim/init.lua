@@ -417,6 +417,7 @@ require('lazy').setup({
       })
       lspconfig.basedpyright.setup({
         capabilities = capabilities,
+        root_dir = lspconfig.util.root_pattern("pyproject.toml"),
         cmd = { 'uv', 'run', '--quiet', 'basedpyright-langserver', '--stdio', '||', 'basedpyright-langserver', '--stdio' },
         settings = {
           python = {
