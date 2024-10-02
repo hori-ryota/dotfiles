@@ -95,8 +95,8 @@ keybinding:
         confirmDiscard: '<disabled>'
         ignoreFile: "<disabled>"
         refreshFiles: "<C-l>"
-        stashAllChanges: "S"
-        viewStashOptions: "<disabled>"
+        stashAllChanges: "<disabled>"
+        viewStashOptions: "S"
         toggleStagedAll: "U" # stage/unstage all
         viewResetOptions: "D"
         fetch: "<disabled>"
