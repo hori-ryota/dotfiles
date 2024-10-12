@@ -675,7 +675,7 @@ require('lazy').setup({
             condition = function()
               local file_dir = vim.fn.expand('%:p:h')
               return vim.fn.findfile('biome.jsonc', file_dir .. ';') == '' and
-              vim.fn.findfile('biome.json', file_dir .. ';') == ''
+                  vim.fn.findfile('biome.json', file_dir .. ';') == ''
             end,
           }),
           -- Go
@@ -1140,8 +1140,33 @@ require('lazy').setup({
         width = 60,
       },
       renderer = {
+        add_trailing = true,
+        indent_markers = {
+          enable = true,
+        },
         icons = {
           git_placement = 'signcolumn',
+        },
+        special_files = {
+          "Cargo.toml",
+          "Makefile",
+          "README.md",
+          "readme.md",
+          "Taskfile.toml",
+          "Taskfile.dist.toml",
+        },
+      },
+      filesystem_watchers = {
+        ignore_dirs = {
+          "/.cache",
+          "/.ccls-cache",
+          "/.git",
+          "/.local",
+          "/.task",
+          "/.terraform",
+          "/build",
+          "/node_modules",
+          "/target",
         },
       },
       on_attach = function(bufnr)
@@ -1160,7 +1185,7 @@ require('lazy').setup({
             require('nvim-tree.actions.node.open-file').fn(action, node.link_to)
             view.close() -- Close the tree if file was opened
           elseif node.nodes ~= nil then
-            lib.expand_or_collapse(node)
+            node:expand_or_collapse()
           else
             require('nvim-tree.actions.node.open-file').fn(action, node.absolute_path)
             view.close() -- Close the tree if file was opened
@@ -1169,6 +1194,21 @@ require('lazy').setup({
 
         apply('o', toggleTreeOrOpen, 'toggle tree or open')
         apply('<CR>', toggleTreeOrOpen, 'toggle tree or open')
+        apply('!', api.node.run.cmd, 'cmd open')
+        apply('g!', api.node.run.system, 'system open')
+        apply('R', function()
+          local node = require('nvim-tree.lib').get_node_at_cursor()
+          local buf = vim.fn.bufadd(node.absolute_path)
+          vim.fn.bufload(buf)
+          local makeprg = vim.api.nvim_buf_get_option(buf, 'makeprg')
+          require('overseer').run_template({
+            name = 'shell',
+            params = {
+              cmd = makeprg,
+            },
+          })
+          require('overseer').open()
+        end, 'run on overseer')
 
         apply('<C-l>', api.tree.reload, 'reload')
         apply('K', api.node.show_info_popup, 'info')
@@ -1467,7 +1507,7 @@ require('lazy').setup({
         group = 'MyOverseer',
         pattern = 'sh',
         callback = function()
-          vim.opt_local.makeprg = '%'
+          vim.opt_local.makeprg = vim.fn.expand('%')
         end,
       })
 
