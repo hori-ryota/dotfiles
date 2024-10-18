@@ -9,7 +9,7 @@ gui:
         'Hori Ryota': 'blue'
 git:
     log:
-        order: "date-order"
+        order: "topo-order"
         showGraph: "always"
         # displays the whole git graph by default in the commits panel (equivalent to passing the `--all` argument to `git log`)
         showWholeGraph: true
@@ -34,6 +34,9 @@ keybinding:
         nextPage: "<disabled>" # go to previous page in list
         gotoTop: "g" # go to top of list
         gotoBottom: "G" # go to bottom of list
+        toggleRangeSelect: 'v'
+        rangeSelectDown: '<disabled>'
+        rangeSelectUp: '<disabled>'
         scrollLeft: "h" # scroll left within list view
         scrollRight: "l" # scroll right within list view
         prevBlock: "<C-k>" # goto the previous block / panel
@@ -43,11 +46,11 @@ keybinding:
         jumpToBlock: ["1", "2", "3", "4", "5"] # goto the Nth block / panel
         nextMatch: "n"
         prevMatch: "N"
+        startSearch: "/"
         optionMenu: "?" # show help menu
         optionMenu-alt1: "<disabled>" # show help menu
         select: "x"
         goInto: "<enter>"
-        openRecentRepos: "<disabled>"
         confirm: "<enter>"
         remove: "d"
         new: "a"
@@ -75,17 +78,16 @@ keybinding:
         diffingMenu: "<disabled>"
         diffingMenu-alt: "<disabled>" # deprecated
         copyToClipboard: y
+        openRecentRepos: "<disabled>"
         submitEditorText: "<enter>"
         extrasMenu: "@"
         toggleWhitespaceInDiffView: "<disabled>"
         increaseContextInDiffView: "<disabled>"
         decreaseContextInDiffView: "<disabled>"
-        toggleRangeSelect: 'v'
-        rangeSelectUp: '<disabled>'
-        rangeSelectDown: '<disabled>'
     status:
         checkForUpdate: "<disabled>"
         recentRepos: "<disabled>"
+        allBranchesLogGraph: "<disabled>"
     files:
         commitChanges: "C"
         commitChangesWithoutHook: "<disabled>" # commit changes without pre-commit hook
@@ -103,6 +105,7 @@ keybinding:
         toggleTreeView: "`"
         openMergeTool: "M"
         openStatusFilter: "<disabled>"
+        copyFileInfoToClipboard: "y"
     branches:
         createPullRequest: "O"
         viewPullRequestOptions: "<disabled>"
@@ -118,21 +121,21 @@ keybinding:
         setUpstream: "<disabled>" # set as upstream of checked-out branch
         fetchRemote: "<disabled>"
     commits:
-        squashDown: "S"
+        squashDown: "s"
         renameCommit: "<disabled>"
         renameCommitWithEditor: "R"
         viewResetOptions: D
         markCommitAsFixup: "<disabled>"
         createFixupCommit: "A" # create fixup commit for this commit
-        squashAboveCommits: "<disabled>"
-        moveDownCommit: "<disabled>" # move commit down one
-        moveUpCommit: "<disabled>" # move commit up one
+        squashAboveCommits: "S"
+        moveDownCommit: "J" # move commit down one
+        moveUpCommit: "K" # move commit up one
         amendToCommit: "E"
         pickCommit: "<disabled>" # pick commit (when mid-rebase)
         revertCommit: "<disabled>"
         cherryPickCopy: "x"
         cherryPickCopyRange: "<disabled>"
-        pasteCommits: "C"
+        pasteCommits: "#"
         tagCommit: "<disabled>"
         checkoutCommit: "<enter>"
         resetCherryPick: "X"
