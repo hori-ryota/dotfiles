@@ -847,6 +847,7 @@ require('lazy').setup({
   --{{{ copilot
   {
     'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
     event = 'InsertEnter',
     config = function()
       require('copilot').setup({
