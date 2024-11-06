@@ -2,5 +2,4 @@
 cache/
 .cache
 /nvim/spell/
-/zsh/completion/_poetry
 lazy-lock.json

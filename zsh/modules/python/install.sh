@@ -7,10 +7,6 @@ mise install python $PYTHON3_VERSION
 mise global python $PYTHON3_VERSION
 mise reshim
 
-mise plugins install poetry
-mise install poetry $POETRY_VERSION
-mise global poetry $POETRY_VERSION
-
 mise plugins install uv
 mise install uv $UV_VERSION
 mise global uv $UV_VERSION
@@ -18,4 +14,3 @@ mise global uv $UV_VERSION
 mise reshim
 
 mkdir -p "$ZSH_COMPLETION_DIR"
-poetry completions zsh > "$ZSH_COMPLETION_DIR/_poetry"

@@ -18,7 +18,6 @@ sed -i '' -E "s/(RUST_VERSION=).*/\1$(mise latest rust)/" ./zsh/modules/rust/exp
 sed -i '' -E "s/(NODE_VERSION=).*/\1$(mise latest nodejs@22)/" ./zsh/modules/nodejs/export.zsh
 
 sed -i '' -E "s/(PYTHON3_VERSION=).*/\1$(mise latest python@3.11)/" ./zsh/modules/python/export.zsh
-sed -i '' -E "s/(POETRY_VERSION=).*/\1$(mise latest poetry)/" ./zsh/modules/python/export.zsh
 sed -i '' -E "s/(UV_VERSION=).*/\1$(mise latest uv)/" ./zsh/modules/python/export.zsh
 
 sed -i '' -E "s/(RUBY_VERSION=).*/\1$(mise latest ruby)/" ./zsh/modules/ruby/export.zsh
