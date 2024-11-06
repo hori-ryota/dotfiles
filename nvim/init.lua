@@ -1177,10 +1177,14 @@ require('lazy').setup({
             { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true })
         end
         local function toggleTreeOrOpen()
-          local lib = require('nvim-tree.lib')
+          local core = require('nvim-tree.core')
+          local explorer = core.get_explorer()
+          if not explorer then
+            return
+          end
           local view = require('nvim-tree.view')
           local action = 'edit'
-          local node = lib.get_node_at_cursor()
+          local node = explorer:get_node_at_cursor()
 
           if node.link_to and not node.nodes then
             require('nvim-tree.actions.node.open-file').fn(action, node.link_to)
