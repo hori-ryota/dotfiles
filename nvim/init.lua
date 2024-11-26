@@ -175,6 +175,7 @@ file_type_detect('*.hcl', 'hcl')
 file_type_detect({ '.terraformrc', 'terraform.rc' }, 'hcl')
 file_type_detect({ '*.tf', '*.tfvars' }, 'terraform')
 file_type_detect({ '*.tfstate', '*.tfstate.backup' }, 'hcl')
+file_type_detect('buf.*gen.md', 'yaml.bufgen')
 --}}}
 
 --{{{ install lazy.nvim
@@ -1595,6 +1596,16 @@ require('lazy').setup({
           },
           prompt = 'always',
         })
+      end, ko)
+      keymap('n', '<Leader>bg', function()
+        overseer.run_template({
+          name = 'shell',
+          params = {
+            cmd = 'buf generate --template=' .. vim.fn.expand('%:t'),
+            cwd = vim.fn.expand('%:h'),
+          },
+        })
+        overseer.open()
       end, ko)
 
       local function terraform_dir()
