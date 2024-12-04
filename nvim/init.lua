@@ -683,7 +683,15 @@ require('lazy').setup({
           require('null-ls').builtins.code_actions.gomodifytags,
           require('null-ls').builtins.code_actions.impl,
           require('null-ls').builtins.diagnostics.golangci_lint,
-          require('null-ls').builtins.formatting.goimports,
+          require('null-ls').builtins.formatting.goimports.with({
+            extra_args = function()
+              local local_imports = os.getenv("GO_IMPORTS_LOCAL")
+              if local_imports then
+                return { "-local", local_imports }
+              end
+              return {}
+            end,
+          }),
           -- GitHub Action
           require('null-ls').builtins.diagnostics.actionlint,
           -- Proto
