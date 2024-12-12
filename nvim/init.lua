@@ -1523,7 +1523,7 @@ require('lazy').setup({
         group = 'MyOverseer',
         pattern = 'sh',
         callback = function()
-          vim.opt_local.makeprg = vim.fn.expand('%')
+          vim.opt_local.makeprg = vim.fn.expand('%:p')
         end,
       })
 
