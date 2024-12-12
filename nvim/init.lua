@@ -634,12 +634,14 @@ require('lazy').setup({
       --{{{ for C/C++
       lspconfig.clangd.setup({
         capabilities = capabilities,
-        on_attach = function(_, bufnr)
-          local filename = vim.api.nvim_buf_get_name(bufnr)
-          if not string.match(filename, "%.proto$") then
-            fmt_on_save()
-          end
-        end,
+        filetypes = {
+          'c',
+          'cpp',
+          'objc',
+          'objcpp',
+          'cuda',
+          -- 'proto',
+        },
       })
       --}}}
 
