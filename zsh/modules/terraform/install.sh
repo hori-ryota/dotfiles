@@ -7,4 +7,4 @@ mise install terraform $TERRAFORM_VERSION
 mise global terraform $TERRAFORM_VERSION
 mise reshim
 
-brew install hashicorp/tap/terraform-ls
+brew install terraform-ls
