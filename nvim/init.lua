@@ -1669,6 +1669,9 @@ require('lazy').setup({
         virtual_text = false,
       }, neotest_ns)
       require('neotest').setup({
+        discovery = {
+          enabled = false,
+        },
         -- your neotest config here
         adapters = {
           require('neotest-golang')({
