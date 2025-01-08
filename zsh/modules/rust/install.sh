@@ -4,7 +4,7 @@ source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 
 mise plugins install rust
 mise install rust "$RUST_VERSION"
-mise global rust "$RUST_VERSION"
+mise use --global rust "$RUST_VERSION"
 mise reshim
 
 rustup component add rust-analyzer

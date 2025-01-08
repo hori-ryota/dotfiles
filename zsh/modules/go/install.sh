@@ -5,13 +5,13 @@ mkdir -p "$GOPATH"
 
 # mise plugins install golang # NOTE: installed as core plugin by mise
 mise install golang $GO_VERSION
-mise global golang $GO_VERSION
+mise use --global golang $GO_VERSION
 mise reshim
 
 echo 'Install github.com/golangci/golangci-lint'
 mise plugins install golangci-lint
 mise install golangci-lint $GOLANGCI_LINT_VERSION
-mise global golangci-lint $GOLANGCI_LINT_VERSION
+mise use --global golangci-lint $GOLANGCI_LINT_VERSION
 mise reshim
 
 # install Debugger
