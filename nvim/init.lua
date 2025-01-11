@@ -168,6 +168,7 @@ file_type_detect('*.dockerignore', 'dockerignore')
 file_type_detect('*Dockerfile*', 'dockerfile')
 file_type_detect({ 'tsconfig.json', 'tsconfig.*.json', 'eslintrc', 'eslintrc.json', 'tasks.json', 'extensions.json' },
   'jsonc')
+file_type_detect({ 'settings.json' }, 'jsonc')
 file_type_detect('editorconfig', 'editorconfig')
 file_type_detect({ 'gitconfig', 'gitconfig.*', '.gitconfig.*' }, 'gitconfig')
 file_type_detect({ 'gitignore', 'gitignore.*', '.gitignore.*' }, 'gitignore')
