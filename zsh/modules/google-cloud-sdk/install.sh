@@ -4,7 +4,7 @@ source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 
 mise plugins install gcloud
 mise install gcloud "$GCLOUD_VERSION"
-mise use --global gcloud "$GCLOUD_VERSION"
+mise use --global gcloud@"$GCLOUD_VERSION"
 mise reshim
 
 source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"

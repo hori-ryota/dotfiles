@@ -4,7 +4,7 @@ source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 
 mise plugins install terraform
 mise install terraform $TERRAFORM_VERSION
-mise use --global terraform $TERRAFORM_VERSION
+mise use --global terraform@$TERRAFORM_VERSION
 mise reshim
 
 brew install terraform-ls
