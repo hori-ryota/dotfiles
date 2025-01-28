@@ -12,5 +12,3 @@ mise install uv $UV_VERSION
 mise use --global uv@$UV_VERSION
 
 mise reshim
-
-mkdir -p "$ZSH_COMPLETION_DIR"

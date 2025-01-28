@@ -5,6 +5,7 @@ brew install google-japanese-ime
 brew install iterm2
 brew install karabiner-elements
 brew install slack
+brew install moom
 
 # 以下はbrew管理するとアプリ自身の更新管理と競合するのでbrewで入れない
 # brew install google-chrome
