@@ -115,6 +115,8 @@ echo 'Install github.com/fatih/gomodifytags'
 go install github.com/fatih/gomodifytags@latest
 echo 'Install github.com/josharian/impl'
 go install github.com/josharian/impl@latest
+echo 'Install github.com/nametake/golangci-lint-langserver'
+go install github.com/nametake/golangci-lint-langserver@latest
 
 echo "pnpm install -g ${npm_install_targets[@]}"
 pnpm install -g ${npm_install_targets[@]}

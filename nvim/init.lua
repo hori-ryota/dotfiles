@@ -513,6 +513,9 @@ require('lazy').setup({
           fmt_on_save()
         end,
       })
+      lspconfig.golangci_lint_ls.setup({
+        capabilities = capabilities,
+      })
       --}}}
 
       --{{{ for Rust
@@ -626,6 +629,12 @@ require('lazy').setup({
       })
       --}}}
 
+      --{{{ for Proto
+      lspconfig.buf_ls.setup({
+        capabilities = capabilities,
+      })
+      --}}}
+
       --{{{ for cmake
       lspconfig.neocmake.setup({
         capabilities = capabilities,
@@ -685,7 +694,6 @@ require('lazy').setup({
           -- Go
           require('null-ls').builtins.code_actions.gomodifytags,
           require('null-ls').builtins.code_actions.impl,
-          require('null-ls').builtins.diagnostics.golangci_lint,
           require('null-ls').builtins.formatting.goimports.with({
             extra_args = function()
               local local_imports = os.getenv("GO_IMPORTS_LOCAL")
@@ -697,9 +705,6 @@ require('lazy').setup({
           }),
           -- GitHub Action
           require('null-ls').builtins.diagnostics.actionlint,
-          -- Proto
-          require('null-ls').builtins.diagnostics.buf,
-          require('null-ls').builtins.formatting.buf,
 
           -- { "go", "javascript", "lua", "python", "typescript" }
           require('null-ls').builtins.code_actions.refactoring,
