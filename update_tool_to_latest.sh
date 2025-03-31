@@ -8,6 +8,8 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
 
 mise plugins update
 
+sed -i '' -E "s/(BUF_VERSION=).*/\1$(mise latest buf)/" ./zsh/modules/buf/export.zsh
+
 sed -i '' -E "s/(DENO_VERSION=).*/\1$(mise latest deno)/" ./zsh/modules/deno/export.zsh
 
 sed -i '' -E "s/(GO_VERSION=).*/\1$(mise latest golang@1.23)/" ./zsh/modules/go/export.zsh
