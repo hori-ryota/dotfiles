@@ -249,7 +249,7 @@ require('lazy').setup({
   {
     'neovim/nvim-lspconfig', --{{{
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
+      'saghen/blink.cmp',
       'j-hui/fidget.nvim',
     },
     lazy = false,
@@ -328,7 +328,7 @@ require('lazy').setup({
         })
       end
 
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       --{{{ filetype settings
       --{{{ for snippets
@@ -724,127 +724,28 @@ require('lazy').setup({
   --}}}
   --{{{ Completion
   {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      'hrsh7th/cmp-nvim-lsp',
-      'saadparwaiz1/cmp_luasnip',
-      'petertriho/cmp-git',
-    },
+    'saghen/blink.cmp',
+    version = '*',
     event = {
       'InsertEnter',
       'CmdlineEnter',
     },
-    config = function()
-      local cmp = require('cmp')
-      local types = require('cmp.types')
-      local mapping = cmp.mapping
-
-      local select_next_item_i = function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item({ behavior = types.cmp.SelectBehavior.Insert })
-        else
-          fallback()
-        end
-      end
-      local select_next_item_c = function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        else
-          fallback()
-        end
-      end
-      local select_prev_item_i = function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item({ behavior = types.cmp.SelectBehavior.Insert })
-        else
-          fallback()
-        end
-      end
-      local select_prev_item_c = function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        else
-          fallback()
-        end
-      end
-
-      cmp.setup({
-        mapping = {
-          --{{{
-          ['<Tab>'] = {
-            i = select_next_item_i,
-            c = select_next_item_c,
-          },
-          ['<S-Tab>'] = {
-            i = select_prev_item_i,
-            c = select_prev_item_c,
-          },
-          ['<C-n>'] = {
-            i = select_next_item_i,
-          },
-          ['<C-p>'] = {
-            i = select_prev_item_i,
-          },
-          ['<CR>'] = {
-            i = cmp.mapping.confirm({ select = false }),
-            c = cmp.mapping.confirm({ select = false }),
-          },
-          ['<C-e>'] = {
-            i = mapping.abort(),
-            c = mapping.abort(),
-          },
-          ['<C-b>'] = {
-            i = cmp.mapping.scroll_docs(-4),
-            c = cmp.mapping.scroll_docs(-4),
-          },
-          ['<C-f>'] = {
-            i = cmp.mapping.scroll_docs(4),
-            c = cmp.mapping.scroll_docs(4),
-          }
-        }, --}}}
-        snippet = {
-          expand = function(args)
-            require('luasnip').lsp_expand(args.body)
-          end
+    opts = {
+      keymap = { preset = 'enter' },
+      completion = {
+        documentation = { auto_show = true },
+        keyword = { range = 'prefix' },
+      },
+      sources = {
+        default = {
+          'snippets',
+          'lsp',
+          'path',
+          'buffer',
         },
-        sources = cmp.config.sources({
-          { name = 'luasnip' },
-          { name = 'nvim_lsp' },
-          { name = 'nvim_lsp_signature_help' },
-          { name = 'path' },
-          { name = 'buffer' },
-          { name = 'git' },
-        }),
-      })
-      cmp.setup.cmdline({ '/', '?' }, {
-        sources = {
-          { name = 'buffer' },
-        }
-      })
-      cmp.setup.cmdline(':', {
-        sources = cmp.config.sources({
-          { name = 'path' },
-          { name = 'cmdline' },
-          { name = 'cmdline_history' },
-          { name = 'buffer' },
-        })
-      })
-    end,
-  },
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-nvim-lsp-signature-help',
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-path',
-  'hrsh7th/cmp-cmdline',
-  'dmitmel/cmp-cmdline-history',
-  'petertriho/cmp-git',
-  {
-    'saadparwaiz1/cmp_luasnip',
-    dependencies = {
-      'L3MON4D3/LuaSnip',
+      },
+      snippets = { preset = 'luasnip' },
+      signature = { enabled = true },
     },
   },
   --}}}
