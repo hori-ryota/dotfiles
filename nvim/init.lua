@@ -277,21 +277,20 @@ require('lazy').setup({
             require('telescope.builtin')[f]()
           end
         end
-        keymap('n', '<Leader>a', vim.lsp.buf.code_action, ko_sb)
-        keymap('n', '<Leader><Leader>l', vim.lsp.codelens.run, ko_sb)
-        keymap('n', '<Leader><Leader>L', function() vim.diagnostic.open_float({ focusable = false }) end, ko_sb)
+        keymap('n', '<Leader>ll', vim.lsp.codelens.run, ko_sb)
+        keymap('n', '<Leader>lL', function() vim.diagnostic.open_float({ focusable = false }) end, ko_sb)
         keymap('n', '[f', vim.diagnostic.goto_prev, ko_sb)
         keymap('n', ']f', vim.diagnostic.goto_next, ko_sb)
-        keymap('n', '<Space>f', telescope('diagnostics'), ko_sb)
+        keymap('n', '<Space>lf', telescope('diagnostics'), ko_sb)
         keymap('n', 'K', vim.lsp.buf.hover, ko_sb)
         keymap('n', '<Space><Tab>', vim.lsp.buf.signature_help, ko_sb)
         keymap('n', '<C-]>', telescope('lsp_definitions'), ko_sb)
-        keymap('n', '<Leader>i', telescope('lsp_implementations'), ko_sb)
-        keymap('n', '<Leader>c', telescope('lsp_incoming_calls'), ko_sb)
-        keymap('n', '<Leader>R', vim.lsp.buf.rename, ko_sb)
-        keymap('n', '<Leader>gr', telescope('lsp_references'), ko_sb)
-        keymap('n', '<Leader>a', vim.lsp.buf.code_action, ko_sb)
-        keymap('v', '<Leader>a', vim.lsp.buf.code_action, ko_sb)
+        keymap('n', '<Leader>li', telescope('lsp_implementations'), ko_sb)
+        keymap('n', '<Leader>lc', telescope('lsp_incoming_calls'), ko_sb)
+        keymap('n', '<Leader>lR', vim.lsp.buf.rename, ko_sb)
+        keymap('n', '<Leader>lr', telescope('lsp_references'), ko_sb)
+        keymap('n', '<Leader>la', vim.lsp.buf.code_action, ko_sb)
+        keymap('v', '<Leader>la', vim.lsp.buf.code_action, ko_sb)
         keymap('n', 'gq', vim.lsp.buf.format, ko_sb)
         keymap('v', 'gq', vim.lsp.buf.format, ko_sb)
         keymap('n', '<Leader>ws', vim.lsp.buf.workspace_symbol, ko_sb)
@@ -726,22 +725,39 @@ require('lazy').setup({
   {
     'saghen/blink.cmp',
     version = '*',
+    dependencies = {
+      "Kaiser-Yang/blink-cmp-avante",
+    },
     event = {
       'InsertEnter',
       'CmdlineEnter',
     },
     opts = {
-      keymap = { preset = 'enter' },
+      keymap = {
+        preset = 'default',
+        ['<Tab>'] = { 'select_next', 'fallback' },
+        ['<S-Tab>'] = { 'select_next', 'fallback' },
+      },
       completion = {
         documentation = { auto_show = true },
         keyword = { range = 'prefix' },
       },
       sources = {
         default = {
+          'avante', -- by blink-cmp-avante
           'snippets',
           'lsp',
           'path',
           'buffer',
+        },
+        providers = {
+          avante = {
+            module = 'blink-cmp-avante',
+            name = 'Avante',
+            opts = {
+              -- options for blink-cmp-avante
+            }
+          }
         },
       },
       snippets = { preset = 'luasnip' },
@@ -796,6 +812,81 @@ require('lazy').setup({
       })
       -- vim.api.nvim_command('highlight link CopilotSuggestion Comment')
     end,
+  },
+  --}}}
+  --{{{ AI
+  {
+    'yetone/avante.nvim',
+    version = false, -- Never set this value to "*"! Never!
+    event = "VeryLazy",
+    build = 'make',
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        'MeanderingProgrammer/render-markdown.nvim',
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+    opts = {
+      behavior = {
+        auto_suggestion = false,
+        auto_set_keymaps = false,
+        enable_claude_text_editor_tool_mode = true,
+      },
+      provider = 'claude',
+      mappings = {
+        ask = '<Space>aa',
+        edit = '<Space>ae',
+        toggle = {
+          default = '<Space>at',
+        },
+        submit = {
+          normal = '<CR>',
+          insert = '<C-q>',
+        },
+        diff = {
+          ours = '<Leader>ao',
+          theirs = '<Leader>at',
+          all_theirs = '<Leader>aT',
+          both = '<Leader>am',
+          cursor = '<Leader>ad',
+          next = '<Leader>a]',
+          prev = '<Leader>a[',
+        },
+        sidebar = {
+          apply_all = '<Leader>aY',
+          apply_cursor = '<Leader>ay',
+          retry_user_request = '<Leader>aR',
+          edit_user_request = '<Leader>ae',
+          add_file = 'A',
+          remove_file = 'D',
+        },
+      },
+    },
   },
   --}}}
   --{{{ telescope
@@ -1426,7 +1517,7 @@ require('lazy').setup({
           overseer.run_action(tasks[1], "restart")
         end
       end, {})
-      keymap('n', '<Leader>l', '<Cmd>OverseerRestartLast<CR>', ko)
+      keymap('n', '<Leader>R', '<Cmd>OverseerRestartLast<CR>', ko)
 
       vim.api.nvim_create_augroup('MyOverseer', {})
       vim.api.nvim_create_autocmd('FileType', {
