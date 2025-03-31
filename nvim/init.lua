@@ -1398,6 +1398,9 @@ require('lazy').setup({
           direction = "bottom",
           min_height = 20,
         },
+        components = {
+          { "on_complete_dispose", timeout = 3600 },
+        },
       })
       keymap('n', '<Space>o', '<Cmd>OverseerToggle<CR>', ko)
       keymap('n', '<Leader>o', '<Cmd>OverseerRun<CR><Cmd>OverseerOpen<CR>', ko)
