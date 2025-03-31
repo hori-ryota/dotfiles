@@ -736,7 +736,7 @@ require('lazy').setup({
       keymap = {
         preset = 'default',
         ['<Tab>'] = { 'select_next', 'fallback' },
-        ['<S-Tab>'] = { 'select_next', 'fallback' },
+        ['<S-Tab>'] = { 'select_prev', 'fallback' },
       },
       completion = {
         documentation = { auto_show = true },
