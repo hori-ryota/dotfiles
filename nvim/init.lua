@@ -514,6 +514,28 @@ require('lazy').setup({
       })
       lspconfig.golangci_lint_ls.setup({
         capabilities = capabilities,
+        init_options = (function()
+          local handle = io.popen(
+            "golangci-lint --version 2>/dev/null | grep -o 'version [0-9]\\+\\.[0-9]\\+\\.[0-9]\\+' | cut -d' ' -f2")
+          local version = handle and handle:read("*a"):gsub("%s+$", "") or ""
+          if handle then handle:close() end
+
+          local major_version = tonumber(version:match("^(%d+)%."))
+
+          if major_version and major_version < 2 then
+            return {
+              command = {
+                "golangci-lint",
+                "run",
+                "--out-format",
+                "json",
+                "--issues-exit-code=1",
+              }
+            }
+          end
+
+          return {}
+        end)(),
       })
       --}}}
 
