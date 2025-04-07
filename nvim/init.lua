@@ -203,17 +203,19 @@ require('lazy').setup({
   {
     'stevearc/dressing.nvim',
     lazy = false,
-    opts = {
-      select = {
-        telescope = {
-          layout_config = {
-            bottom_pane = {
-              height = '0.95',
-            }
+    init = function()
+      require('dressing').setup({
+        select = {
+          telescope = {
+            layout_config = {
+              bottom_pane = {
+                height = '0.95',
+              }
+            },
           },
         },
-      },
-    },
+      })
+    end,
   },
   {
     'nvim-tree/nvim-web-devicons',
@@ -417,17 +419,7 @@ require('lazy').setup({
       lspconfig.basedpyright.setup({
         capabilities = capabilities,
         root_dir = lspconfig.util.root_pattern("pyproject.toml"),
-        cmd = function()
-          local uv_cmd = { 'uv', 'run', '--quiet', 'basedpyright-langserver', '--stdio' }
-          local direct_cmd = { 'basedpyright-langserver', '--stdio' }
-
-          -- uvコマンドが存在するか確認
-          if vim.fn.executable('uv') == 1 then
-            return uv_cmd
-          else
-            return direct_cmd
-          end
-        end,
+        cmd = { 'uv', 'run', '--quiet', 'basedpyright-langserver', '--stdio', '||', 'basedpyright-langserver', '--stdio' },
         settings = {
           python = {
             venvPath = ".",
@@ -566,21 +558,10 @@ require('lazy').setup({
       })
       lspconfig.biome.setup({
         capabilities = capabilities,
-        cmd = function()
-          if vim.fn.executable('na') == 1 then
-            return { 'na', 'exec', 'biome', 'lsp-proxy' }
-          else
-            return { 'biome', 'lsp-proxy' }
-          end
-        end,
+        cmd = { 'na', 'exec', 'biome', 'lsp-proxy' },
         on_attach = function()
-          if vim.fn.executable('na') == 1 then
-            keymap('n', 'gQ', "<Cmd>execute '!na exec biome check --write --unsafe ' . shellescape(expand('%:p'))<CR>",
-              ko_b)
-          else
-            keymap('n', 'gQ', "<Cmd>execute '!biome check --write --unsafe ' . shellescape(expand('%:p'))<CR>",
-              ko_b)
-          end
+          keymap('n', 'gQ', "<Cmd>execute '!na exec biome check --write --unsafe ' . shellescape(expand('%:p'))<CR>",
+            ko_b)
           fmt_on_save()
         end,
       })
@@ -757,7 +738,9 @@ require('lazy').setup({
   },
   {
     'j-hui/fidget.nvim',
-    opts = {},
+    config = function()
+      require('fidget').setup()
+    end,
   },
   --}}}
   --{{{ Completion
@@ -822,36 +805,35 @@ require('lazy').setup({
     'zbirenbaum/copilot.lua',
     cmd = 'Copilot',
     event = 'InsertEnter',
-    opts = {
-      suggestion = {
-        enabled = true,
-        auto_trigger = true,
-        keymap = {
-          accept = '<C-a>',
-          prev = '<C-k>',
-          next = '<C-j>',
-          dismiss = '<C-d>',
+    config = function()
+      require('copilot').setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = '<C-a>',
+            prev = '<C-k>',
+            next = '<C-j>',
+            dissmiss = '<C-d>',
+          },
         },
-      },
-      panel = {
-        enabled = true,
-        keymap = {
-          accept = '<CR>',
-          jump_prev = '<C-k>',
-          jump_next = '<C-j>',
-          refresh = '<C-l>',
-          open = '<C-q>',
+        panel = {
+          enabled = true,
+          keymap = {
+            accept = '<CR>',
+            jump_prev = '<C-k>',
+            jump_next = '<C-j>',
+            refresh = '<C-l>',
+            open = '<C-q>',
+          },
+          layout = {
+            position = 'right',
+            ratio = 0.4,
+          },
         },
-        layout = {
-          position = 'right',
-          ratio = 0.4,
-        },
-      },
-      filetypes = {
-        markdown = true, -- マークダウンでも有効化
-        help = true,     -- ヘルプファイルでも有効化
-      },
-    },
+      })
+      -- vim.api.nvim_command('highlight link CopilotSuggestion Comment')
+    end,
   },
   --}}}
   --{{{ AI
@@ -859,15 +841,7 @@ require('lazy').setup({
     'yetone/avante.nvim',
     version = false, -- Never set this value to "*"! Never!
     event = "VeryLazy",
-    build = function()
-      -- makeコマンドが存在するか確認
-      if vim.fn.executable('make') == 1 then
-        return 'make'
-      else
-        vim.notify('make command not found, skipping build for avante.nvim', vim.log.levels.WARN)
-        return ''
-      end
-    end,
+    build = 'make',
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "stevearc/dressing.nvim",
@@ -947,7 +921,6 @@ require('lazy').setup({
       'nvim-tree/nvim-web-devicons',
       'nvim-telescope/telescope-file-browser.nvim',
       'AckslD/nvim-neoclip.lua',
-      'lpoto/telescope-docker.nvim',
     },
     cmd = 'Telescope',
     init = function() --{{{
@@ -1128,9 +1101,6 @@ require('lazy').setup({
     config = function()
       require('telescope').load_extension('file_browser')
     end,
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-    },
   },
   {
     'lpoto/telescope-docker.nvim',
@@ -1141,45 +1111,40 @@ require('lazy').setup({
     config = function()
       require('telescope').load_extension('docker')
     end,
-    dependencies = {
-      'nvim-telescope/telescope.nvim',
-    },
   },
   'kkharji/sqlite.lua',
   {
     'AckslD/nvim-neoclip.lua',
     dependencies = {
       'kkharji/sqlite.lua',
-      'nvim-telescope/telescope.nvim',
     },
-    opts = {
-      enable_persistent_history = true,
-      enable_macro_history = true,
-      keys = {
-        telescope = {
-          i = {
-            select = '<c-\\>',
-            paste = '<cr>',
-            paste_behind = '<c-\\>',
-            replay = '<c-q>',  -- replay a macro
-            delete = '<c-\\>', -- delete an entry
-            edit = '<c-\\>',   -- edit an entry
-            custom = {},
-          },
-          n = {
-            select = '<c-\\>',
-            paste = '<cr>',
-            paste_behind = '<c-\\>',
-            replay = '<c-q>',  -- replay a macro
-            delete = '<c-\\>', -- delete an entry
-            edit = '<c-\\>',   -- edit an entry
-            custom = {},
+    config = function()
+      require('neoclip').setup({
+        enable_persistent_history = true,
+        enable_macro_history = true,
+        keys = {
+          telescope = {
+            i = {
+              select = '<c-\\>',
+              paste = '<cr>',
+              paste_behind = '<c-\\>',
+              replay = '<c-q>',  -- replay a macro
+              delete = '<c-\\>', -- delete an entry
+              edit = '<c-\\>',   -- edit an entry
+              custom = {},
+            },
+            n = {
+              select = '<c-\\>',
+              paste = '<cr>',
+              paste_behind = '<c-\\>',
+              replay = '<c-q>',  -- replay a macro
+              delete = '<c-\\>', -- delete an entry
+              edit = '<c-\\>',   -- edit an entry
+              custom = {},
+            },
           },
         },
-      },
-    },
-    config = function(_, opts)
-      require('neoclip').setup(opts)
+      })
       require('telescope').load_extension('neoclip')
     end,
   },
@@ -1190,23 +1155,16 @@ require('lazy').setup({
     dependencies = {
       'nvim-tree/nvim-web-devicons',
       'stevearc/oil.nvim',
-      'stevearc/overseer.nvim',
     },
-    keys = {
-      { '<Space>e', function() require('nvim-tree.api').tree.toggle() end, desc = 'Toggle NvimTree', silent = true, nowait = true },
-      {
-        '<Space>E',
-        function()
-          require('nvim-tree.api').tree.toggle({
-            find_file = true,
-            focus = true,
-          })
-        end,
-        desc = 'Toggle NvimTree (find current file)',
-        silent = true,
-        nowait = true
-      },
-    },
+    init = function()
+      keymap('n', '<Space>e', function() require('nvim-tree.api').tree.toggle() end, ko_s)
+      keymap('n', '<Space>E', function()
+        require('nvim-tree.api').tree.toggle({
+          find_file = true,
+          focus = true,
+        })
+      end, ko_s)
+    end,
     opts = {
       git = {
         ignore = false,
@@ -1330,7 +1288,7 @@ require('lazy').setup({
     dependencies = {
       'nvim-tree/nvim-web-devicons',
     },
-    config = function()
+    init = function()
       require("oil").setup({
         default_file_exploler = false,
         use_default_keymaps = false,
@@ -1719,7 +1677,6 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter',
       'nvim-neotest/nvim-nio',
       'antoinemadec/FixCursorHold.nvim',
-      'fredrikaverpil/neotest-golang',
     },
     init = function()
       keymap('n', '<Leader>t', function() require("neotest").run.run(vim.fn.expand('%')) end, ko)
@@ -1783,7 +1740,9 @@ require('lazy').setup({
     end,
   },
   'nvim-neotest/nvim-nio',
-
+  {
+    'fredrikaverpil/neotest-golang',
+  },
   -- 'nvim-neotest/neotest-python',
   -- 'haydenmeade/neotest-jest',
   -- 'marilari88/neotest-vitest',
@@ -2021,9 +1980,6 @@ require('lazy').setup({
   {
     'norcalli/nvim-colorizer.lua',
     lazy = false,
-    config = function()
-      require('colorizer').setup()
-    end,
   },
   --}}}
   --{{{ Highlights
@@ -2231,7 +2187,9 @@ require('lazy').setup({
   {
     'brenoprata10/nvim-highlight-colors',
     lazy = false,
-    opts = {},
+    init = function()
+      require('nvim-highlight-colors').setup()
+    end,
   },
   --}}}
   --{{{ FileType plugins
@@ -2249,16 +2207,7 @@ require('lazy').setup({
   {
     'iamcco/markdown-preview.nvim',
     ft = { 'markdown', 'plantuml', 'mermaid' },
-    build = function()
-      if vim.fn.executable('yarn') == 1 then
-        return 'cd app && yarn install'
-      elseif vim.fn.executable('npm') == 1 then
-        return 'cd app && npm install'
-      else
-        vim.notify('Neither yarn nor npm found, skipping build for markdown-preview.nvim', vim.log.levels.WARN)
-        return ''
-      end
-    end,
+    build = 'cd app && yarn install',
     init = function()
       vim.g.mkdp_command_for_global = 1
       vim.g.mkdp_auto_close = 0
@@ -2295,7 +2244,9 @@ require('lazy').setup({
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
     },
-    opts = {},
+    config = function()
+      require('nvim-ts-autotag').setup({})
+    end,
   },
   -- for configuration files
   {
