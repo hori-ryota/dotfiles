@@ -906,6 +906,7 @@ require('lazy').setup({
           edit_user_request = '<Leader>ae',
           add_file = 'A',
           remove_file = 'D',
+          close = '<Leader>aq',
         },
       },
     },
