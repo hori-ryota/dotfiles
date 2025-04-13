@@ -1226,7 +1226,7 @@ require('lazy').setup({
         apply('!', api.node.run.cmd, 'cmd open')
         apply('g!', api.node.run.system, 'system open')
         apply('R', function()
-          local node = require('nvim-tree.lib').get_node_at_cursor()
+          local node = api.tree.get_node_under_cursor()
           local buf = vim.fn.bufadd(node.absolute_path)
           vim.fn.bufload(buf)
           local makeprg = vim.api.nvim_buf_get_option(buf, 'makeprg')
@@ -1262,8 +1262,7 @@ require('lazy').setup({
         apply('<space>h', api.tree.change_root_to_parent, 'change root to parent')
         apply('<space>l', api.tree.change_root_to_node, 'change root to node')
         apply('E', function()
-          local lib = require('nvim-tree.lib')
-          local node = lib.get_node_at_cursor()
+          local node = api.tree.get_node_under_cursor()
           local dir = node.type == 'directory' and node.absolute_path or node.parent.absolute_path
           require('oil').open(dir)
         end, 'open by oil.nvim')
