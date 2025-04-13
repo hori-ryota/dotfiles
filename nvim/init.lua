@@ -1267,6 +1267,42 @@ require('lazy').setup({
           require('oil').open(dir)
         end, 'open by oil.nvim')
 
+        apply('<C-a>', function()
+          local function add_file_to_avante(path)
+            local sidebar = require('avante').get()
+
+            local open = sidebar and sidebar:is_open()
+            -- ensure avante sidebar is open
+            if not open then
+              require('avante.api').ask()
+              sidebar = require('avante').get()
+            end
+
+            sidebar.file_selector:add_selected_file(path)
+
+            -- remove nvim-tree buffer
+            if not open then
+              sidebar.file_selector:remove_selected_file('NvimTree_1')
+            end
+          end
+
+          local function process_node(node)
+            if node.type == 'directory' then
+              -- For directories, use fs.scan_dir to get all files recursively
+              local scan = vim.fn.glob(node.absolute_path .. '/**/*', false, true)
+              for _, file_path in ipairs(scan) do
+                if vim.fn.isdirectory(file_path) ~= 1 then
+                  add_file_to_avante(file_path)
+                end
+              end
+            else
+              -- For single files, just add the file
+              add_file_to_avante(node.absolute_path)
+            end
+          end
+          process_node(api.tree.get_node_under_cursor())
+        end, 'add file to avante')
+
         apply('?', api.tree.toggle_help, 'help')
         apply('gf', api.live_filter.start, 'live fitler start')
         apply('gF', api.live_filter.clear, 'live fitler clear')
