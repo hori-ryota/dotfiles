@@ -771,6 +771,12 @@ require('lazy').setup({
           'path',
           'buffer',
         },
+        config = {
+          path = {
+            -- Limit recursive search depth for command line completion
+            cmdline_recursive_level = 1, -- Set to 0 to disable recursive search
+          },
+        },
         providers = {
           avante = {
             module = 'blink-cmp-avante',
