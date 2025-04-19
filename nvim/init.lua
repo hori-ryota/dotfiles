@@ -778,7 +778,11 @@ require('lazy').setup({
             opts = {
               -- options for blink-cmp-avante
             }
-          }
+          },
+          path = {
+            timeout_ms = 1000,
+            max_items = 1000,
+          },
         },
       },
       snippets = { preset = 'luasnip' },
