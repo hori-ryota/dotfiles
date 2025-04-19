@@ -116,7 +116,6 @@ vim.opt.fileencodings = 'utf-8,sjis'
 --}}}
 --{{{ 24 various
 vim.opt.sessionoptions:append('winpos')
-vim.opt.sessionoptions:append('winpos')
 vim.opt.exrc = true
 --}}}
 --}}}
