@@ -876,7 +876,11 @@ require('lazy').setup({
         auto_set_keymaps = false,
         enable_claude_text_editor_tool_mode = true,
       },
-      provider = 'claude',
+      -- provider = 'claude',
+      provider = 'gemini',
+      gemini = {
+        model = 'gemini-2.5-flash-preview-04-17',
+      },
       mappings = {
         ask = '<Space>aa',
         edit = '<Space>ae',
