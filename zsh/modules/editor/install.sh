@@ -12,6 +12,9 @@ brew install universal-ctags
 # symlinks for editorconfig
 ln -snf "$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)/editorconfig" "$HOME/.editorconfig"
 
+# symlinks for shellcheck
+ln -snf "$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)/shellcheckrc" "$HOME/.shellcheckrc"
+
 # symlinks for Neovim
 ln -snf "$DOTFILEDIR"/nvim "$XDG_CONFIG_HOME"/nvim
 ln -snf "$DOTFILEDIR"/nvim/cache/dein "$XDG_CACHE_HOME"/dein
