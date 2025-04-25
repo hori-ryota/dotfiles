@@ -556,7 +556,13 @@ require('lazy').setup({
         on_attach = disable_formatter
       })
       lspconfig.biome.setup({
-        capabilities = capabilities,
+        capabilities =
+            vim.tbl_deep_extend('force', capabilities, {
+              textDocument = {
+                positionEncoding = { 'utf-16' }
+              }
+            }),
+
         cmd = { 'na', 'exec', 'biome', 'lsp-proxy' },
         on_attach = function()
           keymap('n', 'gQ', "<Cmd>execute '!na exec biome check --write --unsafe ' . shellescape(expand('%:p'))<CR>",
