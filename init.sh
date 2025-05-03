@@ -2,6 +2,7 @@
 
 set -eu
 
+source "$(dirname "${BASH_SOURCE:-$0}")/zsh/modules/helper.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/zsh/modules/0-base-envs/export.zsh"
 mkdir -p "$XDG_CONFIG_HOME"
 mkdir -p "$XDG_CACHE_HOME"
@@ -34,7 +35,7 @@ eval "$("${HOMEBREW_PREFIX}"/bin/brew shellenv)"
 
 brew upgrade
 
-brew install zsh
+brew_install zsh
 
 # change default shell to zsh (installed by homebrew)
 grep -q "^${HOMEBREW_PREFIX}/bin/zsh$" /etc/shells || sudo sh -c "echo '${HOMEBREW_PREFIX}/bin/zsh' >> /etc/shells"

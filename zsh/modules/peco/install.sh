@@ -1,4 +1,6 @@
-brew install peco
+source "$(dirname "${BASH_SOURCE:-$0}")/../helper.sh"
+
+brew_install peco
 
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
 

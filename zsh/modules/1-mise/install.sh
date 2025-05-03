@@ -1,4 +1,6 @@
-brew install mise
+source "$(dirname "${BASH_SOURCE:-$0}")/../helper.sh"
+
+brew_install mise
 source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 
 mise settings add idiomatic_version_file_enable_tools go

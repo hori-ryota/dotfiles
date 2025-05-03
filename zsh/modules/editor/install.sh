@@ -1,13 +1,14 @@
+source "$(dirname "${BASH_SOURCE:-$0}")/../helper.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../1-mise/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 
-brew install vim
+brew_install vim
 
-brew install luarocks # for lazy.nvim
-brew install neovim
+brew_install luarocks # for lazy.nvim
+brew_install neovim
 
-brew install universal-ctags
+brew_install universal-ctags
 
 # symlinks for editorconfig
 ln -snf "$(cd "$(dirname "${BASH_SOURCE:-$0}")" && pwd)/editorconfig" "$HOME/.editorconfig"
@@ -47,7 +48,7 @@ npm_install_targets+=("vscode-langservers-extracted")
 
 ## Markdown
 ### LSP
-brew install marksman
+brew_install marksman
 
 ## Vim
 ### LSP
@@ -55,7 +56,7 @@ npm_install_targets+=("vim-language-server")
 
 ## Lua
 ### LSP
-brew install lua-language-server
+brew_install lua-language-server
 
 ## Makefile
 ### Linter
@@ -64,7 +65,7 @@ go install github.com/mrtazz/checkmake/cmd/checkmake@latest
 
 ## C/C++
 ### LSP
-brew install llvm
+brew_install llvm
 
 ## Shell
 ### LSP
@@ -99,14 +100,14 @@ npm_install_targets+=("@astrojs/language-server")
 npm_install_targets+=("dockerfile-language-server-nodejs")
 npm_install_targets+=("@microsoft/compose-language-service")
 ### Linter
-brew install hadolint
+brew_install hadolint
 
 ## Shell
 ### Linter
-brew install shellcheck
+brew_install shellcheck
 
 ### Formatter
-brew install shfmt
+brew_install shfmt
 
 ## Go
 ### LSP

@@ -1,3 +1,5 @@
-brew install --cask docker
+source "$(dirname "${BASH_SOURCE:-$0}")/../helper.sh"
 
-brew install hadolint
+brew_install docker --cask
+
+brew_install hadolint

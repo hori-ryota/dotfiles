@@ -1,9 +1,11 @@
-brew install git
-brew install git-secrets
-brew install ghq
-brew install git-lfs
-brew install lazygit
-brew install gh
+source "$(dirname "${BASH_SOURCE:-$0}")/../helper.sh"
+
+brew_install git
+brew_install git-secrets
+brew_install ghq
+brew_install git-lfs
+brew_install lazygit
+brew_install gh
 
 source "$(dirname "${BASH_SOURCE:-$0}")/../0-base-envs/export.zsh"
 

@@ -1,1 +1,3 @@
-brew install clang-format
+source "$(dirname "${BASH_SOURCE:-$0}")/../helper.sh"
+
+brew_install clang-format

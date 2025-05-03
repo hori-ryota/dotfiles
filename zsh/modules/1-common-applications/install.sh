@@ -1,22 +1,24 @@
-brew install 1password
-brew install alfred
-brew install appcleaner
-brew install google-japanese-ime
-brew install iterm2
-brew install karabiner-elements
-brew install slack
-brew install moom
+source "$(dirname "${BASH_SOURCE:-$0}")/../helper.sh"
+
+brew_install 1password
+brew_install alfred
+brew_install appcleaner
+brew_install google-japanese-ime
+brew_install iterm2
+brew_install karabiner-elements
+brew_install slack
+brew_install moom
 
 # 以下はbrew管理するとアプリ自身の更新管理と競合するのでbrewで入れない
 # brew install google-chrome
 
 # Fonts
-brew install --cask font-hackgen-nerd
+brew_install font-hackgen-nerd
 
 # Quick Look
 ## Plugins
 ### https://github.com/sindresorhus/quick-look-plugins
-brew install --cask qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize suspicious-package apparency quicklookase qlvideo
+brew_install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize suspicious-package apparency quicklookase qlvideo
 
 xattr -r ~/Library/QuickLook | grep -q "com.apple.quarantine" && xattr -d -r com.apple.quarantine ~/Library/QuickLook
 

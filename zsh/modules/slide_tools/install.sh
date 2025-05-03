@@ -1,1 +1,3 @@
-brew install marp-cli
+source "$(dirname "${BASH_SOURCE:-$0}")/../helper.sh"
+
+brew_install marp-cli

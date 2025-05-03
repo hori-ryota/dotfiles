@@ -1,13 +1,15 @@
-brew install ack
-brew install curl
-brew install nkf
-brew install tree
-brew install wget
-brew install gcc
+source "$(dirname "${BASH_SOURCE:-$0}")/../helper.sh"
 
-brew install jq
+brew_install ack
+brew_install curl
+brew_install nkf
+brew_install tree
+brew_install wget
+brew_install gcc
 
-brew install binutils
+brew_install jq
 
-brew install watchman
-brew install go-task
+brew_install binutils
+
+brew_install watchman
+brew_install go-task
