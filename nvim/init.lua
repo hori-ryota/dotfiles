@@ -886,6 +886,7 @@ require('lazy').setup({
       },
       vertex = {
         model = 'gemini-2.5-pro-preview-05-06',
+        endpoint = vim.fn.getenv('AVANTE_VERTEX_ENDPOINT') or 'https://LOCATION-aiplatform.googleapis.com/v1/projects/PROJECT_ID/locations/LOCATION/publishers/google/models',
       },
       mappings = {
         ask = '<Space>aa',
