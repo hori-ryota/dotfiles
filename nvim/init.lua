@@ -880,9 +880,11 @@ require('lazy').setup({
         auto_set_keymaps = false,
         enable_claude_text_editor_tool_mode = true,
       },
-      -- provider = 'claude',
-      provider = 'gemini',
+      provider = vim.fn.getenv('AVANTE_PROVIDER') or 'gemini',
       gemini = {
+        model = 'gemini-2.5-pro-preview-05-06',
+      },
+      vertex = {
         model = 'gemini-2.5-pro-preview-05-06',
       },
       mappings = {
