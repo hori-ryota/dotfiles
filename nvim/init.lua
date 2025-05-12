@@ -880,13 +880,13 @@ require('lazy').setup({
         auto_set_keymaps = false,
         enable_claude_text_editor_tool_mode = true,
       },
-      provider = vim.fn.getenv('AVANTE_PROVIDER') or 'gemini',
+      provider = vim.fn.getenv('AVANTE_PROVIDER') ~= vim.NIL and vim.fn.getenv('AVANTE_PROVIDER') or 'gemini',
       gemini = {
         model = 'gemini-2.5-pro-preview-05-06',
       },
       vertex = {
         model = 'gemini-2.5-pro-preview-05-06',
-        endpoint = vim.fn.getenv('AVANTE_VERTEX_ENDPOINT') or 'https://LOCATION-aiplatform.googleapis.com/v1/projects/PROJECT_ID/locations/LOCATION/publishers/google/models',
+        endpoint = vim.fn.getenv('AVANTE_VERTEX_ENDPOINT') ~= vim.NIL and vim.fn.getenv('AVANTE_VERTEX_ENDPOINT') or 'https://LOCATION-aiplatform.googleapis.com/v1/projects/PROJECT_ID/locations/LOCATION/publishers/google/models',
       },
       mappings = {
         ask = '<Space>aa',
