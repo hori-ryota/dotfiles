@@ -200,23 +200,6 @@ require('lazy').setup({
   'MunifTanjim/nui.nvim',
   'antoinemadec/FixCursorHold.nvim', -- for https://github.com/antoinemadec/FixCursorHold.nvim/issues/13 for neotest
   {
-    'stevearc/dressing.nvim',
-    lazy = false,
-    init = function()
-      require('dressing').setup({
-        select = {
-          telescope = {
-            layout_config = {
-              bottom_pane = {
-                height = '0.95',
-              }
-            },
-          },
-        },
-      })
-    end,
-  },
-  {
     'nvim-tree/nvim-web-devicons',
     opts = {
       override = {
@@ -250,6 +233,7 @@ require('lazy').setup({
     dependencies = {
       'saghen/blink.cmp',
       'j-hui/fidget.nvim',
+      'folke/snacks.nvim',
     },
     lazy = false,
     config = function()
@@ -271,28 +255,27 @@ require('lazy').setup({
       --}}}
 
       local function bind_key_map() --{{{
-        local function telescope(f)
+        local function picker(f)
           return function()
-            require('telescope.builtin')[f]()
+            Snacks.picker[f]()
           end
         end
         keymap('n', '<Leader>ll', vim.lsp.codelens.run, ko_sb)
         keymap('n', '<Leader>lL', function() vim.diagnostic.open_float({ focusable = false }) end, ko_sb)
         keymap('n', '[f', vim.diagnostic.goto_prev, ko_sb)
         keymap('n', ']f', vim.diagnostic.goto_next, ko_sb)
-        keymap('n', '<Space>lf', telescope('diagnostics'), ko_sb)
+        keymap('n', '<Space>lf', picker('diagnostics'), ko_sb)
         keymap('n', 'K', vim.lsp.buf.hover, ko_sb)
         keymap('n', '<Space><Tab>', vim.lsp.buf.signature_help, ko_sb)
-        keymap('n', '<C-]>', telescope('lsp_definitions'), ko_sb)
-        keymap('n', '<Leader>li', telescope('lsp_implementations'), ko_sb)
-        keymap('n', '<Leader>lc', telescope('lsp_incoming_calls'), ko_sb)
+        keymap('n', '<C-]>', picker('lsp_definitions'), ko_sb)
+        keymap('n', '<Leader>li', picker('lsp_implementations'), ko_sb)
+        keymap('n', '<Leader>lc', picker('lsp_references'), ko_sb)
         keymap('n', '<Leader>lR', vim.lsp.buf.rename, ko_sb)
-        keymap('n', '<Leader>lr', telescope('lsp_references'), ko_sb)
         keymap('n', '<Leader>la', vim.lsp.buf.code_action, ko_sb)
         keymap('v', '<Leader>la', vim.lsp.buf.code_action, ko_sb)
         keymap('n', 'gq', vim.lsp.buf.format, ko_sb)
         keymap('v', 'gq', vim.lsp.buf.format, ko_sb)
-        keymap('n', '<Leader>ws', vim.lsp.buf.workspace_symbol, ko_sb)
+        keymap('n', '<Leader>ws', picker('lsp_workspace_symbols'), ko_sb)
       end --}}}
 
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -877,7 +860,7 @@ require('lazy').setup({
       vertex = {
         model = 'gemini-2.5-pro-preview-05-06',
         endpoint = vim.fn.getenv('AVANTE_VERTEX_ENDPOINT') ~= vim.NIL and vim.fn.getenv('AVANTE_VERTEX_ENDPOINT') or
-        'https://LOCATION-aiplatform.googleapis.com/v1/projects/PROJECT_ID/locations/LOCATION/publishers/google/models',
+            'https://LOCATION-aiplatform.googleapis.com/v1/projects/PROJECT_ID/locations/LOCATION/publishers/google/models',
       },
       mappings = {
         ask = '<Space>aa',
@@ -911,241 +894,38 @@ require('lazy').setup({
     },
   },
   --}}}
-  --{{{ telescope
+  --{{{ snacks.nvim
   {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-tree/nvim-web-devicons',
-      'nvim-telescope/telescope-file-browser.nvim',
-      'AckslD/nvim-neoclip.lua',
-    },
-    cmd = 'Telescope',
-    init = function() --{{{
-      keymap('n', '<Space><Space>', '<Cmd>Telescope find_files<CR>', ko_s)
-      keymap('n', '<Space>w', '<Cmd>Telescope file_browser<CR>', ko_s)
-      keymap('n', '<Space>W', '<Cmd>Telescope file_browser path=%:p:h select_buffer=true<CR>', ko_s)
-      keymap('n', '<Space>b', '<Cmd>Telescope buffers<CR>', ko_s)
-      keymap('n', '<Space>r', '<Cmd>Telescope live_grep<CR>', ko_s)
-      keymap('n', '<Space>.', '<Cmd>Telescope resume<CR>', ko_s)
-
-      keymap('n', '<Space>vs', '<Cmd>Telescope git_status<CR>', ko_s)
-      keymap('n', '<Space>vl', function()
-        require('telescope.builtin').git_commits({
-          git_command = {
-            "git",
-            "log",
-            "--pretty=%h %cd [%an] %s %d",
-            "--date=iso-local",
-            "--", ".",
-          }
-        })
-      end, ko_s)
-      keymap('n', '<Space>vL', function()
-        require('telescope.builtin').git_bcommits({
-          git_command = {
-            "git",
-            "log",
-            "--pretty=%h %cd [%an] %s %d",
-            "--date=iso-local",
-          }
-        })
-      end, ko_s)
-
-      keymap('n', '<Space>p', '<Cmd>Telescope neoclip<CR>', ko_s)
-      keymap('n', '<Space>q', '<Cmd>Telescope macroscope<CR>', ko_s)
-      keymap('n', '<Space>ip', '<C-u>Telescope neoclip ', ko_s)
-      keymap('n', '<Space>iq', '<C-u>Telescope macroscope ', ko_s)
-
-      -- memolist
-      keymap('n', '<Space>ml', function()
-        require('telescope.builtin').find_files({
-          cwd = vim.g.memolist_path,
-          find_command = { 'rg', '--files', '--sortr', 'path' },
-        })
-      end, ko_s)
-      keymap('n', '<Space>mr', function()
-        require('telescope.builtin').live_grep({ cwd = vim.g.memolist_path })
-      end, ko_s)
-
-      -- dotfiles
-      keymap('n', '<Space>sl', function()
-        require('telescope.builtin').find_files({ cwd = os.getenv('HOME') .. '/.dotfiles' })
-      end, ko_s)
-      keymap('n', '<Space>sr',
-        function() require('telescope.builtin').live_grep({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end, ko_s)
-    end,                --}}}
-    config = function() --{{{
-      local actions = require("telescope.actions")
-      local fb_actions = require('telescope').extensions.file_browser.actions
-      require("telescope").setup({
-        defaults = {
-          mappings = {
-            --{{{
-            n = {
-              ['<esc>']      = actions.close,
-              ['<CR>']       = actions.select_default,
-              s              = actions.select_horizontal,
-              S              = actions.select_vertical,
-              gs             = actions.select_tab,
-              j              = actions.move_selection_next,
-              k              = actions.move_selection_previous,
-              H              = actions.move_to_top,
-              M              = actions.move_to_middle,
-              L              = actions.move_to_bottom,
-              gg             = actions.move_to_top,
-              G              = actions.move_to_bottom,
-              x              = actions.toggle_selection + actions.move_selection_worse,
-              X              = actions.toggle_all,
-              ['<C-f>']      = actions.preview_scrolling_down,
-              ['<C-b>']      = actions.preview_scrolling_up,
-              ['?']          = actions.which_key,
-              -- disable defaults
-              ['<C-D>']      = false,
-              ['<C-U>']      = false,
-              ['<C-q>']      = false,
-              ['<C-t>']      = false,
-              ['<C-v>']      = false,
-              ['<C-x>']      = false,
-              ['<M-q>']      = false,
-              ['<Tab>']      = false,
-              ['<S-Tab>']    = false,
-              ['<Up>']       = false,
-              ['<Down>']     = false,
-              ['<PageUp>']   = false,
-              ['<PageDown>'] = false,
-            },
-            i = {
-              ['<CR>']       = actions.select_default,
-              ['<C-s>']      = actions.select_horizontal,
-              ['<C-v>']      = actions.select_vertical,
-              ['<C-j>']      = actions.move_selection_next,
-              ['<C-k>']      = actions.move_selection_previous,
-              ['<C-f>']      = actions.preview_scrolling_down,
-              ['<C-b>']      = actions.preview_scrolling_up,
-              -- disable defaults
-              ['<C-c>']      = false,
-              ['<C-d>']      = false,
-              ['<C-l>']      = false,
-              ['<C-p>']      = false,
-              ['<C-q>']      = false,
-              ['<C-t>']      = false,
-              ['<C-u>']      = false,
-              ['<M-q>']      = false,
-              ['<Tab>']      = false,
-              ['<S-Tab>']    = false,
-              ['<Up>']       = false,
-              ['<Down>']     = false,
-              ['<PageUp>']   = false,
-              ['<PageDown>'] = false,
-            },
-          } --}}}
-        },
-        extensions = {
-          file_browser = {
-            hidden = true,
-            mappings = {
-              --{{{
-              n = {
-                A = fb_actions.create,
-                R = fb_actions.rename,
-                M = fb_actions.move,
-                C = fb_actions.copy,
-                D = fb_actions.remove,
-                o = fb_actions.open,
-                ['<C-h>'] = fb_actions.goto_parent_dir,
-                H = fb_actions.goto_cwd,
-                X = fb_actions.toggle_all,
-                -- disable defaults
-                c = false,
-                r = false,
-                m = false,
-                y = false,
-                d = false,
-                g = false,
-                e = false,
-                w = false,
-                t = false,
-                f = false,
-                h = false,
-                s = false,
-              },
-              i = {
-                -- disable defaults
-                ["<A-c>"]  = false,
-                ["<S-CR>"] = false,
-                ["<A-r>"]  = false,
-                ["<A-m>"]  = false,
-                ["<A-y>"]  = false,
-                ["<A-d>"]  = false,
-                ["<C-o>"]  = false,
-                ["<C-g>"]  = false,
-                ["<C-e>"]  = false,
-                ["<C-w>"]  = false,
-                ["<C-t>"]  = false,
-                ["<C-f>"]  = false,
-                ["<C-h>"]  = false,
-                ["<C-s>"]  = false,
-                ["<bs>"]   = false,
-              },
-            }, --}}}
-          },
+    'folke/snacks.nvim',
+    lazy = false,
+    config = function()
+      vim.cmd('hi! link SnacksPickerDir Comment')
+      require('snacks').setup({
+        picker = {
+          ui_select = true,
         },
       })
-    end, --}}}
-  },
-  {
-    'nvim-telescope/telescope-file-browser.nvim',
-    config = function()
-      require('telescope').load_extension('file_browser')
     end,
-  },
-  {
-    'lpoto/telescope-docker.nvim',
-    init = function()
-      keymap('n', '<Space>di', function() require('telescope').extensions.docker.images() end, ko)
-      keymap('n', '<Space>dc', function() require('telescope').extensions.docker.containers() end, ko)
-    end,
-    config = function()
-      require('telescope').load_extension('docker')
-    end,
-  },
-  'kkharji/sqlite.lua',
-  {
-    'AckslD/nvim-neoclip.lua',
-    dependencies = {
-      'kkharji/sqlite.lua',
+    keys = {
+      { '<Space><Space>', function() Snacks.picker.smart() end },
+      { '<Space>b',       function() Snacks.picker.buffers() end },
+      { '<Space>r',       function() Snacks.picker.grep() end },
+
+      { '<Space>h',       function() Snacks.picker.help() end },
+      { '<Space>k',       function() Snacks.picker.keymaps() end },
+
+      { '<Space>vs',      function() Snacks.picker.git_status() end },
+      { '<Space>vl',      function() Snacks.picker.git_log() end },
+      { '<Space>vd',      function() Snacks.picker.git_diff() end },
+      { '<Space>vL',      function() Snacks.picker.git_log_file() end },
+      { '<Space>v<C-l>',  function() Snacks.picker.git_log_line() end },
+
+      { '<Space>ml',      function() Snacks.picker.files({ cwd = vim.g.memolist_path }) end },
+      { '<Space>mr',      function() Snacks.picker.grep({ cwd = vim.g.memolist_path }) end },
+
+      { '<Space>sl',      function() Snacks.picker.files({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end },
+      { '<Space>sr',      function() Snacks.picker.grep({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end },
     },
-    config = function()
-      require('neoclip').setup({
-        enable_persistent_history = true,
-        enable_macro_history = true,
-        keys = {
-          telescope = {
-            i = {
-              select = '<c-\\>',
-              paste = '<cr>',
-              paste_behind = '<c-\\>',
-              replay = '<c-q>',  -- replay a macro
-              delete = '<c-\\>', -- delete an entry
-              edit = '<c-\\>',   -- edit an entry
-              custom = {},
-            },
-            n = {
-              select = '<c-\\>',
-              paste = '<cr>',
-              paste_behind = '<c-\\>',
-              replay = '<c-q>',  -- replay a macro
-              delete = '<c-\\>', -- delete an entry
-              edit = '<c-\\>',   -- edit an entry
-              custom = {},
-            },
-          },
-        },
-      })
-      require('telescope').load_extension('neoclip')
-    end,
   },
   --}}}
   --{{{ filer
@@ -1364,153 +1144,11 @@ require('lazy').setup({
     end
   },
   --}}}
-  --{{{ GitHub
-  {
-    'pwntester/octo.nvim',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-tree/nvim-web-devicons',
-      'nvim-telescope/telescope.nvim',
-    },
-    cmd = 'Octo',
-    init = function()
-      keymap('n', '<Space>vil', '<Cmd>Octo issue list<CR>', ko)
-      keymap('n', '<Space>vpl', '<Cmd>Octo pr list<CR>', ko)
-    end,
-    config = function()
-      vim.treesitter.language.register('markdown', 'octo')
-      require('octo').setup({
-        default_remote = { 'upstream', 'origin', 'hori-ryota' },
-        mappings = {
-          issue = {
-            -- close_issue = { lhs = "<Leader>DD", desc = "close PR" },
-            -- reopen_issue = { lhs = "<Leader>OO", desc = "reopen PR" },
-            -- list_issues = { lhs = "<Space>il", desc = "list open issues on same repo" },
-            -- reload = { lhs = "<C-l>", desc = "reload PR" },
-            -- open_in_browser = { lhs = "<Space>br", desc = "open PR in browser" },
-            -- copy_url = { lhs = "<Leader>y", desc = "copy url to system clipboard" },
-            -- add_assignee = { lhs = "<Leader>aA", desc = "add assignee" },
-            -- remove_assignee = { lhs = "<Leader>aD", desc = "remove assignee" },
-            -- create_label = { lhs = "<Leader>LC", desc = "create label" },
-            -- add_label = { lhs = "<Leader>LA", desc = "add label" },
-            -- remove_label = { lhs = "<Leader>LD", desc = "remove label" },
-            -- goto_issue = { lhs = "<C-]>", desc = "navigate to a local repo issue" },
-            -- add_comment = { lhs = "<Leader>cA", desc = "add comment" },
-            -- delete_comment = { lhs = "<Leader>cD", desc = "delete comment" },
-            -- next_comment = { lhs = "]c", desc = "go to next comment" },
-            -- prev_comment = { lhs = "[c", desc = "go to previous comment" },
-            -- react_hooray = { lhs = "<Leader>et", desc = "add/remove 🎉 reaction" },
-            -- react_heart = { lhs = "<Leader>eh", desc = "add/remove ❤️ reaction" },
-            -- react_eyes = { lhs = "<Leader>ee", desc = "add/remove 👀 reaction" },
-            -- react_thumbs_up = { lhs = "<Leader>e+", desc = "add/remove 👍 reaction" },
-            -- react_thumbs_down = { lhs = "<Leader>e-", desc = "add/remove 👎 reaction" },
-            -- react_rocket = { lhs = "<Leader>er", desc = "add/remove 🚀 reaction" },
-            -- react_laugh = { lhs = "<Leader>es", desc = "add/remove 😄 reaction" },
-            -- react_confused = { lhs = "<Leader>ec", desc = "add/remove 😕 reaction" },
-          },
-          pull_request = {
-            -- checkout_pr = { lhs = "<Leader>X", desc = "checkout PR" },
-            -- merge_pr = { lhs = "<Leader>MM", desc = "merge commit PR" },
-            -- squash_and_merge_pr = { lhs = "<Leader>SS", desc = "squash and merge PR" },
-            -- list_commits = { lhs = "<Space>l", desc = "list PR commits" },
-            -- list_changed_files = { lhs = "<Space>f", desc = "list PR changed files" },
-            -- show_pr_diff = { lhs = "<Space>d", desc = "show PR diff" },
-            -- add_reviewer = { lhs = "<Leader>rA", desc = "add reviewer" },
-            -- remove_reviewer = { lhs = "<Leader>rD", desc = "remove reviewer request" },
-            -- close_issue = { lhs = "<Leader>DD", desc = "close PR" },
-            -- reopen_issue = { lhs = "<Leader>OO", desc = "reopen PR" },
-            -- list_issues = { lhs = "<Space>il", desc = "list open issues on same repo" },
-            -- reload = { lhs = "<C-l>", desc = "reload PR" },
-            -- open_in_browser = { lhs = "<Space>br", desc = "open PR in browser" },
-            -- copy_url = { lhs = "<Leader>y", desc = "copy url to system clipboard" },
-            -- goto_file = { lhs = "gf", desc = "go to file" },
-            -- add_assignee = { lhs = "<Leader>aA", desc = "add assignee" },
-            -- remove_assignee = { lhs = "<Leader>aD", desc = "remove assignee" },
-            -- create_label = { lhs = "<Leader>LC", desc = "create label" },
-            -- add_label = { lhs = "<Leader>LA", desc = "add label" },
-            -- remove_label = { lhs = "<Leader>LD", desc = "remove label" },
-            -- goto_issue = { lhs = "<C-]>", desc = "navigate to a local repo issue" },
-            -- add_comment = { lhs = "<Leader>cA", desc = "add comment" },
-            -- delete_comment = { lhs = "<Leader>cD", desc = "delete comment" },
-            -- next_comment = { lhs = "]c", desc = "go to next comment" },
-            -- prev_comment = { lhs = "[c", desc = "go to previous comment" },
-            -- react_hooray = { lhs = "<Leader>et", desc = "add/remove 🎉 reaction" },
-            -- react_heart = { lhs = "<Leader>eh", desc = "add/remove ❤️ reaction" },
-            -- react_eyes = { lhs = "<Leader>ee", desc = "add/remove 👀 reaction" },
-            -- react_thumbs_up = { lhs = "<Leader>e+", desc = "add/remove 👍 reaction" },
-            -- react_thumbs_down = { lhs = "<Leader>e-", desc = "add/remove 👎 reaction" },
-            -- react_rocket = { lhs = "<Leader>er", desc = "add/remove 🚀 reaction" },
-            -- react_laugh = { lhs = "<Leader>es", desc = "add/remove 😄 reaction" },
-            -- react_confused = { lhs = "<Leader>ec", desc = "add/remove 😕 reaction" },
-          },
-          review_thread = {
-            -- goto_issue = { lhs = "<C-]>", desc = "navigate to a local repo issue" },
-            -- add_comment = { lhs = "<Leader>cA", desc = "add comment" },
-            -- add_suggestion = { lhs = "<Leader>gA", desc = "add suggestion" },
-            -- delete_comment = { lhs = "<Leader>cD", desc = "delete comment" },
-            -- next_comment = { lhs = "]c", desc = "go to next comment" },
-            -- prev_comment = { lhs = "[c", desc = "go to previous comment" },
-            -- select_next_entry = { lhs = "]e", desc = "move to previous changed file" },
-            -- select_prev_entry = { lhs = "[e", desc = "move to next changed file" },
-            -- close_review_tab = { lhs = "<C-c>", desc = "close review tab" },
-            -- react_hooray = { lhs = "<Leader>et", desc = "add/remove 🎉 reaction" },
-            -- react_heart = { lhs = "<Leader>eh", desc = "add/remove ❤️ reaction" },
-            -- react_eyes = { lhs = "<Leader>ee", desc = "add/remove 👀 reaction" },
-            -- react_thumbs_up = { lhs = "<Leader>e+", desc = "add/remove 👍 reaction" },
-            -- react_thumbs_down = { lhs = "<Leader>e-", desc = "add/remove 👎 reaction" },
-            -- react_rocket = { lhs = "<Leader>er", desc = "add/remove 🚀 reaction" },
-            -- react_laugh = { lhs = "<Leader>es", desc = "add/remove 😄 reaction" },
-            -- react_confused = { lhs = "<Leader>ec", desc = "add/remove 😕 reaction" },
-          },
-          submit_win = {
-            -- approve_review = { lhs = "<Space>vp<C-a>", desc = "approve review" },
-            -- comment_review = { lhs = "<Space>vp<C-c>", desc = "comment review" },
-            -- request_changes = { lhs = "<Space>vp<C-r>", desc = "request changes review" },
-            -- close_review_tab = { lhs = "<Space>vp<C-d>", desc = "close review tab" },
-          },
-          review_diff = {
-            -- add_review_comment = { lhs = "<Leader>cA", desc = "add a new review comment" },
-            -- add_review_suggestion = { lhs = "<Leader>gA", desc = "add a new review suggestion" },
-            -- focus_files = { lhs = "<Space>F", desc = "move focus to changed file panel" },
-            -- toggle_files = { lhs = "<Space>f", desc = "hide/show changed files panel" },
-            -- next_thread = { lhs = "]t", desc = "move to next thread" },
-            -- prev_thread = { lhs = "[t", desc = "move to previous thread" },
-            -- select_next_entry = { lhs = "]e", desc = "move to previous changed file" },
-            -- select_prev_entry = { lhs = "[e", desc = "move to next changed file" },
-            -- close_review_tab = { lhs = "<Esc>", desc = "close review tab" },
-            -- toggle_viewed = { lhs = "<Leader>V", desc = "toggle viewer viewed state" },
-          },
-          file_panel = {
-            -- next_entry = { lhs = "j", desc = "move to next changed file" },
-            -- prev_entry = { lhs = "k", desc = "move to previous changed file" },
-            -- select_entry = { lhs = "o", desc = "show selected changed file diffs" },
-            -- refresh_files = { lhs = "<C-l>", desc = "refresh changed files panel" },
-            -- focus_files = { lhs = "<Space>F", desc = "move focus to changed file panel" },
-            -- toggle_files = { lhs = "<Space>f", desc = "hide/show changed files panel" },
-            -- select_next_entry = { lhs = "]e", desc = "move to previous changed file" },
-            -- select_prev_entry = { lhs = "[e", desc = "move to next changed file" },
-            -- close_review_tab = { lhs = "<Esc>", desc = "close review tab" },
-            -- toggle_viewed = { lhs = "<Leader>V", desc = "toggle viewer viewed state" },
-          },
-        },
-      })
-      vim.api.nvim_create_augroup('MyOcto', {})
-      vim.api.nvim_create_autocmd('FileType', {
-        group = 'MyOcto',
-        pattern = 'octo',
-        callback = function()
-          keymap('n', '<Space>s', '<Cmd>Octo pr checks<CR>', ko_b)
-        end,
-      })
-    end,
-  },
-  --}}}
   --{{{ Async Execution
   {
     'stevearc/overseer.nvim',
     dependencies = {
       'MunifTanjim/nui.nvim',
-      'nvim-telescope/telescope.nvim',
     },
     lazy = false,
     init = function()
