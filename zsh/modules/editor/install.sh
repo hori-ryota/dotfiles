@@ -88,8 +88,6 @@ uv tool install --upgrade jupytext
 ## Node.js and frontend development
 ### LSP
 npm_install_targets+=("typescript" "typescript-language-server")
-npm_install_targets+=("@olrtg/emmet-language-server")
-npm_install_targets+=("@tailwindcss/language-server")
 npm_install_targets+=("@prisma/language-server")
 
 ### Astro

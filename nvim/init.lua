@@ -417,7 +417,7 @@ require('lazy').setup({
       })
       lspconfig.basedpyright.setup({
         capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern("pyproject.toml"),
+        root_markers = { 'pyproject.toml' },
         cmd = { 'uv', 'run', '--quiet', 'basedpyright-langserver', '--stdio', '||', 'basedpyright-langserver', '--stdio' },
         settings = {
           python = {
@@ -550,7 +550,7 @@ require('lazy').setup({
       --{{{ for Node.js and frontend development
       lspconfig.ts_ls.setup({
         capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern("package.json"),
+        root_markers = { "package.json" },
         single_file_support = false,
         -- use prettier as formatter
         on_attach = disable_formatter
@@ -569,6 +569,7 @@ require('lazy').setup({
             ko_b)
           fmt_on_save()
         end,
+        workspace_required = true,
       })
       lspconfig.html.setup({
         capabilities = capabilities,
@@ -582,18 +583,11 @@ require('lazy').setup({
       -- })
       lspconfig.eslint.setup({
         capabilities = capabilities,
-        on_attach = function()
+        on_attach = function(client)
+          disable_formatter(client)
           keymap('n', 'gQ', '<Cmd>EslintFixAll<CR><Cmd>lua vim.lsp.buf.format()<CR>', ko_b)
         end,
-      })
-      -- lspconfig.stylelint_lsp.setup({
-      --   capabilities = capabilities,
-      -- })
-      lspconfig.tailwindcss.setup({
-        capabilities = capabilities,
-      })
-      lspconfig.emmet_language_server.setup({
-        capabilities = capabilities,
+        workspace_required = true,
       })
       lspconfig.prismals.setup({
         capabilities = capabilities,
@@ -603,10 +597,11 @@ require('lazy').setup({
       --{{{ for Astro
       lspconfig.astro.setup({
         capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern("astro.config.*"),
+        root_markers = { 'astro.config.ts' },
         on_attach = function()
           fmt_on_save()
         end,
+        workspace_required = true,
       })
       --}}}
 
@@ -615,12 +610,7 @@ require('lazy').setup({
         capabilities = capabilities,
         root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
         on_attach = function()
-          vim.api.nvim_create_autocmd('BufWritePre', {
-            group = 'MyLspConfig',
-            buffer = 0,
-            callback = function() vim.lsp.buf.format() end,
-          })
-
+          fmt_on_save()
           vim.opt_local.makeprg = 'deno run -A %'
         end,
       })
