@@ -6,89 +6,9 @@ fi
 # modules
 source "$HOME/.zsh/modules/zshrc"
 
-# search history with peco
-function peco-select-history() {
-    local tac
-    if which tac > /dev/null; then
-        tac="tac"
-    else
-        tac="tail -r"
-    fi
-    BUFFER=$(\history -n 1 | \
-        eval $tac | \
-        peco --query "$LBUFFER")
-    CURSOR=$#BUFFER
-    zle clear-screen
-}
-zle -N peco-select-history
-bindkey '^r' peco-select-history
-
-# search ghq src with peco
-function peco-ghq () {
-  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
-    zle accept-line
-  fi
-  zle clear-screen
-}
-zle -N peco-ghq
-
-# search ghq src and bookmarks with peco
-function peco-ghq-and-bookmarks () {
-  local selected_dir=$(cat <(ghq list -p) "$HOME/.bookmarkdirs" | peco --query "$LBUFFER")
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
-    zle accept-line
-  fi
-  zle clear-screen
-}
-zle -N peco-ghq-and-bookmarks
-
-if [ -f "$HOME/.bookmarkdirs" ]; then
-  bindkey '^ ' peco-ghq-and-bookmarks
-else
-  bindkey '^ ' peco-ghq
-fi
-
-# search tmuxinator with peco
-function peco-tmuxinator () {
-  local selected_session=$(tmuxinator list | tail -n +2 | tr -s ' ' '\n' | peco --query "$LBUFFER")
-  if [ -n "$selected_session" ]; then
-    BUFFER="tmuxinator start ${selected_session}"
-    zle accept-line
-  fi
-  zle clear-screen
-}
-zle -N peco-tmuxinator
-bindkey '^z^z' peco-tmuxinator
-
-# search tmuxinator edit with peco
-function peco-tmuxinator-edit () {
-  local selected_session=$(tmuxinator list | tail -n +2 | tr -s ' ' '\n' | peco --query "$LBUFFER")
-  if [ -n "$selected_session" ]; then
-    BUFFER="tmuxinator new ${selected_session}"
-    zle accept-line
-  fi
-  zle clear-screen
-}
-zle -N peco-tmuxinator-edit
-bindkey '^ze' peco-tmuxinator-edit
-
-# emacs like keybind
-bindkey "^A" beginning-of-line
-bindkey "^B" backward-char
-bindkey "^D" delete-char-or-list
-bindkey "^E" end-of-line
-bindkey "^F" forward-char
-bindkey "^G" send-break
-bindkey "^K" kill-line
 bindkey "^L" clear-screen
 bindkey "^N" history-substring-search-down
-bindkey "^O" accept-line-and-down-history
 bindkey "^P" history-substring-search-up
-bindkey "^S" history-incremental-pattern-search-forward
-bindkey "^T" transpose-chars
 
 # ローカルの設定ファイルがあればそれを読み込み
 if [ -f "$HOME/.zshrc.local" ]; then

@@ -1,0 +1,54 @@
+source <(fzf --zsh)
+
+# search ghq src with fzf
+function fzf-ghq () {
+  local selected_dir=$(ghq list -p | fzf --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N fzf-ghq
+
+# search ghq src and bookmarks with fzf
+function fzf-ghq-and-bookmarks () {
+  local selected_dir=$(cat <(ghq list -p) "$HOME/.bookmarkdirs" | fzf --query "$LBUFFER" --scheme=path)
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N fzf-ghq-and-bookmarks
+
+# CTRL-<Space> - search ghq src and bookmarks with fzf
+if [ -f "$HOME/.bookmarkdirs" ]; then
+  bindkey '^ ' fzf-ghq-and-bookmarks
+else
+  bindkey '^ ' fzf-ghq
+fi
+
+# search tmuxinator with fzf
+function fzf-tmuxinator () {
+  local selected_session=$(tmuxinator list | tail -n +2 | tr -s ' ' '\n' | fzf --query "$LBUFFER")
+  if [ -n "$selected_session" ]; then
+    BUFFER="tmuxinator start ${selected_session}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N fzf-tmuxinator
+bindkey '^z^z' fzf-tmuxinator
+
+# search tmuxinator edit with fzf
+function fzf-tmuxinator-edit () {
+  local selected_session=$(tmuxinator list | tail -n +2 | tr -s ' ' '\n' | fzf --query "$LBUFFER")
+  if [ -n "$selected_session" ]; then
+    BUFFER="tmuxinator new ${selected_session}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N fzf-tmuxinator-edit
+bindkey '^ze' fzf-tmuxinator-edit
