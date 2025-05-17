@@ -6,8 +6,6 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
 
 (cd ./zprezto && git pull origin master && git submodule update --init)
 
-mise plugins update
-
 sed -i '' -E "s/(BUF_VERSION=).*/\1$(mise latest buf)/" ./zsh/modules/buf/export.zsh
 
 sed -i '' -E "s/(DENO_VERSION=).*/\1$(mise latest deno)/" ./zsh/modules/deno/export.zsh
@@ -25,5 +23,3 @@ sed -i '' -E "s/(UV_VERSION=).*/\1$(mise latest uv)/" ./zsh/modules/python/expor
 sed -i '' -E "s/(RUBY_VERSION=).*/\1$(mise latest ruby)/" ./zsh/modules/ruby/export.zsh
 
 sed -i '' -E "s/(TERRAFORM_VERSION=).*/\1$(mise latest terraform)/" ./zsh/modules/terraform/export.zsh
-
-sed -i '' -E "s/(GCLOUD_VERSION=).*/\1$(mise latest gcloud)/" ./zsh/modules/google-cloud-sdk/export.zsh
