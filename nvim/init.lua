@@ -862,6 +862,9 @@ require('lazy').setup({
         endpoint = vim.fn.getenv('AVANTE_VERTEX_ENDPOINT') ~= vim.NIL and vim.fn.getenv('AVANTE_VERTEX_ENDPOINT') or
             'https://LOCATION-aiplatform.googleapis.com/v1/projects/PROJECT_ID/locations/LOCATION/publishers/google/models',
       },
+      web_search_engine = {
+        provider= "tavily",
+      },
       mappings = {
         ask = '<Space>aa',
         edit = '<Space>ae',
