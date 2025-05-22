@@ -725,9 +725,6 @@ require('lazy').setup({
   {
     'saghen/blink.cmp',
     version = '*',
-    dependencies = {
-      "Kaiser-Yang/blink-cmp-avante",
-    },
     event = {
       'InsertEnter',
       'CmdlineEnter',
@@ -744,24 +741,19 @@ require('lazy').setup({
       },
       sources = {
         default = {
-          'avante', -- by blink-cmp-avante
           'snippets',
           'lsp',
           'path',
           'buffer',
         },
         providers = {
-          avante = {
-            module = 'blink-cmp-avante',
-            name = 'Avante',
-            opts = {
-              -- options for blink-cmp-avante
-            }
-          },
           path = {
             timeout_ms = 1000,
             max_items = 1000,
           },
+        },
+        per_filetype = {
+          codecompanion = { "codecompanion" },
         },
       },
       snippets = { preset = 'luasnip' },
@@ -820,81 +812,98 @@ require('lazy').setup({
   --}}}
   --{{{ AI
   {
-    'yetone/avante.nvim',
-    version = false, -- Never set this value to "*"! Never!
-    event = "VeryLazy",
-    build = 'make',
+    'olimorris/codecompanion.nvim',
+    lazy = false,
     dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
-      "nvim-lua/plenary.nvim",
-      "MunifTanjim/nui.nvim",
-      {
-        -- support for image pasting
-        "HakonHarnes/img-clip.nvim",
-        event = "VeryLazy",
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+    },
+    config = function()
+      require('codecompanion').setup({
         opts = {
-          -- recommended settings
-          default = {
-            embed_image_as_base64 = false,
-            prompt_for_file_name = false,
-            drag_and_drop = {
-              insert_mode = true,
+          language = "Japanese",
+        },
+        adapters = {
+          gemini = function()
+            return require("codecompanion.adapters").extend("gemini", {
+              schema = {
+                model = {
+                  default = "gemini-2.5-pro-preview-05-06",
+                },
+              },
+            })
+          end,
+        },
+        strategies = {
+          chat = {
+            adapter = 'gemini',
+            keymaps = {
+              send = {
+                modes = { n = '<CR>', i = '<C-q>' },
+              },
+              close = {
+                modes = { n = '<Space>at' },
+              },
             },
-            -- required for Windows users
-            use_absolute_path = true,
+          },
+          inline = {
+            adapter = 'gemini',
+            keymaps = {
+              accept_change = {
+                modes = { n = '<Leader>aa' },
+              },
+              reject_change = {
+                modes = { n = '<Leader>ad' },
+              },
+            },
+          },
+          cmd = {
+            adapter = 'gemini',
           },
         },
-      },
+        display = {
+          action_palette = {
+            provider = 'snacks',
+          },
+          chat = {
+            show_settings = true,
+          },
+        },
+        extensions = {
+          mcphub = {
+            callback = 'mcphub.extensions.codecompanion',
+            opts = {
+              show_result_in_chat = true,
+              make_vars = true,
+              make_slash_commands = true,
+            },
+          },
+        },
+      })
+
+      vim.api.nvim_create_augroup('MyCodeCompanion', {})
+      vim.api.nvim_create_autocmd('FileType', {
+        group = 'MyCodeCompanion',
+        pattern = 'codecompanion',
+        callback = function()
+          keymap('n', '<C-d>', 'i@full_stack_dev<CR>', ko)
+          keymap('i', '<C-d>', '@full_stack_dev<CR>', ko)
+          keymap('n', '<C-v>', 'i#viewport<CR>', ko)
+          keymap('i', '<C-v>', '#viewport<CR>', ko)
+          vim.opt_local.makeprg = vim.fn.expand('%:p')
+        end,
+      })
+    end,
+    keys = {
+      { '<Space>at', '<Cmd>CodeCompanionChat Toggle<CR>' },
+      { '<Space>aa', ':CodeCompanionActions<CR>',              mode = { 'n', 'x' }, },
     },
-    opts = {
-      behavior = {
-        auto_suggestion = false,
-        auto_set_keymaps = false,
-        enable_claude_text_editor_tool_mode = true,
-      },
-      provider = vim.fn.getenv('AVANTE_PROVIDER') ~= vim.NIL and vim.fn.getenv('AVANTE_PROVIDER') or 'gemini',
-      gemini = {
-        model = 'gemini-2.5-pro-preview-05-06',
-      },
-      vertex = {
-        model = 'gemini-2.5-pro-preview-05-06',
-        endpoint = vim.fn.getenv('AVANTE_VERTEX_ENDPOINT') ~= vim.NIL and vim.fn.getenv('AVANTE_VERTEX_ENDPOINT') or
-            'https://LOCATION-aiplatform.googleapis.com/v1/projects/PROJECT_ID/locations/LOCATION/publishers/google/models',
-      },
-      web_search_engine = {
-        provider= "tavily",
-      },
-      mappings = {
-        ask = '<Space>aa',
-        edit = '<Space>ae',
-        toggle = {
-          default = '<Space>at',
-        },
-        submit = {
-          normal = '<CR>',
-          insert = '<C-q>',
-        },
-        diff = {
-          ours = '<Leader>ao',
-          theirs = '<Leader>at',
-          all_theirs = '<Leader>aT',
-          both = '<Leader>am',
-          cursor = '<Leader>ad',
-          next = '<Leader>a]',
-          prev = '<Leader>a[',
-        },
-        sidebar = {
-          apply_all = '<Leader>aY',
-          apply_cursor = '<Leader>ay',
-          retry_user_request = '<Leader>aR',
-          edit_user_request = '<Leader>ae',
-          add_file = 'A',
-          remove_file = 'D',
-          close = '<Leader>aq',
-        },
-      },
-    },
+  },
+  {
+    'ravitemer/mcphub.nvim',
+    config = function()
+      require('mcphub').setup()
+    end,
   },
   --}}}
   --{{{ snacks.nvim
@@ -906,6 +915,13 @@ require('lazy').setup({
       require('snacks').setup({
         picker = {
           ui_select = true,
+          win = {
+            input = {
+              keys = {
+                ['x'] = { 'select_and_next', mode = { 'n' } },
+              },
+            },
+          },
         },
       })
     end,
@@ -1056,42 +1072,6 @@ require('lazy').setup({
           local dir = node.type == 'directory' and node.absolute_path or node.parent.absolute_path
           require('oil').open(dir)
         end, 'open by oil.nvim')
-
-        apply('<C-a>', function()
-          local function add_file_to_avante(path)
-            local sidebar = require('avante').get()
-
-            local open = sidebar and sidebar:is_open()
-            -- ensure avante sidebar is open
-            if not open then
-              require('avante.api').ask()
-              sidebar = require('avante').get()
-            end
-
-            sidebar.file_selector:add_selected_file(path)
-
-            -- remove nvim-tree buffer
-            if not open then
-              sidebar.file_selector:remove_selected_file('NvimTree_1')
-            end
-          end
-
-          local function process_node(node)
-            if node.type == 'directory' then
-              -- For directories, use fs.scan_dir to get all files recursively
-              local scan = vim.fn.glob(node.absolute_path .. '/**/*', false, true)
-              for _, file_path in ipairs(scan) do
-                if vim.fn.isdirectory(file_path) ~= 1 then
-                  add_file_to_avante(file_path)
-                end
-              end
-            else
-              -- For single files, just add the file
-              add_file_to_avante(node.absolute_path)
-            end
-          end
-          process_node(api.tree.get_node_under_cursor())
-        end, 'add file to avante')
 
         apply('?', api.tree.toggle_help, 'help')
         apply('gf', api.live_filter.start, 'live fitler start')

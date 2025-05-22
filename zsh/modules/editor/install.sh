@@ -41,6 +41,9 @@ source "$(dirname "${BASH_SOURCE:-$0}")/../deno/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../rust/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../rust/export.zsh"
 
+# AI
+npm_install_targets+=("mcp-hub")
+
 # VSCode language servers
 npm_install_targets+=("vscode-langservers-extracted")
 
