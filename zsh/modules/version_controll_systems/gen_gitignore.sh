@@ -29,6 +29,10 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
 	echo ".task"
 	echo ""
 
+	echo "# for claude code"
+	echo "**/.claude/settings.local.json"
+	echo ""
+
 	# Use [simonwhitaker/gibo: Easy access to gitignore boilerplates](https://github.com/simonwhitaker/gibo).
 	gibo dump Dropbox Eclipse JetBrains Linux macOS MicrosoftOffice Vagrant Ninja Tags Vim VisualStudioCode Xcode
 
