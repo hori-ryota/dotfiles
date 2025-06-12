@@ -15,6 +15,7 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
 	echo ".nvim.lua"
 	echo ".nvimrc"
 	echo ".exrc"
+	echo ".docs"
 	echo ""
 
 	echo "# for ripgrep"
