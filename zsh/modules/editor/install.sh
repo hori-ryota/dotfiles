@@ -43,6 +43,8 @@ source "$(dirname "${BASH_SOURCE:-$0}")/../rust/export.zsh"
 
 # AI
 npm_install_targets+=("mcp-hub")
+go install github.com/github/github-mcp-server/cmd/github-mcp-server@latest
+go install github.com/hashicorp/terraform-mcp-server/cmd/terraform-mcp-server@latest
 
 # VSCode language servers
 npm_install_targets+=("vscode-langservers-extracted")
