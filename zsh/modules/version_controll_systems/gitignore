@@ -8,6 +8,7 @@ pyvenv.cfg
 .nvim.lua
 .nvimrc
 .exrc
+.docs
 
 # for ripgrep
 .rgignore
@@ -320,3 +321,5 @@ xcuserdata/
 *.xccheckout
 
 !tags/
+
+**/.claude/settings.local.json
