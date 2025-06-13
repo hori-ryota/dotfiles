@@ -1,0 +1,371 @@
+# Workspace-related commands for tmux + claude code + git worktree
+
+# Files/directories to symlink when creating worktrees
+WORKTREE_SYMLINK_ITEMS=(
+    "CLAUDE.md"
+    ".claude/"
+    ".mcp.json"
+
+    ".docs/"
+
+    ".env"
+    ".envrc"
+)
+
+# Open a tmux window with claude in the current directory
+tmux_open_claude_window() {
+    # Get the current directory name
+    local dir_name=$(basename "$PWD")
+    local window_name="${dir_name} - claude"
+
+    # Check if we're in a tmux session
+    if [[ -z "$TMUX" ]]; then
+        echo "Error: Not in a tmux session"
+        return 1
+    fi
+
+    # Create a new window with the specified name and start claude
+    tmux new-window -n "$window_name" -c "$PWD" "claude"
+}
+
+# Create a git worktree
+worktree_create() {
+    local feature="$1"
+
+    # Check if feature name is provided
+    if [[ -z "$feature" ]]; then
+        echo "Usage: worktree_create <feature>"
+        return 1
+    fi
+
+    # Check if we're in a git repository
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "Error: Not in a git repository"
+        return 1
+    fi
+
+    # Get the repository root and name
+    local repo_root=$(git rev-parse --show-toplevel)
+    local repo_name=$(basename "$repo_root")
+
+    # Define branch name and worktree path
+    local branch_name
+    if [[ "$feature" == *"/"* ]]; then
+        # If feature contains slash, use it as-is
+        branch_name="${feature}"
+    else
+        # Otherwise, prepend feature/hori/
+        branch_name="feature/hori/${feature}"
+    fi
+    local worktree_path="${repo_root}/../${repo_name}-${feature//\//-}"
+
+    # Normalize worktree path to absolute path
+    local abs_worktree_path=$(cd "${repo_root}/.." && pwd)/"${repo_name}-${feature//\//-}"
+
+    # Check if worktree already exists using git
+    if git worktree list --porcelain | grep -q "^worktree ${abs_worktree_path}$"; then
+        echo "Worktree already exists at: $worktree_path" >&2
+    elif [[ -d "$worktree_path" ]]; then
+        # Double check if it's actually a worktree by looking for .git file
+        if [[ -f "$worktree_path/.git" ]]; then
+            echo "Worktree already exists at: $worktree_path" >&2
+        else
+            echo "Directory exists but not a worktree: $worktree_path" >&2
+            return 1
+        fi
+    else
+        # Check if branch exists (local or remote)
+        if git show-ref --verify --quiet "refs/heads/${branch_name}"; then
+            echo "Branch ${branch_name} already exists locally" >&2
+            # Create worktree with existing branch
+            if ! git worktree add "$worktree_path" "$branch_name" >/dev/null 2>&1; then
+                echo "Error: Failed to create worktree" >&2
+                return 1
+            fi
+        elif git ls-remote --heads origin "${branch_name}" | grep -q "${branch_name}"; then
+            echo "Branch ${branch_name} exists on remote" >&2
+            # Create worktree tracking remote branch
+            if ! git worktree add "$worktree_path" -b "$branch_name" "origin/${branch_name}" >/dev/null 2>&1; then
+                echo "Error: Failed to create worktree" >&2
+                return 1
+            fi
+        else
+            echo "Creating new branch ${branch_name}" >&2
+            # Create new branch and worktree
+            if ! git worktree add -b "$branch_name" "$worktree_path" >/dev/null 2>&1; then
+                echo "Error: Failed to create worktree" >&2
+                return 1
+            fi
+        fi
+    fi
+
+    # Create symlinks for ignored files/directories
+    for item in "${WORKTREE_SYMLINK_ITEMS[@]}"; do
+        if [[ -n "$WORKTREE_DEBUG" ]]; then
+            echo "Processing: ${item}" >&2
+        fi
+        if [[ -e "${repo_root}/${item}" ]]; then
+            if [[ -n "$WORKTREE_DEBUG" ]]; then
+                echo "  Source exists: ${repo_root}/${item}" >&2
+            fi
+
+            # Skip if symlink already exists
+            if [[ -L "${worktree_path}/${item}" ]]; then
+                if [[ -n "$WORKTREE_DEBUG" ]]; then
+                    echo "  Symlink already exists: ${item}" >&2
+                fi
+                continue
+            fi
+
+            # Check if target already exists (but not as symlink)
+            if [[ -e "${worktree_path}/${item}" ]] && [[ ! -L "${worktree_path}/${item}" ]]; then
+                echo "  Warning: ${item} already exists as regular file/directory" >&2
+                # Remove existing directory to prevent nested symlinks
+                if [[ -d "${worktree_path}/${item}" ]]; then
+                    if [[ -n "$WORKTREE_DEBUG" ]]; then
+                        echo "  Removing existing directory: ${item}" >&2
+                    fi
+                    rm -rf "${worktree_path}/${item}"
+                fi
+            fi
+
+            # Create parent directory if needed
+            local parent_dir=$(dirname "${worktree_path}/${item}")
+            if [[ ! -d "$parent_dir" ]]; then
+                mkdir -p "$parent_dir"
+            fi
+
+            # Create symlink (works for both files and directories)
+            # Remove trailing slash for directories
+            local source_path="${repo_root}/${item%/}"
+            local target_path="${worktree_path}/${item%/}"
+
+            # Remove any existing symlink first
+            if [[ -L "${target_path}" ]]; then
+                rm -f "${target_path}"
+            fi
+
+            if ln -s "${source_path}" "${target_path}"; then
+                echo "  Created symlink: ${item}" >&2
+            else
+                echo "  Failed to create symlink: ${item}" >&2
+            fi
+        else
+            if [[ -n "$WORKTREE_DEBUG" ]]; then
+                echo "  Source not found: ${repo_root}/${item}" >&2
+            fi
+        fi
+    done
+
+    echo "$worktree_path"
+}
+
+# Open a tmux window at a worktree path
+tmux_open_window() {
+    local worktree_path="$1"
+
+    # Check if worktree path is provided
+    if [[ -z "$worktree_path" ]]; then
+        echo "Usage: tmux_open_window <worktree_path>"
+        return 1
+    fi
+
+    # Check if we're in a tmux session
+    if [[ -z "$TMUX" ]]; then
+        echo "Error: Not in a tmux session"
+        return 1
+    fi
+
+    # Check if worktree path exists
+    if [[ ! -d "$worktree_path" ]]; then
+        echo "Error: Worktree path does not exist: $worktree_path"
+        return 1
+    fi
+
+    # Get the worktree name from path
+    local window_name=$(basename "$worktree_path")
+    # Remove repository name prefix if present
+    window_name="${window_name#*-}"
+
+    # Create new tmux window and change to worktree directory
+    tmux new-window -n "$window_name" -c "$worktree_path"
+}
+
+# Open an existing worktree in a tmux window
+worktree_open() {
+    local worktree_path="$1"
+
+    # Check if worktree path is provided
+    if [[ -z "$worktree_path" ]]; then
+        echo "Usage: worktree_open <worktree_path>"
+        return 1
+    fi
+
+    # Open in tmux window
+    tmux_open_window "$worktree_path"
+}
+
+# Create a worktree if needed and open it in a tmux window
+worktree_ensure_and_open() {
+    local feature="$1"
+
+    # Check if feature name is provided
+    if [[ -z "$feature" ]]; then
+        echo "Usage: worktree_ensure_and_open <feature>"
+        return 1
+    fi
+
+    # Create worktree and get its path
+    local worktree_path=$(worktree_create "$feature")
+
+    # Open worktree in new tmux window
+    tmux_open_window "$worktree_path"
+}
+
+# Open a tmux window with claude at an existing worktree path
+worktree_open_with_claude() {
+    local worktree_path="$1"
+
+    # Check if worktree path is provided
+    if [[ -z "$worktree_path" ]]; then
+        echo "Usage: worktree_open_with_claude <worktree_path>"
+        return 1
+    fi
+
+    # Check if we're in a tmux session
+    if [[ -z "$TMUX" ]]; then
+        echo "Error: Not in a tmux session"
+        return 1
+    fi
+
+    # Check if worktree path exists
+    if [[ ! -d "$worktree_path" ]]; then
+        echo "Error: Worktree path does not exist: $worktree_path"
+        return 1
+    fi
+
+    # Get the worktree name from path
+    local window_name=$(basename "$worktree_path")
+    # Remove repository name prefix if present
+    window_name="${window_name#*-}"
+    window_name="${window_name} - claude"
+
+    # Create new tmux window and start claude
+    tmux new-window -n "$window_name" -c "$worktree_path" "claude"
+}
+
+# Create a worktree if needed and open claude in a tmux window
+worktree_ensure_and_open_with_claude() {
+    local feature="$1"
+
+    # Check if feature name is provided
+    if [[ -z "$feature" ]]; then
+        echo "Usage: worktree_ensure_and_open_with_claude <feature>"
+        return 1
+    fi
+
+    # Create worktree and get its path
+    local worktree_path=$(worktree_create "$feature")
+
+    # Open worktree with claude in new tmux window
+    worktree_open_with_claude "$worktree_path"
+}
+
+# Translate Japanese feature name to English using Claude
+translate_feature_name() {
+    local japanese="$1"
+    # Use claude to translate
+    local english=$(claude -p "この日本語を短い英語のfeature名に変換してください。小文字のみ使用し、ハイフンで単語を繋いでください。余計な説明は不要で、feature名だけを返してください: $japanese" 2>/dev/null | tail -n 1)
+
+    # Check if translation failed by checking exit code
+    local exit_code=${PIPESTATUS[1]}
+    if [[ $exit_code -ne 0 ]] || [[ -z "$english" ]]; then
+        echo "Translation failed, using original: $japanese" >&2
+        echo "$japanese"
+        return
+    fi
+
+    echo "$english"
+}
+
+# Wrapper for worktree_ensure_and_open with Japanese support
+worktree_ensure_and_open_jp() {
+    local feature="$1"
+
+    # Check if feature name is provided
+    if [[ -z "$feature" ]]; then
+        echo "Usage: worktree_ensure_and_open_jp <feature>"
+        return 1
+    fi
+
+    # Translate if Japanese characters are detected
+    if [[ "$feature" =~ [ぁ-んァ-ヶー一-龠] ]]; then
+        echo "Translating: $feature"
+        feature=$(translate_feature_name "$feature")
+        echo "Feature name: $feature"
+    fi
+
+    worktree_ensure_and_open "$feature"
+}
+
+# Wrapper for worktree_ensure_and_open_with_claude with Japanese support
+worktree_ensure_and_open_with_claude_jp() {
+    local feature="$1"
+
+    # Check if feature name is provided
+    if [[ -z "$feature" ]]; then
+        echo "Usage: worktree_ensure_and_open_with_claude_jp <feature>"
+        return 1
+    fi
+
+    # Translate if Japanese characters are detected
+    if [[ "$feature" =~ [ぁ-んァ-ヶー一-龠] ]]; then
+        echo "Translating: $feature"
+        feature=$(translate_feature_name "$feature")
+        echo "Feature name: $feature"
+    fi
+
+    worktree_ensure_and_open_with_claude "$feature"
+}
+
+# Select and open an existing worktree using fzf
+worktree_select_and_open() {
+    # Check if we're in a git repository
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "Error: Not in a git repository"
+        return 1
+    fi
+
+    # Get list of worktrees with fzf
+    local selected=$(git worktree list | fzf --height=40% --reverse --header="Select worktree to open" | awk '{print $1}')
+
+    # Check if selection was made
+    if [[ -z "$selected" ]]; then
+        echo "No worktree selected"
+        return 1
+    fi
+
+    # Open the selected worktree
+    tmux_open_window "$selected"
+}
+
+# Select and open an existing worktree with claude using fzf
+worktree_select_and_open_with_claude() {
+    # Check if we're in a git repository
+    if ! git rev-parse --git-dir > /dev/null 2>&1; then
+        echo "Error: Not in a git repository"
+        return 1
+    fi
+
+    # Get list of worktrees with fzf
+    local selected=$(git worktree list | fzf --height=40% --reverse --header="Select worktree to open with Claude" | awk '{print $1}')
+
+    # Check if selection was made
+    if [[ -z "$selected" ]]; then
+        echo "No worktree selected"
+        return 1
+    fi
+
+    # Open the selected worktree with claude
+    worktree_open_with_claude "$selected"
+}
