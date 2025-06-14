@@ -1,0 +1,276 @@
+#!/usr/bin/env bats
+
+# Load test helpers
+load "../z_tests/helpers.zsh"
+
+setup() {
+  load_bats_libs
+  setup_test_dir
+  source "${BATS_TEST_DIRNAME}/zshrc_workspace"
+}
+
+teardown() {
+  teardown_test_dir
+  unmock_all
+}
+
+# Unit tests for helper functions
+
+@test "get_repo_name extracts repository name correctly" {
+  run get_repo_name "/path/to/my-awesome-repo"
+  assert_success
+  assert_output "my-awesome-repo"
+}
+
+@test "generate_branch_name with simple feature name" {
+  run generate_branch_name "login"
+  assert_success
+  assert_output "feature/hori/login"
+}
+
+@test "generate_branch_name with slash in feature name" {
+  run generate_branch_name "bugfix/issue-123"
+  assert_success
+  assert_output "bugfix/issue-123"
+}
+
+@test "generate_worktree_path creates correct path" {
+  run generate_worktree_path "/repos/myapp" "myapp" "new-feature"
+  assert_success
+  assert_output "/repos/myapp/../myapp-new-feature"
+}
+
+@test "generate_worktree_path handles slashes in feature name" {
+  run generate_worktree_path "/repos/myapp" "myapp" "feature/auth"
+  assert_success
+  assert_output "/repos/myapp/../myapp-feature-auth"
+}
+
+@test "extract_window_name removes repo prefix" {
+  setup_test_repo "test-repo"
+
+  run extract_window_name "$TEST_REPO_PATH/../test-repo-feature"
+  assert_success
+  assert_output "feature"
+}
+
+@test "extract_window_name handles repo with hyphens" {
+  setup_test_repo "my-awesome-repo"
+
+  run extract_window_name "$TEST_REPO_PATH/../my-awesome-repo-new-feature"
+  assert_success
+  assert_output "new-feature"
+}
+
+@test "in_tmux_session returns true when TMUX is set" {
+  export TMUX="test"
+  run in_tmux_session
+  assert_success
+}
+
+@test "in_tmux_session returns false when TMUX is unset" {
+  unset TMUX
+  run in_tmux_session
+  assert_failure
+}
+
+@test "in_git_repository returns true in git repo" {
+  setup_test_repo
+  run in_git_repository
+  assert_success
+}
+
+@test "in_git_repository returns false outside git repo" {
+  mkdir -p "$TEST_TEMP_DIR/not-a-repo"
+  cd "$TEST_TEMP_DIR/not-a-repo"
+
+  run in_git_repository
+  assert_failure
+}
+
+# Integration tests
+
+@test "get_main_repo_root works in main repository" {
+  setup_test_repo "main-repo"
+
+  run get_main_repo_root
+  assert_success
+  # Compare canonical paths
+  local expected=$(cd "$TEST_REPO_PATH" && pwd -P)
+  assert_output "$expected"
+}
+
+@test "get_main_repo_root works in worktree" {
+  setup_test_repo "main-repo"
+  setup_test_worktree "feature1"
+  cd "$TEST_WORKTREE_PATH"
+
+  run get_main_repo_root
+  assert_success
+  # The function should return a valid directory path
+  assert [ -d "$output" ]
+  # The output should not be the worktree path itself
+  assert [ "$output" != "$TEST_WORKTREE_PATH" ]
+}
+
+@test "worktree_exists detects existing worktree" {
+  setup_test_repo "test-repo"
+  setup_test_worktree "existing"
+
+  run worktree_exists "$TEST_WORKTREE_PATH"
+  assert_success
+}
+
+@test "worktree_exists returns false for non-existent worktree" {
+  setup_test_repo "test-repo"
+
+  run worktree_exists "/nonexistent/path"
+  assert_failure
+}
+
+@test "create_worktree_directory creates new branch and worktree" {
+  setup_test_repo "test-repo"
+  local worktree_path="$TEST_REPO_PATH/../test-repo-newbranch"
+
+  run create_worktree_directory "feature/test" "$worktree_path"
+  assert_success
+
+  # Verify worktree was created
+  assert [ -d "$worktree_path" ]
+  assert [ -f "$worktree_path/.git" ]
+
+  # Verify branch was created
+  cd "$TEST_REPO_PATH"
+  run git branch --list "feature/test"
+  assert_output --partial "feature/test"
+}
+
+@test "create_worktree_symlinks creates symlinks" {
+  setup_test_repo "test-repo"
+  setup_test_worktree "feature1"
+
+  # Create source files
+  echo "# Claude" >"$TEST_REPO_PATH/CLAUDE.md"
+  mkdir -p "$TEST_REPO_PATH/.claude"
+
+  # Clear any existing symlinks
+  rm -f "$TEST_WORKTREE_PATH/CLAUDE.md"
+  rm -rf "$TEST_WORKTREE_PATH/.claude"
+
+  run create_worktree_symlinks "$TEST_REPO_PATH" "$TEST_WORKTREE_PATH"
+  assert_success
+
+  # Verify symlinks were created
+  assert [ -L "$TEST_WORKTREE_PATH/CLAUDE.md" ]
+  assert [ -L "$TEST_WORKTREE_PATH/.claude" ]
+}
+
+@test "create_worktree_symlinks handles existing directory" {
+  setup_test_repo "test-repo"
+  setup_test_worktree "feature1"
+
+  # Create source and conflicting target
+  mkdir -p "$TEST_REPO_PATH/.claude"
+  mkdir -p "$TEST_WORKTREE_PATH/.claude"
+
+  run create_worktree_symlinks "$TEST_REPO_PATH" "$TEST_WORKTREE_PATH"
+  assert_success
+  assert_output --partial "Warning: .claude/ already exists"
+
+  # Verify symlink was created after removing directory
+  assert [ -L "$TEST_WORKTREE_PATH/.claude" ]
+}
+
+# Full workflow tests
+
+@test "worktree_create full workflow for new feature" {
+  setup_test_repo "myapp"
+
+  # Create files to symlink
+  echo "# Test" >"$TEST_REPO_PATH/CLAUDE.md"
+
+  run worktree_create "awesome-feature"
+  assert_success
+  assert_output --partial "$TEST_REPO_PATH/../myapp-awesome-feature"
+
+  # Verify worktree structure
+  local worktree_path="$TEST_REPO_PATH/../myapp-awesome-feature"
+  assert [ -d "$worktree_path" ]
+  assert [ -L "$worktree_path/CLAUDE.md" ]
+
+  # Verify branch
+  cd "$TEST_REPO_PATH"
+  run git branch --list "feature/hori/awesome-feature"
+  assert_output --partial "feature/hori/awesome-feature"
+}
+
+@test "worktree_create handles existing worktree" {
+  setup_test_repo "myapp"
+
+  # Create worktree first (capture stderr to avoid git remote warnings)
+  run worktree_create "existing" 2>&1
+  assert_success
+  # Extract just the path from the output
+  local worktree_path=$(echo "$output" | grep -E "^/" | tail -n1)
+
+  # Try to create again
+  run worktree_create "existing"
+  assert_success
+  assert_output --partial "Worktree already exists"
+  # Verify the path is still returned
+  assert_output --partial "myapp-existing"
+}
+
+@test "worktree_create with debug mode" {
+  setup_test_repo "myapp"
+  echo "test" >"$TEST_REPO_PATH/.env"
+
+  export WORKTREE_DEBUG=1
+  run worktree_create "debug-test"
+  assert_success
+  assert_output --partial "Processing: .env"
+  assert_output --partial "Created symlink: .env"
+}
+
+# Error handling tests
+
+@test "worktree_create validates feature name" {
+  setup_test_repo
+
+  run worktree_create ""
+  assert_failure
+  assert_output --partial "$ERR_USAGE_WORKTREE"
+}
+
+@test "worktree_create checks git repository" {
+  mkdir -p "$TEST_TEMP_DIR/not-git"
+  cd "$TEST_TEMP_DIR/not-git"
+
+  run worktree_create "test"
+  assert_failure
+  assert_output --partial "$ERR_NOT_IN_GIT"
+}
+
+@test "tmux_open_claude_window checks tmux session" {
+  unset TMUX
+
+  run tmux_open_claude_window
+  assert_failure
+  assert_output "$ERR_NOT_IN_TMUX"
+}
+
+@test "tmux_open_window validates input" {
+  export TMUX="test"
+
+  run tmux_open_window ""
+  assert_failure
+  assert_output --partial "Usage: tmux_open_window"
+}
+
+@test "tmux_open_window checks directory existence" {
+  export TMUX="test"
+
+  run tmux_open_window "/nonexistent/path"
+  assert_failure
+  assert_output --partial "does not exist"
+}
