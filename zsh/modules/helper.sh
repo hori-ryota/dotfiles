@@ -1,7 +1,7 @@
 # Function to install a package using Homebrew.
 # If the second argument is "--cask", it installs a cask.
 # Usage: brew_install <package_name> [--cask]
-brew_install () {
+brew_install() {
   local package_name="$1"
 
   # Check if package name is provided

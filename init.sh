@@ -27,9 +27,9 @@ if ! xcode-select -p 1>/dev/null; then
 fi
 
 if type "brew" >/dev/null 2>&1; then
-	brew update
+  brew update
 else
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 fi
 eval "$("${HOMEBREW_PREFIX}"/bin/brew shellenv)"
 
@@ -44,7 +44,7 @@ grep -q "^${HOMEBREW_PREFIX}/bin/zsh$" /etc/shells || sudo sh -c "echo '${HOMEBR
 source "$(dirname "${BASH_SOURCE:-$0}")/zsh/modules/0-base-envs/export.zsh"
 
 for f in "$(dirname "${BASH_SOURCE:-$0}")/zsh/modules/"*"/install.sh"; do
-	echo "Execute installation script ${f}"
-	zsh -c "${f}"
-	echo "Finish installation script ${f}"
+  echo "Execute installation script ${f}"
+  zsh -c "${f}"
+  echo "Finish installation script ${f}"
 done
