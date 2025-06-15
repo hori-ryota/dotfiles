@@ -32,20 +32,18 @@ vim.opt.smartcase = true
 --}}}
 --{{{ 4 displaying text
 vim.opt.scrolloff = 5
-vim.opt.lazyredraw = true
 vim.opt.list = false
 vim.opt.number = true
 --}}}
 --{{{ 5 syntax, highlighting and spelling
 vim.opt.hlsearch = true
 vim.cmd.nohlsearch()
-vim.opt.termguicolors = true
 vim.opt.spell = true
 vim.opt.spellcapcheck = ''
 vim.opt.spelloptions = { 'camel', 'noplainbuffer' }
 vim.opt.spelllang:append('cjk')
 local spellfile_dir = vim.fn.stdpath('config') .. '/spell'
-if not (vim.fn.isdirectory(spellfile_dir)) then
+if vim.fn.isdirectory(spellfile_dir) == 0 then
   vim.fn.mkdir(spellfile_dir)
 end
 vim.opt.spellfile = spellfile_dir .. '/en.utf-8.add'
@@ -75,7 +73,7 @@ vim.opt.infercase = true
 vim.opt.tabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.shiftround = true
-vim.opt.smarttab = false
+vim.opt.smarttab = true
 vim.opt.expandtab = true
 vim.opt.autoindent = true
 --}}}
@@ -1299,7 +1297,7 @@ require('lazy').setup({
 
       local function terraform_dir()
         local dir = os.getenv('TERRAFORM_DIR')
-        if not (dir) then
+        if not dir then
           dir = '.'
         end
         return dir
