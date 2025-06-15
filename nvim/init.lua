@@ -495,10 +495,15 @@ require('lazy').setup({
       lspconfig.golangci_lint_ls.setup({
         capabilities = capabilities,
         init_options = (function()
-          local handle = io.popen(
-            "golangci-lint --version 2>/dev/null | grep -o 'version [0-9]\\+\\.[0-9]\\+\\.[0-9]\\+' | cut -d' ' -f2")
-          local version = handle and handle:read("*a"):gsub("%s+$", "") or ""
-          if handle then handle:close() end
+          local version = ""
+          local handle = io.popen("golangci-lint --version 2>/dev/null | grep -o 'version [0-9]\\+\\.[0-9]\\+\\.[0-9]\\+' | cut -d' ' -f2")
+          if handle then
+            local result = handle:read("*a")
+            if result then
+              version = result:gsub("%s+$", "")
+            end
+            handle:close()
+          end
 
           local major_version = tonumber(version:match("^(%d+)%."))
 
