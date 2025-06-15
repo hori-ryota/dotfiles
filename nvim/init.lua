@@ -178,7 +178,7 @@ file_type_detect('buf.*gen.md', 'yaml.bufgen')
 
 --{{{ install lazy.nvim
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     'git',
     'clone',
@@ -1033,7 +1033,7 @@ require('lazy').setup({
           local node = api.tree.get_node_under_cursor()
           local buf = vim.fn.bufadd(node.absolute_path)
           vim.fn.bufload(buf)
-          local makeprg = vim.api.nvim_buf_get_option(buf, 'makeprg')
+          local makeprg = vim.bo[buf].makeprg
           require('overseer').run_template({
             name = 'shell',
             params = {
