@@ -9,6 +9,7 @@ pyvenv.cfg
 .nvimrc
 .exrc
 .docs
+.scripts
 
 # for ripgrep
 .rgignore
