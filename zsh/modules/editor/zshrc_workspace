@@ -93,6 +93,7 @@ WORKTREE_SYMLINK_ITEMS=(
   ".docs/"
   ".env"
   ".envrc"
+  ".env.development.local"
 )
 
 # Error messages
