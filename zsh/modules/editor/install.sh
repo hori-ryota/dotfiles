@@ -64,11 +64,6 @@ npm_install_targets+=("vim-language-server")
 ### LSP
 brew_install lua-language-server
 
-## Makefile
-### Linter
-echo 'Install github.com/mrtazz/checkmake/cmd/checkmake'
-go install github.com/mrtazz/checkmake/cmd/checkmake@latest
-
 ## C/C++
 ### LSP
 brew_install llvm
