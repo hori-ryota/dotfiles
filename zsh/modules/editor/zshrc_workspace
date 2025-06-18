@@ -72,6 +72,14 @@
 #   - .docs/
 #   - .env
 #   - .envrc
+#   - .env.development.local
+#
+# ## 自動初期化
+#   worktree作成時に以下が自動実行されます：
+#   - **submodule初期化**: .gitmodulesが存在する場合
+#     `git submodule update --init --recursive`
+#   - **mise trust**: .mise.tomlが存在する場合
+#     `mise trust` でプロジェクト固有のツール設定を信頼
 #
 # ## 使用例
 #   # 新機能の開発を始める（日本語OK）
@@ -192,6 +200,18 @@ create_worktree_directory() {
   else
     echo "Creating new branch ${branch_name}" >&2
     git worktree add -b "$branch_name" "$worktree_path" >/dev/null 2>&1
+  fi
+
+  # Initialize submodules in the new worktree
+  if [[ -f "$worktree_path/.gitmodules" ]]; then
+    echo "Initializing submodules in worktree" >&2
+    (cd "$worktree_path" && git submodule update --init --recursive >/dev/null 2>&1)
+  fi
+
+  # Trust mise configuration in the new worktree
+  if [[ -f "$worktree_path/.mise.toml" ]]; then
+    echo "Trusting mise configuration in worktree" >&2
+    (cd "$worktree_path" && mise trust >/dev/null 2>&1)
   fi
 }
 
