@@ -266,6 +266,9 @@ extract_window_name() {
     window_name="${window_name#${repo_name}-}"
   fi
 
+  # Prepend repository name to feature
+  window_name="${repo_name}-${window_name}"
+
   echo "$window_name"
 }
 
