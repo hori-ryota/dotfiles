@@ -246,10 +246,11 @@ require('lazy').setup({
       keymap('n', '<Leader>L', '<Cmd>LspRestart<CR>', ko)
 
       --{{{ [\[gopls\] delay diagnostics or not run them in insert mode · Issue \#127 · neovim/nvim\-lspconfig](https://github.com/neovim/nvim-lspconfig/issues/127)
-      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.handlers["textDocument/publishDiagnostics"], {
-        -- delay update diagnostics
-        update_in_insert = false,
-      });
+      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+        vim.lsp.handlers["textDocument/publishDiagnostics"], {
+          -- delay update diagnostics
+          update_in_insert = false,
+        });
       --}}}
 
       local function bind_key_map() --{{{
@@ -496,7 +497,8 @@ require('lazy').setup({
         capabilities = capabilities,
         init_options = (function()
           local version = ""
-          local handle = io.popen("golangci-lint --version 2>/dev/null | grep -o 'version [0-9]\\+\\.[0-9]\\+\\.[0-9]\\+' | cut -d' ' -f2")
+          local handle = io.popen(
+            "golangci-lint --version 2>/dev/null | grep -o 'version [0-9]\\+\\.[0-9]\\+\\.[0-9]\\+' | cut -d' ' -f2")
           if handle then
             local result = handle:read("*a")
             if result then
@@ -671,16 +673,6 @@ require('lazy').setup({
         diagnostics_format = '[#{c}] #{m} (#{s})',
         update_in_insert = false,
         sources = {
-          -- Makefile
-          require('null-ls').builtins.diagnostics.checkmake.with({
-            filter = function(diagnostic)
-              if diagnostic.message:match('Missing required phony target "all"') or
-                  diagnostic.message:match('Missing required phony target "clean"') then
-                return false
-              end
-              return true
-            end,
-          }),
           -- Dockerfile
           require('null-ls').builtins.diagnostics.hadolint,
           -- sh
@@ -899,7 +891,7 @@ require('lazy').setup({
     end,
     keys = {
       { '<Space>at', '<Cmd>CodeCompanionChat Toggle<CR>' },
-      { '<Space>aa', ':CodeCompanionActions<CR>',              mode = { 'n', 'x' }, },
+      { '<Space>aa', ':CodeCompanionActions<CR>',        mode = { 'n', 'x' }, },
     },
   },
   {
