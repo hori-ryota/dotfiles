@@ -46,12 +46,12 @@ teardown() {
   assert_output "/repos/myapp/../myapp-feature-auth"
 }
 
-@test "extract_window_name removes repo prefix" {
+@test "extract_window_name creates repository-feature format" {
   setup_test_repo "test-repo"
 
   run extract_window_name "$TEST_REPO_PATH/../test-repo-feature"
   assert_success
-  assert_output "feature"
+  assert_output "test-repo-feature"
 }
 
 @test "extract_window_name handles repo with hyphens" {
@@ -59,7 +59,7 @@ teardown() {
 
   run extract_window_name "$TEST_REPO_PATH/../my-awesome-repo-new-feature"
   assert_success
-  assert_output "new-feature"
+  assert_output "my-awesome-repo-new-feature"
 }
 
 @test "in_tmux_session returns true when TMUX is set" {
@@ -143,6 +143,62 @@ teardown() {
   cd "$TEST_REPO_PATH"
   run git branch --list "feature/test"
   assert_output --partial "feature/test"
+}
+
+@test "create_worktree_directory initializes submodules when .gitmodules exists" {
+  setup_test_repo "test-repo"
+  local worktree_path="$TEST_REPO_PATH/../test-repo-submodule"
+
+  # Create a .gitmodules file
+  cd "$TEST_REPO_PATH"
+  echo '[submodule "test-sub"]' >.gitmodules
+  echo '  path = test-sub' >>.gitmodules
+  echo '  url = https://github.com/example/test.git' >>.gitmodules
+  git add .gitmodules
+  git commit -m "Add submodule"
+
+  # Mock git submodule command
+  mock_git() {
+    if [[ "$1" == "submodule" && "$2" == "update" ]]; then
+      echo "Submodule update called with: $*" >&2
+      return 0
+    else
+      command git "$@"
+    fi
+  }
+
+  run create_worktree_directory "feature/test" "$worktree_path"
+  assert_success
+
+  # Verify submodule initialization was attempted
+  assert_output --partial "Initializing submodules in worktree"
+}
+
+@test "create_worktree_directory trusts mise when .mise.toml exists" {
+  setup_test_repo "test-repo"
+  local worktree_path="$TEST_REPO_PATH/../test-repo-mise"
+
+  # Create a .mise.toml file
+  cd "$TEST_REPO_PATH"
+  echo '[tools]' >.mise.toml
+  echo 'node = "18.0.0"' >>.mise.toml
+  git add .mise.toml
+  git commit -m "Add mise config"
+
+  # Mock mise command
+  mise() {
+    if [[ "$1" == "trust" ]]; then
+      echo "Mise trust called" >&2
+      return 0
+    fi
+  }
+  export -f mise
+
+  run create_worktree_directory "feature/test" "$worktree_path"
+  assert_success
+
+  # Verify mise trust was attempted
+  assert_output --partial "Trusting mise configuration in worktree"
 }
 
 @test "create_worktree_symlinks creates symlinks" {
