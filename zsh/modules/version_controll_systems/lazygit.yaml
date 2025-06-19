@@ -161,3 +161,7 @@ customCommands:
     - key: "<C-d>"
       command: "git pull-and-clean {{.SelectedLocalBranch.Name}}"
       context: "localBranches"
+    - key: "D"
+      command: "git worktree remove --force {{.SelectedWorktree.Path}}"
+      context: "worktrees"
+      description: "Force remove worktree (removes even with submodules)"
