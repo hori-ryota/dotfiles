@@ -1007,18 +1007,17 @@ require('lazy').setup({
           if not explorer then
             return
           end
-          local view = require('nvim-tree.view')
           local action = 'edit'
           local node = explorer:get_node_at_cursor()
 
           if node.link_to and not node.nodes then
             require('nvim-tree.actions.node.open-file').fn(action, node.link_to)
-            view.close() -- Close the tree if file was opened
+            api.tree.close() -- Close the tree if file was opened
           elseif node.nodes ~= nil then
             node:expand_or_collapse()
           else
             require('nvim-tree.actions.node.open-file').fn(action, node.absolute_path)
-            view.close() -- Close the tree if file was opened
+            api.tree.close() -- Close the tree if file was opened
           end
         end
 
