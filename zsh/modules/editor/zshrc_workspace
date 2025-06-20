@@ -99,6 +99,7 @@ WORKTREE_SYMLINK_ITEMS=(
   ".claude/"
   ".mcp.json"
   ".docs/"
+  ".scripts/"
   ".env"
   ".envrc"
   ".env.development.local"
@@ -118,11 +119,10 @@ get_main_repo_root() {
   fi
 
   local repo_root
-  if [[ -f "$git_dir" ]]; then
-    # In a worktree, the .git file contains the path to the real git directory
-    local real_git_dir=$(cat "$git_dir" | sed 's/^gitdir: //')
-    # Extract main repository path from worktree git directory
-    repo_root=$(echo "$real_git_dir" | sed 's|/\.git/worktrees/[^/]*$||')
+  # Check if we're in a worktree by looking for /worktrees/ in the git directory path
+  if [[ "$git_dir" =~ /\.git/worktrees/ ]]; then
+    # In a worktree - extract main repository path from git directory
+    repo_root=$(echo "$git_dir" | sed 's|/\.git/worktrees/[^/]*$||')
   else
     # In main repository
     repo_root=$(git rev-parse --show-toplevel)
@@ -141,7 +141,7 @@ get_main_repo_root() {
   echo "$repo_root"
 }
 
-# Get repository name from path
+# Get repository name from path (always from main repo)
 get_repo_name() {
   local repo_path="${1:-$(get_main_repo_root)}"
   basename "$repo_path"
