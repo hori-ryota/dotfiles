@@ -1,4 +1,4 @@
 # Source workspace-related commands
 source "$(dirname "${BASH_SOURCE:-$0}")/zshrc_workspace"
 
-alias c='claude'
+alias c='claude --model opus'
