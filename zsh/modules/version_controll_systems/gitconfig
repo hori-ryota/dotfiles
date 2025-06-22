@@ -1,9 +1,26 @@
 [include]
 	path = ~/.gitconfig.local
 [alias]
+	# マージ済みのローカルブランチを削除する
+	# - リモートの削除済みブランチを削除 (git fetch --prune)
+	# - 現在のブランチにマージ済みのブランチを検出
+	# - main/masterブランチと現在のブランチ(*)は削除対象から除外
 	delete-merged-branches = !git fetch --prune && git branch --merged | grep -vE '^\\*|^ *main$|^ *master$' | xargs git branch -d
-  show-default-branch = !git symbolic-ref refs/remotes/origin/HEAD | cut -d '/' -f 4
+
+	# リモートリポジトリのデフォルトブランチ名を取得する
+	# 動作の優先順位：
+	# 1. git ls-remote でリモートのHEADを確認（ネットワーク接続が必要）
+	# 2. ローカルのorigin/HEADシンボリックリファレンスを確認（オフラインでも動作）
+	# 3. どちらも取得できない場合は "main" を返す
+	# ※ worktreeでも正常に動作するように設計
+	show-default-branch = "!f() { result=$(git ls-remote --symref origin HEAD 2>/dev/null | grep '^ref:' | awk '{print $2}' | sed 's|refs/heads/||'); test -n \"$result\" && echo \"$result\" || { result=$(git rev-parse --abbrev-ref origin/HEAD 2>/dev/null | cut -d '/' -f 2); test -n \"$result\" && echo \"$result\" || echo 'main'; }; }; f"
+
+	# 指定ブランチに切り替えてpull後、マージ済みブランチを削除
+	# 使用例: git pull-and-clean develop
 	pull-and-clean = !sh -c 'git switch $1 && git pull && git delete-merged-branches' -
+
+	# デフォルトブランチで pull-and-clean を実行
+	# show-default-branch で取得したブランチ名を使用
 	pull-and-clean-default = !git pull-and-clean "$(git show-default-branch)"
 [core]
 	editor = nvim
