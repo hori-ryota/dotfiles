@@ -73,6 +73,8 @@
 #   - .env
 #   - .envrc
 #   - .env.development.local
+#   - .lefthook.yaml
+#   - .lefthook-local/
 #
 # ## 自動初期化
 #   worktree作成時に以下が自動実行されます：
@@ -80,6 +82,8 @@
 #     `git submodule update --init --recursive`
 #   - **mise trust**: .mise.tomlが存在する場合
 #     `mise trust` でプロジェクト固有のツール設定を信頼
+#   - **lefthook install**: .lefthook.yamlが存在する場合
+#     `lefthook install` でGit hooksを設定
 #
 # ## 使用例
 #   # 新機能の開発を始める（日本語OK）
@@ -103,6 +107,8 @@ WORKTREE_SYMLINK_ITEMS=(
   ".env"
   ".envrc"
   ".env.development.local"
+  ".lefthook.yaml"
+  ".lefthook-local/"
 )
 
 # Error messages
@@ -212,6 +218,12 @@ create_worktree_directory() {
   if [[ -f "$worktree_path/.mise.toml" ]]; then
     echo "Trusting mise configuration in worktree" >&2
     (cd "$worktree_path" && mise trust >/dev/null 2>&1)
+  fi
+
+  # Install lefthook in the new worktree
+  if [[ -f "$worktree_path/.lefthook.yaml" ]]; then
+    echo "Installing lefthook in worktree" >&2
+    (cd "$worktree_path" && lefthook install >/dev/null 2>&1)
   fi
 }
 
