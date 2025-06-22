@@ -50,6 +50,9 @@ go install github.com/hashicorp/terraform-mcp-server/cmd/terraform-mcp-server@ma
 # VSCode language servers
 npm_install_targets+=("vscode-langservers-extracted")
 
+# pre commit
+brew_install lefthook
+
 # For Languages
 
 ## Markdown

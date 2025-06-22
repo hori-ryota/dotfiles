@@ -10,6 +10,7 @@ pyvenv.cfg
 .exrc
 .docs
 .scripts
+lefthook.yml
 
 # for ripgrep
 .rgignore

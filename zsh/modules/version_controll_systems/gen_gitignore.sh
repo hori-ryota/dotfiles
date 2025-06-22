@@ -17,6 +17,7 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
   echo ".exrc"
   echo ".docs"
   echo ".scripts"
+  echo "lefthook.yml"
   echo ""
 
   echo "# for ripgrep"
