@@ -6,6 +6,7 @@ brew_install nkf
 brew_install tree
 brew_install wget
 brew_install gcc
+brew_install unar
 
 brew_install jq
 
