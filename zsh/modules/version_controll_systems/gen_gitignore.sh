@@ -17,7 +17,7 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
   echo ".exrc"
   echo ".docs"
   echo ".scripts"
-  echo ".lefthook.yaml"
+  echo ".lefthook-local.yaml"
   echo ""
 
   echo "# for ripgrep"
@@ -33,9 +33,6 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
   echo ""
 
   echo "# for claude code"
-  echo ".claude"
-  echo "CLAUDE.md"
-  echo ".mcp.json"
   echo "# Ignored by .claude, but added by claude code automatically"
   echo "**/.claude/settings.local.json"
   echo ""
