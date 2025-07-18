@@ -747,9 +747,6 @@ require('lazy').setup({
             max_items = 1000,
           },
         },
-        per_filetype = {
-          codecompanion = { "codecompanion" },
-        },
       },
       snippets = { preset = 'luasnip' },
       signature = { enabled = true },
@@ -802,102 +799,6 @@ require('lazy').setup({
         },
       })
       -- vim.api.nvim_command('highlight link CopilotSuggestion Comment')
-    end,
-  },
-  --}}}
-  --{{{ AI
-  {
-    'olimorris/codecompanion.nvim',
-    lazy = false,
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      'nvim-treesitter/nvim-treesitter',
-    },
-    config = function()
-      require('codecompanion').setup({
-        opts = {
-          language = "Japanese",
-        },
-        adapters = {
-          gemini = function()
-            return require("codecompanion.adapters").extend("gemini", {
-              schema = {
-                model = {
-                  default = "gemini-2.5-pro-preview-05-06",
-                },
-              },
-            })
-          end,
-        },
-        strategies = {
-          chat = {
-            adapter = 'gemini',
-            keymaps = {
-              send = {
-                modes = { n = '<CR>', i = '<C-q>' },
-              },
-              close = {
-                modes = { n = '<Space>at' },
-              },
-            },
-          },
-          inline = {
-            adapter = 'gemini',
-            keymaps = {
-              accept_change = {
-                modes = { n = '<Leader>aa' },
-              },
-              reject_change = {
-                modes = { n = '<Leader>ad' },
-              },
-            },
-          },
-          cmd = {
-            adapter = 'gemini',
-          },
-        },
-        display = {
-          action_palette = {
-            provider = 'snacks',
-          },
-          chat = {
-            show_settings = true,
-          },
-        },
-        extensions = {
-          mcphub = {
-            callback = 'mcphub.extensions.codecompanion',
-            opts = {
-              show_result_in_chat = true,
-              make_vars = true,
-              make_slash_commands = true,
-            },
-          },
-        },
-      })
-
-      vim.api.nvim_create_augroup('MyCodeCompanion', {})
-      vim.api.nvim_create_autocmd('FileType', {
-        group = 'MyCodeCompanion',
-        pattern = 'codecompanion',
-        callback = function()
-          keymap('n', '<C-d>', 'i@full_stack_dev<CR>', ko)
-          keymap('i', '<C-d>', '@full_stack_dev<CR>', ko)
-          keymap('n', '<C-v>', 'i#viewport<CR>', ko)
-          keymap('i', '<C-v>', '#viewport<CR>', ko)
-          vim.opt_local.makeprg = vim.fn.expand('%:p')
-        end,
-      })
-    end,
-    keys = {
-      { '<Space>at', '<Cmd>CodeCompanionChat Toggle<CR>' },
-      { '<Space>aa', ':CodeCompanionActions<CR>',        mode = { 'n', 'x' }, },
-    },
-  },
-  {
-    'ravitemer/mcphub.nvim',
-    config = function()
-      require('mcphub').setup()
     end,
   },
   --}}}
