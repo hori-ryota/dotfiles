@@ -959,7 +959,63 @@ require('lazy').setup({
         apply('S', api.node.open.vertical, 'edit vertical')
         apply('s', api.node.open.horizontal, 'edit horizontal')
         apply('gcd', api.tree.change_root_to_node, 'change root')
-        apply('y', api.fs.copy.absolute_path, 'yank absolute_path')
+        apply('y', function()
+          -- カスタム相対パスコピー関数: シンボリックリンクを考慮
+          local node = api.tree.get_node_under_cursor()
+          local explorer = require('nvim-tree.core').get_explorer()
+
+          if node.name == ".." then
+            api.fs.copy.relative_path(node)
+            return
+          end
+
+          -- 現在のツリーのルートパス（表示されているパス）を取得
+          local tree_root = explorer.absolute_path
+
+          -- ノードのパスを構築（ツリールートからの相対パス）
+          local node_path_in_tree = node.absolute_path
+
+          -- nvim-tree が表示しているパスからの相対パスを計算
+          -- node.parent を辿って親ディレクトリのパスを構築
+          local path_parts = {}
+          local current = node
+          while current and current.name ~= ".." do
+            table.insert(path_parts, 1, current.name)
+            current = current.parent
+          end
+
+          -- tree_root からの相対パスを構築
+          local relative_from_tree = table.concat(path_parts, "/")
+
+          -- vimのカレントディレクトリからの相対パスを計算
+          local cwd = vim.fn.getcwd()
+          local full_path = tree_root .. "/" .. relative_from_tree
+          full_path = vim.fn.simplify(full_path)
+
+          local relative_path = vim.fn.fnamemodify(full_path, ':~:.')
+
+          -- ディレクトリの場合は末尾に / を追加
+          if node.type == 'directory' or (node.type == 'link' and vim.fn.isdirectory(full_path) == 1) then
+            relative_path = relative_path .. '/'
+          end
+
+          -- クリップボードにコピー（nvim-treeと同じ方法で）
+          local use_system_clipboard = explorer.opts.actions.use_system_clipboard
+          local reg = use_system_clipboard and '+' or '1'
+          local clipboard_name = use_system_clipboard and "system" or "neovim"
+          
+          -- nvim-tree と同じ方法でヤンク
+          local temp_buf = vim.api.nvim_create_buf(false, true)
+          vim.api.nvim_buf_set_text(temp_buf, 0, 0, 0, 0, { relative_path })
+          vim.api.nvim_buf_call(temp_buf, function()
+            vim.cmd(string.format('normal! "%sy$', reg))
+          end)
+          vim.api.nvim_buf_delete(temp_buf, {})
+          
+          -- 通知
+          require('nvim-tree.notify').info(string.format("Copied %s to %s clipboard!", relative_path, clipboard_name))
+        end, 'yank relative_path')
+        apply('gy', api.fs.copy.absolute_path, 'yank absolute_path')
         apply('<space>h', api.tree.change_root_to_parent, 'change root to parent')
         apply('<space>l', api.tree.change_root_to_node, 'change root to node')
         apply('E', function()
