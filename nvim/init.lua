@@ -1003,7 +1003,7 @@ require('lazy').setup({
           local use_system_clipboard = explorer.opts.actions.use_system_clipboard
           local reg = use_system_clipboard and '+' or '1'
           local clipboard_name = use_system_clipboard and "system" or "neovim"
-          
+
           -- nvim-tree と同じ方法でヤンク
           local temp_buf = vim.api.nvim_create_buf(false, true)
           vim.api.nvim_buf_set_text(temp_buf, 0, 0, 0, 0, { relative_path })
@@ -1011,7 +1011,7 @@ require('lazy').setup({
             vim.cmd(string.format('normal! "%sy$', reg))
           end)
           vim.api.nvim_buf_delete(temp_buf, {})
-          
+
           -- 通知
           require('nvim-tree.notify').info(string.format("Copied %s to %s clipboard!", relative_path, clipboard_name))
         end, 'yank relative_path')
