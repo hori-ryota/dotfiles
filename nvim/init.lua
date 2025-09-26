@@ -293,7 +293,16 @@ require('lazy').setup({
         end,
       })
 
-      local lspconfig = require('lspconfig')
+      local lsp = vim.lsp
+      local util = require('lspconfig.util')
+      local configured_servers = {}
+
+      local function configure(server, opts)
+        if opts then
+          lsp.config(server, opts)
+        end
+        table.insert(configured_servers, server)
+      end
 
       local function disable_formatter(client)
         client.server_capabilities.documentFormattingProvider = false;
@@ -319,7 +328,7 @@ require('lazy').setup({
       --}}}
 
       --{{{ for configuration files
-      lspconfig.jsonls.setup({
+      configure('jsonls', {
         capabilities = capabilities,
         init_options = {
           -- use prettier
@@ -332,7 +341,7 @@ require('lazy').setup({
           },
         },
       })
-      lspconfig.yamlls.setup({
+      configure('yamlls', {
         capabilities = capabilities,
         settings = {
           yaml = {
@@ -357,13 +366,13 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Vim
-      lspconfig.vimls.setup({
+      configure('vimls', {
         capabilities = capabilities,
       })
       --}}}
 
       --{{{ for lua
-      lspconfig.lua_ls.setup({
+      configure('lua_ls', {
         capabilities = capabilities,
         settings = {
           Lua = {
@@ -376,13 +385,13 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Markdown
-      lspconfig.marksman.setup({
+      configure('marksman', {
         capabilities = capabilities,
       })
       --}}}
 
       --{{{ for Python
-      lspconfig.ruff.setup({
+      configure('ruff', {
         capabilities = capabilities,
         on_attach = function()
           keymap('n', 'gQ', function()
@@ -397,7 +406,7 @@ require('lazy').setup({
           end, ko_b)
         end,
       })
-      lspconfig.basedpyright.setup({
+      configure('basedpyright', {
         capabilities = capabilities,
         root_markers = { 'pyproject.toml' },
         cmd = { 'sh', '-c', 'uv run --quiet basedpyright-langserver --stdio || basedpyright-langserver --stdio' },
@@ -416,7 +425,7 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Go
-      lspconfig.gopls.setup({
+      configure('gopls', {
         capabilities = capabilities,
         settings = {
           gopls = {
@@ -493,7 +502,7 @@ require('lazy').setup({
           fmt_on_save()
         end,
       })
-      lspconfig.golangci_lint_ls.setup({
+      configure('golangci_lint_ls', {
         capabilities = capabilities,
         init_options = (function()
           local version = ""
@@ -527,7 +536,7 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Rust
-      lspconfig.rust_analyzer.setup({
+      configure('rust_analyzer', {
         capabilities = capabilities,
         on_attach = function()
           fmt_on_save()
@@ -536,14 +545,14 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Node.js and frontend development
-      lspconfig.ts_ls.setup({
+      configure('ts_ls', {
         capabilities = capabilities,
         root_markers = { "package.json" },
         single_file_support = false,
         -- use prettier as formatter
         on_attach = disable_formatter
       })
-      lspconfig.biome.setup({
+      configure('biome', {
         capabilities =
             vim.tbl_deep_extend('force', capabilities, {
               textDocument = {
@@ -559,17 +568,17 @@ require('lazy').setup({
         end,
         workspace_required = true,
       })
-      lspconfig.html.setup({
+      configure('html', {
         capabilities = capabilities,
         -- use prettier as formatter
         init_options = { provideFormatter = false },
       })
-      -- lspconfig.cssls.setup({
+      -- configure('cssls', {
       --   capabilities = capabilities,
       --   -- use prettier as formatter
       --   init_options = { provideFormatter = false },
       -- })
-      lspconfig.eslint.setup({
+      configure('eslint', {
         capabilities = capabilities,
         on_attach = function(client)
           disable_formatter(client)
@@ -577,13 +586,13 @@ require('lazy').setup({
         end,
         workspace_required = true,
       })
-      lspconfig.prismals.setup({
+      configure('prismals', {
         capabilities = capabilities,
       })
       --}}}
 
       --{{{ for Astro
-      lspconfig.astro.setup({
+      configure('astro', {
         capabilities = capabilities,
         root_markers = { 'astro.config.ts' },
         on_attach = function()
@@ -594,9 +603,9 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Deno
-      lspconfig.denols.setup({
+      configure('denols', {
         capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+        root_dir = util.root_pattern("deno.json", "deno.jsonc"),
         on_attach = function()
           fmt_on_save()
           vim.opt_local.makeprg = 'deno run -A %'
@@ -605,7 +614,7 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Sell Scripts
-      lspconfig.bashls.setup({
+      configure('bashls', {
         on_attach = function(_, bufnr)
           local filename = vim.api.nvim_buf_get_name(bufnr)
           if string.match(filename, "%.env$") or string.match(filename, "%.env%..*$") then
@@ -616,7 +625,7 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Terraform
-      lspconfig.terraformls.setup({
+      configure('terraformls', {
         capabilities = capabilities,
         on_attach = function()
           fmt_on_save()
@@ -625,28 +634,28 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Docker
-      lspconfig.dockerls.setup({
+      configure('dockerls', {
         capabilities = capabilities,
       })
-      lspconfig.docker_compose_language_service.setup({
+      configure('docker_compose_language_service', {
         capabilities = capabilities,
       })
       --}}}
 
       --{{{ for Proto
-      lspconfig.buf_ls.setup({
+      configure('buf_ls', {
         capabilities = capabilities,
       })
       --}}}
 
       --{{{ for cmake
-      lspconfig.neocmake.setup({
+      configure('neocmake', {
         capabilities = capabilities,
       })
       --}}}
 
       --{{{ for C/C++
-      lspconfig.clangd.setup({
+      configure('clangd', {
         capabilities = capabilities,
         filetypes = {
           'c',
@@ -658,6 +667,8 @@ require('lazy').setup({
         },
       })
       --}}}
+
+      lsp.enable(configured_servers)
 
       --}}}
     end,
