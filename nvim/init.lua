@@ -791,15 +791,15 @@ require('lazy').setup({
             accept = '<C-a>',
             prev = '<C-k>',
             next = '<C-j>',
-            dissmiss = '<C-d>',
+            dismiss = '<C-d>',
           },
         },
         panel = {
           enabled = true,
           keymap = {
             accept = '<CR>',
-            jump_prev = '<C-k>',
-            jump_next = '<C-j>',
+            jump_prev = '[[',
+            jump_next = ']]',
             refresh = '<C-l>',
             open = '<C-q>',
           },
