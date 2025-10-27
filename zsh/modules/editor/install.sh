@@ -84,7 +84,6 @@ go install github.com/rhysd/actionlint/cmd/actionlint@latest
 ### LSP
 uv tool install --upgrade basedpyright
 uv tool install --upgrade ruff
-uv tool install --upgrade rope
 
 ### for Jupyter notebook
 uv tool install --upgrade jupytext
