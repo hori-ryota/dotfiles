@@ -16,9 +16,8 @@ git:
 os:
     editCommand: "nvim" # see 'Configuring File Editing' section
     editCommandTemplate: '{{editor}} +{{line}} -- {{filename}}'
-    # Force interactive shell to load mise and other tools
+    shellFunctionsFile: "$HOME/.zshrc"
     shell: "zsh"
-    shellArg: "-ic"
 quitOnTopLevelReturn: true
 disableStartupPopups: true
 notARepository: "skip"
