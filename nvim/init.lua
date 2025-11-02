@@ -1092,6 +1092,7 @@ require('lazy').setup({
   --{{{ Async Execution
   {
     'stevearc/overseer.nvim',
+    version = 'v1.6.0',
     dependencies = {
       'MunifTanjim/nui.nvim',
     },
