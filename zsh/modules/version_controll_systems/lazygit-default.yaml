@@ -1,9 +1,7 @@
 # Config relating to the Lazygit UI
 gui:
   # See https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-author-color
-  authorColors:
-    hori-ryota: blue
-    Hori Ryota: blue
+  authorColors: {}
 
   # See https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-branch-color
   branchColorPatterns: {}
@@ -38,7 +36,7 @@ gui:
   # If true, capture mouse events.
   # When mouse events are captured, it's a little harder to select text: e.g.
   # requiring you to hold the option key when on macOS.
-  mouseEvents: false
+  mouseEvents: true
 
   # If true, do not show a warning when amending a commit.
   skipAmendWarning: false
@@ -104,7 +102,7 @@ gui:
 
   # One of 'auto' (default) | 'en' | 'zh-CN' | 'zh-TW' | 'pl' | 'nl' | 'ja' | 'ko'
   # | 'ru' | 'pt'
-  language: en
+  language: auto
 
   # Format used when displaying time e.g. commit time.
   # Uses Go's time format syntax: https://pkg.go.dev/time#Time.Format
@@ -180,7 +178,7 @@ gui:
   # files as a flat list.
   # This can be toggled from within Lazygit with the '`' key, but that will not
   # change the default.
-  showFileTree: false
+  showFileTree: true
 
   # If true, add a "/" root item in the file tree representing the root of the
   # repository. It is only added when necessary, i.e. when there is more than one
@@ -428,7 +426,7 @@ git:
 
     # displays the whole git graph by default in the commits view (equivalent to
     # passing the `--all` argument to `git log`)
-    showWholeGraph: true
+    showWholeGraph: false
 
   # How branches are sorted in the local branches view.
   # One of: 'date' (default) | 'recency' | 'alphabetical'
@@ -469,17 +467,17 @@ confirmOnQuit: false
 
 # If true, exit Lazygit when the user presses escape in a context where there is
 # nothing to cancel/close
-quitOnTopLevelReturn: true
+quitOnTopLevelReturn: false
 
 # Config relating to things outside of Lazygit like how files are opened,
 # copying to clipboard, etc
 os:
   # Command for editing a file. Should contain "{{filename}}".
-  edit: "nvim {{filename}}"
+  edit: ""
 
   # Command for editing a file at a given line number. Should contain
   # "{{filename}}", and may optionally contain "{{line}}".
-  editAtLine: "nvim +{{line}} -- {{filename}}"
+  editAtLine: ""
 
   # Same as EditAtLine, except that the command needs to wait until the window is
   # closed.
@@ -514,24 +512,14 @@ os:
   # sourced before running any shell commands, so that shell functions are
   # available in the `:` command prompt or even in custom commands.
   # See https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#using-aliases-or-functions-in-shell-commands
-  shellFunctionsFile: "$HOME/.zshrc"
+  shellFunctionsFile: ""
 
 # If true, don't display introductory popups upon opening Lazygit.
-disableStartupPopups: true
+disableStartupPopups: false
 
 # User-configured commands that can be invoked from within Lazygit
 # See https://github.com/jesseduffield/lazygit/blob/master/docs/Custom_Command_Keybindings.md
-customCommands:
-  - key: "<C-d>"
-    command: "git pull-and-clean-default"
-    context: "global"
-  - key: "<C-d>"
-    command: "git pull-and-clean {{.SelectedLocalBranch.Name}}"
-    context: "localBranches"
-  - key: "D"
-    command: "git worktree remove --force {{.SelectedWorktree.Path}}"
-    context: "worktrees"
-    description: "Force remove worktree (removes even with submodules)"
+customCommands: []
 
 # See https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-pull-request-urls
 services: {}
@@ -542,7 +530,7 @@ services: {}
 # - 'create': initialize a new repo
 # - 'skip': open most recent repo
 # - 'quit': exit Lazygit
-notARepository: skip
+notARepository: prompt
 
 # If true, display a confirmation when subprocess terminates. This allows you to
 # view the output of the subprocess before returning to Lazygit.
@@ -551,136 +539,178 @@ promptToReturnFromSubprocess: true
 # Keybindings
 keybinding:
   universal:
-    quit: "q"
-    quit-alt1: "<c-c>"
-    return: "<esc>"
-    quitWithoutChangingDirectory: "<disabled>"
-    togglePanel: "<C-w>"
-    prevItem: "k"
-    nextItem: "j"
-    prevItem-alt: "<disabled>"
-    nextItem-alt: "<disabled>"
-    prevPage: "<disabled>"
-    nextPage: "<disabled>"
-    gotoTop: "g"
-    gotoBottom: "G"
-    toggleRangeSelect: "v"
-    rangeSelectDown: "<disabled>"
-    rangeSelectUp: "<disabled>"
-    scrollLeft: "h"
-    scrollRight: "l"
-    prevBlock: "<C-k>"
-    nextBlock: "<C-j>"
-    prevBlock-alt: "<disabled>"
-    nextBlock-alt: "<disabled>"
-    jumpToBlock: ["1", "2", "3", "4", "5"]
+    quit: q
+    quit-alt1: <c-c>
+    suspendApp: <c-z>
+    return: <esc>
+    quitWithoutChangingDirectory: Q
+    togglePanel: <tab>
+    prevItem: <up>
+    nextItem: <down>
+    prevItem-alt: k
+    nextItem-alt: j
+    prevPage: ","
+    nextPage: .
+    scrollLeft: H
+    scrollRight: L
+    gotoTop: <
+    gotoBottom: ">"
+    gotoTop-alt: <home>
+    gotoBottom-alt: <end>
+    toggleRangeSelect: v
+    rangeSelectDown: <s-down>
+    rangeSelectUp: <s-up>
+    prevBlock: <left>
+    nextBlock: <right>
+    prevBlock-alt: h
+    nextBlock-alt: l
+    nextBlock-alt2: <tab>
+    prevBlock-alt2: <backtab>
+    jumpToBlock:
+      - "1"
+      - "2"
+      - "3"
+      - "4"
+      - "5"
+    focusMainView: "0"
     nextMatch: "n"
     prevMatch: "N"
-    startSearch: "/"
-    optionMenu: "?"
-    optionMenu-alt1: "<disabled>"
-    select: "x"
-    goInto: "<enter>"
-    confirm: "<enter>"
-    remove: "d"
-    new: "a"
-    edit: "e"
-    openFile: "o"
-    scrollUpMain: "<C-b>"
-    scrollDownMain: "<C-f>"
-    scrollUpMain-alt1: "<disabled>"
-    scrollDownMain-alt1: "<disabled>"
-    scrollUpMain-alt2: "<disabled>"
-    scrollDownMain-alt2: "<disabled>"
+    startSearch: /
+    optionMenu: <disabled>
+    optionMenu-alt1: "?"
+    select: <space>
+    goInto: <enter>
+    confirm: <enter>
+    confirmMenu: <enter>
+    confirmSuggestion: <enter>
+    confirmInEditor: <a-enter>
+    confirmInEditor-alt: <c-s>
+    remove: d
+    new: "n"
+    edit: e
+    openFile: o
+    scrollUpMain: <pgup>
+    scrollDownMain: <pgdown>
+    scrollUpMain-alt1: K
+    scrollDownMain-alt1: J
+    scrollUpMain-alt2: <c-u>
+    scrollDownMain-alt2: <c-d>
     executeShellCommand: ":"
-    createRebaseOptionsMenu: "m"
-    pushFiles: "P"
-    pullFiles: "<C-p>"
-    refresh: "<C-l>"
-    createPatchOptionsMenu: "<disabled>"
+    createRebaseOptionsMenu: m
+
+    # 'Files' appended for legacy reasons
+    pushFiles: P
+
+    # 'Files' appended for legacy reasons
+    pullFiles: p
+    refresh: R
+    createPatchOptionsMenu: <c-p>
     nextTab: "]"
     prevTab: "["
-    nextScreenMode: "<C-z>"
-    prevScreenMode: "<disabled>"
-    undo: "u"
-    redo: "<C-r>"
-    filteringMenu: "<disabled>"
-    diffingMenu: "<disabled>"
-    diffingMenu-alt: "<disabled>"
-    copyToClipboard: "y"
-    openRecentRepos: "<disabled>"
-    submitEditorText: "<enter>"
+    nextScreenMode: +
+    prevScreenMode: _
+    cyclePagers: "|"
+    undo: z
+    redo: Z
+    filteringMenu: <c-s>
+    diffingMenu: W
+    diffingMenu-alt: <c-e>
+    copyToClipboard: <c-o>
+    openRecentRepos: <c-r>
+    submitEditorText: <enter>
     extrasMenu: "@"
-    toggleWhitespaceInDiffView: "<disabled>"
-    increaseContextInDiffView: "<disabled>"
-    decreaseContextInDiffView: "<disabled>"
+    toggleWhitespaceInDiffView: <c-w>
+    increaseContextInDiffView: "}"
+    decreaseContextInDiffView: "{"
+    increaseRenameSimilarityThreshold: )
+    decreaseRenameSimilarityThreshold: (
+    openDiffTool: <c-t>
   status:
-    checkForUpdate: "<disabled>"
-    recentRepos: "<disabled>"
-    allBranchesLogGraph: "<disabled>"
+    checkForUpdate: u
+    recentRepos: <enter>
+    allBranchesLogGraph: a
   files:
-    commitChanges: "C"
-    commitChangesWithoutHook: "<disabled>"
-    amendLastCommit: "A"
-    commitChangesWithEditor: "<disabled>"
-    findBaseCommitForFixup: "<disabled>"
-    confirmDiscard: "<disabled>"
-    ignoreFile: "<disabled>"
-    refreshFiles: "<C-l>"
-    stashAllChanges: "<disabled>"
-    viewStashOptions: "S"
-    toggleStagedAll: "U"
-    viewResetOptions: "D"
-    fetch: "<disabled>"
-    toggleTreeView: "`"
-    openMergeOptions: "M"
-    openStatusFilter: "<disabled>"
-    copyFileInfoToClipboard: "y"
-  branches:
-    createPullRequest: "O"
-    viewPullRequestOptions: "<disabled>"
-    checkoutBranchByName: X
-    forceCheckoutBranch: "<disabled>"
-    rebaseBranch: "F"
-    renameBranch: "R"
-    mergeIntoCurrentBranch: "M"
-    viewGitFlowOptions: "<disabled>"
-    fastForward: "<disabled>"
-    createTag: "T"
-    pushTag: "<disabled>"
-    setUpstream: "<disabled>"
-    fetchRemote: "<disabled>"
-  commits:
-    squashDown: "s"
-    renameCommit: "<disabled>"
-    renameCommitWithEditor: "R"
+    commitChanges: c
+    commitChangesWithoutHook: w
+    amendLastCommit: A
+    commitChangesWithEditor: C
+    findBaseCommitForFixup: <c-f>
+    confirmDiscard: x
+    ignoreFile: i
+    refreshFiles: r
+    stashAllChanges: s
+    viewStashOptions: S
+    toggleStagedAll: a
     viewResetOptions: D
-    markCommitAsFixup: "<disabled>"
-    createFixupCommit: "A"
-    squashAboveCommits: "S"
-    moveDownCommit: "J"
-    moveUpCommit: "K"
-    amendToCommit: "E"
-    pickCommit: "<disabled>"
-    revertCommit: "<disabled>"
-    cherryPickCopy: "x"
-    cherryPickCopyRange: "<disabled>"
-    pasteCommits: "#"
-    tagCommit: "<disabled>"
-    checkoutCommit: "<enter>"
-    resetCherryPick: "X"
-    copyCommitMessageToClipboard: "y"
-    openLogMenu: "<disabled>"
-    viewBisectOptions: "<disabled>"
+    fetch: f
+    toggleTreeView: "`"
+    openMergeOptions: M
+    openStatusFilter: <c-b>
+    copyFileInfoToClipboard: "y"
+    collapseAll: "-"
+    expandAll: =
+  branches:
+    createPullRequest: o
+    viewPullRequestOptions: O
+    copyPullRequestURL: <c-y>
+    checkoutBranchByName: c
+    forceCheckoutBranch: F
+    checkoutPreviousBranch: "-"
+    rebaseBranch: r
+    renameBranch: R
+    mergeIntoCurrentBranch: M
+    moveCommitsToNewBranch: "N"
+    viewGitFlowOptions: i
+    fastForward: f
+    createTag: T
+    pushTag: P
+    setUpstream: u
+    fetchRemote: f
+    sortOrder: s
+  worktrees:
+    viewWorktreeOptions: w
+  commits:
+    squashDown: s
+    renameCommit: r
+    renameCommitWithEditor: R
+    viewResetOptions: g
+    markCommitAsFixup: f
+    createFixupCommit: F
+    squashAboveCommits: S
+    moveDownCommit: <c-j>
+    moveUpCommit: <c-k>
+    amendToCommit: A
+    resetCommitAuthor: a
+    pickCommit: p
+    revertCommit: t
+    cherryPickCopy: C
+    pasteCommits: V
+    markCommitAsBaseForRebase: B
+    tagCommit: T
+    checkoutCommit: <space>
+    resetCherryPick: <c-R>
+    copyCommitAttributeToClipboard: "y"
+    openLogMenu: <c-l>
+    openInBrowser: o
+    viewBisectOptions: b
+    startInteractiveRebase: i
+    selectCommitsOfCurrentBranch: "*"
+  amendAttribute:
+    resetAuthor: a
+    setAuthor: A
+    addCoAuthor: c
   stash:
-    popStash: "<enter>"
-    renameStash: "R"
+    popStash: g
+    renameStash: r
   commitFiles:
-    checkoutCommitFile: "<disabled>"
+    checkoutCommitFile: c
   main:
-    toggleSelectHunk: "X"
-    pickBothHunks: "<disabled>"
+    toggleSelectHunk: a
+    pickBothHunks: b
+    editSelectHunk: E
   submodules:
-    init: "I"
-    update: "U"
-    bulkMenu: "B"
+    init: i
+    update: u
+    bulkMenu: b
+  commitMessage:
+    commitMenu: <c-o>
