@@ -108,11 +108,11 @@ gui:
 
   # Format used when displaying time e.g. commit time.
   # Uses Go's time format syntax: https://pkg.go.dev/time#Time.Format
-  timeFormat: 02 Jan 06
+  timeFormat: 2006-01-02
 
   # Format used when displaying time if the time is less than 24 hours ago.
   # Uses Go's time format syntax: https://pkg.go.dev/time#Time.Format
-  shortTimeFormat: 3:04PM
+  shortTimeFormat: 15:04
 
   # Config relating to colors and styles.
   # See https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#color-attributes
@@ -424,7 +424,7 @@ git:
     #
     # Can be toggled from within lazygit with `Log menu -> Show git graph` (`<c-l>`
     # in the commits window by default).
-    showGraph: always
+    showGraph: never
 
     # displays the whole git graph by default in the commits view (equivalent to
     # passing the `--all` argument to `git log`)
