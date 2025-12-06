@@ -424,7 +424,7 @@ git:
     #
     # Can be toggled from within lazygit with `Log menu -> Show git graph` (`<c-l>`
     # in the commits window by default).
-    showGraph: never
+    showGraph: always
 
     # displays the whole git graph by default in the commits view (equivalent to
     # passing the `--all` argument to `git log`)
