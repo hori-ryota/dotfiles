@@ -864,10 +864,13 @@ require('lazy').setup({
     init = function()
       keymap('n', '<Space>e', function() require('nvim-tree.api').tree.toggle() end, ko_s)
       keymap('n', '<Space>E', function()
-        require('nvim-tree.api').tree.toggle({
-          find_file = true,
-          focus = true,
-        })
+        local file_dir = vim.fn.expand('%:p:h')
+        local cwd = vim.fn.getcwd()
+        local opts = { find_file = true, focus = true }
+        if not vim.startswith(file_dir, cwd) then
+          opts.path = file_dir
+        end
+        require('nvim-tree.api').tree.open(opts)
       end, ko_s)
     end,
     opts = {
@@ -1573,17 +1576,34 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
     },
     opts = {
+      legacy_commands = false,
       workspaces = {
         {
           name = 'main',
           path = os.getenv('OBSIDIAN_VAULT'),
         },
       },
+      note_id_func = function(title)
+        local date = os.date('%Y-%m-%d')
+        if title ~= nil and title ~= '' then
+          local sanitized = title:gsub('[/\\:*?"<>|]', '-')
+          return date .. '-' .. sanitized
+        end
+        return date
+      end,
+      note_path_func = function(spec)
+        local subdir = os.getenv('OBSIDIAN_NOTES_SUBDIR')
+        if subdir and subdir ~= '' then
+          local Path = require('obsidian.path')
+          return Path.new(os.getenv('OBSIDIAN_VAULT')) / subdir / tostring(spec.id)
+        end
+        return spec.dir / tostring(spec.id)
+      end,
       completion = {
         blink = true,
       },
       picker = {
-        name = 'snacks.picker',
+        name = 'snacks.pick',
       },
       ui = {
         enable = false,
@@ -1594,6 +1614,8 @@ require('lazy').setup({
       },
     },
     keys = {
+      { '<Space>mm', '<Cmd>Obsidian<CR>', desc = 'Obsidian menu' },
+      { '<Space>me', function() require('nvim-tree.api').tree.open({ path = os.getenv('OBSIDIAN_VAULT') }) end, desc = 'Open vault in nvim-tree' },
       { '<Leader>mn', '<Cmd>Obsidian new<CR>', desc = 'New note' },
       { '<Leader>md', '<Cmd>Obsidian today<CR>', desc = 'Daily note' },
       { '<Space>ml', '<Cmd>Obsidian quick_switch<CR>', desc = 'Find notes' },
