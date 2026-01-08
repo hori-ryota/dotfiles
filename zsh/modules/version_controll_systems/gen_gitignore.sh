@@ -18,6 +18,7 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
   echo ".docs"
   echo ".scripts"
   echo ".lefthook-local.yaml"
+  echo ".playwright-mcp/"
   echo ""
 
   echo "# for ripgrep"
