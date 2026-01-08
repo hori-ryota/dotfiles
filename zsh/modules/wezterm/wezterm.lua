@@ -1,0 +1,183 @@
+local wezterm = require("wezterm")
+local config = wezterm.config_builder()
+
+---------------------
+--  Color scheme   --
+---------------------
+config.color_scheme = "iceberg-dark"
+
+---------------------
+--  Font settings  --
+---------------------
+config.font = wezterm.font("HackGen35 Console NF")
+config.font_size = 14.0
+
+---------------------
+--  Window         --
+---------------------
+config.window_background_opacity = 0.95
+config.window_decorations = "RESIZE"
+config.window_padding = {
+	left = 8,
+	right = 8,
+	top = 8,
+	bottom = 8,
+}
+config.window_frame = {
+	border_left_width = "1px",
+	border_right_width = "1px",
+	border_bottom_height = "1px",
+	border_top_height = "1px",
+	border_left_color = "#3d4252",
+	border_right_color = "#3d4252",
+	border_bottom_color = "#3d4252",
+	border_top_color = "#3d4252",
+}
+
+---------------------
+--  Tab bar        --
+---------------------
+config.use_fancy_tab_bar = false
+config.hide_tab_bar_if_only_one_tab = true
+config.tab_bar_at_bottom = true
+
+---------------------
+--  Misc           --
+---------------------
+config.scrollback_lines = 100000
+config.enable_scroll_bar = false
+
+-- Disable ligatures
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
+
+-- GPU rendering (Metal on macOS)
+config.front_end = "WebGpu"
+
+-- Kitty keyboard protocol (better key reporting for modern apps)
+config.enable_kitty_keyboard = true
+
+-- Quick select patterns (Leader + Space)
+config.quick_select_patterns = {
+	"[a-f0-9]{7,40}", -- git hash
+	"[0-9]+:[0-9]+", -- line:column (e.g., 42:10)
+}
+
+---------------------
+--  Mouse          --
+---------------------
+config.mouse_bindings = {
+	-- Triple click to select command output (semantic zone)
+	{
+		event = { Down = { streak = 3, button = "Left" } },
+		action = wezterm.action.SelectTextAtMouseCursor("SemanticZone"),
+		mods = "NONE",
+	},
+}
+
+---------------------
+--  IME            --
+---------------------
+config.use_ime = true
+config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
+
+---------------------
+--  Key bindings   --
+---------------------
+config.leader = { key = "s", mods = "CTRL", timeout_milliseconds = 1000 }
+
+config.keys = {
+	-- Pane navigation (vim style)
+	{ key = "h", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Left") },
+	{ key = "j", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Down") },
+	{ key = "k", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Up") },
+	{ key = "l", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Right") },
+
+	-- Pane resize
+	{ key = "H", mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Left", 5 }) },
+	{ key = "J", mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Down", 5 }) },
+	{ key = "K", mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Up", 5 }) },
+	{ key = "L", mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Right", 5 }) },
+
+	-- Split panes (same as tmux)
+	{ key = '"', mods = "LEADER", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+	{ key = "%", mods = "LEADER", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+
+	-- Open URL (same as tmux urlview prefix + x)
+	{
+		key = "x",
+		mods = "LEADER",
+		action = wezterm.action.QuickSelectArgs({
+			patterns = { "https?://\\S+" },
+			action = wezterm.action_callback(function(window, pane)
+				local url = window:get_selection_text_for_pane(pane)
+				wezterm.open_with(url)
+			end),
+		}),
+	},
+
+	-- New tab
+	{ key = "c", mods = "LEADER", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
+
+	-- Tab navigation
+	{ key = "n", mods = "LEADER", action = wezterm.action.ActivateTabRelative(1) },
+	{ key = "p", mods = "LEADER", action = wezterm.action.ActivateTabRelative(-1) },
+
+	-- Copy mode (like tmux copy-mode)
+	{ key = "[", mods = "LEADER", action = wezterm.action.ActivateCopyMode },
+
+	-- Paste
+	{ key = "]", mods = "LEADER", action = wezterm.action.PasteFrom("Clipboard") },
+
+	-- Reload config
+	{ key = "r", mods = "LEADER", action = wezterm.action.ReloadConfiguration },
+
+	-- lazygit popup (90% screen size like tmux)
+	{
+		key = "v",
+		mods = "LEADER",
+		action = wezterm.action_callback(function(_, pane)
+			local screen = wezterm.gui.screens().active
+			local ratio = 0.9
+			local width, height = screen.width * ratio, screen.height * ratio
+			local cwd = pane:get_current_working_dir()
+			local cwd_path = cwd and cwd.file_path or nil
+
+			local _, _, new_window = wezterm.mux.spawn_window({
+				args = { "/opt/homebrew/bin/zsh", "-ic", "lazygit" },
+				cwd = cwd_path,
+				position = {
+					x = (screen.width - width) / 2,
+					y = (screen.height - height) / 2,
+					origin = "ActiveScreen",
+				},
+			})
+			new_window:gui_window():set_inner_size(width, height)
+		end),
+	},
+
+	-- Rename tab (same as tmux prefix + ,)
+	{
+		key = ",",
+		mods = "LEADER",
+		action = wezterm.action.PromptInputLine({
+			description = "Enter new name for tab",
+			action = wezterm.action_callback(function(window, _, line)
+				if line then
+					window:active_tab():set_title(line)
+				end
+			end),
+		}),
+	},
+
+	-- Quick select mode (select URLs, paths, hashes, etc.)
+	{ key = "Space", mods = "LEADER", action = wezterm.action.QuickSelect },
+
+	-- Toggle pane zoom (same as tmux prefix + z)
+	{ key = "z", mods = "LEADER", action = wezterm.action.TogglePaneZoomState },
+
+	-- Scroll to prompt (shell integration)
+	{ key = "k", mods = "CTRL|SHIFT", action = wezterm.action.ScrollToPrompt(-1) },
+	{ key = "j", mods = "CTRL|SHIFT", action = wezterm.action.ScrollToPrompt(1) },
+}
+
+return config

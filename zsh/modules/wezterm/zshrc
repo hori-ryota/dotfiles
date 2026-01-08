@@ -1,0 +1,4 @@
+# WezTerm shell integration (OSC 7, OSC 133, semantic zones)
+if [[ "$TERM_PROGRAM" == "WezTerm" ]]; then
+  source "/Applications/WezTerm.app/Contents/Resources/wezterm.sh"
+fi
