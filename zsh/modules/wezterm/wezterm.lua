@@ -180,4 +180,14 @@ config.keys = {
 	{ key = "j", mods = "CTRL|SHIFT", action = wezterm.action.ScrollToPrompt(1) },
 }
 
+---------------------
+--  Private config --
+---------------------
+local private_path = os.getenv("HOME") .. "/.wezterm_private.lua"
+local f = io.open(private_path, "r")
+if f then
+	f:close()
+	dofile(private_path)(wezterm, config)
+end
+
 return config
