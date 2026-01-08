@@ -752,6 +752,9 @@ require('lazy').setup({
           'path',
           'buffer',
         },
+        per_filetype = {
+          markdown = { 'obsidian', 'obsidian_new', 'obsidian_tags', 'snippets', 'lsp', 'path', 'buffer' },
+        },
         providers = {
           path = {
             timeout_ms = 1000,
@@ -845,9 +848,6 @@ require('lazy').setup({
       { '<Space>vd',      function() Snacks.picker.git_diff() end },
       { '<Space>vL',      function() Snacks.picker.git_log_file() end },
       { '<Space>v<C-l>',  function() Snacks.picker.git_log_line() end },
-
-      { '<Space>ml',      function() Snacks.picker.files({ cwd = vim.g.memolist_path }) end },
-      { '<Space>mr',      function() Snacks.picker.grep({ cwd = vim.g.memolist_path }) end },
 
       { '<Space>sl',      function() Snacks.picker.files({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end },
       { '<Space>sr',      function() Snacks.picker.grep({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end },
@@ -1562,17 +1562,43 @@ require('lazy').setup({
     },
   },
   --}}}
-  --{{{ Memo
+  --{{{ Obsidian
   {
-    'glidenote/memolist.vim',
-    keys = {
-      { '<Leader>mn', '<Cmd>MemoNew<CR>' }
+    'obsidian-nvim/obsidian.nvim',
+    cond = os.getenv('OBSIDIAN_VAULT') ~= nil,
+    version = '*',
+    lazy = true,
+    ft = 'markdown',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
     },
-    init = function()
-      vim.g.memolist_path = "~/Dropbox/memo"
-      vim.g.memolist_memo_suffix = "txt"
-      vim.g.memolist_memo_date = "%Y-%m-%d %H:%M"
-    end,
+    opts = {
+      workspaces = {
+        {
+          name = 'main',
+          path = os.getenv('OBSIDIAN_VAULT'),
+        },
+      },
+      completion = {
+        blink = true,
+      },
+      picker = {
+        name = 'snacks.picker',
+      },
+      ui = {
+        enable = false,
+      },
+      daily_notes = {
+        folder = 'daily',
+        date_format = '%Y-%m-%d',
+      },
+    },
+    keys = {
+      { '<Leader>mn', '<Cmd>Obsidian new<CR>', desc = 'New note' },
+      { '<Leader>md', '<Cmd>Obsidian today<CR>', desc = 'Daily note' },
+      { '<Space>ml', '<Cmd>Obsidian quick_switch<CR>', desc = 'Find notes' },
+      { '<Space>mr', '<Cmd>Obsidian search<CR>', desc = 'Search notes' },
+    },
   },
   --}}}
   --{{{ Diff tools
