@@ -4,7 +4,6 @@ brew_install 1password
 brew_install alfred
 brew_install appcleaner
 brew_install google-japanese-ime
-brew_install iterm2
 brew_install karabiner-elements
 brew_install slack
 brew_install moom
