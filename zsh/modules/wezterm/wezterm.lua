@@ -131,7 +131,7 @@ config.keys = {
 	-- Reload config
 	{ key = "r", mods = "LEADER", action = wezterm.action.ReloadConfiguration },
 
-	-- lazygit popup (90% screen size like tmux)
+	-- lazygit popup (floating window for both local and remote)
 	{
 		key = "v",
 		mods = "LEADER",
@@ -141,16 +141,23 @@ config.keys = {
 			local width, height = screen.width * ratio, screen.height * ratio
 			local cwd = pane:get_current_working_dir()
 			local cwd_path = cwd and cwd.file_path or nil
+			local domain = pane:get_domain_name()
 
-			local _, _, new_window = wezterm.mux.spawn_window({
-				args = { "/opt/homebrew/bin/zsh", "-ic", "lazygit" },
+			local spawn_args = {
+				args = { "/bin/zsh", "-ic", "lazygit" },
 				cwd = cwd_path,
+				domain = { DomainName = domain },
 				position = {
 					x = (screen.width - width) / 2,
 					y = (screen.height - height) / 2,
 					origin = "ActiveScreen",
 				},
-			})
+			}
+			-- Clear TMPDIR for remote domains (local path doesn't exist on remote)
+			if domain ~= "local" then
+				spawn_args.set_environment_variables = { TMPDIR = "/tmp" }
+			end
+			local _, _, new_window = wezterm.mux.spawn_window(spawn_args)
 			new_window:gui_window():set_inner_size(width, height)
 		end),
 	},
