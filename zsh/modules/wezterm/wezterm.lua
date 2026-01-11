@@ -40,6 +40,49 @@ config.window_frame = {
 config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
 config.tab_bar_at_bottom = true
+config.tab_max_width = 24
+
+-- Track tabs with bell notifications (for Claude Code waiting state)
+local bell_tabs = {}
+
+wezterm.on("bell", function(window, pane)
+	local tab = pane:tab()
+	if tab then
+		bell_tabs[tab:tab_id()] = true
+		window:invalidate()
+	end
+end)
+
+wezterm.on("format-tab-title", function(tab, _, _, _, _, max_width)
+	local tab_id = tab.tab_id
+	local index = tab.tab_index + 1
+	local title = tab.active_pane.title
+
+	-- Truncate title if too long
+	local prefix_len = 4 -- "N: " + padding
+	if #title > max_width - prefix_len then
+		title = wezterm.truncate_right(title, max_width - prefix_len - 1) .. "…"
+	end
+
+	local formatted = index .. ": " .. title
+
+	-- Clear bell state when tab becomes active
+	if tab.is_active then
+		bell_tabs[tab_id] = nil
+	end
+
+	-- Highlight tabs with bell (Claude Code waiting for input)
+	if bell_tabs[tab_id] and not tab.is_active then
+		return {
+			{ Background = { Color = "#e2943b" } },
+			{ Foreground = { Color = "#161821" } },
+			{ Text = " " .. formatted .. " " },
+		}
+	end
+
+	-- Default format
+	return " " .. formatted .. " "
+end)
 
 ---------------------
 --  Misc           --
@@ -86,6 +129,18 @@ config.macos_forward_to_ime_modifier_mask = "SHIFT|CTRL"
 config.leader = { key = "s", mods = "CTRL", timeout_milliseconds = 1000 }
 
 config.keys = {
+	-- Tab navigation by number (same as tmux)
+	{ key = "1", mods = "LEADER", action = wezterm.action.ActivateTab(0) },
+	{ key = "2", mods = "LEADER", action = wezterm.action.ActivateTab(1) },
+	{ key = "3", mods = "LEADER", action = wezterm.action.ActivateTab(2) },
+	{ key = "4", mods = "LEADER", action = wezterm.action.ActivateTab(3) },
+	{ key = "5", mods = "LEADER", action = wezterm.action.ActivateTab(4) },
+	{ key = "6", mods = "LEADER", action = wezterm.action.ActivateTab(5) },
+	{ key = "7", mods = "LEADER", action = wezterm.action.ActivateTab(6) },
+	{ key = "8", mods = "LEADER", action = wezterm.action.ActivateTab(7) },
+	{ key = "9", mods = "LEADER", action = wezterm.action.ActivateTab(8) },
+	{ key = "0", mods = "LEADER", action = wezterm.action.ActivateTab(9) },
+
 	-- Pane navigation (vim style)
 	{ key = "h", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Left") },
 	{ key = "j", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Down") },
