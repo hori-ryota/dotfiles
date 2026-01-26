@@ -1,4 +1,4 @@
-export NODE_VERSION=24.12.0
+export NODE_VERSION=24.13.0
 
 export PNPM_HOME="$XDG_DATA_HOME/.local/share/pnpm"
 case ":$PATH:" in

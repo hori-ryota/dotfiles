@@ -147,11 +147,39 @@ config.keys = {
 	{ key = "k", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Up") },
 	{ key = "l", mods = "LEADER", action = wezterm.action.ActivatePaneDirection("Right") },
 
-	-- Pane resize
-	{ key = "H", mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Left", 5 }) },
-	{ key = "J", mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Down", 5 }) },
-	{ key = "K", mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Up", 5 }) },
-	{ key = "L", mods = "LEADER", action = wezterm.action.AdjustPaneSize({ "Right", 5 }) },
+	-- Pane resize (Leader + C-hjkl, then C-hjkl to repeat)
+	{
+		key = "h",
+		mods = "LEADER|CTRL",
+		action = wezterm.action.Multiple({
+			wezterm.action.AdjustPaneSize({ "Left", 5 }),
+			wezterm.action.ActivateKeyTable({ name = "resize_pane", one_shot = false, timeout_milliseconds = 1000 }),
+		}),
+	},
+	{
+		key = "j",
+		mods = "LEADER|CTRL",
+		action = wezterm.action.Multiple({
+			wezterm.action.AdjustPaneSize({ "Down", 5 }),
+			wezterm.action.ActivateKeyTable({ name = "resize_pane", one_shot = false, timeout_milliseconds = 1000 }),
+		}),
+	},
+	{
+		key = "k",
+		mods = "LEADER|CTRL",
+		action = wezterm.action.Multiple({
+			wezterm.action.AdjustPaneSize({ "Up", 5 }),
+			wezterm.action.ActivateKeyTable({ name = "resize_pane", one_shot = false, timeout_milliseconds = 1000 }),
+		}),
+	},
+	{
+		key = "l",
+		mods = "LEADER|CTRL",
+		action = wezterm.action.Multiple({
+			wezterm.action.AdjustPaneSize({ "Right", 5 }),
+			wezterm.action.ActivateKeyTable({ name = "resize_pane", one_shot = false, timeout_milliseconds = 1000 }),
+		}),
+	},
 
 	-- Split panes (same as tmux)
 	{ key = '"', mods = "LEADER", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
@@ -170,8 +198,8 @@ config.keys = {
 		}),
 	},
 
-	-- New tab
-	{ key = "c", mods = "LEADER", action = wezterm.action.SpawnTab("CurrentPaneDomain") },
+	-- New tab (open in home directory)
+	{ key = "c", mods = "LEADER", action = wezterm.action.SpawnCommandInNewTab({ cwd = wezterm.home_dir }) },
 
 	-- Tab navigation
 	{ key = "n", mods = "LEADER", action = wezterm.action.ActivateTabRelative(1) },
@@ -240,6 +268,19 @@ config.keys = {
 	-- Scroll to prompt (shell integration)
 	{ key = "k", mods = "CTRL|SHIFT", action = wezterm.action.ScrollToPrompt(-1) },
 	{ key = "j", mods = "CTRL|SHIFT", action = wezterm.action.ScrollToPrompt(1) },
+}
+
+---------------------
+--  Key tables     --
+---------------------
+config.key_tables = {
+	resize_pane = {
+		{ key = "h", mods = "CTRL", action = wezterm.action.AdjustPaneSize({ "Left", 5 }) },
+		{ key = "j", mods = "CTRL", action = wezterm.action.AdjustPaneSize({ "Down", 5 }) },
+		{ key = "k", mods = "CTRL", action = wezterm.action.AdjustPaneSize({ "Up", 5 }) },
+		{ key = "l", mods = "CTRL", action = wezterm.action.AdjustPaneSize({ "Right", 5 }) },
+		{ key = "Escape", action = "PopKeyTable" },
+	},
 }
 
 ---------------------
