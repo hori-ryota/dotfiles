@@ -42,10 +42,7 @@ source "$(dirname "${BASH_SOURCE:-$0}")/../rust/install.sh"
 source "$(dirname "${BASH_SOURCE:-$0}")/../rust/export.zsh"
 
 # AI
-npm_install_targets+=("mcp-hub")
-go install github.com/github/github-mcp-server/cmd/github-mcp-server@latest
-# latestだと右記のissueのエラーで失敗するため、いったんmainブランチを取得 https://github.com/hashicorp/terraform-mcp-server/pull/67
-go install github.com/hashicorp/terraform-mcp-server/cmd/terraform-mcp-server@main
+npm_install_targets+=("@playwright/cli@latest")
 
 # VSCode language servers
 npm_install_targets+=("vscode-langservers-extracted")

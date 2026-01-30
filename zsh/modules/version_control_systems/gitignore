@@ -12,6 +12,7 @@ pyvenv.cfg
 .scripts
 .lefthook-local.yaml
 .playwright-mcp/
+.playwright-cli/
 
 # for ripgrep
 .rgignore
