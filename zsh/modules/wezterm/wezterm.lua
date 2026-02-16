@@ -223,8 +223,15 @@ config.keys = {
 	-- Paste
 	{ key = "]", mods = "LEADER", action = wezterm.action.PasteFrom("Clipboard") },
 
-	-- Reload config
-	{ key = "r", mods = "LEADER", action = wezterm.action.ReloadConfiguration },
+	-- Reload config + force repaint
+	{
+		key = "r",
+		mods = "LEADER",
+		action = wezterm.action_callback(function(window, _)
+			wezterm.reload_configuration()
+			window:invalidate()
+		end),
+	},
 
 	-- lazygit popup (floating window for both local and remote)
 	{
