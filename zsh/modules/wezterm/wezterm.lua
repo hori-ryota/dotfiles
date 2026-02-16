@@ -109,6 +109,18 @@ config.quick_select_patterns = {
 --  Mouse          --
 ---------------------
 config.mouse_bindings = {
+	-- Override default: plain click only completes selection (no URL open)
+	{
+		event = { Up = { streak = 1, button = "Left" } },
+		mods = "NONE",
+		action = wezterm.action.CompleteSelection("ClipboardAndPrimarySelection"),
+	},
+	-- Cmd+Click to open URLs
+	{
+		event = { Up = { streak = 1, button = "Left" } },
+		mods = "SUPER",
+		action = wezterm.action.OpenLinkAtMouseCursor,
+	},
 	-- Triple click to select command output (semantic zone)
 	{
 		event = { Down = { streak = 3, button = "Left" } },
