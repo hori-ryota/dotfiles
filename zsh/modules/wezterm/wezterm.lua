@@ -284,6 +284,16 @@ config.keys = {
 	-- Toggle pane zoom (same as tmux prefix + z)
 	{ key = "z", mods = "LEADER", action = wezterm.action.TogglePaneZoomState },
 
+	-- Rotate pane layout (same as tmux prefix + Space)
+	{ key = "Space", mods = "LEADER|CTRL", action = wezterm.action.RotatePanes("Clockwise") },
+
+	-- Swap panes interactively (same as tmux prefix + q then swap)
+	{
+		key = "q",
+		mods = "LEADER",
+		action = wezterm.action.PaneSelect({ mode = "SwapWithActiveKeepFocus" }),
+	},
+
 	-- Scroll to prompt (shell integration)
 	{ key = "k", mods = "CTRL|SHIFT", action = wezterm.action.ScrollToPrompt(-1) },
 	{ key = "j", mods = "CTRL|SHIFT", action = wezterm.action.ScrollToPrompt(1) },
