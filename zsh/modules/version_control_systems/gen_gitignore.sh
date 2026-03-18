@@ -37,6 +37,7 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
   echo "# for claude code"
   echo "# Ignored by .claude, but added by claude code automatically"
   echo "**/.claude/settings.local.json"
+  echo "**/.claude/rules/my-own-rules.md"
   echo ""
 
   # Use [simonwhitaker/gibo: Easy access to gitignore boilerplates](https://github.com/simonwhitaker/gibo).
