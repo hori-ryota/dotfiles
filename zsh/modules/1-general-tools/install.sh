@@ -12,5 +12,6 @@ brew_install jq
 
 brew_install binutils
 
+brew_install htop
 brew_install watchman
 brew_install go-task
