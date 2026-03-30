@@ -264,6 +264,33 @@ config.keys = {
 		end),
 	},
 
+	-- htop popup (floating window)
+	{
+		key = "t",
+		mods = "LEADER",
+		action = wezterm.action_callback(function(_, pane)
+			local screen = wezterm.gui.screens().active
+			local ratio = 0.9
+			local width, height = screen.width * ratio, screen.height * ratio
+			local domain = pane:get_domain_name()
+
+			local spawn_args = {
+				args = { "/bin/zsh", "-ic", "htop" },
+				domain = { DomainName = domain },
+				position = {
+					x = (screen.width - width) / 2,
+					y = (screen.height - height) / 2,
+					origin = "ActiveScreen",
+				},
+			}
+			if domain ~= "local" then
+				spawn_args.set_environment_variables = { TMPDIR = "/tmp" }
+			end
+			local _, _, new_window = wezterm.mux.spawn_window(spawn_args)
+			new_window:gui_window():set_inner_size(width, height)
+		end),
+	},
+
 	-- Rename tab (same as tmux prefix + ,)
 	{
 		key = ",",
