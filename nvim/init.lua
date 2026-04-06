@@ -66,7 +66,6 @@ keymap('t', '<ESC>', '<C-\\><C-n>', ko_s)
 --}}}
 --{{{ 12 editing text
 vim.opt.undofile = true
-vim.opt.completeopt = 'menuone'
 vim.opt.infercase = true
 --}}}
 --{{{ 13 tabs and indenting
@@ -194,10 +193,8 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   --{{{ ecosystems
-  'vim-denops/denops.vim',
   'nvim-lua/plenary.nvim',
   'MunifTanjim/nui.nvim',
-  'antoinemadec/FixCursorHold.nvim', -- for https://github.com/antoinemadec/FixCursorHold.nvim/issues/13 for neotest
   {
     'nvim-tree/nvim-web-devicons',
     opts = {
@@ -1288,7 +1285,6 @@ require('lazy').setup({
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
       'nvim-neotest/nvim-nio',
-      'antoinemadec/FixCursorHold.nvim',
     },
     init = function()
       keymap('n', '<Leader>t', function() require("neotest").run.run(vim.fn.expand('%')) end, ko)
