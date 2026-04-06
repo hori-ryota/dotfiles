@@ -163,6 +163,7 @@ file_type_detect('*.vim.local', 'vim')
 file_type_detect('*.lua.local', 'lua')
 file_type_detect('*.dockerignore', 'dockerignore')
 file_type_detect('*Dockerfile*', 'dockerfile')
+file_type_detect({ 'docker-compose.yml', 'docker-compose.yaml' }, 'yaml.docker-compose')
 file_type_detect({ 'tsconfig.json', 'tsconfig.*.json', 'eslintrc', 'eslintrc.json', 'tasks.json', 'extensions.json' },
   'jsonc')
 file_type_detect({ 'settings.json' }, 'jsonc')
@@ -241,17 +242,10 @@ require('lazy').setup({
           source = true,
           prefix = '',
         },
+        update_in_insert = false,
       }); --}}}
 
       keymap('n', '<Leader>L', '<Cmd>LspRestart<CR>', ko)
-
-      --{{{ [\[gopls\] delay diagnostics or not run them in insert mode · Issue \#127 · neovim/nvim\-lspconfig](https://github.com/neovim/nvim-lspconfig/issues/127)
-      vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-        vim.lsp.handlers["textDocument/publishDiagnostics"], {
-          -- delay update diagnostics
-          update_in_insert = false,
-        });
-      --}}}
 
       local function bind_key_map() --{{{
         local function picker(f)
@@ -819,6 +813,7 @@ require('lazy').setup({
   --{{{ snacks.nvim
   {
     'folke/snacks.nvim',
+    priority = 1000,
     lazy = false,
     config = function()
       vim.cmd('hi! link SnacksPickerDir Comment')
@@ -834,24 +829,20 @@ require('lazy').setup({
           },
         },
       })
+
+      keymap('n', '<Space><Space>', function() Snacks.picker.smart() end, ko_s)
+      keymap('n', '<Space>b',       function() Snacks.picker.buffers() end, ko_s)
+      keymap('n', '<Space>r',       function() Snacks.picker.grep() end, ko_s)
+      keymap('n', '<Space>h',       function() Snacks.picker.help() end, ko_s)
+      keymap('n', '<Space>k',       function() Snacks.picker.keymaps() end, ko_s)
+      keymap('n', '<Space>vs',      function() Snacks.picker.git_status() end, ko_s)
+      keymap('n', '<Space>vl',      function() Snacks.picker.git_log() end, ko_s)
+      keymap('n', '<Space>vd',      function() Snacks.picker.git_diff() end, ko_s)
+      keymap('n', '<Space>vL',      function() Snacks.picker.git_log_file() end, ko_s)
+      keymap('n', '<Space>v<C-l>',  function() Snacks.picker.git_log_line() end, ko_s)
+      keymap('n', '<Space>sl',      function() Snacks.picker.files({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end, ko_s)
+      keymap('n', '<Space>sr',      function() Snacks.picker.grep({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end, ko_s)
     end,
-    keys = {
-      { '<Space><Space>', function() Snacks.picker.smart() end },
-      { '<Space>b',       function() Snacks.picker.buffers() end },
-      { '<Space>r',       function() Snacks.picker.grep() end },
-
-      { '<Space>h',       function() Snacks.picker.help() end },
-      { '<Space>k',       function() Snacks.picker.keymaps() end },
-
-      { '<Space>vs',      function() Snacks.picker.git_status() end },
-      { '<Space>vl',      function() Snacks.picker.git_log() end },
-      { '<Space>vd',      function() Snacks.picker.git_diff() end },
-      { '<Space>vL',      function() Snacks.picker.git_log_file() end },
-      { '<Space>v<C-l>',  function() Snacks.picker.git_log_line() end },
-
-      { '<Space>sl',      function() Snacks.picker.files({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end },
-      { '<Space>sr',      function() Snacks.picker.grep({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end },
-    },
   },
   --}}}
   --{{{ filer
@@ -1789,7 +1780,7 @@ require('lazy').setup({
           'r',
           'racket',
           'rasi',
-          'regex',
+          -- 'regex',
           'rego',
           'rnoweb',
           'ron',
