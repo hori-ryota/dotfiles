@@ -244,53 +244,55 @@ require('lazy').setup({
 
       keymap('n', '<Leader>L', '<Cmd>LspRestart<CR>', ko)
 
-      local function bind_key_map() --{{{
-        local function picker(f)
-          return function()
-            Snacks.picker[f]()
-          end
-        end
-        keymap('n', '<Leader>ll', vim.lsp.codelens.run, ko_sb)
-        keymap('n', '<Leader>lL', function() vim.diagnostic.open_float({ focusable = false }) end, ko_sb)
-        keymap('n', '[f', vim.diagnostic.goto_prev, ko_sb)
-        keymap('n', ']f', vim.diagnostic.goto_next, ko_sb)
-        keymap('n', '<Space>lf', picker('diagnostics'), ko_sb)
-        keymap('n', 'K', vim.lsp.buf.hover, ko_sb)
-        keymap('n', '<Space><Tab>', vim.lsp.buf.signature_help, ko_sb)
-        keymap('n', '<C-]>', picker('lsp_definitions'), ko_sb)
-        keymap('n', '<Leader>li', picker('lsp_implementations'), ko_sb)
-        keymap('n', '<Leader>lc', picker('lsp_references'), ko_sb)
-        keymap('n', '<Leader>lR', vim.lsp.buf.rename, ko_sb)
-        keymap('n', '<Leader>la', vim.lsp.buf.code_action, ko_sb)
-        keymap('v', '<Leader>la', vim.lsp.buf.code_action, ko_sb)
-        keymap('n', 'gq', vim.lsp.buf.format, ko_sb)
-        keymap('v', 'gq', vim.lsp.buf.format, ko_sb)
-        keymap('n', '<Leader>ws', picker('lsp_workspace_symbols'), ko_sb)
+      local function set_lsp_highlights() --{{{
+        vim.cmd('hi! link DiagnosticError      ALEVirtualTextError')
+        vim.cmd('hi! link DiagnosticWarn       ALEVirtualTextWarning')
+        vim.cmd('hi! link DiagnosticInfo       Identifier')
+        vim.cmd('hi! link DiagnosticHint       ALEVirtualTextWarning')
+        vim.cmd('hi! link LspReferenceText     Normal')
+        vim.cmd('hi! link LspReferenceRead     Identifier')
+        vim.cmd('hi! link LspReferenceWrite    MoreMsg')
+        vim.cmd('hi! link LspCodeLens          Comment')
+        vim.cmd('hi! link LspCodeLensSeparator Comment')
       end --}}}
-
-      vim.api.nvim_create_autocmd('LspAttach', {
+      set_lsp_highlights()
+      vim.api.nvim_create_autocmd('ColorScheme', {
         group = 'MyLspConfig',
-        callback = function()
-          bind_key_map()
-          vim.cmd('hi! link DiagnosticError      ALEVirtualTextError')
-          vim.cmd('hi! link DiagnosticWarn       ALEVirtualTextWarning')
-          vim.cmd('hi! link DiagnosticInfo       Identifier')
-          vim.cmd('hi! link DiagnosticHint       ALEVirtualTextWarning')
-          vim.cmd('hi! link LspReferenceText     Normal')
-          vim.cmd('hi! link LspReferenceRead     Identifier')
-          vim.cmd('hi! link LspReferenceWrite    MoreMsg')
-          vim.cmd('hi! link LspCodeLens          Comment')
-          vim.cmd('hi! link LspCodeLensSeparator Comment')
-        end,
+        callback = set_lsp_highlights,
       })
 
-      local lsp = vim.lsp
-      local util = require('lspconfig.util')
+      vim.api.nvim_create_autocmd('LspAttach', { --{{{
+        group = 'MyLspConfig',
+        callback = function()
+          local function picker(f)
+            return function()
+              Snacks.picker[f]()
+            end
+          end
+          keymap('n', '<Leader>ll', vim.lsp.codelens.run, ko_sb)
+          keymap('n', '<Leader>lL', function() vim.diagnostic.open_float({ focusable = false }) end, ko_sb)
+          keymap('n', '[f', vim.diagnostic.goto_prev, ko_sb)
+          keymap('n', ']f', vim.diagnostic.goto_next, ko_sb)
+          keymap('n', '<Space>lf', picker('diagnostics'), ko_sb)
+          keymap('n', 'K', vim.lsp.buf.hover, ko_sb)
+          keymap('n', '<Space><Tab>', vim.lsp.buf.signature_help, ko_sb)
+          keymap('n', '<C-]>', picker('lsp_definitions'), ko_sb)
+          keymap('n', '<Leader>li', picker('lsp_implementations'), ko_sb)
+          keymap('n', '<Leader>lc', picker('lsp_references'), ko_sb)
+          keymap('n', '<Leader>lR', vim.lsp.buf.rename, ko_sb)
+          keymap('n', '<Leader>la', vim.lsp.buf.code_action, ko_sb)
+          keymap('v', '<Leader>la', vim.lsp.buf.code_action, ko_sb)
+          keymap('n', 'gq', vim.lsp.buf.format, ko_sb)
+          keymap('v', 'gq', vim.lsp.buf.format, ko_sb)
+          keymap('n', '<Leader>ws', picker('lsp_workspace_symbols'), ko_sb)
+        end,
+      }) --}}}
+
       local configured_servers = {}
 
       local function configure(server, opts)
         if opts then
-          lsp.config(server, opts)
+          vim.lsp.config(server, opts)
         end
         table.insert(configured_servers, server)
       end
@@ -308,19 +310,13 @@ require('lazy').setup({
         })
       end
 
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
+      vim.lsp.config('*', {
+        capabilities = require('blink.cmp').get_lsp_capabilities(),
+      })
 
       --{{{ filetype settings
-      --{{{ for snippets
-      -- table.insert(coc_global_extensions, 'coc-snippets')
-      -- vim.fn['coc#config']('snippets', {
-      --   userSnippetsDirectory = vim.fn.stdpath('config') .. '/snippets',
-      -- })
-      --}}}
-
       --{{{ for configuration files
       configure('jsonls', {
-        capabilities = capabilities,
         init_options = {
           -- use prettier
           provideFormatter = false,
@@ -333,7 +329,7 @@ require('lazy').setup({
         },
       })
       configure('yamlls', {
-        capabilities = capabilities,
+
         settings = {
           yaml = {
             schemaStore = {
@@ -358,13 +354,13 @@ require('lazy').setup({
 
       --{{{ for Vim
       configure('vimls', {
-        capabilities = capabilities,
+
       })
       --}}}
 
       --{{{ for lua
       configure('lua_ls', {
-        capabilities = capabilities,
+
         settings = {
           Lua = {
             diagnostics = {
@@ -377,13 +373,13 @@ require('lazy').setup({
 
       --{{{ for Markdown
       configure('marksman', {
-        capabilities = capabilities,
+
       })
       --}}}
 
       --{{{ for Python
       configure('ruff', {
-        capabilities = capabilities,
+
         on_attach = function()
           keymap('n', 'gQ', function()
             vim.lsp.buf.code_action({
@@ -398,7 +394,7 @@ require('lazy').setup({
         end,
       })
       configure('basedpyright', {
-        capabilities = capabilities,
+
         root_markers = { 'pyproject.toml' },
         cmd = { 'sh', '-c', 'uv run --quiet basedpyright-langserver --stdio || basedpyright-langserver --stdio' },
         settings = {
@@ -417,7 +413,7 @@ require('lazy').setup({
 
       --{{{ for Go
       configure('gopls', {
-        capabilities = capabilities,
+
         settings = {
           gopls = {
             ---- Build ----
@@ -494,7 +490,7 @@ require('lazy').setup({
         end,
       })
       configure('golangci_lint_ls', {
-        capabilities = capabilities,
+
         init_options = (function()
           local version = ""
           local handle = io.popen(
@@ -528,7 +524,7 @@ require('lazy').setup({
 
       --{{{ for Rust
       configure('rust_analyzer', {
-        capabilities = capabilities,
+
         on_attach = function()
           fmt_on_save()
         end,
@@ -537,20 +533,13 @@ require('lazy').setup({
 
       --{{{ for Node.js and frontend development
       configure('ts_ls', {
-        capabilities = capabilities,
+
         root_markers = { "package.json" },
         single_file_support = false,
         -- use prettier as formatter
         on_attach = disable_formatter
       })
       configure('biome', {
-        capabilities =
-            vim.tbl_deep_extend('force', capabilities, {
-              textDocument = {
-                positionEncoding = { 'utf-16' }
-              }
-            }),
-
         cmd = { 'na', 'exec', 'biome', 'lsp-proxy' },
         on_attach = function()
           keymap('n', 'gQ', "<Cmd>execute '!na exec biome check --write --unsafe ' . shellescape(expand('%:p'))<CR>",
@@ -560,7 +549,7 @@ require('lazy').setup({
         workspace_required = true,
       })
       configure('html', {
-        capabilities = capabilities,
+
         -- use prettier as formatter
         init_options = { provideFormatter = false },
       })
@@ -570,7 +559,7 @@ require('lazy').setup({
       --   init_options = { provideFormatter = false },
       -- })
       configure('eslint', {
-        capabilities = capabilities,
+
         on_attach = function(client)
           disable_formatter(client)
           keymap('n', 'gQ', '<Cmd>EslintFixAll<CR><Cmd>lua vim.lsp.buf.format()<CR>', ko_b)
@@ -578,13 +567,13 @@ require('lazy').setup({
         workspace_required = true,
       })
       configure('prismals', {
-        capabilities = capabilities,
+
       })
       --}}}
 
       --{{{ for Astro
       configure('astro', {
-        capabilities = capabilities,
+
         root_markers = { 'astro.config.ts' },
         on_attach = function()
           fmt_on_save()
@@ -595,8 +584,7 @@ require('lazy').setup({
 
       --{{{ for Deno
       configure('denols', {
-        capabilities = capabilities,
-        root_dir = util.root_pattern("deno.json", "deno.jsonc"),
+        root_markers = { 'deno.json', 'deno.jsonc' },
         on_attach = function()
           fmt_on_save()
           vim.opt_local.makeprg = 'deno run -A %'
@@ -617,7 +605,7 @@ require('lazy').setup({
 
       --{{{ for Terraform
       configure('terraformls', {
-        capabilities = capabilities,
+
         on_attach = function()
           fmt_on_save()
         end,
@@ -626,28 +614,28 @@ require('lazy').setup({
 
       --{{{ for Docker
       configure('dockerls', {
-        capabilities = capabilities,
+
       })
       configure('docker_compose_language_service', {
-        capabilities = capabilities,
+
       })
       --}}}
 
       --{{{ for Proto
       configure('buf_ls', {
-        capabilities = capabilities,
+
       })
       --}}}
 
       --{{{ for cmake
       configure('neocmake', {
-        capabilities = capabilities,
+
       })
       --}}}
 
       --{{{ for C/C++
       configure('clangd', {
-        capabilities = capabilities,
+
         filetypes = {
           'c',
           'cpp',
@@ -659,7 +647,7 @@ require('lazy').setup({
       })
       --}}}
 
-      lsp.enable(configured_servers)
+      vim.lsp.enable(configured_servers)
 
       --}}}
     end,
