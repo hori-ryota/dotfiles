@@ -622,9 +622,6 @@ require('lazy').setup({
   }, --}}}
   {
     'nvimtools/none-ls.nvim',
-    dependencies = {
-      'nvimtools/none-ls-extras.nvim',
-    },
     lazy = false,
     config = function()
       require('null-ls').setup({
@@ -657,15 +654,9 @@ require('lazy').setup({
           }),
           -- GitHub Action
           require('null-ls').builtins.diagnostics.actionlint,
-
-          -- { "go", "javascript", "lua", "python", "typescript" }
-          require('null-ls').builtins.code_actions.refactoring,
         },
       })
     end,
-  },
-  {
-    'nvimtools/none-ls-extras.nvim',
   },
   {
     'j-hui/fidget.nvim',
