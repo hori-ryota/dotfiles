@@ -7,6 +7,7 @@ brew_install vim
 
 brew_install luarocks # for lazy.nvim
 brew_install neovim
+brew_install tree-sitter-cli # for nvim-treesitter parser builds
 
 brew_install universal-ctags
 
