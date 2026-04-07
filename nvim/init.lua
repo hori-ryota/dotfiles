@@ -940,18 +940,11 @@ require('lazy').setup({
             relative_path = relative_path .. '/'
           end
 
-          -- クリップボードにコピー（nvim-treeと同じ方法で）
+          -- クリップボードにコピー
           local use_system_clipboard = explorer.opts.actions.use_system_clipboard
           local reg = use_system_clipboard and '+' or '1'
           local clipboard_name = use_system_clipboard and "system" or "neovim"
-
-          -- nvim-tree と同じ方法でヤンク
-          local temp_buf = vim.api.nvim_create_buf(false, true)
-          vim.api.nvim_buf_set_text(temp_buf, 0, 0, 0, 0, { relative_path })
-          vim.api.nvim_buf_call(temp_buf, function()
-            vim.cmd(string.format('normal! "%sy$', reg))
-          end)
-          vim.api.nvim_buf_delete(temp_buf, {})
+          vim.fn.setreg(reg, relative_path)
 
           -- 通知
           require('nvim-tree.notify').info(string.format("Copied %s to %s clipboard!", relative_path, clipboard_name))
@@ -1014,7 +1007,7 @@ require('lazy').setup({
       { '<Space>vO',  '<Cmd>GitBlameOpenFileURL<CR><Cmd>GitBlameDisable<CR>' },
     },
     init = function()
-      vim.g.gitblame_date_format = '%Y-%m-%d %H:%m:%S'
+      vim.g.gitblame_date_format = '%Y-%m-%d %H:%M:%S'
     end
   },
   --}}}
@@ -1190,11 +1183,7 @@ require('lazy').setup({
       end, ko)
 
       local function terraform_dir()
-        local dir = os.getenv('TERRAFORM_DIR')
-        if not dir then
-          dir = '.'
-        end
-        return dir
+        return os.getenv('TERRAFORM_DIR') or '.'
       end
       for k, v in pairs({
         ["<Leader>fp"] = "terraform plan",
@@ -1242,24 +1231,11 @@ require('lazy').setup({
         discovery = {
           enabled = false,
         },
-        -- your neotest config here
         adapters = {
           require('neotest-golang')({
             testify_enabled = true,
           }),
-          -- require('neotest-python'),
-          -- require('neotest-jest'),
-          -- require('neotest-vitest'),
-          -- require('neotest-playwright').adapter({
-          --   options = {
-          --     enable_dynamic_test_discovery = true,
-          --   },
-          -- }),
-          -- require('neotest-dart'),
         },
-        -- consumers = {
-        --   playwright = require("neotest-playwright.consumers").consumers,
-        -- },
         icons = {
           failed  = '',
           passed  = '',
@@ -1286,15 +1262,7 @@ require('lazy').setup({
     end,
   },
   'nvim-neotest/nvim-nio',
-  {
-    'fredrikaverpil/neotest-golang',
-  },
-  -- 'nvim-neotest/neotest-python',
-  -- 'haydenmeade/neotest-jest',
-  -- 'marilari88/neotest-vitest',
-  -- 'thenbe/neotest-playwright',
-  -- 'sidlatau/neotest-dart',
-  -- -- NOTE: neotest-denoはまだWIPな模様（README.mdにWIPと記載、docに `*neotest.config*` がありhelptagsが本体との重複で失敗する）
+  'fredrikaverpil/neotest-golang',
   --}}}
   --{{{ Utilities
   {
@@ -1455,7 +1423,6 @@ require('lazy').setup({
     },
   },
   {
-    -- comment
     'numToStr/Comment.nvim',
     keys = {
       'gc',
@@ -1465,21 +1432,17 @@ require('lazy').setup({
       { 'gc', mode = 'x' },
       { 'gb', mode = 'x' },
     },
-    config = function()
-      require('Comment').setup({})
-    end,
+    opts = {},
   },
   {
-    -- comment
+    -- keymap duplication detector
     'tris203/hawtkeys.nvim',
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
     },
     lazy = false,
-    config = function()
-      require('hawtkeys').setup({})
-    end,
+    opts = {},
   },
   --}}}
   --{{{ Undo
@@ -1565,12 +1528,6 @@ require('lazy').setup({
       keymap('n', '[<C-d>', '<Cmd>DirDiffPrev<CR>', ko_s)
       keymap('n', ']<C-d>', '<Cmd>DirDiffNext<CR>', ko_s)
     end,
-  },
-  --}}}
-  --{{{ Appearance
-  {
-    'norcalli/nvim-colorizer.lua',
-    lazy = false,
   },
   --}}}
   --{{{ Highlights
@@ -1778,9 +1735,7 @@ require('lazy').setup({
   {
     'brenoprata10/nvim-highlight-colors',
     lazy = false,
-    init = function()
-      require('nvim-highlight-colors').setup()
-    end,
+    opts = {},
   },
   --}}}
   --{{{ FileType plugins
