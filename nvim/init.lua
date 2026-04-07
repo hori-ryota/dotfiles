@@ -917,9 +917,6 @@ require('lazy').setup({
           -- 現在のツリーのルートパス（表示されているパス）を取得
           local tree_root = explorer.absolute_path
 
-          -- ノードのパスを構築（ツリールートからの相対パス）
-          local node_path_in_tree = node.absolute_path
-
           -- nvim-tree が表示しているパスからの相対パスを計算
           -- node.parent を辿って親ディレクトリのパスを構築
           local path_parts = {}
@@ -933,7 +930,6 @@ require('lazy').setup({
           local relative_from_tree = table.concat(path_parts, "/")
 
           -- vimのカレントディレクトリからの相対パスを計算
-          local cwd = vim.fn.getcwd()
           local full_path = tree_root .. "/" .. relative_from_tree
           full_path = vim.fn.simplify(full_path)
 
@@ -972,8 +968,7 @@ require('lazy').setup({
         apply('?', api.tree.toggle_help, 'help')
         apply('gf', api.live_filter.start, 'live fitler start')
         apply('gF', api.live_filter.clear, 'live fitler clear')
-      end
-      ,
+      end,
     },
   },
   {
@@ -983,7 +978,7 @@ require('lazy').setup({
     },
     init = function()
       require("oil").setup({
-        default_file_exploler = false,
+        default_file_explorer = false,
         use_default_keymaps = false,
         keymaps = {
           ["g?"] = "actions.show_help",
