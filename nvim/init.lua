@@ -329,7 +329,6 @@ require('lazy').setup({
         },
       })
       configure('yamlls', {
-
         settings = {
           yaml = {
             schemaStore = {
@@ -353,14 +352,11 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Vim
-      configure('vimls', {
-
-      })
+      configure('vimls', {})
       --}}}
 
       --{{{ for lua
       configure('lua_ls', {
-
         settings = {
           Lua = {
             diagnostics = {
@@ -372,14 +368,11 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Markdown
-      configure('marksman', {
-
-      })
+      configure('marksman', {})
       --}}}
 
       --{{{ for Python
       configure('ruff', {
-
         on_attach = function()
           keymap('n', 'gQ', function()
             vim.lsp.buf.code_action({
@@ -394,7 +387,6 @@ require('lazy').setup({
         end,
       })
       configure('basedpyright', {
-
         root_markers = { 'pyproject.toml' },
         cmd = { 'sh', '-c', 'uv run --quiet basedpyright-langserver --stdio || basedpyright-langserver --stdio' },
         settings = {
@@ -413,7 +405,6 @@ require('lazy').setup({
 
       --{{{ for Go
       configure('gopls', {
-
         settings = {
           gopls = {
             ---- Build ----
@@ -490,7 +481,6 @@ require('lazy').setup({
         end,
       })
       configure('golangci_lint_ls', {
-
         init_options = (function()
           local version = ""
           local handle = io.popen(
@@ -524,7 +514,6 @@ require('lazy').setup({
 
       --{{{ for Rust
       configure('rust_analyzer', {
-
         on_attach = function()
           fmt_on_save()
         end,
@@ -533,7 +522,6 @@ require('lazy').setup({
 
       --{{{ for Node.js and frontend development
       configure('ts_ls', {
-
         root_markers = { "package.json" },
         single_file_support = false,
         -- use prettier as formatter
@@ -549,31 +537,21 @@ require('lazy').setup({
         workspace_required = true,
       })
       configure('html', {
-
         -- use prettier as formatter
         init_options = { provideFormatter = false },
       })
-      -- configure('cssls', {
-      --   capabilities = capabilities,
-      --   -- use prettier as formatter
-      --   init_options = { provideFormatter = false },
-      -- })
       configure('eslint', {
-
         on_attach = function(client)
           disable_formatter(client)
           keymap('n', 'gQ', '<Cmd>EslintFixAll<CR><Cmd>lua vim.lsp.buf.format()<CR>', ko_b)
         end,
         workspace_required = true,
       })
-      configure('prismals', {
-
-      })
+      configure('prismals', {})
       --}}}
 
       --{{{ for Astro
       configure('astro', {
-
         root_markers = { 'astro.config.ts' },
         on_attach = function()
           fmt_on_save()
@@ -605,7 +583,6 @@ require('lazy').setup({
 
       --{{{ for Terraform
       configure('terraformls', {
-
         on_attach = function()
           fmt_on_save()
         end,
@@ -613,29 +590,20 @@ require('lazy').setup({
       --}}}
 
       --{{{ for Docker
-      configure('dockerls', {
-
-      })
-      configure('docker_compose_language_service', {
-
-      })
+      configure('dockerls', {})
+      configure('docker_compose_language_service', {})
       --}}}
 
       --{{{ for Proto
-      configure('buf_ls', {
-
-      })
+      configure('buf_ls', {})
       --}}}
 
       --{{{ for cmake
-      configure('neocmake', {
-
-      })
+      configure('neocmake', {})
       --}}}
 
       --{{{ for C/C++
       configure('clangd', {
-
         filetypes = {
           'c',
           'cpp',
@@ -816,17 +784,17 @@ require('lazy').setup({
       })
 
       keymap('n', '<Space><Space>', function() Snacks.picker.smart() end, ko_s)
-      keymap('n', '<Space>b',       function() Snacks.picker.buffers() end, ko_s)
-      keymap('n', '<Space>r',       function() Snacks.picker.grep() end, ko_s)
-      keymap('n', '<Space>h',       function() Snacks.picker.help() end, ko_s)
-      keymap('n', '<Space>k',       function() Snacks.picker.keymaps() end, ko_s)
-      keymap('n', '<Space>vs',      function() Snacks.picker.git_status() end, ko_s)
-      keymap('n', '<Space>vl',      function() Snacks.picker.git_log() end, ko_s)
-      keymap('n', '<Space>vd',      function() Snacks.picker.git_diff() end, ko_s)
-      keymap('n', '<Space>vL',      function() Snacks.picker.git_log_file() end, ko_s)
-      keymap('n', '<Space>v<C-l>',  function() Snacks.picker.git_log_line() end, ko_s)
-      keymap('n', '<Space>sl',      function() Snacks.picker.files({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end, ko_s)
-      keymap('n', '<Space>sr',      function() Snacks.picker.grep({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end, ko_s)
+      keymap('n', '<Space>b', function() Snacks.picker.buffers() end, ko_s)
+      keymap('n', '<Space>r', function() Snacks.picker.grep() end, ko_s)
+      keymap('n', '<Space>h', function() Snacks.picker.help() end, ko_s)
+      keymap('n', '<Space>k', function() Snacks.picker.keymaps() end, ko_s)
+      keymap('n', '<Space>vs', function() Snacks.picker.git_status() end, ko_s)
+      keymap('n', '<Space>vl', function() Snacks.picker.git_log() end, ko_s)
+      keymap('n', '<Space>vd', function() Snacks.picker.git_diff() end, ko_s)
+      keymap('n', '<Space>vL', function() Snacks.picker.git_log_file() end, ko_s)
+      keymap('n', '<Space>v<C-l>', function() Snacks.picker.git_log_line() end, ko_s)
+      keymap('n', '<Space>sl', function() Snacks.picker.files({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end, ko_s)
+      keymap('n', '<Space>sr', function() Snacks.picker.grep({ cwd = os.getenv('HOME') .. '/.dotfiles' }) end, ko_s)
     end,
   },
   --}}}
@@ -1589,12 +1557,12 @@ require('lazy').setup({
       },
     },
     keys = {
-      { '<Space>mm', '<Cmd>Obsidian<CR>', desc = 'Obsidian menu' },
-      { '<Space>me', function() require('nvim-tree.api').tree.open({ path = os.getenv('OBSIDIAN_VAULT') }) end, desc = 'Open vault in nvim-tree' },
-      { '<Leader>mn', '<Cmd>Obsidian new<CR>', desc = 'New note' },
-      { '<Leader>md', '<Cmd>Obsidian today<CR>', desc = 'Daily note' },
-      { '<Space>ml', '<Cmd>Obsidian quick_switch<CR>', desc = 'Find notes' },
-      { '<Space>mr', '<Cmd>Obsidian search<CR>', desc = 'Search notes' },
+      { '<Space>mm',  '<Cmd>Obsidian<CR>',                                                                       desc = 'Obsidian menu' },
+      { '<Space>me',  function() require('nvim-tree.api').tree.open({ path = os.getenv('OBSIDIAN_VAULT') }) end, desc = 'Open vault in nvim-tree' },
+      { '<Leader>mn', '<Cmd>Obsidian new<CR>',                                                                   desc = 'New note' },
+      { '<Leader>md', '<Cmd>Obsidian today<CR>',                                                                 desc = 'Daily note' },
+      { '<Space>ml',  '<Cmd>Obsidian quick_switch<CR>',                                                          desc = 'Find notes' },
+      { '<Space>mr',  '<Cmd>Obsidian search<CR>',                                                                desc = 'Search notes' },
     },
   },
   --}}}
