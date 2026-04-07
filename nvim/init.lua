@@ -660,9 +660,7 @@ require('lazy').setup({
   },
   {
     'j-hui/fidget.nvim',
-    config = function()
-      require('fidget').setup()
-    end,
+    opts = {},
   },
   --}}}
   --{{{ Completion
@@ -709,7 +707,6 @@ require('lazy').setup({
   {
     'L3MON4D3/LuaSnip',
     version = 'v2.*',
-    cmd = 'InsertEnter',
     build = "make install_jsregexp",
     config = function()
       require('luasnip.loaders.from_snipmate').lazy_load({ paths = "./snippets" })
@@ -750,7 +747,6 @@ require('lazy').setup({
           },
         },
       })
-      -- vim.api.nvim_command('highlight link CopilotSuggestion Comment')
     end,
   },
   --}}}
