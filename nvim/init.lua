@@ -18,6 +18,22 @@ local ko_sb = {
 local keymap = vim.keymap.set
 --}}}
 
+--{{{ Clipboard (OSC 52 for SSH, default for local)
+if os.getenv("SSH_TTY") then
+  vim.g.clipboard = {
+    name = 'OSC 52',
+    copy = {
+      ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
+    },
+    paste = {
+      ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
+    },
+  }
+end
+--}}}
+
 --{{{ Options
 -- see `:options`
 --{{{ 1 important
