@@ -21,7 +21,9 @@ usage() {
 }
 
 get_repo_root() {
-  git rev-parse --show-toplevel
+  local git_common_dir
+  git_common_dir="$(git rev-parse --git-common-dir)"
+  (cd "$git_common_dir/.." && pwd)
 }
 
 get_repo_name() {

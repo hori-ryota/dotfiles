@@ -340,7 +340,11 @@ config.keys = {
 					if cwd_path then
 						local quoted = "'" .. line:gsub("'", "'\\''") .. "'"
 						local spawn_args = {
-							args = { "/bin/zsh", "-ic", "wt " .. quoted },
+							args = {
+								"/bin/zsh",
+								"-ic",
+								'cd "$(worktree-create.sh ' .. quoted .. ')" && exec zsh',
+							},
 							cwd = cwd_path,
 							domain = { DomainName = domain },
 						}
@@ -367,7 +371,11 @@ config.keys = {
 			local domain = pane:get_domain_name()
 			if cwd_path then
 				local spawn_args = {
-					args = { "/bin/zsh", "-ic", "wts" },
+					args = {
+						"/bin/zsh",
+						"-ic",
+						'path=$(git worktree list --porcelain | grep "^worktree " | sed "s/^worktree //" | fzf --prompt="Select worktree> " --preview="git -C {} log --oneline -5") && cd "$path" && exec zsh',
+					},
 					cwd = cwd_path,
 					domain = { DomainName = domain },
 				}
