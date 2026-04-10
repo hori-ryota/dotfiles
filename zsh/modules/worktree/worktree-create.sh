@@ -9,7 +9,8 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REAL_PATH="$(readlink "${BASH_SOURCE[0]}" 2>/dev/null || echo "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(cd "$(dirname "$REAL_PATH")" && pwd)"
 readonly SCRIPT_DIR
 
 log_info() { echo "[INFO] $1" >&2; }

@@ -9,7 +9,8 @@
 
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REAL_PATH="$(readlink "${BASH_SOURCE[0]}" 2>/dev/null || echo "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(cd "$(dirname "$REAL_PATH")" && pwd)"
 readonly SCRIPT_DIR
 
 INPUT="$(cat)"
@@ -29,7 +30,8 @@ else
 fi
 
 # Run worktree-setup.sh (all output to stderr)
-REPO_ROOT="$(git rev-parse --show-toplevel)"
+GIT_COMMON_DIR="$(git rev-parse --git-common-dir)"
+REPO_ROOT="$(cd "$GIT_COMMON_DIR/.." && pwd)"
 "${SCRIPT_DIR}/worktree-setup.sh" "$REPO_ROOT" "$WORKTREE_PATH" >&2
 
 # Output the worktree path (Claude Code reads this from stdout)
