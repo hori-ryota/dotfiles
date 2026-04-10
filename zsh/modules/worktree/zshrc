@@ -1,0 +1,54 @@
+# Worktree management functions
+_WORKTREE_MODULE_DIR="$(dirname "${BASH_SOURCE:-$0}")"
+
+# Create a worktree and open in a new WezTerm tab
+wt() {
+  if [[ -z "${1:-}" ]]; then
+    echo "Usage: wt <branch-or-feature-name>" >&2
+    return 1
+  fi
+
+  local worktree_path
+  worktree_path="$("${_WORKTREE_MODULE_DIR}/worktree-create.sh" "$1")" || return 1
+
+  if [[ -n "${WEZTERM_PANE:-}" ]]; then
+    wezterm cli spawn --cwd "$worktree_path"
+  else
+    echo "$worktree_path"
+    cd "$worktree_path"
+  fi
+}
+
+# Select a worktree with fzf and open in a new WezTerm tab
+wts() {
+  local path
+  path=$(git worktree list --porcelain \
+    | grep '^worktree ' \
+    | sed 's/^worktree //' \
+    | fzf --prompt="Select worktree> " --preview='git -C {} log --oneline -5') || return 0
+
+  if [[ -n "${WEZTERM_PANE:-}" ]]; then
+    wezterm cli spawn --cwd "$path"
+  else
+    cd "$path"
+  fi
+}
+
+# Re-run worktree-setup.sh on current worktree (after editing .worktreesetup)
+wt-sync() {
+  local force=""
+  [[ "${1:-}" == "--force" ]] && force="--force"
+
+  local main_repo
+  main_repo="$(git rev-parse --git-common-dir 2>/dev/null)" || {
+    echo "Not inside a git repository" >&2
+    return 1
+  }
+  # git-common-dir returns the .git dir; get its parent
+  main_repo="$(cd "$main_repo" && cd .. && pwd)"
+
+  local current_dir
+  current_dir="$(pwd)"
+
+  "${_WORKTREE_MODULE_DIR}/worktree-setup.sh" $force "$main_repo" "$current_dir"
+}

@@ -324,6 +324,49 @@ config.keys = {
 	-- Scroll to prompt (shell integration)
 	{ key = "k", mods = "CTRL|SHIFT", action = wezterm.action.ScrollToPrompt(-1) },
 	{ key = "j", mods = "CTRL|SHIFT", action = wezterm.action.ScrollToPrompt(1) },
+
+	-- Worktree: create new worktree and open in new tab
+	{
+		key = "g",
+		mods = "LEADER",
+		action = wezterm.action.PromptInputLine({
+			description = "Enter branch/feature name for worktree",
+			action = wezterm.action_callback(function(window, pane, line)
+				if line and #line > 0 then
+					local cwd = pane:get_current_working_dir()
+					local cwd_path = cwd and cwd.file_path or nil
+					if cwd_path then
+						window:perform_action(
+							wezterm.action.SpawnCommandInNewTab({
+								args = { "/bin/zsh", "-ic", "wt " .. line },
+								cwd = cwd_path,
+							}),
+							pane
+						)
+					end
+				end
+			end),
+		}),
+	},
+
+	-- Worktree: select existing worktree with fzf and open in new tab
+	{
+		key = "G",
+		mods = "LEADER",
+		action = wezterm.action_callback(function(window, pane)
+			local cwd = pane:get_current_working_dir()
+			local cwd_path = cwd and cwd.file_path or nil
+			if cwd_path then
+				window:perform_action(
+					wezterm.action.SpawnCommandInNewTab({
+						args = { "/bin/zsh", "-ic", "wts" },
+						cwd = cwd_path,
+					}),
+					pane
+				)
+			end
+		end),
+	},
 }
 
 ---------------------

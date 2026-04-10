@@ -1,0 +1,350 @@
+#!/usr/bin/env bats
+
+load "../z_tests/helpers.zsh"
+
+setup() {
+  load_bats_libs
+  setup_test_dir
+
+  SCRIPT_DIR="$(cd "$(dirname "${BATS_TEST_DIRNAME}")" && pwd)/worktree"
+  SCRIPT="${BATS_TEST_DIRNAME}/worktree-setup.sh"
+
+  # Create source and target directories
+  SOURCE_DIR="$TEST_TEMP_DIR/source"
+  TARGET_DIR="$TEST_TEMP_DIR/target"
+  mkdir -p "$SOURCE_DIR" "$TARGET_DIR"
+}
+
+teardown() {
+  teardown_test_dir
+}
+
+# --- Parsing tests ---
+
+@test "no .worktreesetup file: exits successfully with info message" {
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert_output --partial "No .worktreesetup found"
+}
+
+@test "empty .worktreesetup: exits successfully" {
+  touch "$SOURCE_DIR/.worktreesetup"
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+}
+
+@test "comments and blank lines are ignored" {
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+# This is a comment
+   # Indented comment
+
+copy:.env
+EOF
+  echo "secret" >"$SOURCE_DIR/.env"
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert [ -f "$TARGET_DIR/.env" ]
+}
+
+@test "unknown directive produces warning" {
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+unknown:foo
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert_output --partial "Unknown directive: unknown"
+}
+
+# --- Copy tests ---
+
+@test "copy: copies file to target" {
+  echo "DB_HOST=localhost" >"$SOURCE_DIR/.env"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+copy:.env
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert [ -f "$TARGET_DIR/.env" ]
+  assert_equal "$(cat "$TARGET_DIR/.env")" "DB_HOST=localhost"
+}
+
+@test "copy: skips existing file without --force" {
+  echo "original" >"$SOURCE_DIR/.env"
+  echo "existing" >"$TARGET_DIR/.env"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+copy:.env
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert_output --partial "Already exists, skipping copy"
+  assert_equal "$(cat "$TARGET_DIR/.env")" "existing"
+}
+
+@test "copy: overwrites existing file with --force" {
+  echo "new-content" >"$SOURCE_DIR/.env"
+  echo "old-content" >"$TARGET_DIR/.env"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+copy:.env
+EOF
+
+  run "$SCRIPT" --force "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert_equal "$(cat "$TARGET_DIR/.env")" "new-content"
+}
+
+@test "copy: warns when source does not exist" {
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+copy:.env
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert_output --partial "Copy source does not exist"
+}
+
+@test "copy: copies directory recursively" {
+  mkdir -p "$SOURCE_DIR/config"
+  echo "key=val" >"$SOURCE_DIR/config/app.conf"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+copy:config
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert [ -d "$TARGET_DIR/config" ]
+  assert [ -f "$TARGET_DIR/config/app.conf" ]
+}
+
+@test "copy: creates parent directories" {
+  mkdir -p "$SOURCE_DIR/deep/nested"
+  echo "data" >"$SOURCE_DIR/deep/nested/file.txt"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+copy:deep/nested/file.txt
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert [ -f "$TARGET_DIR/deep/nested/file.txt" ]
+}
+
+# --- Symlink tests ---
+
+@test "symlink: creates symlink to source file" {
+  echo "# Claude" >"$SOURCE_DIR/CLAUDE.md"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+symlink:CLAUDE.md
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert [ -L "$TARGET_DIR/CLAUDE.md" ]
+  assert_equal "$(readlink "$TARGET_DIR/CLAUDE.md")" "$SOURCE_DIR/CLAUDE.md"
+}
+
+@test "symlink: creates symlink to source directory" {
+  mkdir -p "$SOURCE_DIR/.claude"
+  echo "{}" >"$SOURCE_DIR/.claude/settings.json"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+symlink:.claude
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert [ -L "$TARGET_DIR/.claude" ]
+  assert_equal "$(readlink "$TARGET_DIR/.claude")" "$SOURCE_DIR/.claude"
+}
+
+@test "symlink: follows source symlink to use its target (dotfiles-private)" {
+  # Simulate dotfiles-private setup:
+  # source/CLAUDE.md -> /some/private/path/CLAUDE.md
+  local private_dir="$TEST_TEMP_DIR/private"
+  mkdir -p "$private_dir"
+  echo "# Private Claude" >"$private_dir/CLAUDE.md"
+  ln -s "$private_dir/CLAUDE.md" "$SOURCE_DIR/CLAUDE.md"
+
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+symlink:CLAUDE.md
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert [ -L "$TARGET_DIR/CLAUDE.md" ]
+  # Should point to the private path, not the source symlink
+  assert_equal "$(readlink "$TARGET_DIR/CLAUDE.md")" "$private_dir/CLAUDE.md"
+}
+
+@test "symlink: idempotent - same target does nothing" {
+  echo "# Claude" >"$SOURCE_DIR/CLAUDE.md"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+symlink:CLAUDE.md
+EOF
+
+  # Run twice
+  "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert_output --partial "Symlink already correct"
+  assert [ -L "$TARGET_DIR/CLAUDE.md" ]
+}
+
+@test "symlink: updates when target points elsewhere" {
+  echo "# Claude" >"$SOURCE_DIR/CLAUDE.md"
+  echo "# Old" >"$TEST_TEMP_DIR/old.md"
+  ln -s "$TEST_TEMP_DIR/old.md" "$TARGET_DIR/CLAUDE.md"
+
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+symlink:CLAUDE.md
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert_equal "$(readlink "$TARGET_DIR/CLAUDE.md")" "$SOURCE_DIR/CLAUDE.md"
+}
+
+@test "symlink: backs up existing file" {
+  echo "# Claude" >"$SOURCE_DIR/CLAUDE.md"
+  echo "# Existing" >"$TARGET_DIR/CLAUDE.md"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+symlink:CLAUDE.md
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert [ -L "$TARGET_DIR/CLAUDE.md" ]
+  assert [ -f "$TARGET_DIR/CLAUDE.md.bak" ]
+  assert_equal "$(cat "$TARGET_DIR/CLAUDE.md.bak")" "# Existing"
+}
+
+@test "symlink: warns when source does not exist" {
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+symlink:nonexistent
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert_output --partial "Symlink source does not exist"
+}
+
+@test "symlink: creates parent directories" {
+  mkdir -p "$SOURCE_DIR/.claude"
+  echo "{}" >"$SOURCE_DIR/.claude/settings.json"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+symlink:.claude/settings.json
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert [ -L "$TARGET_DIR/.claude/settings.json" ]
+}
+
+# --- Run tests ---
+
+@test "run: executes command in target directory" {
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+run:touch .initialized
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert [ -f "$TARGET_DIR/.initialized" ]
+}
+
+@test "run: executes in target worktree directory" {
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+run:pwd > .cwd_check
+EOF
+
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  local recorded_dir
+  recorded_dir="$(cat "$TARGET_DIR/.cwd_check")"
+  # Resolve both to canonical paths for comparison
+  local expected_dir
+  expected_dir="$(cd "$TARGET_DIR" && pwd -P)"
+  recorded_dir="$(cd "$recorded_dir" && pwd -P)"
+  assert_equal "$recorded_dir" "$expected_dir"
+}
+
+# --- Usage / error tests ---
+
+@test "missing arguments shows usage" {
+  run "$SCRIPT"
+  assert_failure
+  assert_output --partial "Usage:"
+}
+
+@test "one argument shows usage" {
+  run "$SCRIPT" "$SOURCE_DIR"
+  assert_failure
+  assert_output --partial "Usage:"
+}
+
+@test "nonexistent source directory fails" {
+  run "$SCRIPT" "/nonexistent" "$TARGET_DIR"
+  assert_failure
+  assert_output --partial "Source repository does not exist"
+}
+
+@test "nonexistent target directory fails" {
+  run "$SCRIPT" "$SOURCE_DIR" "/nonexistent"
+  assert_failure
+  assert_output --partial "Target worktree does not exist"
+}
+
+# --- Idempotency integration test ---
+
+@test "full setup is idempotent: second run produces no changes" {
+  # Set up source with all directive types
+  echo "secret" >"$SOURCE_DIR/.env"
+  echo "# Claude" >"$SOURCE_DIR/CLAUDE.md"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+copy:.env
+symlink:CLAUDE.md
+run:touch .initialized
+EOF
+
+  # First run
+  "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+
+  # Capture state
+  local env_content symlink_target
+  env_content="$(cat "$TARGET_DIR/.env")"
+  symlink_target="$(readlink "$TARGET_DIR/CLAUDE.md")"
+
+  # Second run
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+
+  # State unchanged
+  assert_equal "$(cat "$TARGET_DIR/.env")" "$env_content"
+  assert_equal "$(readlink "$TARGET_DIR/CLAUDE.md")" "$symlink_target"
+  assert [ -f "$TARGET_DIR/.initialized" ]
+}
+
+@test "re-run after adding new entries picks up changes" {
+  echo "secret" >"$SOURCE_DIR/.env"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+copy:.env
+EOF
+
+  # First run
+  "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert [ -f "$TARGET_DIR/.env" ]
+  assert [ ! -L "$TARGET_DIR/CLAUDE.md" ]
+
+  # Add new entry
+  echo "# Claude" >"$SOURCE_DIR/CLAUDE.md"
+  cat >"$SOURCE_DIR/.worktreesetup" <<'EOF'
+copy:.env
+symlink:CLAUDE.md
+EOF
+
+  # Second run picks up the new symlink
+  run "$SCRIPT" "$SOURCE_DIR" "$TARGET_DIR"
+  assert_success
+  assert [ -L "$TARGET_DIR/CLAUDE.md" ]
+}
