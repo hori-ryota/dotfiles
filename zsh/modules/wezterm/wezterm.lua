@@ -335,13 +335,19 @@ config.keys = {
 				if line and #line > 0 then
 					local cwd = pane:get_current_working_dir()
 					local cwd_path = cwd and cwd.file_path or nil
+					local domain = pane:get_domain_name()
 					if cwd_path then
 						local quoted = "'" .. line:gsub("'", "'\\''") .. "'"
+						local spawn_args = {
+							args = { "/bin/zsh", "-ic", "wt " .. quoted },
+							cwd = cwd_path,
+							domain = { DomainName = domain },
+						}
+						if domain ~= "local" then
+							spawn_args.set_environment_variables = { TMPDIR = "/tmp" }
+						end
 						window:perform_action(
-							wezterm.action.SpawnCommandInNewTab({
-								args = { "/bin/zsh", "-ic", "wt " .. quoted },
-								cwd = cwd_path,
-							}),
+							wezterm.action.SpawnCommandInNewTab(spawn_args),
 							pane
 						)
 					end
@@ -357,12 +363,18 @@ config.keys = {
 		action = wezterm.action_callback(function(window, pane)
 			local cwd = pane:get_current_working_dir()
 			local cwd_path = cwd and cwd.file_path or nil
+			local domain = pane:get_domain_name()
 			if cwd_path then
+				local spawn_args = {
+					args = { "/bin/zsh", "-ic", "wts" },
+					cwd = cwd_path,
+					domain = { DomainName = domain },
+				}
+				if domain ~= "local" then
+					spawn_args.set_environment_variables = { TMPDIR = "/tmp" }
+				end
 				window:perform_action(
-					wezterm.action.SpawnCommandInNewTab({
-						args = { "/bin/zsh", "-ic", "wts" },
-						cwd = cwd_path,
-					}),
+					wezterm.action.SpawnCommandInNewTab(spawn_args),
 					pane
 				)
 			end
