@@ -343,7 +343,7 @@ config.keys = {
 							args = {
 								"/bin/zsh",
 								"-ic",
-								'cd "$(worktree-create.sh ' .. quoted .. ')" && exec zsh',
+								'cd "$(worktree-create ' .. quoted .. ')" && exec zsh',
 							},
 							cwd = cwd_path,
 							domain = { DomainName = domain },
