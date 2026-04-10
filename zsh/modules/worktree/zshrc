@@ -36,8 +36,8 @@ wts() {
 
 # Re-run worktree-setup.sh on current worktree (after editing .worktreesetup)
 wt-sync() {
-  local force=""
-  [[ "${1:-}" == "--force" ]] && force="--force"
+  local args=()
+  [[ "${1:-}" == "--force" ]] && args+=(--force)
 
   local main_repo
   main_repo="$(git rev-parse --git-common-dir 2>/dev/null)" || {
@@ -50,5 +50,5 @@ wt-sync() {
   local current_dir
   current_dir="$(pwd)"
 
-  "${_WORKTREE_MODULE_DIR}/worktree-setup.sh" $force "$main_repo" "$current_dir"
+  "${_WORKTREE_MODULE_DIR}/worktree-setup.sh" "${args[@]}" "$main_repo" "$current_dir"
 }

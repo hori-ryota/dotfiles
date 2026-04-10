@@ -336,9 +336,10 @@ config.keys = {
 					local cwd = pane:get_current_working_dir()
 					local cwd_path = cwd and cwd.file_path or nil
 					if cwd_path then
+						local quoted = "'" .. line:gsub("'", "'\\''") .. "'"
 						window:perform_action(
 							wezterm.action.SpawnCommandInNewTab({
-								args = { "/bin/zsh", "-ic", "wt " .. line },
+								args = { "/bin/zsh", "-ic", "wt " .. quoted },
 								cwd = cwd_path,
 							}),
 							pane
