@@ -97,7 +97,8 @@ config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 config.front_end = "WebGpu"
 
 -- Kitty keyboard protocol (better key reporting for modern apps)
-config.enable_kitty_keyboard = true
+-- Kitty keyboard protocol disabled: conflicts with Karabiner's Ctrl+[ → Esc+Eisuu rule
+-- config.enable_kitty_keyboard = true
 
 -- Quick select patterns (Leader + Space)
 config.quick_select_patterns = {
