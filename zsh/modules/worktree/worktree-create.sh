@@ -81,7 +81,12 @@ main() {
     log_info "Worktree already exists: $worktree_path"
   else
     log_info "Creating worktree: $worktree_path (branch: $branch_name)"
-    git worktree add "$worktree_path" -b "$branch_name" >&2
+    if git show-ref --verify --quiet "refs/remotes/origin/$branch_name"; then
+      log_info "Remote branch found: origin/$branch_name"
+      git worktree add "$worktree_path" "$branch_name" >&2
+    else
+      git worktree add "$worktree_path" -b "$branch_name" >&2
+    fi
   fi
 
   # Run setup
