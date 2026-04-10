@@ -34,6 +34,10 @@ cd "$(dirname "${BASH_SOURCE:-$0}")" || exit
   echo ".task"
   echo ""
 
+  echo "# for worktree setup"
+  echo ".worktreesetup"
+  echo ""
+
   echo "# for claude code"
   echo "# Ignored by .claude, but added by claude code automatically"
   echo "**/.claude/settings.local.json"
