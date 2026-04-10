@@ -1,1 +1,1 @@
-alias c='claude --model opus'
+alias c='claude'
