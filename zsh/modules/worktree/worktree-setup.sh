@@ -102,62 +102,6 @@ do_run() {
   (cd "$dir" && eval "$cmd")
 }
 
-# Check if a symlink points outside the repository
-is_external_symlink() {
-  local link_path="$1"
-  local repo_root="$2"
-
-  [[ ! -L "$link_path" ]] && return 1
-
-  local target
-  target="$(readlink "$link_path")"
-
-  # Resolve relative targets to absolute using the symlink's directory
-  if [[ "$target" != /* ]]; then
-    local link_dir
-    link_dir="$(cd "$(dirname "$link_path")" && pwd -P)"
-    target="${link_dir}/${target}"
-  fi
-
-  # Normalize the path (resolve .., ., etc.)
-  if [[ -e "$target" ]]; then
-    target="$(cd "$(dirname "$target")" && pwd -P)/$(basename "$target")"
-  fi
-
-  # Check if target is outside the repo
-  [[ "$target" != "$repo_root"* ]]
-}
-
-# Auto-replicate external symlinks from source to target
-replicate_external_symlinks() {
-  local source_repo="$1"
-  local target_worktree="$2"
-
-  # Resolve to canonical path for comparison
-  local repo_canonical
-  repo_canonical="$(cd "$source_repo" && pwd -P)"
-
-  local found=false
-  for item in "$source_repo"/.* "$source_repo"/*; do
-    [[ ! -e "$item" ]] && [[ ! -L "$item" ]] && continue
-
-    local name
-    name="$(basename "$item")"
-
-    # Skip . .. .git
-    [[ "$name" == "." ]] || [[ "$name" == ".." ]] || [[ "$name" == ".git" ]] && continue
-
-    if is_external_symlink "$item" "$repo_canonical"; then
-      do_symlink "$item" "${target_worktree}/${name}"
-      found=true
-    fi
-  done
-
-  if [[ "$found" == "true" ]]; then
-    log_info "External symlinks replicated"
-  fi
-}
-
 # Parse and execute .worktreesetup
 run_setup() {
   local source_repo="$1"
@@ -231,7 +175,6 @@ main() {
     exit 1
   fi
 
-  replicate_external_symlinks "$source_repo" "$target_worktree"
   run_setup "$source_repo" "$target_worktree" "$force"
 }
 
