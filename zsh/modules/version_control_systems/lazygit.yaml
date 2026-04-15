@@ -532,6 +532,14 @@ customCommands:
     command: "git worktree remove --force {{.SelectedWorktree.Path}}"
     context: "worktrees"
     description: "Force remove worktree (removes even with submodules)"
+  - key: "D"
+    command: "git worktree remove --force $(git worktree list | grep '\\[{{.SelectedLocalBranch.Name}}\\]' | awk '{print $1}') && git branch -d {{.SelectedLocalBranch.Name}}"
+    context: "localBranches"
+    description: "Delete worktree and branch"
+    prompts:
+      - type: "confirm"
+        title: "Delete worktree & branch"
+        body: "Delete worktree and branch '{{.SelectedLocalBranch.Name}}'?"
 
 # See https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-pull-request-urls
 services: {}
