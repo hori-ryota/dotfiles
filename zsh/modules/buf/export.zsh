@@ -1,1 +1,1 @@
-export BUF_VERSION=1.68.1
+export BUF_VERSION=1.68.4

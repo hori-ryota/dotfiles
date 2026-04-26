@@ -1,1 +1,1 @@
-export RUBY_VERSION=4.0.2
+export RUBY_VERSION=4.0.3
