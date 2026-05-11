@@ -18,8 +18,17 @@ local ko_sb = {
 local keymap = vim.keymap.set
 --}}}
 
---{{{ Clipboard (OSC 52 for SSH, default for local)
-if os.getenv("SSH_TTY") then
+--{{{ Clipboard (OSC 52 for SSH / WezTerm mux, default for local)
+-- wezterm connect (multiplexing="WezTerm") では SSH_TTY が空になるため、
+-- WEZTERM_EXECUTABLE が wezterm-mux-server を指す場合も OSC 52 を有効化する。
+local function use_osc52_clipboard()
+  if os.getenv("SSH_TTY") then return true end
+  local wt = os.getenv("WEZTERM_EXECUTABLE") or ""
+  if wt:find("wezterm%-mux%-server") then return true end
+  return false
+end
+
+if use_osc52_clipboard() then
   vim.g.clipboard = {
     name = 'OSC 52',
     copy = {
