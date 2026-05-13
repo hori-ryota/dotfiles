@@ -504,7 +504,8 @@ os:
 
   # CopyToClipboardCmd is the command for copying to clipboard.
   # See https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-command-for-copying-to-and-pasting-from-clipboard
-  copyToClipboardCmd: ""
+  # OSC 52 で host 側のクリップボードに送る。SSH や wezterm-mux 経由でもホストに届くようにするための設定。
+  copyToClipboardCmd: printf "\033]52;c;$(printf '%s' {{text}} | base64 | tr -d '\n')\a" > /dev/tty
 
   # ReadFromClipboardCmd is the command for reading the clipboard.
   # See https://github.com/jesseduffield/lazygit/blob/master/docs/Config.md#custom-command-for-copying-to-and-pasting-from-clipboard
