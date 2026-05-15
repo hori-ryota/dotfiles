@@ -7,7 +7,7 @@ mise install nodejs $NODE_VERSION
 mise use --global nodejs@$NODE_VERSION
 
 corepack enable
+corepack install -g pnpm
 
 pnpm install -g \
-  npm-check-updates \
   @antfu/ni
