@@ -713,9 +713,6 @@ require('lazy').setup({
           'path',
           'buffer',
         },
-        per_filetype = {
-          markdown = { 'obsidian', 'obsidian_new', 'obsidian_tags', 'snippets', 'lsp', 'path', 'buffer' },
-        },
         providers = {
           path = {
             timeout_ms = 1000,
@@ -1495,9 +1492,6 @@ require('lazy').setup({
         end
         return spec.dir / tostring(spec.id)
       end,
-      completion = {
-        blink = true,
-      },
       picker = {
         name = 'snacks.pick',
       },
