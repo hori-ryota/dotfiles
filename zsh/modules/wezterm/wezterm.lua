@@ -102,7 +102,6 @@ config.front_end = "WebGpu"
 
 -- Quick select patterns (Leader + Space)
 config.quick_select_patterns = {
-	"[a-f0-9]{7,40}", -- git hash
 	"[0-9]+:[0-9]+", -- line:column (e.g., 42:10)
 }
 
