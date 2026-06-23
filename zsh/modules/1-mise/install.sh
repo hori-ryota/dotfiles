@@ -4,10 +4,8 @@ brew_install mise
 source "$(dirname "${BASH_SOURCE:-$0}")/export.zsh"
 
 mise settings set go_set_gobin false
-mise settings add disable_backends asdf
-mise settings add disable_backends vfox
+# `set` で全置換する (idempotent)。 `add` は重複排除せず追記するため、
+# install.sh を複数回流すと配列が肥大化する
+mise settings set disable_backends "asdf,vfox"
 
-mise settings add idiomatic_version_file_enable_tools go
-mise settings add idiomatic_version_file_enable_tools node
-mise settings add idiomatic_version_file_enable_tools python
-mise settings add idiomatic_version_file_enable_tools ruby
+mise settings set idiomatic_version_file_enable_tools "go,node,python,ruby"
